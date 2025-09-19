@@ -1,5 +1,7 @@
 # UD2 - Persistencia en ficheros
 
+<img src="../../../assets/images/ud02/portada_ud02.png" alt="Portada Unidad 2" style="zoom: 50%;" />
+
 ## Resumen
 En este documento se recogen los contenidos referentes al RA1 (desarrolla aplicaciones que gestionan información almacenada en ficheros identificando el campo de aplicación de los mismos y utilizando clases específicas).
 
@@ -41,11 +43,17 @@ El acceso a ficheros es una tarea fundamental en la programación, ya que permit
 
 * **Acceso secuencial**: Los datos se procesan en orden, desde el principio hasta el final del fichero. Es el más común y sencillo. Se usa cuando se desea leer todo el contenido o recorrer registro por registro. Por ejemplo lectura de un fichero de texto línea por línea, o de un fichero binario estructurado registro a registro.
 
+<img src="../../../assets/images/ud02/ej01.png" alt="Portada Unidad 2" style="zoom: 50%;" />
+
 * **Acceso aleatorio**: Permite saltar a una posición concreta del fichero sin necesidad de leer lo anterior. Es útil cuando los registros tienen un tamaño fijo y se necesita eficiencia (por ejemplo, ir directamente al registro 100). Requiere técnicas más avanzadas como el uso de `FileChannel`, `SeekableByteChannel` o `RandomAccessFile`.
+
+<img src="../../../assets/images/ud02/ej02.png" alt="Portada Unidad 2" style="zoom: 50%;" />
 
 A lo largo de esta unidad se explicarán algunas funciones de manejo de ficheros que requieren librerías externas (dependencias). Utilizaremos **Gradle** para descargarlas automáticamente en nuestros proyectos.
 
 Para crear un proyecto Kotlin con Gradle en IntelliJ haremos clic en **New Project**, indicamos la información de la siguiente imagen, haremos clic en el botón **Create** y esperaremos a que IntelliJ prepare el proyecto.
+
+<img src="../../../assets/images/ud02/ej03.png" alt="Portada Unidad 2" style="zoom: 50%;" />
 
 A medida que necesitemos utilizar dependencias en nuestro proyecto, las iremos añadiendo al fichero **build.gradle.kts** en la sección de dependencias. Si después de añadirlas no se descargan automáticamente, abrir la **ventana Gradle** (lateral derecho de IntelliJ) y hacer clic en el botón de actualizar.
 
