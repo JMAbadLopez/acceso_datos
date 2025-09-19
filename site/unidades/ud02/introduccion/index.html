@@ -836,6 +836,7 @@
 
 
 <h1 id="ud2-persistencia-en-ficheros">UD2 - Persistencia en ficheros</h1>
+<p><img src="../../../assets/images/ud02/portada_ud02.png" alt="Portada Unidad 2" style="zoom: 50%;" /></p>
 <h2 id="resumen">Resumen</h2>
 <p>En este documento se recogen los contenidos referentes al RA1 (desarrolla aplicaciones que gestionan información almacenada en ficheros identificando el campo de aplicación de los mismos y utilizando clases específicas).</p>
 <h2 id="guia-de-uso">Guía de uso</h2>
@@ -871,15 +872,16 @@
 <h3 id="formas-de-acceso">Formas de acceso:</h3>
 <p>El acceso a ficheros es una tarea fundamental en la programación, ya que permite leer y escribir datos persistentes. Hemos visto que hay diferentes tipos de ficheros, según sus características y necesidades existen dos formas principales de acceder a un fichero (secuencial y aleatorio):</p>
 <ul>
-<li>
-<p><strong>Acceso secuencial</strong>: Los datos se procesan en orden, desde el principio hasta el final del fichero. Es el más común y sencillo. Se usa cuando se desea leer todo el contenido o recorrer registro por registro. Por ejemplo lectura de un fichero de texto línea por línea, o de un fichero binario estructurado registro a registro.</p>
-</li>
-<li>
-<p><strong>Acceso aleatorio</strong>: Permite saltar a una posición concreta del fichero sin necesidad de leer lo anterior. Es útil cuando los registros tienen un tamaño fijo y se necesita eficiencia (por ejemplo, ir directamente al registro 100). Requiere técnicas más avanzadas como el uso de <code>FileChannel</code>, <code>SeekableByteChannel</code> o <code>RandomAccessFile</code>.</p>
-</li>
+<li><strong>Acceso secuencial</strong>: Los datos se procesan en orden, desde el principio hasta el final del fichero. Es el más común y sencillo. Se usa cuando se desea leer todo el contenido o recorrer registro por registro. Por ejemplo lectura de un fichero de texto línea por línea, o de un fichero binario estructurado registro a registro.</li>
 </ul>
+<p><img src="../../../assets/images/ud02/ej01.png" alt="Portada Unidad 2" style="zoom: 50%;" /></p>
+<ul>
+<li><strong>Acceso aleatorio</strong>: Permite saltar a una posición concreta del fichero sin necesidad de leer lo anterior. Es útil cuando los registros tienen un tamaño fijo y se necesita eficiencia (por ejemplo, ir directamente al registro 100). Requiere técnicas más avanzadas como el uso de <code>FileChannel</code>, <code>SeekableByteChannel</code> o <code>RandomAccessFile</code>.</li>
+</ul>
+<p><img src="../../../assets/images/ud02/ej02.png" alt="Portada Unidad 2" style="zoom: 50%;" /></p>
 <p>A lo largo de esta unidad se explicarán algunas funciones de manejo de ficheros que requieren librerías externas (dependencias). Utilizaremos <strong>Gradle</strong> para descargarlas automáticamente en nuestros proyectos.</p>
 <p>Para crear un proyecto Kotlin con Gradle en IntelliJ haremos clic en <strong>New Project</strong>, indicamos la información de la siguiente imagen, haremos clic en el botón <strong>Create</strong> y esperaremos a que IntelliJ prepare el proyecto.</p>
+<p><img src="../../../assets/images/ud02/ej03.png" alt="Portada Unidad 2" style="zoom: 50%;" /></p>
 <p>A medida que necesitemos utilizar dependencias en nuestro proyecto, las iremos añadiendo al fichero <strong>build.gradle.kts</strong> en la sección de dependencias. Si después de añadirlas no se descargan automáticamente, abrir la <strong>ventana Gradle</strong> (lateral derecho de IntelliJ) y hacer clic en el botón de actualizar.</p>
 <hr />
 <h3 id="practica-1-proyecto-kotlin-con-gradle">🎯 Práctica 1: Proyecto Kotlin con Gradle</h3>
