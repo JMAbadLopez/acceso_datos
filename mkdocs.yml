@@ -1,0 +1,51 @@
+site_name: Acceso a Datos DAM
+
+nav:
+  - Inicio: index.md
+  - Unidades:
+    - UD1 - Programación en el entorno Kotlin.: 
+      - Introducción: unidades/ud01/ud01.md
+    - UD2 - Persistencia en ficheros:
+      - Introducción: unidades/ud02/introduccion.md
+      - Ficheros y directorios: unidades/ud02/ficheros_directorios.md
+      - Ficheros de texto: unidades/ud02/ficheros_texto.md
+      - Ficheros de intercambio: unidades/ud02/ficheros_intercambio.md
+      - Ficheros binarios: unidades/ud02/ficheros_binarios.md
+      - Ficheros de acceso aleatorio: unidades/ud02/ficheros_acceso_aleatorio.md
+      - Documentación final: unidades/ud02/documentacion_final.md
+
+repo_url: https://github.com/jmabadlopez/acceso_datos
+repo_name: jmabadlopez/acceso_datos
+
+theme:
+  name: material
+  language: es
+  logo: ./assets/images/camp.png
+  icon: fontawesome/brands/mastodon
+  hljs_languages:
+    - python
+    - java
+    - c
+    - kotlin
+  features:
+    - navigation.top
+    - optimize
+    - content.code.copy
+    - navigation.footer
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Modo oscuro
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+markdown_extensions:
+  - sane_lists
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
