@@ -3,8 +3,7 @@ site_name: Acceso a Datos DAM
 nav:
   - Inicio: index.md
   - Unidades:
-    - UD1 - Programación en el entorno Kotlin.: 
-      - Introducción: unidades/ud01/ud01.md
+    - UD1 - Programación en el entorno Kotlin.: unidades/ud01/ud01.md
     - UD2 - Persistencia en ficheros:
       - Introducción: unidades/ud02/introduccion.md
       - Ficheros y directorios: unidades/ud02/ficheros_directorios.md
