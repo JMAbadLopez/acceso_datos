@@ -195,11 +195,36 @@ fun main() {
 ---
 
 ### 🎯 Práctica 2: Directorios y comprobaciones
-Prepara **la estructura de tu proyecto**. Crea la carpeta `datos`. Basándote en los ejemplos anteriores, desarrolla un programa en tu proyecto haga lo siguiente:
+Prepara **la estructura de tu proyecto**. Crea la ruta `proyecto/datos`. Basándote en los ejemplos anteriores, **desarrolla un programa** en tu proyecto haga lo siguiente:
 
-* **Define dos rutas**: una para una carpeta llamada `datos_ini` y otra para una carpeta llamada `datos_fin` (ambas dentro de la carpeta de tu proyecto).
-* **Comprueba los directorios**: Si las carpetas no existen las deberá crear utilizando `Files.createDirectories`.
-* **Añade ficheros**: Añade (manualmente y vacío) el fichero `mis_datos.json` dentro de la carpeta `datos_ini`.
-* **Comprueba ficheros**: Después de la comprobación de la existencia del fichero de datos dentro de la carpeta `datos_ini` (`mis_datos.json`) imprimirá un mensaje por consola mostrando la estrctura de directorios y ficheros.
+1. **Defina dos rutas**: una para una carpeta llamada `datos_ini` y otra para una carpeta llamada `datos_fin` (ambas dentro de la carpeta `proyecto/datos` de tu proyecto).
+2. **Comprueba los directorios**: Si las carpetas no existen las deberá crear utilizando `Files.createDirectories`.
+3. **Añade ficheros**: Añade (manualmente y vacío) el fichero `mis_datos.json` dentro de la carpeta `datos_ini`.
+4. **Comprueba ficheros**: Después de la comprobación de la existencia del fichero de datos dentro de la carpeta `datos_ini` (`mis_datos.json`) imprimirá un mensaje por consola mostrando la estrctura de directorios y ficheros.
 
----
+**La salida de tu programa** debe ser parecida a esta, la primera vez que se ejecuta:
+```
+CREACIÓN DE RUTAS PROYECTO
+	Creando rutas...
+	Creación de ruta para DATOS_INI
+	Creación de ruta para DATOS_FIN
+MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
+	[DIR] datos
+		[DIR] datos_fin
+		[DIR] datos_ini
+```
+
+Y la segunda vez que se ejecuta, tras añadir el fichero `mis_datos.json`:
+```
+CREACIÓN DE RUTAS PROYECTO
+	Creando rutas...
+MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
+	[DIR] datos
+		[DIR] datos_fin
+		[DIR] datos_ini
+			[FILE] mis_datos.json
+```
+
+**La estructura en tu proyecto** debe ser parecida a esta:
+
+![Proyecto 01](../../assets/images/ud02/proy01.png)

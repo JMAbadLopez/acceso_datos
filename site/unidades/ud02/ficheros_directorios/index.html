@@ -1023,14 +1023,34 @@
 </code></pre></div></p>
 <hr />
 <h3 id="practica-2-directorios-y-comprobaciones">🎯 Práctica 2: Directorios y comprobaciones</h3>
-<p>Prepara <strong>la estructura de tu proyecto</strong>. Crea la carpeta <code>datos</code>. Basándote en los ejemplos anteriores, desarrolla un programa en tu proyecto haga lo siguiente:</p>
-<ul>
-<li><strong>Define dos rutas</strong>: una para una carpeta llamada <code>datos_ini</code> y otra para una carpeta llamada <code>datos_fin</code> (ambas dentro de la carpeta de tu proyecto).</li>
+<p>Prepara <strong>la estructura de tu proyecto</strong>. Crea la ruta <code>proyecto/datos</code>. Basándote en los ejemplos anteriores, <strong>desarrolla un programa</strong> en tu proyecto haga lo siguiente:</p>
+<ol>
+<li><strong>Defina dos rutas</strong>: una para una carpeta llamada <code>datos_ini</code> y otra para una carpeta llamada <code>datos_fin</code> (ambas dentro de la carpeta <code>proyecto/datos</code> de tu proyecto).</li>
 <li><strong>Comprueba los directorios</strong>: Si las carpetas no existen las deberá crear utilizando <code>Files.createDirectories</code>.</li>
 <li><strong>Añade ficheros</strong>: Añade (manualmente y vacío) el fichero <code>mis_datos.json</code> dentro de la carpeta <code>datos_ini</code>.</li>
 <li><strong>Comprueba ficheros</strong>: Después de la comprobación de la existencia del fichero de datos dentro de la carpeta <code>datos_ini</code> (<code>mis_datos.json</code>) imprimirá un mensaje por consola mostrando la estrctura de directorios y ficheros.</li>
-</ul>
-<hr />
+</ol>
+<p><strong>La salida de tu programa</strong> debe ser parecida a esta, la primera vez que se ejecuta:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>CREACIÓN DE RUTAS PROYECTO
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    Creando rutas...
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    Creación de ruta para DATOS_INI
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    Creación de ruta para DATOS_FIN
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    [DIR] datos
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        [DIR] datos_fin
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        [DIR] datos_ini
+</code></pre></div></p>
+<p>Y la segunda vez que se ejecuta, tras añadir el fichero <code>mis_datos.json</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>CREACIÓN DE RUTAS PROYECTO
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    Creando rutas...
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    [DIR] datos
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        [DIR] datos_fin
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        [DIR] datos_ini
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>            [FILE] mis_datos.json
+</code></pre></div></p>
+<p><strong>La estructura en tu proyecto</strong> debe ser parecida a esta:</p>
+<p><img alt="Proyecto 01" src="../../../assets/images/ud02/proy01.png" /></p>
 
 
 
