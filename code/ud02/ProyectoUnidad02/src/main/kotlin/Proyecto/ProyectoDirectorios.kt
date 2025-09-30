@@ -8,6 +8,11 @@ fun main() {
     val directorioIni = Path.of("datos", "datos_ini")
     val directorioFin = Path.of("datos", "datos_fin")
 
+    CrearRutas(rutaPrincipal, directorioIni, directorioFin)
+    MostrarDirectorio(rutaPrincipal)
+}
+
+fun CrearRutas(rutaPrincipal: Path, directorioIni: Path, directorioFin: Path) {
     println("CREACIÓN DE RUTAS PROYECTO")
 
     try {
@@ -15,17 +20,22 @@ fun main() {
          * Creamos las rutas del Proyecto
          */
         Files.list(rutaPrincipal).use {
-            streamPath -> streamPath.forEach {
-                pathFichero ->
+
+            streamPath -> streamPath.forEach { pathFichero ->
 
                 val rutaIni = rutaPrincipal.resolve(directorioIni)
                 val rutaFin = rutaPrincipal.resolve(directorioFin)
 
                 if(pathFichero.toString() == "proyecto/datos") {
+
                     println("\tCreando rutas...")
+
                     if(Files.notExists(rutaIni)) {
                         println("\tCreación de ruta para DATOS_INI")
                         Files.createDirectories(rutaIni)
+
+                        val misDatos = Path.of("proyecto","datos","datos_ini", "mis_datos.json")
+                        Files.createFile(misDatos)
                     }
 
                     if(Files.notExists(rutaFin)) {
@@ -38,7 +48,9 @@ fun main() {
     } catch (e: Exception) {
         println(e.message)
     }
+}
 
+fun MostrarDirectorio(rutaPrincipal: Path) {
     println("MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS")
     try {
         Files.walk(rutaPrincipal).use { stream ->

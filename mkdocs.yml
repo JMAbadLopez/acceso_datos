@@ -37,12 +37,16 @@ theme:
       toggle:
         icon: material/brightness-7 
         name: Modo oscuro
+      primary: amber
+      accent: amber
 
     # Palette toggle for dark mode
     - scheme: slate
       toggle:
         icon: material/brightness-4
         name: Modo claro
+      primary: amber
+      accent: amber
 markdown_extensions:
   - sane_lists
   - pymdownx.highlight:

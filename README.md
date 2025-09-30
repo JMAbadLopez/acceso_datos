@@ -1,8 +1,10 @@
-# Acceso a Datos DAM
+# Acceso a datos DAM
+
+<img src="./assets/images/portada_ad.png" alt="Portada" style="zoom:40%;" />
 
 ## Descripción
 
-Material del módulo de **Acceso a Dato de 2º de DAM del IES CAMP DE MORVEDRE**.
+Material del módulo de **Acceso a Datos de 2º de DAM del IES CAMP DE MORVEDRE**.
 
 | Fecha      | Versión | Descripción                                |
 | ---------- | ------- | ------------------------------------------ |
@@ -11,9 +13,12 @@ Material del módulo de **Acceso a Dato de 2º de DAM del IES CAMP DE MORVEDRE**
 ## Enlaces de interés
 
 * Todo el material está disponible en el [repositorio del módulo](https://github.com/jmabadlopez/acceso_datos)
+
 ## Autoría y revisión
 
-Material original de **Alicia Salvador** y **Begoña Paterna**. Adaptado y revisado por **José Manuel Abad López**.
+Obra realizada por **Begoña Paterna** basado en materiales de **Alicia Salvador**. Adaptado, revisado y ampliado por **José Manuel Abad López**. 
+
+Publicada bajo licencia [Creative Commons Atribución/Reconocimiento-CompartirIgual 4.0 Internacional](https://creativecommons.org/licenses/by-sa/4.0/deed.es)
 
 ## Repositorio y contacto
 <https://jmabadlopez.github.io>
