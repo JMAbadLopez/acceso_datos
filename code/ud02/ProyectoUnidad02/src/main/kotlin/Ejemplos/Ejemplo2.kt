@@ -4,9 +4,10 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import kotlin.io.path.extension // Extensión de Kotlin para obtener la extensión
+
 fun main() {
     // 1. Ruta de la carpeta a organizar
-    val carpeta = Path.of("multimedia_test")
+    val carpeta = Path.of("multimedia")
     println ("--- Iniciando la organización de la carpeta: " + carpeta + "---")
     try {
         // 2. Recorrer la carpeta desordenada y utilizar .use para asegurar que los recursos del sistema se cierren correctamente

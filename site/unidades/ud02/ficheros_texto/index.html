@@ -429,6 +429,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -461,6 +463,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -469,16 +473,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#3-ficheros-de-texto" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Ficheros de texto
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Ficheros de texto">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#metodos-de-ficheros-de-texto" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de Ficheros de Texto
@@ -486,18 +480,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#ejemplo-escritura-y-lectura-en-fichero-de-texto-plano-txt" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo - Escritura y lectura en fichero de texto plano .txt:
+      Ejemplo - Escritura y lectura en fichero de texto plano .txt
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -634,6 +623,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -642,16 +633,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#3-ficheros-de-texto" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Ficheros de texto
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Ficheros de texto">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#metodos-de-ficheros-de-texto" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de Ficheros de Texto
@@ -659,18 +640,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#ejemplo-escritura-y-lectura-en-fichero-de-texto-plano-txt" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo - Escritura y lectura en fichero de texto plano .txt:
+      Ejemplo - Escritura y lectura en fichero de texto plano .txt
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -693,11 +669,9 @@
   
 
 
-  <h1>Ficheros de texto</h1>
-
-<h2 id="3-ficheros-de-texto">3. Ficheros de texto</h2>
+<h1 id="3-ficheros-de-texto">3. Ficheros de texto</h1>
 <p>Los ficheros de texto son legibles directamente por humanos y son una buena opción para guardar información después de cerrar el programa. A continuación se muestran algunas clases y métodos para leer y escribir información en ellos:</p>
-<h3 id="metodos-de-ficheros-de-texto">Métodos de Ficheros de Texto</h3>
+<h2 id="metodos-de-ficheros-de-texto">Métodos de Ficheros de Texto</h2>
 <table>
 <thead>
 <tr>
@@ -753,8 +727,8 @@
 </tbody>
 </table>
 <p>Dentro de los ficheros de texto existen ficheros de texto plano (sin ningún tipo de estructura) y ficheros de texto en los que la información está estructurada.</p>
-<h3 id="ejemplo-escritura-y-lectura-en-fichero-de-texto-plano-txt">Ejemplo - Escritura y lectura en fichero de texto plano .txt:</h3>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<h2 id="ejemplo-escritura-y-lectura-en-fichero-de-texto-plano-txt">Ejemplo - Escritura y lectura en fichero de texto plano .txt</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Paths</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -794,22 +768,22 @@
 <a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="p">}</span>
 </code></pre></div>
-🔍 <strong>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Fichero de texto escrito.
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Contenido leído con readAllLines:
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Primera línea
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Segunda línea
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>¡Hola desde Kotlin!
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Contenido leído con readString:
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Primera línea
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Segunda línea
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>¡Hola desde Kotlin!
+<p>🔍 <strong>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Fichero<span class="w"> </span>de<span class="w"> </span>texto<span class="w"> </span>escrito.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Contenido<span class="w"> </span>leído<span class="w"> </span>con<span class="w"> </span>readAllLines:
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Primera<span class="w"> </span>línea
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Segunda<span class="w"> </span>línea
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>¡Hola<span class="w"> </span>desde<span class="w"> </span>Kotlin!
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Contenido<span class="w"> </span>leído<span class="w"> </span>con<span class="w"> </span>readString:
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Primera<span class="w"> </span>línea
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Segunda<span class="w"> </span>línea
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>¡Hola<span class="w"> </span>desde<span class="w"> </span>Kotlin!
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Contenido leído con newBufferedReader:
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Primera línea
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Segunda línea
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>¡Hola desde Kotlin!
-</code></pre></div></p>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Contenido<span class="w"> </span>leído<span class="w"> </span>con<span class="w"> </span>newBufferedReader:
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Primera<span class="w"> </span>línea
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Segunda<span class="w"> </span>línea
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>¡Hola<span class="w"> </span>desde<span class="w"> </span>Kotlin!
+</code></pre></div>
 <hr />
 
 

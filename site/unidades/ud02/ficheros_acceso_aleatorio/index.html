@@ -498,6 +498,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -530,6 +532,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -538,16 +542,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#6-ficheros-de-acceso-aleatorio" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Ficheros de acceso aleatorio
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Ficheros de acceso aleatorio">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#metodos-de-filechannel" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de FileChannel
@@ -555,8 +549,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#metodos-de-bytebuffer" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de ByteBuffer
@@ -564,29 +558,21 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#metodos-de-control-del-buffer" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de control del buffer
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Métodos de control del buffer">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ejemplo" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo:
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#practica-5-modificar-y-eliminar-registros-en-ficheros-dat" class="md-nav__link">
-    <span class="md-ellipsis">
-      🎯 Práctica 5: Modificar y eliminar registros en ficheros .dat
+      Ejemplo
     </span>
   </a>
   
@@ -594,6 +580,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practica-4-modificar-y-eliminar-registros-en-ficheros-dat" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat
+    </span>
+  </a>
   
 </li>
       
@@ -661,6 +656,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -669,16 +666,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#6-ficheros-de-acceso-aleatorio" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Ficheros de acceso aleatorio
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Ficheros de acceso aleatorio">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#metodos-de-filechannel" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de FileChannel
@@ -686,8 +673,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#metodos-de-bytebuffer" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de ByteBuffer
@@ -695,29 +682,21 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#metodos-de-control-del-buffer" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de control del buffer
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Métodos de control del buffer">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ejemplo" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo:
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#practica-5-modificar-y-eliminar-registros-en-ficheros-dat" class="md-nav__link">
-    <span class="md-ellipsis">
-      🎯 Práctica 5: Modificar y eliminar registros en ficheros .dat
+      Ejemplo
     </span>
   </a>
   
@@ -725,6 +704,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practica-4-modificar-y-eliminar-registros-en-ficheros-dat" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat
+    </span>
+  </a>
   
 </li>
       
@@ -747,12 +735,10 @@
   
 
 
-  <h1>Ficheros de acceso aleatorio</h1>
-
-<h2 id="6-ficheros-de-acceso-aleatorio">6. Ficheros de acceso aleatorio</h2>
+<h1 id="6-ficheros-de-acceso-aleatorio">6. Ficheros de acceso aleatorio</h1>
 <p>Un fichero de acceso aleatorio es un tipo de fichero que permite leer o escribir en cualquier posición del fichero directamente, sin necesidad de procesar secuencialmente todo el contenido previo. El sistema puede “saltar” a una posición concreta (medida en bytes desde el inicio del fichero) y comenzar la lectura o escritura desde ahí. Por ejemplo, si cada registro ocupa 200 bytes, para acceder al registro número 100 hay que saltar 200×99=19.800 bytes desde el inicio.</p>
 <p>Las clases <strong>FileChannel</strong>, <strong>ByteBuffer</strong> y <strong>StandardOpenOption</strong> se utilizan juntas para leer y escribir en ficheros binarios y en el acceso aleatorio a ficheros. <code>ByteBuffer</code> se utiliza en ficheros de acceso aleatorio porque permite leer y escribir bloques binarios de datos en posiciones específicas del fichero.</p>
-<h3 id="metodos-de-filechannel">Métodos de FileChannel</h3>
+<h2 id="metodos-de-filechannel">Métodos de FileChannel</h2>
 <table>
 <thead>
 <tr>
@@ -783,7 +769,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="metodos-de-bytebuffer">Métodos de ByteBuffer</h3>
+<h2 id="metodos-de-bytebuffer">Métodos de ByteBuffer</h2>
 <table>
 <thead>
 <tr>
@@ -822,7 +808,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="metodos-de-control-del-buffer">Métodos de control del buffer</h3>
+<h2 id="metodos-de-control-del-buffer">Métodos de control del buffer</h2>
 <table>
 <thead>
 <tr>
@@ -874,14 +860,14 @@
 </tbody>
 </table>
 <p><strong>IMPORTANTE</strong>: un fichero <code>.dat</code> no es un fichero de texto. No se puede abrir con el Bloc de Notas, TextEdit, o un editor de código en modo texto normal. Si se abre con estos programas se ve una mezcla de caracteres extraños, símbolos y espacios ("basura"). Hay herramientas online y plugins para los IDE para poder abrir los ficheros y ver la información en binario que contienen.</p>
-<h3 id="ejemplo">Ejemplo:</h3>
+<h3 id="ejemplo">Ejemplo</h3>
 <p>El siguiente ejemplo utiliza <code>FileChannel</code> y <code>ByteBuffer</code> para crear y leer un fichero llamado <code>mediciones.dat</code> con registros con la siguiente estructura:</p>
 <ul>
 <li>ID del sensor (<code>Int</code> - 4 bytes)</li>
 <li>temperatura (<code>Double</code> - 8 bytes)</li>
 <li>humedad (<code>Double</code> - 8 bytes)</li>
 </ul>
-<p>A continuación se muestra el código con las funciones para añadir una medición al final del fichero y leer todas las mediciones que hay en él.
+<p>A continuación se muestra el código con las funciones para añadir una medición al final del fichero y leer todas las mediciones que hay en él.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.ByteBuffer</span><span class="w"> </span><span class="c1">// &quot;contenedor&quot; de bytes en memoria.</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.ByteOrder</span><span class="w"> </span><span class="c1">// especificar el orden de los bytes</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.channels.FileChannel</span><span class="w"> </span><span class="c1">//canal que conecta con el fichero</span>
@@ -970,18 +956,18 @@
 <a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a><span class="p">}</span>
 </code></pre></div>
-🔍 <strong>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Medición (ID: 101) escrita correctamente.
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Medición (ID: 102) escrita correctamente.
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Medición (ID: 103) escrita correctamente.
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Medición (ID: 104) escrita correctamente.
+<p>🔍 <strong>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Medición<span class="w"> </span><span class="o">(</span>ID:<span class="w"> </span><span class="m">101</span><span class="o">)</span><span class="w"> </span>escrita<span class="w"> </span>correctamente.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Medición<span class="w"> </span><span class="o">(</span>ID:<span class="w"> </span><span class="m">102</span><span class="o">)</span><span class="w"> </span>escrita<span class="w"> </span>correctamente.
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Medición<span class="w"> </span><span class="o">(</span>ID:<span class="w"> </span><span class="m">103</span><span class="o">)</span><span class="w"> </span>escrita<span class="w"> </span>correctamente.
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Medición<span class="w"> </span><span class="o">(</span>ID:<span class="w"> </span><span class="m">104</span><span class="o">)</span><span class="w"> </span>escrita<span class="w"> </span>correctamente.
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>--- Leyendo todas las mediciones ---
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  - ID: 102, Nombre: Hera, Temperatura: 26.1 °C, Humedad: 58.9 %
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-</code></pre></div></p>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>---<span class="w"> </span>Leyendo<span class="w"> </span>todas<span class="w"> </span>las<span class="w"> </span>mediciones<span class="w"> </span>---
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">101</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Atenea,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">25</span>.5<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">60</span>.2<span class="w"> </span>%
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">102</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Hera,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">26</span>.1<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">58</span>.9<span class="w"> </span>%
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">103</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Iris,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">104</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Selene,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+</code></pre></div>
 <p>Ahora que ya tenemos la información guardada en nuestro fichero <code>.dat</code> y sabemos leerla, vamos a ampliar la aplicación con una función que recoge el ID del sensor a modificar y los nuevos datos de temperatura y humedad. Cuando localiza el registro del sensor cuyo ID coincide con el buscado, escribe los nuevos datos en las posiciones de los bytes correspondientes.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">actualizarMedicion</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">idSensorBuscado</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">nuevaTemperatura</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span><span class="w"> </span><span class="n">nuevaHumedad</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Files</span><span class="p">.</span><span class="na">exists</span><span class="p">(</span><span class="n">ruta</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
@@ -1031,37 +1017,37 @@
 <a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a><span class="p">}</span>
 </code></pre></div>
-<p>La llamada a esta nueva función en el main podría ser:
+<p>La llamada a esta nueva función en el main podría ser:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">actualizarMedicion</span><span class="p">(</span><span class="n">rutaFichero</span><span class="p">,</span><span class="w"> </span><span class="m">102</span><span class="p">,</span><span class="w"> </span><span class="m">21.0</span><span class="p">,</span><span class="w"> </span><span class="m">72.3</span><span class="p">)</span>
-</code></pre></div></p>
-<p>Se vuelve a llamar a <code>leerMediciones</code> para comprobar que la información del sensor se ha modificado correctamente:
+</code></pre></div>
+<p>Se vuelve a llamar a <code>leerMediciones</code> para comprobar que la información del sensor se ha modificado correctamente:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">leerMediciones</span><span class="p">(</span><span class="n">rutaFichero</span><span class="p">)</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>🔍 <strong>Realiza los siguientes pasos:</strong></p>
 <ul>
 <li>Añade el código de la función <code>actualizarMedicion()</code> al proyecto del ejemplo anterior.</li>
 <li>Comenta en el <code>main</code> las llamadas a la función <code>escribirMedicion()</code>.</li>
 <li>Añade al <code>main</code> las llamadas a <code>actualizarMedicion()</code> y a <code>leerMediciones()</code>.</li>
-<li><strong>Ejecuta la aplicación y comprueba que la salida es la siguiente:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>--- Leyendo todas las mediciones ---
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  - ID: 102, Nombre: Hera, Temperatura: 26.1 °C, Humedad: 58.9 %
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Intentando actualizar medición para ID: 102...
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>leyendo ID: 101
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>leyendo ID: 102
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Sensor 102 en posición 40.
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>Medición actualizada con éxito a Temp: 21.0, Hum: 72.3.
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>--- Leyendo todas las mediciones ---
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>  - ID: 102, Nombre: Hera, Temperatura: 21.0 °C, Humedad: 72.3 %
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-</code></pre></div></li>
+<li><strong>Ejecuta la aplicación y comprueba que la salida es la siguiente:</strong></li>
 </ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>---<span class="w"> </span>Leyendo<span class="w"> </span>todas<span class="w"> </span>las<span class="w"> </span>mediciones<span class="w"> </span>---
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">101</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Atenea,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">25</span>.5<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">60</span>.2<span class="w"> </span>%
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">102</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Hera,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">26</span>.1<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">58</span>.9<span class="w"> </span>%
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">103</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Iris,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">104</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Selene,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Intentando<span class="w"> </span>actualizar<span class="w"> </span>medición<span class="w"> </span>para<span class="w"> </span>ID:<span class="w"> </span><span class="m">102</span>...
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>leyendo<span class="w"> </span>ID:<span class="w"> </span><span class="m">101</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>leyendo<span class="w"> </span>ID:<span class="w"> </span><span class="m">102</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Sensor<span class="w"> </span><span class="m">102</span><span class="w"> </span>en<span class="w"> </span>posición<span class="w"> </span><span class="m">40</span>.
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>Medición<span class="w"> </span>actualizada<span class="w"> </span>con<span class="w"> </span>éxito<span class="w"> </span>a<span class="w"> </span>Temp:<span class="w"> </span><span class="m">21</span>.0,<span class="w"> </span>Hum:<span class="w"> </span><span class="m">72</span>.3.
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>---<span class="w"> </span>Leyendo<span class="w"> </span>todas<span class="w"> </span>las<span class="w"> </span>mediciones<span class="w"> </span>---
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">101</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Atenea,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">25</span>.5<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">60</span>.2<span class="w"> </span>%
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">102</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Hera,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">21</span>.0<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">72</span>.3<span class="w"> </span>%
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">103</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Iris,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">104</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Selene,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+</code></pre></div>
 <p>Por último, ampliaremos la aplicación para poder eliminar los datos de un sensor a partir de su ID. El programa recorre todo los registros comprobando si el ID coincide con el buscado. En caso de que no coincida escribe el registro en un fichero temporal y si coincide, no hace nada. Al finalizar el fichero temporal contendrá los registros que no se quieren eliminar. Por último, se elimina el fichero original y se renombra el fichero temporal con el nombre original.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">eliminarMedicion</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">idSensorAEliminar</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">rutaTemp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;temp.dat&quot;</span><span class="p">)</span>
@@ -1104,41 +1090,43 @@
 <a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="p">}</span>
 </code></pre></div>
-<p>La llamada a esta nueva función en el main podría ser:
+<p>La llamada a esta nueva función en el main podría ser:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">eliminarMedicion</span><span class="p">(</span><span class="n">rutaFichero</span><span class="p">,</span><span class="w"> </span><span class="m">102</span><span class="p">)</span>
 </code></pre></div>
-Se vuelve a llamar a <code>leerMediciones</code> para comprobar que la información del sensor se ha modificado correctamente:
+<p>Se vuelve a llamar a <code>leerMediciones</code> para comprobar que la información del sensor se ha modificado correctamente:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">leerMediciones</span><span class="p">(</span><span class="n">rutaFichero</span><span class="p">)</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>🔍 <strong>Realiza los siguientes pasos:</strong></p>
 <ul>
 <li>Añade el código de la función <code>eliminarMedicion()</code> al ejemplo anterior.</li>
 <li>Comenta en el <code>main</code> la llamada a la función <code>actualizarMedicion()</code>.</li>
 <li>Añade al <code>main</code> la llamada a <code>eliminarMedicion()</code>.</li>
-<li><strong>Ejecuta la aplicación y comprueba que la salida es la siguiente:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>--- Leyendo todas las mediciones ---
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  - ID: 102, Nombre: Hera, Temperatura: 21.0 °C, Humedad: 72.3 %
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>Intentando eliminar medición para el sensor con ID: 102...
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>Medición (ID: 101) escrita correctamente.
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>Medición (ID: 103) escrita correctamente.
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>Medición (ID: 104) escrita correctamente.
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>--- Leyendo todas las mediciones ---
-<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-</code></pre></div></li>
+<li><strong>Ejecuta la aplicación y comprueba que la salida es la siguiente:</strong></li>
 </ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>---<span class="w"> </span>Leyendo<span class="w"> </span>todas<span class="w"> </span>las<span class="w"> </span>mediciones<span class="w"> </span>---
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">101</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Atenea,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">25</span>.5<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">60</span>.2<span class="w"> </span>%
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">102</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Hera,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">21</span>.0<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">72</span>.3<span class="w"> </span>%
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">103</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Iris,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">104</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Selene,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>Intentando<span class="w"> </span>eliminar<span class="w"> </span>medición<span class="w"> </span>para<span class="w"> </span>el<span class="w"> </span>sensor<span class="w"> </span>con<span class="w"> </span>ID:<span class="w"> </span><span class="m">102</span>...
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>Medición<span class="w"> </span><span class="o">(</span>ID:<span class="w"> </span><span class="m">101</span><span class="o">)</span><span class="w"> </span>escrita<span class="w"> </span>correctamente.
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>Medición<span class="w"> </span><span class="o">(</span>ID:<span class="w"> </span><span class="m">103</span><span class="o">)</span><span class="w"> </span>escrita<span class="w"> </span>correctamente.
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>Medición<span class="w"> </span><span class="o">(</span>ID:<span class="w"> </span><span class="m">104</span><span class="o">)</span><span class="w"> </span>escrita<span class="w"> </span>correctamente.
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>---<span class="w"> </span>Leyendo<span class="w"> </span>todas<span class="w"> </span>las<span class="w"> </span>mediciones<span class="w"> </span>---
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">101</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Atenea,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">25</span>.5<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">60</span>.2<span class="w"> </span>%
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">103</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Iris,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">104</span>,<span class="w"> </span>Nombre:<span class="w"> </span>Selene,<span class="w"> </span>Temperatura:<span class="w"> </span><span class="m">28</span>.4<span class="w"> </span>°C,<span class="w"> </span>Humedad:<span class="w"> </span><span class="m">65</span>.9<span class="w"> </span>%
+</code></pre></div>
 <hr />
-<h3 id="practica-5-modificar-y-eliminar-registros-en-ficheros-dat">🎯 Práctica 5: Modificar y eliminar registros en ficheros .dat</h3>
-<p>Realiza lo siguiente:
-* <strong>Crea la función <code>modificarReg()</code></strong>: Pedirá al usuario el ID del registro a modificar y buscará ese registro en el fichero. Si lo encuentra, pedirá los nuevos datos. Utilizará acceso aleatorio (<code>FileChannel.position()</code>) para saltar a la posición exacta de ese registro y sobrescribir únicamente los campos modificados, sin alterar el resto del fichero.
-* <strong>Crea la función <code>eliminarReg()</code></strong>: Debe recibir un ID y eliminar el registro correspondiente. Implementa la técnica de streaming (leer el fichero original registro a registro, escribir los que se conservan en un fichero temporal, borrar el original y renombrar el temporal).
-* <strong>Comprueba</strong>: Prueba estas funciones desde <code>main</code>, llamando a <code>mostrarTodo()</code> antes y después de cada operación para verificar los resultados.</p>
+<h2 id="practica-4-modificar-y-eliminar-registros-en-ficheros-dat">🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat</h2>
+<p>Realiza lo siguiente:</p>
+<ul>
+<li><strong>Crea la función <code>modificarReg()</code></strong>: Pedirá al usuario el ID del registro a modificar y buscará ese registro en el fichero. Si lo encuentra, pedirá los nuevos datos. Utilizará acceso aleatorio (<code>FileChannel.position()</code>) para saltar a la posición exacta de ese registro y sobrescribir únicamente los campos modificados, sin alterar el resto del fichero.</li>
+<li><strong>Crea la función <code>eliminarReg()</code></strong>: Debe recibir un ID y eliminar el registro correspondiente. Implementa la técnica de streaming (leer el fichero original registro a registro, escribir los que se conservan en un fichero temporal, borrar el original y renombrar el temporal).</li>
+<li><strong>Comprueba</strong>: Prueba estas funciones desde <code>main</code>, llamando a <code>mostrarTodo()</code> antes y después de cada operación para verificar los resultados.</li>
+</ul>
 <hr />
 
 

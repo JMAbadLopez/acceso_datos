@@ -48,3 +48,13 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.superfences
+
+# plugins:
+#   - to-pdf:
+#       author: José Manuel Abad López
+#       copyright: 🄯 Creative Commons CC BY-SA 4.0 2025
+#       cover_title: Acceso a Datos
+#       cover_subtitle: 2º DAM
+#       toc_title: "Contenidos"
+#       toc_level: 3
+#       output_path: ../public/libro.pdf

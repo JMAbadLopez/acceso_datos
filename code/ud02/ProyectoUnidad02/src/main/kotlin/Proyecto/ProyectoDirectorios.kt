@@ -38,7 +38,7 @@ fun main() {
     } catch (e: Exception) {
         println(e.message)
     }
-    
+
     println("MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS")
     try {
         Files.walk(rutaPrincipal).use { stream ->

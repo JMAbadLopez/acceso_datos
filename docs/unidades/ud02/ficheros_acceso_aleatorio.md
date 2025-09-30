@@ -1,9 +1,11 @@
-## 6. Ficheros de acceso aleatorio
+# 6. Ficheros de acceso aleatorio
+
 Un fichero de acceso aleatorio es un tipo de fichero que permite leer o escribir en cualquier posición del fichero directamente, sin necesidad de procesar secuencialmente todo el contenido previo. El sistema puede “saltar” a una posición concreta (medida en bytes desde el inicio del fichero) y comenzar la lectura o escritura desde ahí. Por ejemplo, si cada registro ocupa 200 bytes, para acceder al registro número 100 hay que saltar 200×99=19.800 bytes desde el inicio.
 
 Las clases **FileChannel**, **ByteBuffer** y **StandardOpenOption** se utilizan juntas para leer y escribir en ficheros binarios y en el acceso aleatorio a ficheros. `ByteBuffer` se utiliza en ficheros de acceso aleatorio porque permite leer y escribir bloques binarios de datos en posiciones específicas del fichero.
 
-### Métodos de FileChannel
+## Métodos de FileChannel
+
 | Método | Descripción |
 | :--- | :--- |
 | `position()` | Devuelve la posición actual del puntero en el fichero y permite saltar a cualquier posición en él (tanto para leer como para escribir). |
@@ -12,7 +14,8 @@ Las clases **FileChannel**, **ByteBuffer** y **StandardOpenOption** se utilizan 
 | `size()` | Devuelve el tamaño total actual del fichero. |
 | `read(ByteBuffer)`, `write(ByteBuffer)` | Usa `FileChannel` para secuencial o aleatorio. |
 
-### Métodos de ByteBuffer
+## Métodos de ByteBuffer
+
 | Método | Descripción |
 | :--- | :--- |
 | `allocate(capacidad)` | Crea un buffer con capacidad fija en memoria (no compartida). |
@@ -23,7 +26,8 @@ Las clases **FileChannel**, **ByteBuffer** y **StandardOpenOption** se utilizan 
 | `get()`, `getInt()`, `getDouble()`, `getFloat()`, `getChar()`, `getShort()`, `getLong()` | Lee un byte, int, double, float, char, short o long desde la posición actual. |
 | `get(byte[], offset, length)` | Lee una porción del buffer a un array. |
 
-### Métodos de control del buffer
+## Métodos de control del buffer
+
 | Método | Descripción |
 | :--- | :--- |
 | `position()` | Devuelve la posición actual del cursor. |
@@ -39,7 +43,8 @@ Las clases **FileChannel**, **ByteBuffer** y **StandardOpenOption** se utilizan 
 
 **IMPORTANTE**: un fichero `.dat` no es un fichero de texto. No se puede abrir con el Bloc de Notas, TextEdit, o un editor de código en modo texto normal. Si se abre con estos programas se ve una mezcla de caracteres extraños, símbolos y espacios ("basura"). Hay herramientas online y plugins para los IDE para poder abrir los ficheros y ver la información en binario que contienen.
 
-### Ejemplo:
+### Ejemplo
+
 El siguiente ejemplo utiliza `FileChannel` y `ByteBuffer` para crear y leer un fichero llamado `mediciones.dat` con registros con la siguiente estructura:
 
 * ID del sensor (`Int` - 4 bytes)
@@ -47,6 +52,7 @@ El siguiente ejemplo utiliza `FileChannel` y `ByteBuffer` para crear y leer un f
 * humedad (`Double` - 8 bytes)
 
 A continuación se muestra el código con las funciones para añadir una medición al final del fichero y leer todas las mediciones que hay en él.
+
 ```kotlin
 import java.nio.ByteBuffer // "contenedor" de bytes en memoria.
 import java.nio.ByteOrder // especificar el orden de los bytes
@@ -136,8 +142,10 @@ fun leerMediciones(ruta: Path) {
     }
 }
 ```
+
 🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
-```
+
+```bash
 Medición (ID: 101) escrita correctamente.
 Medición (ID: 102) escrita correctamente.
 Medición (ID: 103) escrita correctamente.
@@ -203,11 +211,13 @@ fun actualizarMedicion(ruta: Path, idSensorBuscado: Int, nuevaTemperatura: Doubl
 ```
 
 La llamada a esta nueva función en el main podría ser:
+
 ```kotlin
 actualizarMedicion(rutaFichero, 102, 21.0, 72.3)
 ```
 
 Se vuelve a llamar a `leerMediciones` para comprobar que la información del sensor se ha modificado correctamente:
+
 ```kotlin
 leerMediciones(rutaFichero)
 ```
@@ -218,7 +228,8 @@ leerMediciones(rutaFichero)
 * Comenta en el `main` las llamadas a la función `escribirMedicion()`.
 * Añade al `main` las llamadas a `actualizarMedicion()` y a `leerMediciones()`.
 * **Ejecuta la aplicación y comprueba que la salida es la siguiente:**
-```
+
+```bash
 --- Leyendo todas las mediciones ---
   - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
   - ID: 102, Nombre: Hera, Temperatura: 26.1 °C, Humedad: 58.9 %
@@ -284,10 +295,13 @@ fun eliminarMedicion(ruta: Path, idSensorAEliminar: Int) {
 ```
 
 La llamada a esta nueva función en el main podría ser:
+
 ```kotlin
 eliminarMedicion(rutaFichero, 102)
 ```
+
 Se vuelve a llamar a `leerMediciones` para comprobar que la información del sensor se ha modificado correctamente:
+
 ```kotlin
 leerMediciones(rutaFichero)
 ```
@@ -298,7 +312,8 @@ leerMediciones(rutaFichero)
 * Comenta en el `main` la llamada a la función `actualizarMedicion()`.
 * Añade al `main` la llamada a `eliminarMedicion()`.
 * **Ejecuta la aplicación y comprueba que la salida es la siguiente:**
-```
+
+```bash
 --- Leyendo todas las mediciones ---
   - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
   - ID: 102, Nombre: Hera, Temperatura: 21.0 °C, Humedad: 72.3 %
@@ -318,8 +333,10 @@ Medición (ID: 104) escrita correctamente.
 
 ---
 
-### 🎯 Práctica 5: Modificar y eliminar registros en ficheros .dat
+## 🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat
+
 Realiza lo siguiente:
+
 * **Crea la función `modificarReg()`**: Pedirá al usuario el ID del registro a modificar y buscará ese registro en el fichero. Si lo encuentra, pedirá los nuevos datos. Utilizará acceso aleatorio (`FileChannel.position()`) para saltar a la posición exacta de ese registro y sobrescribir únicamente los campos modificados, sin alterar el resto del fichero.
 * **Crea la función `eliminarReg()`**: Debe recibir un ID y eliminar el registro correspondiente. Implementa la técnica de streaming (leer el fichero original registro a registro, escribir los que se conservan en un fichero temporal, borrar el original y renombrar el temporal).
 * **Comprueba**: Prueba estas funciones desde `main`, llamando a `mostrarTodo()` antes y después de cada operación para verificar los resultados.

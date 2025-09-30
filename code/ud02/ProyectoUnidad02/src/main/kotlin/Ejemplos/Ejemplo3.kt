@@ -3,7 +3,7 @@ package org.example.Ejemplos
 import java.nio.file.Files
 import java.nio.file.Path
 fun main() {
-    val carpetaPrincipal = Path.of("multimedia_test")
+    val carpetaPrincipal = Path.of("multimedia")
     println ("--- Mostrando la estructura final con Files.walk() ---")
     try {
         Files.walk(carpetaPrincipal).use { stream ->

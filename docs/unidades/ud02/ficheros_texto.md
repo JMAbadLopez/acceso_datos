@@ -1,7 +1,9 @@
-## 3. Ficheros de texto
+# 3. Ficheros de texto
+
 Los ficheros de texto son legibles directamente por humanos y son una buena opción para guardar información después de cerrar el programa. A continuación se muestran algunas clases y métodos para leer y escribir información en ellos:
 
-### Métodos de Ficheros de Texto
+## Métodos de Ficheros de Texto
+
 | Método | Descripción |
 | :--- | :--- |
 | `Files.readAllLines(path)` devuelve `List<String>` | Leer ficheros. |
@@ -18,7 +20,8 @@ Los ficheros de texto son legibles directamente por humanos y son una buena opci
 
 Dentro de los ficheros de texto existen ficheros de texto plano (sin ningún tipo de estructura) y ficheros de texto en los que la información está estructurada.
 
-### Ejemplo - Escritura y lectura en fichero de texto plano .txt:
+## Ejemplo - Escritura y lectura en fichero de texto plano .txt
+
 ```kotlin
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -60,8 +63,10 @@ fun main() {
     }
 }
 ```
+
 🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
-```
+
+```bash
 Fichero de texto escrito.
 Contenido leído con readAllLines:
 Primera línea

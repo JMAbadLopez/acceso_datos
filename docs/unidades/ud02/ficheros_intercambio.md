@@ -1,4 +1,5 @@
-## 4. Ficheros de intercambio de información
+# 4. Ficheros de intercambio de información
+
 Los ficheros de texto en los que la información está estructurada y organizada de una manera predecible permiten que distintos sistemas la lean y entiendan. Estos tipos de ficheros se utilizan en el desarrollo de software para **intercambiar información entre aplicaciones** y algunos de los formatos más importantes son **CSV, JSON y XML**.
 
 Para poder llevar a cabo este intercambio de información, hay que extraer la información del fichero origen. Este proceso no se realiza línea por línea, sino que el contenido del fichero se lee (parsea) utilizando la técnica de **serialización/deserialización**:
@@ -8,7 +9,8 @@ Para poder llevar a cabo este intercambio de información, hay que extraer la in
 
 A continuación se muestra una tabla con clases y herramientas que se utilizan para serializar / deserializar:
 
-### Métodos de Serialización/Deserialización
+## 4.1 Métodos de Serialización/Deserialización
+
 | Método | Descripción |
 | :--- | :--- |
 | `java.io.Serializable` | Marca que un objeto es serializable. |
@@ -19,7 +21,8 @@ A continuación se muestra una tabla con clases y herramientas que se utilizan p
 | `WriteObject` | Guarda un objeto como binario. |
 | `@Serializable` | Permite convertir el data class a JSON y viceversa. |
 
-### Ejemplo - Serializar y deserializar un objeto (usando `@Transient`):
+### Ejemplo - Serializar y deserializar un objeto (usando `@Transient`)
+
 ```kotlin
 import java.io.*
 // Clase Persona (serializable completamente)
@@ -79,8 +82,10 @@ fun main() {
     }
 }
 ```
+
 🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
-```
+
+```bash
 Persona serializada.
 Persona deserializada:
 Nombre: Pol, Edad: 30
@@ -93,10 +98,12 @@ A continuación se describen los 3 tipos de ficheros más comunes para intercamb
 
 ---
 
-### 4.1. CSV (Comma-Separated Values)
+## 4.2. CSV (Comma-Separated Values)
+
 Son ficheros de texto plano con valores separados por un delimitador (coma, punto y coma, etc.). Son útiles para exportar/importar datos desde Excel, Google Sheets, o bases de datos. Se manejan con herramientas como OpenCSV (más antigua) o **Kotlin-CSV** (la que utilizaremos).
 
 ### Métodos de Kotlin-CSV
+
 | Método | Ejemplo |
 | :--- | :--- |
 | `readAll(File)` | `val filas = csvReader().readAll(File("alumnos.csv"))` |
@@ -108,15 +115,19 @@ Son ficheros de texto plano con valores separados por un delimitador (coma, punt
 | `delimiter`, `quoteChar`, etc. | `csvReader { delimiter = ';' }` |
 
 ### Ejemplo de lectura y escritura de ficheros CSV:
+
 Partimos de un fichero llamado `mis_plantas.csv` con la información siguiente:
-```
+
+```bash
 1;Aloe Vera;Aloe barbadensis miller;7;0.6
 2;Lavanda;Lavandula angustifolia;3;1.0
 3;Helecho de Boston;Nephrolepis exaltata;5;0.9
 4;Bambú de la suerte;Dracaena sanderiana;4;1.5
 5;Girasol;Helianthus annuus;2;3.0
 ```
+
 Donde los campos corresponden a:
+
 * `id_planta` (int)
 * `nombre_comun` (string)
 * `nombre_cientifico` (string)
@@ -126,11 +137,14 @@ Donde los campos corresponden a:
 Utilizaremos la librería **Kotlin-CSV**. Por tanto habrá que indicarlo en el fichero `build.gradle.kts` añadiendo las siguientes líneas:
 
 * **En `plugins`:**
-```
+
+```bash
 kotlin("plugin.serialization") version "1.9.0"
 ```
+
 * **En `dependencies`:**
-```
+
+```bash
 implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.9.1")
 ```
 
@@ -218,8 +232,10 @@ fun escribirDatosCSV(ruta: Path,plantas: List<Planta>){
     }
 }
 ```
+
 🔍 **Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.csv` y que su contenido es correcto:**
-```
+
+```bash
   - ID: 1, Nombre común: Aloe Vera, Nombre científico: Aloe barbadensis miller, Frecuencia de riego: 7 días, Altura: 0.6 metros
   - ID: 2, Nombre común: Lavanda, Nombre científico: Lavandula angustifolia, Frecuencia de riego: 3 días, Altura: 1.0 metros
   - ID: 3, Nombre común: Helecho de Boston, Nombre científico: Nephrolepis exaltata, Frecuencia de riego: 5 días, Altura: 0.9 metros
@@ -231,10 +247,12 @@ Información guardada en: datos_ini\mis_plantas2.csv
 
 ---
 
-### 4.2. XML (eXtensible Markup Language)
+## 4.3. XML (eXtensible Markup Language)
+
 Los ficheros XML son muy estructurados y extensibles. Se basan en etiquetas anidadas similar a HTML. Permiten la validación de datos (mediante esquemas XSD) y es ideal para integración con sistemas empresariales (legacy). Se manejan con librerías como JAXB, DOM, JDOM2 o **Jackson XML (XmlMapper)** que es la que utilizaremos.
 
 ### Métodos de Jackson XML
+
 | Método | Descripción |
 | :--- | :--- |
 | `readValue(File, Class<T>)` | Lee un fichero XML y lo convierte en un objeto Kotlin/Java. |
@@ -249,7 +267,9 @@ Los ficheros XML son muy estructurados y extensibles. Se basan en etiquetas anid
 | `setDefaultPrettyPrinter(...)` | Establece un formateador personalizado. |
 
 ### Ejemplo de lectura y escritura de ficheros XML:
+
 Partimos de un fichero llamado `mis_plantas.xml` con la información siguiente:
+
 ```xml
 <plantas>
   <planta>
@@ -289,8 +309,10 @@ Partimos de un fichero llamado `mis_plantas.xml` con la información siguiente:
   </planta>
 </plantas>
 ```
+
 Utilizaremos la librería **Jackson XML**. Por tanto habrá que indicarlo en el fichero `build.gradle.kts` añadiendo las siguientes líneas:
-```
+
+```bash
 implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.0")
 implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0")
 ```
@@ -362,8 +384,10 @@ fun escribirDatosXML(ruta: Path,plantas: List<Planta>) {
     }
 }
 ```
+
 🔍 **Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.xml` y que su contenido es correcto:**
-```
+
+```bash
   - ID: 1, Nombre común: Aloe Vera, Nombre científico: Aloe barbadensis miller, Frecuencia de riego: 7 días, Altura: 0.6 metros
   - ID: 2, Nombre común: Lavanda, Nombre científico: Lavandula angustifolia, Frecuencia de riego: 3 días, Altura: 1.0 metros
   - ID: 3, Nombre común: Helecho de Boston, Nombre científico: Nephrolepis exaltata, Frecuencia de riego: 5 días, Altura: 0.9 metros
@@ -375,12 +399,14 @@ Información guardada en: datos_ini\mis_plantas2.xml
 
 ---
 
-### 4.3. JSON (JavaScript Object Notation)
+## 4.4. JSON (JavaScript Object Notation)
+
 Son ficheros ligeros, fáciles de leer y con una estructura de pares clave-valor y listas. Ideales para APIs REST, ficheros de configuración y bases de datos NoSQL (como MongoDB). Se maneja con librerías como Jackson & Gson (Java) o **kotlinx.serialization** (la que utilizaremos en Kotlin).
 
 ### Métodos de kotlinx.serialization
+
 | Método / Ejemplo | Descripción |
-| :--- | :--- |
+| :--- | :--- | :---|
 | `Json.encodeToString(objeto)` | `Json.encodeToString(persona)` | Convierte un objeto Kotlin a una cadena JSON. |
 | `Json.encodeToString(serializer, obj)` | `Json.encodeToString(Persona.serializer(), persona)` | Igual que el anterior pero especificando el serializador. |
 | `Json.decodeFromString(json)` | `Json.decodeFromString<Persona>(json)` | Convierte una cadena JSON a un objeto Kotlin. |
@@ -389,8 +415,10 @@ Son ficheros ligeros, fáciles de leer y con una estructura de pares clave-valor
 | `Json.decodeFromJsonElement(elem)` | `val persona = Json.decodeFromJsonElement<Persona>(elem)` | Convierte un `JsonElement` a objeto Kotlin. |
 | `Json.parseToJsonElement(string)` | `val elem = Json` | Parsea una cadena JSON a un árbol `JsonElement` sin mapear. |
 
-### Ejemplo de lectura y escritura de ficheros JSON:
+### Ejemplo de lectura y escritura de ficheros JSON
+
 Partimos de un fichero llamado `mis_plantas.json` con la información siguiente:
+
 ```json
 [
   {
@@ -430,14 +458,18 @@ Partimos de un fichero llamado `mis_plantas.json` con la información siguiente:
   }
 ]
 ```
+
 Utilizaremos la librería **kotlinx.serialization**. Por tanto habrá que indicarlo en el fichero `build.gradle.kts` añadiendo las siguientes líneas:
 
 * **En `plugins`:**
-```
+
+```bash
 kotlin("plugin.serialization") version "1.9.0"
 ```
+
 * **En `dependencies`:**
-```
+
+```bash
 implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 ```
 
@@ -489,8 +521,10 @@ fun escribirDatosJSON(ruta: Path,plantas: List<Planta>) {
     }
 }
 ```
+
 🔍 **Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.json` y que su contenido es correcto:**
-```
+
+```bash
   - ID: 1, Nombre común: Aloe Vera, Nombre científico: Aloe barbadensis miller, Frecuencia de riego: 7 días, Altura: 0.6 metros
   - ID: 2, Nombre común: Lavanda, Nombre científico: Lavandula angustifolia, Frecuencia de riego: 3 días, Altura: 1.0 metros
   - ID: 3, Nombre común: Helecho de Boston, Nombre científico: Nephrolepis exaltata, Frecuencia de riego: 5 días, Altura: 0.9 metros
@@ -502,18 +536,18 @@ Información guardada en: datos_ini\mis_plantas2.json
 
 ---
 
-### 4.4. Conversiones entre ficheros
+## 4.5. Conversiones entre ficheros
+
 Una vez vistas las características de los ficheros de intercambio de información más comunes podemos llegar a la conclusión que en programación y gestión de datos, no todos los formatos sirven igual para todos los casos. **Convertir entre CSV, JSON y XML** permite aprovechar las ventajas de cada uno.
 
-El patrón para convertir datos de un formato a otro es casi siempre el mismo. En lugar de intentar una conversión directa, utilizamos nuestras clases de Kotlin (`data class`) como un paso intermedio universal:
-
-**Formato Origen → Objetos Kotlin en Memoria → Formato Destino**
+El patrón para convertir datos de un formato a otro es casi siempre el mismo. En lugar de intentar una conversión directa, utilizamos nuestras clases de Kotlin (`data class`) como un paso intermedio universal: **Formato Origen → Objetos Kotlin en Memoria → Formato Destino**
 
 > 🔍 **Realiza algunas conversiones entre ficheros CSV, JSON y XML para practicar la lectura / escritura y la serialización / deserialización. Puedes reutilizar el código de los ejemplos.**
 
 ---
 
-### 🎯 Práctica 3: Creación y lectura de un fichero de datos
+## 🎯 Práctica 3: Creación y lectura de un fichero de datos
+
 Realiza lo siguiente:
 
 * **Diseña tu data class**: Define la `data class` de Kotlin que represente un único elemento de tu colección de datos. Debe tener un ID único de tipo `Int`, un nombre de tipo `String` y, al menos, otros dos campos (al menos uno de tipo `Double`).
@@ -522,11 +556,10 @@ Realiza lo siguiente:
 * **Crea la función de lectura**: La función debe leer el fichero de texto y devolver una lista de objetos `leerDatosIniciales(): List<DataClass>`.
 * **Verifica que funciona**: Imprime por consola la información leída.
 * **Aspectos Técnicos Obligatorios**:
-    * Se debe incluir un manejo básico de errores (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
+* Se debe incluir un manejo básico de errores (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
 
 ---
 
-### 📁 Entrega parcial
+## 📁 Entrega parcial
+
 Entrega el código fuente del proyecto comprimido en un fichero `.zip` para que el profesor te dé sugerencias de mejora (el programa entregado deberá ejecutarse, si da error de ejecución, no se podrá revisar).
-
----
