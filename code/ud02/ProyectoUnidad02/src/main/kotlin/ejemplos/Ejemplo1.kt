@@ -1,4 +1,4 @@
-package org.example.Ejemplos
+package ejemplos
 
 import java.nio.file.Path
 fun main() {

@@ -1,0 +1,37 @@
+[
+    {
+        "id_planta": 1,
+        "nombre_comun": "Aloe Vera",
+        "nombre_cientifico": "Aloe barbadensis miller",
+        "frecuencia_riego": 7,
+        "altura_maxima": 0.6
+    },
+    {
+        "id_planta": 2,
+        "nombre_comun": "Lavanda",
+        "nombre_cientifico": "Lavandula angustifolia",
+        "frecuencia_riego": 3,
+        "altura_maxima": 1.0
+    },
+    {
+        "id_planta": 3,
+        "nombre_comun": "Helecho de Boston",
+        "nombre_cientifico": "Nephrolepis exaltata",
+        "frecuencia_riego": 5,
+        "altura_maxima": 0.9
+    },
+    {
+        "id_planta": 4,
+        "nombre_comun": "Bambú de la suerte",
+        "nombre_cientifico": "Dracaena sanderiana",
+        "frecuencia_riego": 4,
+        "altura_maxima": 1.5
+    },
+    {
+        "id_planta": 5,
+        "nombre_comun": "Girasol",
+        "nombre_cientifico": "Helianthus annuus",
+        "frecuencia_riego": 2,
+        "altura_maxima": 3.0
+    }
+]

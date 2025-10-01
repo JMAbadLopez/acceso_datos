@@ -1,0 +1,20 @@
+[
+    {
+        "id_cancion": 1,
+        "titulo": "Master of puppets",
+        "artista": "Metallica",
+        "duracion": 8.5
+    },
+    {
+        "id_cancion": 4,
+        "titulo": "Bohemian Rapsody",
+        "artista": "Queen",
+        "duracion": 6.35
+    },
+    {
+        "id_cancion": 5,
+        "titulo": "One",
+        "artista": "Metallica",
+        "duracion": 7.6
+    }
+]

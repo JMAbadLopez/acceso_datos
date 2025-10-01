@@ -27,21 +27,26 @@ A continuación se muestra una tabla con clases y herramientas que se utilizan p
 import java.io.*
 // Clase Persona (serializable completamente)
 class Persona(val nombre: String, val edad: Int) : Serializable
+
 // Clase Usuario con un atributo que NO se serializa
 class Usuario(
     val nombre: String,
     @Transient val clave: String // Este campo no se guardará
 ) : Serializable
+
 fun main() {
-    val rutaPersona = "multimedia/persona.obj"
-    val rutaUsuario = "multimedia/usuario.obj"
+    val rutaPersona = "documentos/persona.obj"
+    val rutaUsuario = "documentos/usuario.obj"
+    
     // Asegurar que el directorio exista
     val directorio = File("documentos")
     if (!directorio.exists()) {
         directorio.mkdirs()
     }
+    
     // --- Serializar Persona ---
     val persona = Persona("Pol", 30)
+    
     try {
         ObjectOutputStream(FileOutputStream(rutaPersona)).use { oos ->
             oos.writeObject(persona)
@@ -50,6 +55,7 @@ fun main() {
     } catch (e: IOException) {
         println ("Error al serializar Persona: ${e.message}")
     }
+    
     // --- Deserializar Persona ---
     try {
         val personaLeida = ObjectInputStream(FileInputStream(rutaPersona)).use { ois ->
@@ -60,6 +66,7 @@ fun main() {
     } catch (e: Exception) {
         println ("Error al deserializar Persona: ${e.message}")
     }
+    
     // --- Serializar Usuario ---
     val usuario = Usuario("Eli", "1234")
     try {
@@ -70,6 +77,7 @@ fun main() {
     } catch (e: IOException) {
         println ("Error al serializar Usuario: ${e.message}")
     }
+    
     // --- Deserializar Usuario ---
     try {
         val usuarioLeido = ObjectInputStream(FileInputStream(rutaUsuario)).use { ois ->
@@ -155,23 +163,38 @@ import java.io.File
 // Librería específica de Kotlin para leer y escribir ficheros CSV.
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
+
 //Usamos una 'data class' para representar la estructura de una planta.
-data class Planta(val id_planta: Int, val nombre_comun: String, val nombre_cientifico: String, val riego: Int, val altura: Double)
+data class Planta(
+    val id_planta: Int,
+    val nombre_comun: String,
+    val nombre_cientifico: String,
+    val riego: Int,
+    val altura: Double
+)
+
 fun main() {
-    val entradaCSV = Path.of("datos_ini/mis_plantas.csv")
-    val salidaCSV = Path.of("datos_ini/mis_plantas2.csv")
+
+    val entradaCSV = Path.of("documentos/mis_plantas.csv")
+    val salidaCSV = Path.of("documentos/mis_plantas2.csv")
     val datos: List<Planta>
+
     datos = leerDatosInicialesCSV(entradaCSV)
+
     for (dato in datos) {
-        println ("  - ID: ${dato.id_planta}, Nombre común: ${dato.nombre_comun}, Nombre científico: ${dato.nombre_cientifico}, Frecuencia de riego: ${dato.riego} días, Altura: ${dato.altura} metros")
+        println("  - ID: ${dato.id_planta}, Nombre común: ${dato.nombre_comun}, Nombre científico: ${dato.nombre_cientifico}, Frecuencia de riego: ${dato.riego} días, Altura: ${dato.altura} metros")
     }
+
     escribirDatosCSV(salidaCSV, datos)
 }
+
 fun leerDatosInicialesCSV(ruta: Path): List<Planta> {
+
     var plantas: List<Planta> = emptyList()
+
     // Comprobar si el fichero es legible antes de intentar procesarlo.
     if (!Files.isReadable(ruta)) {
-        println ("Error: No se puede leer el fichero en la ruta: $ruta")
+        println("Error: No se puede leer el fichero en la ruta: $ruta")
     } else {
         // Configuramos el lector de CSV con el delimitador
         val reader = csvReader {
@@ -181,6 +204,7 @@ fun leerDatosInicialesCSV(ruta: Path): List<Planta> {
         El resultado es una lista de listas de Strings (`List<List<String>>`),
         donde cada lista interna representa una fila del fichero.*/
         val filas: List<List<String>> = reader.readAll(ruta.toFile())
+
         /* Convertir la lista de texto plano en una lista de objetos 'Planta'.
         `mapNotNull` funciona como un `map` y descartando todos los `null` de la lista final.
         Si una fila del CSV es inválida, devolvemos `null`
@@ -194,41 +218,44 @@ fun leerDatosInicialesCSV(ruta: Path): List<Planta> {
                     val nombre_cientifico = columnas[2]
                     val riego = columnas[3].toInt()
                     val altura = columnas[4].toDouble()
-                    Planta(id_planta,nombre_comun, nombre_cientifico, riego, altura) //crear el objeto Planta
+                    Planta(id_planta, nombre_comun, nombre_cientifico, riego, altura) //crear el objeto Planta
                 } catch (e: Exception) {
                     /* Si ocurre un error en la conversión (ej: NumberFormatException),
                     capturamos la excepción, imprimimos un aviso (opcional)
                     y devolvemos `null` para que `mapNotNull` descarte esta fila. */
-                    println ("Fila inválida ignorada: $columnas -> Error: ${e.message}")
+                    println("Fila inválida ignorada: $columnas -> Error: ${e.message}")
                     null
                 }
             } else {
                 // Si la fila no tiene suficientes columnas, es inválida. Devolvemos null.
-                println ("Fila con formato incorrecto ignorada: $columnas")
+                println("Fila con formato incorrecto ignorada: $columnas")
                 null
             }
         }
     }
     return plantas
 }
-fun escribirDatosCSV(ruta: Path,plantas: List<Planta>){
+
+fun escribirDatosCSV(ruta: Path, plantas: List<Planta>) {
     try {
         val fichero: File = ruta.toFile()
         csvWriter {
             delimiter = ';'
         }.writeAll(
             plantas.map { planta ->
-                listOf (planta.id_planta.toString(),
+                listOf(
+                    planta.id_planta.toString(),
                     planta.nombre_comun,
                     planta.nombre_cientifico,
                     planta.riego.toString(),
-                    planta.altura.toString())
-            } ,
+                    planta.altura.toString()
+                )
+            },
             fichero
         )
-        println ("\nInformación guardada en: $fichero")
+        println("\nInformación guardada en: $fichero")
     } catch (e: Exception) {
-        println ("Error: ${e.message}")
+        println("Error: ${e.message}")
     }
 }
 ```
@@ -327,8 +354,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+
 /*Representa la estructura de una única planta. La propiedad 'id_planta' será la etiqueta <id_planta>...</id_planta> (así todas) */
-data class Planta(
+data class PlantaXML(
     @JacksonXmlProperty(localName = "id_planta")
     val id_planta: Int,
     @JacksonXmlProperty(localName = "nombre_comun")
@@ -340,37 +368,41 @@ data class Planta(
     @JacksonXmlProperty(localName = "altura_maxima")
     val altura_maxima: Double
 )
+
 //nombre del elemento raíz
 @JacksonXmlRootElement(localName = "plantas")
 // Data class que representa el elemento raíz del XML.
-data class Plantas(
+data class PlantasXML(
     @JacksonXmlElementWrapper(useWrapping = false) // No necesitamos la etiqueta <plantas> aquí
     @JacksonXmlProperty(localName = "planta")
-    val listaPlantas: List<Planta> = emptyList()
+    val listaPlantas: List<PlantaXML> = emptyList()
 )
+
 fun main() {
-    val entradaXML = Path.of("datos_ini/mis_plantas.xml")
-    val salidaXML = Path.of("datos_ini/mis_plantas2.xml")
-    val datos: List<Planta>
+    val entradaXML = Path.of("documentos/mis_plantas.xml")
+    val salidaXML = Path.of("documentos/mis_plantas2.xml")
+    val datos: List<PlantaXML>
     datos = leerDatosInicialesXML(entradaXML)
     for (dato in datos) {
-        println ("  - ID: ${dato.id_planta}, Nombre común: ${dato.nombre_comun}, Nombre científico: ${dato.nombre_cientifico}, Frecuencia de riego: ${dato.frecuencia_riego} días, Altura: ${dato.altura_maxima} metros")
+        println("  - ID: ${dato.id_planta}, Nombre común: ${dato.nombre_comun}, Nombre científico: ${dato.nombre_cientifico}, Frecuencia de riego: ${dato.frecuencia_riego} días, Altura: ${dato.altura_maxima} metros")
     }
     escribirDatosXML(salidaXML, datos)
 }
-fun leerDatosInicialesXML(ruta: Path): List<Planta> {
+
+fun leerDatosInicialesXML(ruta: Path): List<PlantaXML> {
     val fichero: File = ruta.toFile()
     // Deserializar el XML a objetos Kotlin
     val xmlMapper = XmlMapper().registerKotlinModule()
     // 'readValue' convierte el contenido XML en una instancia de la clase 'Plantas'
-    val plantasWrapper: Plantas = xmlMapper.readValue(fichero)
+    val plantasWrapper: PlantasXML = xmlMapper.readValue(fichero)
     return plantasWrapper.listaPlantas
 }
-fun escribirDatosXML(ruta: Path,plantas: List<Planta>) {
+
+fun escribirDatosXML(ruta: Path, plantas: List<PlantaXML>) {
     try {
         val fichero: File = ruta.toFile()
         // Creamos instancia de la clase 'Plantas' (raíz del XML).
-        val contenedorXml = Plantas(plantas)
+        val contenedorXml = PlantasXML(plantas)
         // Configuramos el 'XmlMapper' (motor de Jackson) para la conversión a XML.
         val xmlMapper = XmlMapper().registerKotlinModule()
         // Convertimos 'contenedorXml' en un String con formato XML.
@@ -378,9 +410,9 @@ fun escribirDatosXML(ruta: Path,plantas: List<Planta>) {
         val xmlString = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(contenedorXml)
         // escribir un String en un fichero con 'writeText'
         fichero.writeText(xmlString)
-        println ("\nInformación guardada en: $fichero")
+        println("\nInformación guardada en: $fichero")
     } catch (e: Exception) {
-        println ("Error: ${e.message}")
+        println("Error: ${e.message}")
     }
 }
 ```
@@ -405,7 +437,7 @@ Son ficheros ligeros, fáciles de leer y con una estructura de pares clave-valor
 
 ### Métodos de kotlinx.serialization
 
-| Método / Ejemplo | Descripción |
+| Método | Ejemplo | Descripción |
 | :--- | :--- | :---|
 | `Json.encodeToString(objeto)` | `Json.encodeToString(persona)` | Convierte un objeto Kotlin a una cadena JSON. |
 | `Json.encodeToString(serializer, obj)` | `Json.encodeToString(Persona.serializer(), persona)` | Igual que el anterior pero especificando el serializador. |
@@ -482,42 +514,52 @@ import java.io.File
 // Clases de la librería oficial de Kotlin para la serialización/deserialización.
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+
 //Usamos una 'data class' para representar la estructura de una planta e indicamos que es serializable
 @Serializable
-data class Planta(val id_planta: Int, val nombre_comun: String, val nombre_cientifico: String, val frecuencia_riego: Int, val altura_maxima: Double)
+data class PlantaJSON(
+    val id_planta: Int,
+    val nombre_comun: String,
+    val nombre_cientifico: String,
+    val frecuencia_riego: Int,
+    val altura_maxima: Double
+)
+
 fun main() {
-    val entradaJSON = Path.of("datos_ini/mis_plantas.json")
-    val salidaJSON = Path.of("datos_ini/mis_plantas2.json")
-    val datos: List<Planta>
+    val entradaJSON = Path.of("documentos/mis_plantas.json")
+    val salidaJSON = Path.of("documentos/mis_plantas2.json")
+    val datos: List<PlantaJSON>
     datos = leerDatosInicialesJSON(entradaJSON)
     for (dato in datos) {
-        println ("  - ID: ${dato.id_planta}, Nombre común: ${dato.nombre_comun}, Nombre científico: ${dato.nombre_cientifico}, Frecuencia de riego: ${dato.frecuencia_riego} días, Altura: ${dato.altura_maxima} metros")
+        println("  - ID: ${dato.id_planta}, Nombre común: ${dato.nombre_comun}, Nombre científico: ${dato.nombre_cientifico}, Frecuencia de riego: ${dato.frecuencia_riego} días, Altura: ${dato.altura_maxima} metros")
     }
     escribirDatosJSON(salidaJSON, datos)
 }
-fun leerDatosInicialesJSON(ruta: Path): List<Planta> {
-    var plantas: List<Planta> = emptyList()
+
+fun leerDatosInicialesJSON(ruta: Path): List<PlantaJSON> {
+    var plantas: List<PlantaJSON> = emptyList()
     val jsonString = Files.readString(ruta)
     /* A `Json.decodeFromString` le pasamos el String con el JSON.
-    Con `<List<Planta>>`, le indicamos que debe interpretarlo como
+    Con `<List<PlantaJSON>>`, le indicamos que debe interpretarlo como
     una lista de objetos de tipo planta".
-    La librería usará la anotación @Serializable de la clase Planta para saber cómo mapear los campos del JSON ("id_planta", "nombre_comun", etc.)
+    La librería usará la anotación @Serializable de la clase PlantaJSON para saber cómo mapear los campos del JSON ("id_planta", "nombre_comun", etc.)
     a las propiedades del objeto. */
-    plantas = Json.decodeFromString<List<Planta>>(jsonString)
+    plantas = Json.decodeFromString<List<PlantaJSON>>(jsonString)
     return plantas
 }
-fun escribirDatosJSON(ruta: Path,plantas: List<Planta>) {
+
+fun escribirDatosJSON(ruta: Path, plantas: List<PlantaJSON>) {
     try {
         /* La librería `kotlinx.serialization`
-        toma la lista de objetos `Planta` (`List<Planta>`) y la convierte en una
+        toma la lista de objetos `PlantaJSON` (`List<PlantaJSON>`) y la convierte en una
         única cadena de texto con formato JSON.
         `prettyPrint` formatea el JSON para que sea legible. */
         val json = Json { prettyPrint = true }.encodeToString(plantas)
         // Con `Files.writeString` escribimos el String JSON en el fichero de salida
         Files.writeString(ruta, json)
-        println ("\nInformación guardada en: $ruta")
+        println("\nInformación guardada en: $ruta")
     } catch (e: Exception) {
-        println ("Error: ${e.message}")
+        println("Error: ${e.message}")
     }
 }
 ```
@@ -548,15 +590,17 @@ El patrón para convertir datos de un formato a otro es casi siempre el mismo. E
 
 ## 🎯 Práctica 3: Creación y lectura de un fichero de datos
 
-Realiza lo siguiente:
+Abre tu _proyecto creado en la práctica 2_ . Realiza lo siguiente:
 
 * **Diseña tu data class**: Define la `data class` de Kotlin que represente un único elemento de tu colección de datos. Debe tener un ID único de tipo `Int`, un nombre de tipo `String` y, al menos, otros dos campos (al menos uno de tipo `Double`).
 * **Crea tu fichero de datos**: (.csv, .json o .xml) con al menos 5 registros de tu colección dentro de la carpeta `datos_ini`.
 * **Añade dependencias necesarias**: Añade las librerías necesarias para leer tu fichero y _serializar / deserializar_ datos en `build.gradle.kts`.
-* **Crea la función de lectura**: La función debe leer el fichero de texto y devolver una lista de objetos `leerDatosIniciales(): List<DataClass>`.
+* **Crea la función de lectura**: La función debe leer el fichero y devolver una lista de objetos `leerDatosIniciales(): List<DataClass>`.
 * **Verifica que funciona**: Imprime por consola la información leída.
+* **Filtra la información leída**: Crea una función que filtre según un atributo del `data class` y guarde la información resultante en `datos_fin`. Por ejemplo, en el caso de las _plantas_ podemos guardar las que superen una altura.
 * **Aspectos Técnicos Obligatorios**:
-* Se debe incluir un manejo básico de errores (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
+    1. Se debe incluir un **manejo básico de errores** (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
+    2. **Organiza la información**. Es decir, crea las _clases_ en su correspondiente fichero, organizando la lógica del programa.
 
 ---
 
