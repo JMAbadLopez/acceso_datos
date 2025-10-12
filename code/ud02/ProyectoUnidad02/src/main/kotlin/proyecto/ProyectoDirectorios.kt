@@ -1,4 +1,4 @@
-package org.example.Proyecto
+package org.example.proyecto
 import java.nio.file.Files
 import java.nio.file.Path
 

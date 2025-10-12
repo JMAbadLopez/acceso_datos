@@ -1,4 +1,5 @@
 site_name: Acceso a Datos DAM
+site_url: https://jmabadlopez.github.io/acceso_datos/site/
 
 nav:
   - Inicio: index.md
@@ -12,6 +13,11 @@ nav:
       - Ficheros binarios: unidades/ud02/ficheros_binarios.md
       - Ficheros de acceso aleatorio: unidades/ud02/ficheros_acceso_aleatorio.md
       - Documentación final: unidades/ud02/documentacion_final.md
+    # - UD3 - Persistencia en Bases de Datos:
+    #   - Introducción: unidades/ud03/introduccion.md
+    #   - Conexiones: unidades/ud03/conexiones.md
+    #   - Integración SQLite: unidades/ud03/integracion_sqlite_intellij.md
+    #   - Operaciones: unidades/ud03/operaciones.md
 
 repo_url: https://github.com/jmabadlopez/acceso_datos
 repo_name: jmabadlopez/acceso_datos
@@ -20,6 +26,7 @@ theme:
   name: material
   language: es
   logo: ./assets/images/camp.png
+  favicon: ./assets/images/camp.png
   icon: fontawesome/brands/mastodon
   hljs_languages:
     - python
@@ -31,22 +38,23 @@ theme:
     - optimize
     - content.code.copy
     - navigation.footer
+    - navigation.tabs
   palette:
     # Palette toggle for light mode
     - scheme: default
       toggle:
         icon: material/brightness-7 
         name: Modo oscuro
-      primary: amber
-      accent: amber
+      primary: orange
+      accent: orange
 
     # Palette toggle for dark mode
     - scheme: slate
       toggle:
         icon: material/brightness-4
         name: Modo claro
-      primary: amber
-      accent: amber
+      primary: orange
+      accent: orange
 markdown_extensions:
   - sane_lists
   - pymdownx.highlight:

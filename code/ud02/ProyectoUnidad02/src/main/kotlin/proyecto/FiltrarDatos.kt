@@ -1,10 +1,8 @@
-package org.example.Proyecto
+package org.example.proyecto
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.File
+import org.example.Proyecto.Cancion
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -16,7 +14,7 @@ fun main() {
     val datos: List<Cancion> = leerDatosIniciales(entradaJSON)
 
     for (dato in datos) {
-        println("  - ID: ${dato.id_cancion}, Título: ${dato.titulo}, Artista: ${dato.artista}, Duración (mins.): ${dato.duracion} días")
+        println("  - ID: ${dato.id_cancion}, Título: ${dato.titulo}, Artista: ${dato.artista}, Duración (mins.): ${dato.duracion}")
     }
 
     filtrarDatos(salidaJSON, datos)

@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm") version "2.2.0"
+    kotlin("jvm") version "2.2.20"
 }
 
-group = "org.example"
+group = "org.abad.jose"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -17,5 +17,5 @@ tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(24)
 }

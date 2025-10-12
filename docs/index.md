@@ -1,7 +1,5 @@
 # Acceso a datos DAM
 
-<img src="./assets/images/portada_ad.png" alt="Portada" style="zoom:40%;" />
-
 ## Descripción
 
 Material del módulo de **Acceso a Datos de 2º de DAM del IES CAMP DE MORVEDRE**.
