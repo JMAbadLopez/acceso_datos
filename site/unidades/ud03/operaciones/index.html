@@ -11,6 +11,10 @@
         <link rel="canonical" href="https://jmabadlopez.github.io/acceso_datos/site/unidades/ud03/operaciones/">
       
       
+        <link rel="prev" href="../conexiones/">
+      
+      
+        <link rel="next" href="../dao/">
       
       
       <link rel="icon" href="../../../assets/images/camp.png">
@@ -18,7 +22,7 @@
     
     
       
-        <title>Operaciones sobre la BD - Acceso a Datos DAM</title>
+        <title>Operaciones - Acceso a Datos DAM</title>
       
     
     
@@ -70,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#operaciones-sobre-la-bd" class="md-skip">
+        <a href="#operaciones-crud-sobre-la-bd" class="md-skip">
           Saltar a contenido
         </a>
       
@@ -103,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Operaciones sobre la BD
+              Operaciones
             
           </span>
         </div>
@@ -231,10 +235,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../../ud01/ud01/" class="md-tabs__link">
           
   
@@ -317,24 +323,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -347,7 +358,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Unidades
@@ -587,6 +598,255 @@
 
               
             
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    UD3 - Persistencia en Bases de Datos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            UD3 - Persistencia en Bases de Datos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introducción
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conexiones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conexiones
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Operaciones
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Operaciones
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preparando-las-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparando las operaciones
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buenas-practicas-preparedstatement-y-gestion-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Buenas Prácticas: PreparedStatement y Gestión de Recursos
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Arquitectura de Acceso a Datos (Patrón DAO)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../avanzados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conceptos avanzados
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entrega/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentación y entrega final
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -614,6 +874,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preparando-las-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparando las operaciones
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buenas-practicas-preparedstatement-y-gestion-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Buenas Prácticas: PreparedStatement y Gestión de Recursos
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -631,15 +917,12 @@
   
 
 
-<h1 id="operaciones-sobre-la-bd">Operaciones sobre la BD</h1>
+<h1 id="operaciones-crud-sobre-la-bd">Operaciones CRUD sobre la BD</h1>
+<h2 id="preparando-las-operaciones">Preparando las operaciones</h2>
 <p>En <strong>JDBC</strong> (Java Database Connectivity), las operaciones sobre la base de datos se realizan  utilizando los siguientes objetos y métodos:</p>
 <ul>
-<li>
-<p><strong>Connection</strong>, establece el canal de comunicación con el SGBD (PostgreSQL, MySQL, etc.)</p>
-</li>
-<li>
-<p>Los objetos <strong>PreparedStatement</strong> y <strong>CreateStatement</strong> se utlizan para enviar consultas SQL desde el programa a la base de datos. A continuación se muestra una tabla con el uso de cada uno:</p>
-</li>
+<li><strong>Connection</strong>, establece el canal de comunicación con el SGBD (PostgreSQL, MySQL, etc.)</li>
+<li>Los objetos <strong>PreparedStatement</strong> y <strong>CreateStatement</strong> se utlizan para enviar consultas SQL desde el programa a la base de datos. A continuación se muestra una tabla con el uso de cada uno:</li>
 </ul>
 <table>
 <thead>
@@ -687,462 +970,63 @@
 <tr>
 <td><strong>executeQuery()</strong></td>
 <td>Realizar consultas</td>
-<td>SELECT</td>
+<td><code>SELECT</code></td>
 <td>Objeto  <strong>ResultSet</strong> con el resultado de la consulta SQL. Permite recorrer fila a fila el conjunto de resultados, accediendo a cada campo por nombre o por posición</td>
 </tr>
 <tr>
 <td><strong>executeUpdate()</strong></td>
 <td>Realizar modificaciones</td>
-<td>INSERT, UPDATE, DELETE, DDL (CREATE, DROP, etc.)</td>
+<td><code>INSERT, UPDATE, DELETE, DDL (CREATE, DROP, etc.)</code></td>
 <td>Entero con el número de filas afectadas</td>
 </tr>
 <tr>
 <td><strong>execute()</strong></td>
 <td>No se sabe de antemano qué tipo de sentencia SQL se va a ejecutar (consulta o modificación)</td>
 <td>Sentencias SQL que pueden devolver varios resultados</td>
-<td>Booleano <strong>true</strong> si el resultado es un ResultSet (SELECT) y <strong>false</strong> si el resultado es un entero (INSERT, UPDATE, DELETE,CREATE, ALTER)</td>
+<td>Booleano <strong>true</strong> si el resultado es un ResultSet (<code>SELECT</code>) y <strong>false</strong> si el resultado es un entero (<code>INSERT, UPDATE, DELETE,CREATE, ALTER</code>)</td>
 </tr>
 </tbody>
 </table>
-<p><span class="mi_h2">Buenas prácticas</span></p>
-<p><strong>Liberación de recursos</strong></p>
-<p>Cuando una aplicación accede a una base de datos, abre varios recursos internos que consumen memoria y conexiones activas en el sistema:</p>
+<h2 id="buenas-practicas-preparedstatement-y-gestion-de-recursos">Buenas Prácticas: <code>PreparedStatement</code> y Gestión de Recursos</h2>
 <ul>
-<li>La conexión con el servidor de base de datos (Connection).</li>
-<li>Las sentencias SQL preparadas (Statement o PreparedStatement).</li>
-<li>El resultado de la consulta (ResultSet).</li>
+<li><strong>Seguridad con <code>PreparedStatement</code></strong>: Se debe utilizar <strong>siempre</strong> <code>PreparedStatement</code> para ejecutar consultas con datos variables. A diferencia de <code>Statement</code>, precompila la sentencia SQL y trata los parámetros como datos, no como código ejecutable, previniendo así ataques de <strong>Inyección SQL</strong>.</li>
+<li><strong>Gestión de Recursos con <code>.use</code></strong>: Es <strong>imprescindible</strong> cerrar los recursos JDBC (<code>Connection</code>, <code>Statement</code>, <code>ResultSet</code>). La función de extensión <code>.use</code> de Kotlin es la forma recomendada, ya que asegura el cierre automático del recurso.</li>
 </ul>
-<p>Estos recursos no se liberan automáticamente cuando se termina su uso (especialmente en Java o Kotlin con JDBC). Si no se cierran correctamente, se pueden producir problemas como:</p>
-<ul>
-<li>Fugas de memoria.</li>
-<li>Bloqueo de conexiones (demasiadas conexiones abiertas).</li>
-<li>Degradación del rendimiento.</li>
-<li>Errores inesperados en la aplicación.</li>
-</ul>
-<p>Para liberar estos recursos hay dos opciones:</p>
-<p><strong>1. Utilización de .use { ... }</strong></p>
-<p>Se recomienda utilizarlo si:</p>
-<ul>
-<li>
-<p>Estás trabajando con un recurso que implementa AutoCloseable (Connection, Statement, ResultSet, File, etc.).</p>
-</li>
-<li>
-<p>Solo necesitas abrir, usar y cerrar el recurso de forma automática.</p>
-</li>
-<li>
-<p>No necesitas lógica compleja de manejo de excepciones dentro del mismo bloque.</p>
-</li>
-</ul>
-<p>Ventajas:</p>
-<ul>
-<li>
-<p>Código más limpio y legible.</p>
-</li>
-<li>
-<p>Cierra automáticamente el recurso aunque ocurra una excepción.</p>
-</li>
-<li>
-<p>Evita errores de olvidar close().</p>
-</li>
-</ul>
-<p><strong>2. Usar try–catch–finally manual</strong></p>
-<p>Cuándo:</p>
-<ul>
-<li>
-<p>No estás en Kotlin o no puedes usar .use.</p>
-</li>
-<li>
-<p>Necesitas capturar y manejar excepciones dentro del mismo método.</p>
-</li>
-<li>
-<p>Necesitas lógica extra antes o después de cerrar el recurso (por ejemplo, reintentos, logging detallado, liberar múltiples recursos en un orden específico).</p>
-</li>
-<li>
-<p>Estás trabajando en un proyecto que sigue un estilo más clásico de Java.</p>
-</li>
-</ul>
-<p>A continuación se muestra un <strong>ejemplo con .use (sin necesidad de closeConnection)</strong> que utiliza la función <code>getConnection</code> declarada en <strong>PlantasBD.kt</strong> para abrir la conexión de forma que:</p>
-<ul>
-<li>
-<p><strong>conn.use { ... }</strong> cierra la conexión automáticamente al final del bloque.</p>
-</li>
-<li>
-<p><strong>stmt.use { ... }</strong> cierra el Statement automáticamente.</p>
-</li>
-<li>
-<p><strong>ResultSet</strong> se cierra cuando cierras el Statement.</p>
-</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">PlantasBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conectado a la BD&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="n">conn</span><span class="p">.</span><span class="na">createStatement</span><span class="p">().</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="s">&quot;SELECT * FROM plantas&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;</span><span class="n">nombre_comun</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se pudo conectar&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">}</span>
+<p>🔍 <strong>Ejecutar y Analizar: Gestión de Recursos con y sin .use</strong></p>
+<p>Compara las dos siguientes funciones. Ambas hacen lo mismo, pero la versión con <code>.use</code> es más concisa y segura.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// 1. Cierre automático con .use (Recomendado)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">listarConUse</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="n">conn</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;SELECT * FROM plantas&quot;</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">()</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;- </span><span class="si">${</span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;</span><span class="n">nombre_comun</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">// 2. Cierre manual con try-catch-finally</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">listarConFinally</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">stmt</span><span class="p">:</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">sql</span><span class="p">.</span><span class="na">PreparedStatement</span><span class="o">?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">rs</span><span class="p">:</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">sql</span><span class="p">.</span><span class="na">ResultSet</span><span class="o">?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;SELECT * FROM plantas&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="n">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmt</span><span class="o">?.</span><span class="na">executeQuery</span><span class="p">()</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="o">?.</span><span class="na">next</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;- </span><span class="si">${</span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;</span><span class="n">nombre_comun</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">        </span><span class="n">rs</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="n">stmt</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="p">}</span>
 </code></pre></div>
-<p>!!! success "Realiza lo siguiente" 
-    Prueba el código de ejemplo y verifica que funciona correctemente.</p>
-<p>Si no utilizas <strong>use {}</strong> en Kotlin, entonces debes cerrar manualmente cada uno de los recursos abiertos (ResultSet, Statement y Connection) utilizando <strong>close()</strong>, y normalmente deberías hacerlo dentro de un bloque <strong>finally</strong> para garantizar su cierre incluso si ocurre un error. El orden correcto de cierre es del más interno al más externo. A continuación tienes un ejemplo equivalente al ejemplo anterior pero sin utilizar <strong>.use</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">stmt</span><span class="p">:</span><span class="w"> </span><span class="n">Statement? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">rs</span><span class="p">:</span><span class="w"> </span><span class="n">ResultSet? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatabasePlantas</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">conn</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conectado a la BD&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">            </span><span class="n">stmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="p">.</span><span class="na">createStatement</span><span class="p">()</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">            </span><span class="n">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="s">&quot;SELECT * FROM plantas&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;</span><span class="n">nombre_comun</span><span class="s">&quot;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se pudo conectar&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">            </span><span class="n">rs</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">            </span><span class="n">stmt</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">            </span><span class="n">conn</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión cerrada correctamente&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al cerrar los recursos: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="p">}</span>
-</code></pre></div>
-<p>!!! success "Realiza lo siguiente" 
-    Prueba el código de ejemplo y verifica que funciona correctemente.</p>
-<p><strong>Objetos de acceso a datos (DAO)</strong>
-Otra buena práctica es crear un objeto para manejar las diferentes operaciones CRUD de acceso a los datos. Es el Data Access Object (DAO) y algunas de las ventajas de utilizar estos objetos son las siguientes:</p>
-<ul>
-<li>Organización: todo el código SQL está en un único lugar.</li>
-<li>Reutilización: puedes llamar a PlantaDAO.listarPlantas() desde distintos sitios sin repetir la consulta.</li>
-<li>Mantenibilidad: si cambia la base de datos, solo tocas el DAO.</li>
-<li>Claridad: el resto de tu app se lee mucho más limpio, sin SQL mezclado.</li>
-</ul>
-<p><span class="mi_h2">Ejemplo DAO en SQlite</span></p>
-<p>El siguiente ejemplo es el DAO para la tabla <code>plantas</code> de la BD <code>plantas.sqlite</code> en la que se utiliza el código de conexión del objeto <strong>PlantasBD.kt</strong>.</p>
-<p>En el ejemplo se declaran funciones para leer la información de la tabla, añdir registros nuevos, modificar la información existenete y borrarla. Para ello se utiliza un data class <strong>Planta.kt</strong> con la estructura siguiente (misma estructura que la tabla de la BD):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Planta</span><span class="p">(</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="c1">// lo genera SQLite automáticamente</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombreComun</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombreCientifico</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">frecuenciaRiego</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">altura</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">)</span>
-</code></pre></div>
-<p>El código del archivo <strong>PlantasDAO.kt</strong> es el siguiente:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">object</span><span class="w"> </span><span class="nc">PlantasDAO</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">listarPlantas</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Planta</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">lista</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mutableListOf</span><span class="o">&lt;</span><span class="n">Planta</span><span class="o">&gt;</span><span class="p">()</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="n">PlantasBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">createStatement</span><span class="p">().</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="s">&quot;SELECT * FROM plantas&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">                </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">                    </span><span class="n">lista</span><span class="p">.</span><span class="na">add</span><span class="p">(</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">                        </span><span class="n">Planta</span><span class="p">(</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">                            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">                            </span><span class="n">nombreComun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;nombre_comun&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">                            </span><span class="n">nombreCientifico</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;nombre_cientifico&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">                            </span><span class="n">frecuenciaRiego</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;frecuencia_riego&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">                            </span><span class="n">altura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getDouble</span><span class="p">(</span><span class="s">&quot;altura&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">                        </span><span class="p">)</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">                    </span><span class="p">)</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se pudo establecer la conexión.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">lista</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
-<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">    </span><span class="c1">// Consultar planta por ID</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">consultarPlantaPorId</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="n">Planta? </span><span class="p">{</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nv">planta</span><span class="p">:</span><span class="w"> </span><span class="n">Planta? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">        </span><span class="n">PlantasBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;SELECT * FROM plantas WHERE id = ?&quot;</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
-<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">()</span>
-<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">                    </span><span class="n">planta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Planta</span><span class="p">(</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">                        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">                        </span><span class="n">nombreComun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;nombre_comun&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="w">                        </span><span class="n">nombreCientifico</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;nombre_cientifico&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="w">                        </span><span class="n">frecuenciaRiego</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;frecuencia_riego&quot;</span><span class="p">),</span>
-<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="w">                        </span><span class="n">altura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rs</span><span class="p">.</span><span class="na">getDouble</span><span class="p">(</span><span class="s">&quot;altura&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="w">                    </span><span class="p">)</span>
-<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se pudo establecer la conexión.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">planta</span>
-<a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>
-<a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">insertarPlanta</span><span class="p">(</span><span class="n">planta</span><span class="p">:</span><span class="w"> </span><span class="n">Planta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a><span class="w">        </span><span class="n">PlantasBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a><span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span>
-<a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a><span class="w">                </span><span class="s">&quot;INSERT INTO plantas(nombre_comun, nombre_cientifico, frecuencia_riego, altura) VALUES (?, ?, ?, ?)&quot;</span>
-<a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a><span class="w">            </span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">nombreComun</span><span class="p">)</span>
-<a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">nombreCientifico</span><span class="p">)</span>
-<a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">frecuenciaRiego</span><span class="p">)</span>
-<a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setDouble</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">altura</span><span class="p">)</span>
-<a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
-<a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Planta &#39;</span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">nombreComun</span><span class="si">}</span><span class="s">&#39; insertada con éxito.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se pudo establecer la conexión.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>
-<a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">actualizarPlanta</span><span class="p">(</span><span class="n">planta</span><span class="p">:</span><span class="w"> </span><span class="n">Planta</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">planta</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se puede actualizar una planta sin id.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a><span class="w">            </span><span class="k">return</span>
-<a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a><span class="w">        </span><span class="n">PlantasBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a><span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span>
-<a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a><span class="w">                </span><span class="s">&quot;UPDATE plantas SET nombre_comun = ?, nombre_cientifico = ?, frecuencia_riego = ?, altura = ? WHERE id = ?&quot;</span>
-<a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a><span class="w">            </span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">nombreComun</span><span class="p">)</span>
-<a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">nombreCientifico</span><span class="p">)</span>
-<a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">frecuenciaRiego</span><span class="p">)</span>
-<a id="__codelineno-3-72" name="__codelineno-3-72" href="#__codelineno-3-72"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setDouble</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">altura</span><span class="p">)</span>
-<a id="__codelineno-3-73" name="__codelineno-3-73" href="#__codelineno-3-73"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">planta</span><span class="p">.</span><span class="na">id</span><span class="p">)</span>
-<a id="__codelineno-3-74" name="__codelineno-3-74" href="#__codelineno-3-74"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">filas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
-<a id="__codelineno-3-75" name="__codelineno-3-75" href="#__codelineno-3-75"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">filas</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-76" name="__codelineno-3-76" href="#__codelineno-3-76"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Planta con id=</span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> actualizada con éxito.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-77" name="__codelineno-3-77" href="#__codelineno-3-77"></a><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-78" name="__codelineno-3-78" href="#__codelineno-3-78"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se encontró ninguna planta con id=</span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s">.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-79" name="__codelineno-3-79" href="#__codelineno-3-79"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-3-80" name="__codelineno-3-80" href="#__codelineno-3-80"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-3-81" name="__codelineno-3-81" href="#__codelineno-3-81"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se pudo establecer la conexión.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-82" name="__codelineno-3-82" href="#__codelineno-3-82"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-83" name="__codelineno-3-83" href="#__codelineno-3-83"></a>
-<a id="__codelineno-3-84" name="__codelineno-3-84" href="#__codelineno-3-84"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">eliminarPlanta</span><span class="p">(</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-85" name="__codelineno-3-85" href="#__codelineno-3-85"></a><span class="w">        </span><span class="n">PlantasBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-86" name="__codelineno-3-86" href="#__codelineno-3-86"></a><span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;DELETE FROM plantas WHERE id = ?&quot;</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-87" name="__codelineno-3-87" href="#__codelineno-3-87"></a><span class="w">                </span><span class="n">pstmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
-<a id="__codelineno-3-88" name="__codelineno-3-88" href="#__codelineno-3-88"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">filas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
-<a id="__codelineno-3-89" name="__codelineno-3-89" href="#__codelineno-3-89"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">filas</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-90" name="__codelineno-3-90" href="#__codelineno-3-90"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Planta con id=</span><span class="si">$</span><span class="n">id</span><span class="s"> eliminada correctamente.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-91" name="__codelineno-3-91" href="#__codelineno-3-91"></a><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-92" name="__codelineno-3-92" href="#__codelineno-3-92"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se encontró ninguna planta con id=</span><span class="si">$</span><span class="n">id</span><span class="s">.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-93" name="__codelineno-3-93" href="#__codelineno-3-93"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-3-94" name="__codelineno-3-94" href="#__codelineno-3-94"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-3-95" name="__codelineno-3-95" href="#__codelineno-3-95"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se pudo establecer la conexión.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-96" name="__codelineno-3-96" href="#__codelineno-3-96"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-97" name="__codelineno-3-97" href="#__codelineno-3-97"></a><span class="p">}</span>
-</code></pre></div></p>
-<p>La llamada a estas funciones desde <strong>main.kt</strong> podría ser:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="c1">// Listar todas las plantas</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Lista de plantas:&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">PlantasDAO</span><span class="p">.</span><span class="na">listarPlantas</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot; - [</span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s">] </span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">nombreComun</span><span class="si">}</span><span class="s"> (</span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">nombreCientifico</span><span class="si">}</span><span class="s">), riego cada </span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">frecuenciaRiego</span><span class="si">}</span><span class="s"> días, altura: </span><span class="si">${</span><span class="nb">it</span><span class="p">.</span><span class="na">altura</span><span class="si">}</span><span class="s"> m&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="c1">// Consultar planta por ID</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">planta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlantasDAO</span><span class="p">.</span><span class="na">consultarPlantaPorId</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">planta</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Planta encontrada: [</span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s">] </span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">nombreComun</span><span class="si">}</span><span class="s"> (</span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">nombreCientifico</span><span class="si">}</span><span class="s">), riego cada </span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">frecuenciaRiego</span><span class="si">}</span><span class="s"> días, altura: </span><span class="si">${</span><span class="n">planta</span><span class="p">.</span><span class="na">altura</span><span class="si">}</span><span class="s"> m&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se encontró ninguna planta con ese ID.&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="c1">// Insertar plantas</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="n">PlantasDAO</span><span class="p">.</span><span class="na">insertarPlanta</span><span class="p">(</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">        </span><span class="n">Planta</span><span class="p">(</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">            </span><span class="n">nombreComun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Palmera&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">            </span><span class="n">nombreCientifico</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Arecaceae&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">            </span><span class="n">frecuenciaRiego</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">            </span><span class="n">altura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8.5</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">        </span><span class="p">)</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="p">)</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
-<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="c1">// Actualizar planta con id=1</span>
-<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="n">PlantasDAO</span><span class="p">.</span><span class="na">actualizarPlanta</span><span class="p">(</span>
-<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">        </span><span class="n">Planta</span><span class="p">(</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">            </span><span class="n">nombreComun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Aloe Arborescens&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">            </span><span class="n">nombreCientifico</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Aloe barbadensis miller&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">            </span><span class="n">frecuenciaRiego</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span>
-<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">            </span><span class="n">altura</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.8</span>
-<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">        </span><span class="p">)</span>
-<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="w">    </span><span class="p">)</span>
-<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>
-<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">    </span><span class="c1">// Eliminar planta con id=2</span>
-<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">    </span><span class="n">PlantasDAO</span><span class="p">.</span><span class="na">eliminarPlanta</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
-<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="p">}</span>
-</code></pre></div>
-<p>!!! success "Realiza lo siguiente" 
-    Prueba el código de ejemplo y verifica que funciona correctemente.</p>
-<p>!!! warning "Práctica 4: Trabaja con tu base de datos" 
-    Replica el ejemplo anterior para que funcione con tu base de datos.</p>
-<!--
-
-
-
-**Consultas complejas: JOIN, filtros y ordenaciones**
-
-**Ejemplo_join.kt**: Este ejemplo obtiene las líneas de factura con nombre del artículo y ordenado por numero de factura y línea.
-
-        package SQLite
-        import java.sql.DriverManager
-
-        fun main() {
-            val dbPath = "src/main/resources/Tienda.sqlite"
-            val dbFile = java.io.File(dbPath)
-            val url = "jdbc:sqlite:${dbFile.absolutePath}"
-
-            DriverManager.getConnection(url).use { conn ->
-
-                val sql = """
-                    SELECT lf.num_f, lf.num_l, lf.cod_a, a.descrip, lf.quant, lf.preu
-                    FROM linia_fac lf
-                    JOIN article a ON lf.cod_a = a.cod_a
-                    ORDER BY lf.num_f, lf.num_l
-                """.trimIndent()
-
-                conn.prepareStatement(sql).use { stmt ->
-                    stmt.executeQuery().use { rs ->
-                        println("Líneas de factura:")
-                        println("Factura | Línea | Artículo | Descripción | Cantidad | Precio")
-
-                        while (rs.next()) {
-                            val numF = rs.getInt("num_f")
-                            val numL = rs.getInt("num_l")
-                            val codA = rs.getString("cod_a")
-                            val descrip = rs.getString("descrip")
-                            val quant = rs.getInt("quant")
-                            val preu = rs.getDouble("preu")
-
-                            println("$numF\t$numL\t$codA\t$descrip\t$quant\t$preu")
-                        }
-                    }
-                }
-            }
-        }
-
-
-
--->
-
-<!--
-
-## Ejemplos en PostgreSQL
-
-
-!!!Tip "Kotlin - Instrucciones"
-    En el proyecto `BDRelacionales` crearemos un **paquete** llamado `Postgres`, donde incluiremos los ejemplos de este apartado.   
-
-    ![ref](img/carpeta_postgres.png)
-
-
-
-
-
-
-**Read (SELECT)**   
-
-**Ejemplo_Select.kt**
-
-            package Postgres
-            fun main(args: Array<String>) {
-            val sql = "SELECT * FROM institut"
-
-            DatabaseLocal.getConnection().use { conn ->    // DatabaseRemota si se conecta al servidor del instituto
-                    conn.prepareStatement(sql).use { stmt ->
-                    stmt.executeQuery().use { rs ->
-
-                        while (rs.next()) {
-                            print("" + rs.getString(1) + "\t")
-                            println(rs.getString(2))
-                        }
-                    }
-                }
-                }
-             }
-
-
-
----
-
-**Create (INSERT)**{.verde}  
-El siguiente ejemplo inserta un istituto de prueba.
-
-**Ejemplo_Insert.kt**
-
-        package Postgres
-        fun main(args: Array<String>) {
-
-            val sql ="INSERT INTO institut (codi,nom,adreca,numero,codpostal,cod_m) VALUES(?,?,?,?,?,?)"
-
-            DatabaseLocal.getConnection().use { conn ->
-
-                conn.prepareStatement(sql).use { stmt ->
-                    stmt.setString(1, "00000000")
-                    stmt.setString(2, "IES PRUEBA")
-                    stmt.setString(3, "CASTELLÓN")
-                    stmt.setString(4, "S/N")
-                    stmt.setInt(5, 12560)
-                    stmt.setInt(6, 12040)
-                    stmt.executeUpdate()
-                }
-            }
-        }
-
-
-
-**Update (UPDATE)**{.verde}    
-El siguiente ejemplo actualiza el campo nombre del instituto de prueba insertado. 
-
-**Ejemplo_Update.kt**
-
-        package Postgres
-        fun main() {
-            val sql = "UPDATE institut SET nom = ? WHERE codi = ?"
-
-            DatabaseLocal.getConnection().use { conn ->
-
-                conn.prepareStatement(sql).use { stmt ->
-                    stmt.setString(1, "IES PRUEBA 2")
-                    stmt.setString(2, "00000000")
-                    stmt.executeUpdate()
-                }
-            }
-        }
-
-
-**Delete (DELETE)**{.verde}   
-El siguiente ejemplo elimina el instituto de prueba insertado.  
-
-**Ejemplo_Delete.kt**
-
-        package Postgres
-        fun main() {
-            val sql = "DELETE FROM institut WHERE codi = ?"
-
-            DatabaseLocal.getConnection().use { conn ->
-
-                conn.prepareStatement(sql).use { stmt ->
-                    stmt.setString(1, "00000000")
-                    stmt.executeUpdate()
-                }
-            }
-        }
-
-
--->
 
 
 
@@ -1173,6 +1057,44 @@ El siguiente ejemplo elimina el instituto de prueba insertado.
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../conexiones/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Conexiones">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Conexiones
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../dao/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Arquitectura de Acceso a Datos (Patrón DAO)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Arquitectura de Acceso a Datos (Patrón DAO)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">

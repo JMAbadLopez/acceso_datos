@@ -13,11 +13,13 @@ nav:
       - Ficheros binarios: unidades/ud02/ficheros_binarios.md
       - Ficheros de acceso aleatorio: unidades/ud02/ficheros_acceso_aleatorio.md
       - Documentación final: unidades/ud02/documentacion_final.md
-    # - UD3 - Persistencia en Bases de Datos:
-    #   - Introducción: unidades/ud03/introduccion.md
-    #   - Conexiones: unidades/ud03/conexiones.md
-    #   - Integración SQLite: unidades/ud03/integracion_sqlite_intellij.md
-    #   - Operaciones: unidades/ud03/operaciones.md
+    - UD3 - Persistencia en Bases de Datos:
+      - Introducción: unidades/ud03/introduccion.md
+      - Conexiones: unidades/ud03/conexiones.md
+      - Operaciones: unidades/ud03/operaciones.md
+      - Arquitectura de Acceso a Datos (Patrón DAO): unidades/ud03/dao.md
+      - Conceptos avanzados: unidades/ud03/avanzados.md
+      - Documentación y entrega final: unidades/ud03/entrega.md
 
 repo_url: https://github.com/jmabadlopez/acceso_datos
 repo_name: jmabadlopez/acceso_datos
