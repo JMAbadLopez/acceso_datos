@@ -1,4 +1,14 @@
-# 7. Documentación: El Fichero LEEME.md
+# 7. 📁 **Entrega y documentación final**
+
+## El proyecto
+
+¡Enhorabuena! Si has seguido _todas las prácticas_, deberás tener un **Proyecto de Acceso a Ficheros** completo con los siguientes apartados.
+
+* **Organización de directorios**
+* **Ficheros de intercambio**
+* **Ficheros binarios de Acceso Aleatorio**
+
+## El fichero README.md
 
 En un proyecto de software el código fuente por sí solo no cuenta toda la historia y es fundamental crear documentación adicional. La forma estándar y más extendida de hacerlo es a través de un fichero `LEEME.md` (o `README.md`). Un proyecto sin un `LEEME.md` se considera incompleto o poco profesional.
 
@@ -35,7 +45,7 @@ fun main() {
 ```
 ````
 
-## Ejemplo
+## Ejemplo Markdown
 
 ````markdown
 # Gestor de mediciones
