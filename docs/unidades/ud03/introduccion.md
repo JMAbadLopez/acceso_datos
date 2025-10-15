@@ -91,6 +91,10 @@ Esta guía te mostrará cómo configurar esta conexión paso a paso.
 
 * Para trabajar en esta unidad, primero debes descargar el fichero [plantas.sqlite](../../assets/resources/plantas.sqlite)
 
+> **NOTA IMPORTANTE:** Para hacer uso de esta funcionalidad de IntelliJ, tienes que tener activada la versión **Ultimate de IntelliJ**.
+>
+> Como estudiante, puedes activarla gratis. Para ello date de alta y [sigue la guía desde este enlace](https://www.jetbrains.com/es-es/academy/student-pack/).
+
 ---
 
 ### Paso 1: Abrir la Herramienta de Base de Datos
