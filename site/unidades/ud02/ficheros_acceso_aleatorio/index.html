@@ -924,9 +924,10 @@
 <h3 id="ejemplo">Ejemplo</h3>
 <p>El siguiente ejemplo utiliza <code>FileChannel</code> y <code>ByteBuffer</code> para crear y leer un fichero llamado <code>mediciones.dat</code> con registros con la siguiente estructura:</p>
 <ul>
-<li>ID del sensor (<code>Int</code> - 4 bytes)</li>
-<li>temperatura (<code>Double</code> - 8 bytes)</li>
-<li>humedad (<code>Double</code> - 8 bytes)</li>
+<li><strong>ID</strong> del sensor (<code>Int</code> - 4 bytes)</li>
+<li><strong>Nombre</strong> (<code>String</code> - 20 bytes)</li>
+<li><strong>Temperatura</strong> (<code>Double</code> - 8 bytes)</li>
+<li><strong>Humedad</strong> (<code>Double</code> - 8 bytes)</li>
 </ul>
 <p>A continuación se muestra el código con las funciones para añadir una medición al final del fichero y leer todas las mediciones que hay en él.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.ByteBuffer</span>

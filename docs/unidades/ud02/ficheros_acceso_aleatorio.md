@@ -47,9 +47,10 @@ Las clases **FileChannel**, **ByteBuffer** y **StandardOpenOption** se utilizan 
 
 El siguiente ejemplo utiliza `FileChannel` y `ByteBuffer` para crear y leer un fichero llamado `mediciones.dat` con registros con la siguiente estructura:
 
-* ID del sensor (`Int` - 4 bytes)
-* temperatura (`Double` - 8 bytes)
-* humedad (`Double` - 8 bytes)
+* **ID** del sensor (`Int` - 4 bytes)
+* **Nombre** (`String` - 20 bytes)
+* **Temperatura** (`Double` - 8 bytes)
+* **Humedad** (`Double` - 8 bytes)
 
 A continuación se muestra el código con las funciones para añadir una medición al final del fichero y leer todas las mediciones que hay en él.
 
