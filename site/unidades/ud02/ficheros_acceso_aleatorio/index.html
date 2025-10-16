@@ -1264,10 +1264,10 @@
 <p>Realiza lo siguiente:</p>
 <ul>
 <li><strong>Siguiendo con tu Proyecto anterior</strong>: Crea una nueva estructura para registrar los datos que has definido pero en modo <strong>Fichero de Acceso Aleatorio</strong>.</li>
-<li><strong>Crea las funciones</strong> <code>escribirMediciones()</code>y <code>leerMediciones()</code>. Adaptlo a tus datos.</li>
+<li><strong>Crea las funciones <code>escribirRegistros()</code>y <code>leerRegistros()</code></strong>. Adaptlo a tus datos.</li>
 <li><strong>Crea la función <code>modificarReg()</code></strong>: Pedirá al usuario el ID del registro a modificar y buscará ese registro en el fichero. Si lo encuentra, pedirá los nuevos datos. Utilizará acceso aleatorio (<code>FileChannel.position()</code>) para saltar a la posición exacta de ese registro y sobrescribir únicamente los campos modificados, sin alterar el resto del fichero.</li>
 <li><strong>Crea la función <code>eliminarReg()</code></strong>: Debe recibir un ID y eliminar el registro correspondiente. Implementa la técnica de streaming (leer el fichero original registro a registro, escribir los que se conservan en un fichero temporal, borrar el original y renombrar el temporal).</li>
-<li><strong>Comprueba</strong>: Prueba estas funciones desde <code>main</code>, llamando a <code>leerMediciones()</code> antes y después de cada operación para verificar los resultados.</li>
+<li><strong>Comprueba</strong>: Prueba estas funciones desde <code>main</code>, llamando a <code>leerRegistros()</code> antes y después de cada operación para verificar los resultados.</li>
 </ul>
 
 
