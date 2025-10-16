@@ -115,7 +115,7 @@ import java.io.FileOutputStream
 import java.nio.file.Files
 import java.nio.file.Path
 fun main() {
-    val ruta = Path.of("multimedia/binario.dat")
+    val ruta = Path.of("multimedia/bin/binario.dat")
     Files.createDirectories(ruta.parent)
     // Escritura binaria
     val fos = FileOutputStream(ruta.toFile())
