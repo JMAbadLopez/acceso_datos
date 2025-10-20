@@ -42,6 +42,7 @@ fun filtrarDatos(ruta: Path, canciones: List<Cancion>) {
         if( cancion.duracion > 6 ) cancionesFiltradas.add(cancion)
     }
 
+
     try {
 
         val json = Json { prettyPrint = true }.encodeToString(cancionesFiltradas)
