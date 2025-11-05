@@ -813,9 +813,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#practica-para-aplicar-opcional-migracion-a-mysql-o-postgresql" class="md-nav__link">
+  <a href="#preparacion-del-entorno-mysql-desde-intellij" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 Práctica para Aplicar (Opcional): Migración a Mysql o PostgreSQL
+      Preparación del Entorno. MySQL desde IntelliJ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migracion-de-la-bd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migración de la BD
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modificacion-del-conector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modificación del Conector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practica-6-migracion-a-mysql-o-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Práctica 6: Migración a Mysql o PostgreSQL
     </span>
   </a>
   
@@ -895,9 +922,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#practica-para-aplicar-opcional-migracion-a-mysql-o-postgresql" class="md-nav__link">
+  <a href="#preparacion-del-entorno-mysql-desde-intellij" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 Práctica para Aplicar (Opcional): Migración a Mysql o PostgreSQL
+      Preparación del Entorno. MySQL desde IntelliJ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migracion-de-la-bd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migración de la BD
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modificacion-del-conector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modificación del Conector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practica-6-migracion-a-mysql-o-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Práctica 6: Migración a Mysql o PostgreSQL
     </span>
   </a>
   
@@ -924,10 +978,92 @@
 
 <h1 id="evolucion-a-sgbd-cliente-servidor">Evolución a SGBD Cliente-Servidor</h1>
 <p>Gracias a la buena arquitectura, migrar de SQLite a PostgreSQL, MySQL o cualquier <strong>Sistema Gestor de Bases de Datos</strong> (SGBD) es sencillo. Solo requiere modificar el gestor de conexión.</p>
-<h2 id="practica-para-aplicar-opcional-migracion-a-mysql-o-postgresql">🎯 <strong>Práctica para Aplicar (Opcional): Migración a Mysql o PostgreSQL</strong></h2>
+<h2 id="preparacion-del-entorno-mysql-desde-intellij">Preparación del Entorno. MySQL desde IntelliJ</h2>
+<p>Para el siguiente paso vamos a configurar y probar una conexión con el <strong>SGBD MySQL</strong>. Instalado en una máquina local. Los pasos a seguir son muy parecidos a los realizamos en la <a href="../introduccion/">sección de Preparación del Entorno en la Introducción, con <strong>SQLite</strong></a>.</p>
+<p>En el lateral derecho de la ventana de IntelliJ, busca y haz clic en la pestaña vertical <strong>Database</strong>. Si no la encuentras, puedes abrirla desde el menú superior: <code>View &gt; Tool Windows &gt; Database</code>.</p>
+<p>Dentro de la ventana "Database", haz clic en el icono del signo más (<code>+</code>) y en el menú desplegable selecciona <code>Data Source &gt; MySQL</code>.</p>
+<p><img alt="Database IntelliJ" src="../../../assets/images/ud03/ud3_7.png" /></p>
+<p>Se abrirá una ventana de configuración llamada "Data Sources and Drivers". Aquí debemos indicar a IntelliJ dónde se encuentra nuestro fichero de base de datos.</p>
 <ol>
-<li>Instala MySQL o PostgreSQL, preferiblemente mediante un contenedor Docker.</li>
-<li>Crea la base de datos y la tabla en el nuevo SGBD con la misma estructura.</li>
+<li><strong>Nombre (Name):</strong> Asígnale un nombre descriptivo a tu conexión, por ejemplo: <code>Plantas_MySQL</code>.</li>
+<li><strong>Host:</strong> En este paso debemos indicar la dirección <strong>IP o la URL</strong> donde está alojado nuestro SGBD MySQL. En nuestro caso, <code>localhost</code>.</li>
+<li><strong>Authentication (User &amp; Password):</strong> Indicaremos las <strong>Credenciales</strong> de acceso a nuestra Base de Datos.</li>
+<li><strong>Database:</strong> Debemos escribir el numbre de nuestra Base de Datos.</li>
+<li>
+<p><strong>Descargar Drivers:</strong> Si es la primera vez que usas esta función, IntelliJ te notificará que faltan los drivers necesarios para comunicarse con SQLite. Verás un texto de advertencia con un enlace azul: <code>Download missing driver files</code>. Haz clic en él. IntelliJ los descargará e instalará automáticamente en segundo plano.</p>
+<p>La ventana de configuración debería tener un aspecto similar a este:</p>
+<p><img alt="Database IntelliJ" src="../../../assets/images/ud03/ud3_8.png" /></p>
+</li>
+<li>
+<p>Comprobamos que tenemos una conexión abierta y funcionando.</p>
+<p><img alt="Database IntelliJ" src="../../../assets/images/ud03/ud3_9.png" /></p>
+</li>
+</ol>
+<h2 id="migracion-de-la-bd">Migración de la BD</h2>
+<p>Ahora que tenemos configurado el entorno, podemos realizar una importación del <strong>esquema de nuestra base de datos</strong>. Para ello, desde la herramienta, podemos abrirnos una consola SQL (o la herramienta gráfica de creación) e ir añadiendo todas las tablas de nuestra base de datos.</p>
+<div class="admonition warning">
+<p class="admonition-title">Cuidado</p>
+<p>El esquema de datos debe ser el mismo que hemos usado, es decir, los mismos <strong>campos</strong> y <strong>tipos de datos.</strong> En la sección de <em>transacciones</em> de la unidad, hemos añadido más tablas a nuestro esquema de Base de Datos.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">nombre_comun</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">nombre_cientifico</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">frecuencia_riego</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">altura</span><span class="w">  </span><span class="nb">REAL</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="n">stock</span><span class="w"> </span><span class="nb">INTEGER</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">);</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="cm">/* CREAMOS EL ESQUEMA DE TODAS LAS TABLAS COMO LAS TENÍAMOS EN SQLITE */</span>
+</code></pre></div>
+<h2 id="modificacion-del-conector">Modificación del Conector</h2>
+<p>Como decíamos al inicio, gracias a la <strong>modularidad</strong> que nos ofrece la <strong>arquitectura</strong> de nuestro Proyecto, para poder cambiar el <strong>SGBD</strong> simplemente tendremos que cambiar el archivo <code>ConexionDB</code> e indicarle que nuestra conexión se realizará contra <em>MySQL</em>.</p>
+<p>El primer paso que debemos hacer es <strong>añadir las dependencias</strong> adecuadas a nuestro <code>build.gradle.kts</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">))</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="c1">// Para SQLite</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.xerial:sqlite-jdbc:3.43.0.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="c1">// Para MySQL</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;mysql:mysql-connector-java:8.3.0&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">//MySQL</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Importante</p>
+<p>Si observas que no funciona, prueba a <em>recargar las dependencias</em> del Proyecto desde las herramientas de Gradle.</p>
+</div>
+<p><img alt="Database IntelliJ" src="../../../assets/images/ud03/ud3_10.png" /></p>
+<p>El paso final es modificar el archivo <code>ConexionBD.kt</code> de nuestro proyecto. Buscamos la configuració que teníamos con <strong>SQLite</strong> y añadimos la nueva conexión con <strong>MySQL</strong>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">    </span><span class="c1">// Cambia los valores según tu configuración MySQL</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">HOST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;localhost&quot;</span><span class="w"> </span><span class="c1">// La IP o dominio de tu SGBD</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3306</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">DATABASE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;plantas&quot;</span><span class="w"> </span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;USER&quot;</span><span class="w"> </span><span class="c1">// Cambialo por tu usuario</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;PASSWORD&quot;</span><span class="w"> </span><span class="c1">// Cambialo por tu contraseña</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="c1">// URL JDBC para MySQL</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:mysql://</span><span class="si">$</span><span class="n">HOST</span><span class="s">:</span><span class="si">$</span><span class="n">PORT</span><span class="s">/</span><span class="si">$</span><span class="n">DATABASE</span><span class="s">?useSSL=false&amp;serverTimezone=Europe/Madrid&quot;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getConnection</span><span class="p">():</span><span class="w"> </span><span class="n">Connection? </span><span class="p">{</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">            </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">USER</span><span class="p">,</span><span class="w"> </span><span class="n">PASSWORD</span><span class="p">)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al conectar con la base de datos MySQL: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">            </span><span class="kc">null</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="c1">// Función de prueba: verificar conexión</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">testConnection</span><span class="p">():</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión establecida con éxito&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">            </span><span class="kc">true</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<h2 id="practica-6-migracion-a-mysql-o-postgresql">🎯 <strong>Práctica 6: Migración a Mysql o PostgreSQL</strong></h2>
+<ol>
+<li>Instala MySQL o PostgreSQL, preferiblemente mediante un contenedor Docker, AWS o VirtualBox.</li>
+<li>Migra la base de datos que has creado y la/s tabla/s en el nuevo SGBD con la misma estructura.</li>
 <li>Modifica <code>ConexionBD.kt</code> con los nuevos parámetros de conexión (URL, usuario, contraseña).</li>
 <li>Ejecuta la aplicación. Debería funcionar sin alterar el DAO o la lógica principal.</li>
 </ol>

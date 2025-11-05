@@ -14,11 +14,8 @@ dependencies {
     // Para SQLite
     implementation("org.xerial:sqlite-jdbc:3.43.0.0")
 
-    // Para PostgreSQL (se usará opcionalmente más adelante)
-    // implementation("org.postgresql:postgresql:42.7.1")
-
     // Para MySQL
-    // implementation("mysql:mysql-connector-java:8.3.0") //MySQL
+    implementation("com.mysql:mysql-connector-j:8.3.0")
 }
 
 tasks.test {
