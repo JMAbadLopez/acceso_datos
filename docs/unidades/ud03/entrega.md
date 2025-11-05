@@ -4,26 +4,26 @@ Has construido el núcleo de la aplicación. Ahora es el momento de dar un salto
 
 ## **El Objetivo**
 
-En este punto de control, vamos a ampliar nuestra base de datos para que contenga **al menos dos tablas relacionadas entre sí**. Esto nos obligará a gestionar claves primarias y foráneas, y a crear la lógica necesaria en el código para manejar estas nuevas entidades.
+En este punto de control, vamos a ampliar nuestra base de datos para que contenga **al menos tres tablas relacionadas entre sí**. Esto nos obligará a gestionar claves primarias y foráneas, y a crear la lógica necesaria en el código para manejar estas nuevas entidades.
 
-Por ejemplo, si tu proyecto es sobre **plantas**, una planta pertenece a una **familia**. Si es sobre **videojuegos**, un videojuego es desarrollado por un **estudio**. Si es sobre **recetas**, una receta pertenece a una **categoría** (entrantes, postres, etc.).
+Por ejemplo, si tu proyecto es sobre **plantas**, una planta pertenece a un **jardín**. Si es sobre **videojuegos**, un videojuego es desarrollado por un **estudio**. Si es sobre **recetas**, una receta pertenece a una **categoría** (entrantes, postres, etc.).
 
 ## **Requisitos del Proyecto**
 
 Para superar este punto de control, tu aplicación debe ser funcional y cumplir con lo siguiente:
 
-### **Base de Datos (SQLite):**
+### **Base de Datos (MySQL o PostgreSQL):**
 
-* Debe contener **al menos dos tablas** con una relación lógica entre ellas (ej: `familias` y `plantas`).
-* La relación debe estar correctamente implementada usando una **Clave Primaria (PK)** en la tabla principal (la del "uno") y una **Clave Foránea (FK)** en la tabla secundaria (la del "muchos").
+* Debe contener **al menos tres tablas** con una relación lógica entre ellas (ej: `jardines` y `plantas`).
+* La relación debe estar correctamente implementada usando una **Clave Primaria (PK)** en la tabla principal (la del "uno") y una **Clave Foránea (FK)** en la/s tabla/s secundaria/s (la del "muchos").
 
 ### **Estructura del Código (Kotlin):**
 
 * **Fichero de Conexión:** Un único `ConexionBD.kt` que gestiona el acceso a la base de datos.
-* **Modelos de Datos:** Deberás tener una `data class` por cada tabla de tu base de datos (ej: `Familia.kt` y `Planta.kt`).
-* **Objetos de Acceso a Datos (DAOs):** Deberás tener un fichero DAO por cada modelo (ej: `FamiliaDAO.kt` y `PlantaDAO.kt`).
+* **Modelos de Datos:** Deberás tener una `data class` por cada tabla de tu base de datos (ej: `Jardin.kt` y `Planta.kt`).
+* **Objetos de Acceso a Datos (DAOs):** Deberás tener un fichero DAO por cada modelo (ej: `JardinDAO.kt` y `PlantaDAO.kt`).
 * Ambos DAOs deben implementar las **operaciones CRUD** completas para su respectiva tabla.
-* **Reto extra:** El DAO de la tabla secundaria (la del "muchos", ej: `PlantaDAO`) debe incluir un método adicional para consultar todos los elementos que pertenecen a una entidad principal (ej: `fun obtenerPlantasPorFamilia(idFamilia: Int): List<Planta>`).
+* **Reto extra:** El DAO de la tabla secundaria (la del "muchos", ej: `JardinesDAO`) debe incluir un método adicional para consultar todos los elementos que pertenecen a una entidad principal (ej: `fun obtenerPlantasPorJardin(idFamilia: Int): List<Planta>`).
 
 ### **Aplicación Principal (`Main.kt`):**
 

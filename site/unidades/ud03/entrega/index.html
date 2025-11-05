@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://jmabadlopez.github.io/acceso_datos/site/unidades/ud03/entrega/">
       
       
-        <link rel="prev" href="../avanzados/">
+        <link rel="prev" href="../migracion/">
       
       
       
@@ -738,12 +738,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../avanzados/" class="md-nav__link">
+      <a href="../transacciones/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Conceptos avanzados
+    Transacciones
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migracion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migración del SGBD
     
   </span>
   
@@ -830,9 +853,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#base-de-datos-sqlite" class="md-nav__link">
+  <a href="#base-de-datos-mysql-o-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
-      Base de Datos (SQLite):
+      Base de Datos (MySQL o PostgreSQL):
     </span>
   </a>
   
@@ -940,9 +963,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#base-de-datos-sqlite" class="md-nav__link">
+  <a href="#base-de-datos-mysql-o-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
-      Base de Datos (SQLite):
+      Base de Datos (MySQL o PostgreSQL):
     </span>
   </a>
   
@@ -1002,22 +1025,22 @@
 <h1 id="entrega-aplicacion-crud-funcional">📁 <strong>Entrega: Aplicación CRUD Funcional</strong></h1>
 <p>Has construido el núcleo de la aplicación. Ahora es el momento de dar un salto cualitativo y convertir nuestro proyecto en una aplicación con una estructura de datos más robusta y profesional. Una sola tabla está bien para empezar, pero el verdadero poder de las bases de datos reside en cómo se <strong>relacionan</strong> las distintas informaciones.</p>
 <h2 id="el-objetivo"><strong>El Objetivo</strong></h2>
-<p>En este punto de control, vamos a ampliar nuestra base de datos para que contenga <strong>al menos dos tablas relacionadas entre sí</strong>. Esto nos obligará a gestionar claves primarias y foráneas, y a crear la lógica necesaria en el código para manejar estas nuevas entidades.</p>
-<p>Por ejemplo, si tu proyecto es sobre <strong>plantas</strong>, una planta pertenece a una <strong>familia</strong>. Si es sobre <strong>videojuegos</strong>, un videojuego es desarrollado por un <strong>estudio</strong>. Si es sobre <strong>recetas</strong>, una receta pertenece a una <strong>categoría</strong> (entrantes, postres, etc.).</p>
+<p>En este punto de control, vamos a ampliar nuestra base de datos para que contenga <strong>al menos tres tablas relacionadas entre sí</strong>. Esto nos obligará a gestionar claves primarias y foráneas, y a crear la lógica necesaria en el código para manejar estas nuevas entidades.</p>
+<p>Por ejemplo, si tu proyecto es sobre <strong>plantas</strong>, una planta pertenece a un <strong>jardín</strong>. Si es sobre <strong>videojuegos</strong>, un videojuego es desarrollado por un <strong>estudio</strong>. Si es sobre <strong>recetas</strong>, una receta pertenece a una <strong>categoría</strong> (entrantes, postres, etc.).</p>
 <h2 id="requisitos-del-proyecto"><strong>Requisitos del Proyecto</strong></h2>
 <p>Para superar este punto de control, tu aplicación debe ser funcional y cumplir con lo siguiente:</p>
-<h3 id="base-de-datos-sqlite"><strong>Base de Datos (SQLite):</strong></h3>
+<h3 id="base-de-datos-mysql-o-postgresql"><strong>Base de Datos (MySQL o PostgreSQL):</strong></h3>
 <ul>
-<li>Debe contener <strong>al menos dos tablas</strong> con una relación lógica entre ellas (ej: <code>familias</code> y <code>plantas</code>).</li>
-<li>La relación debe estar correctamente implementada usando una <strong>Clave Primaria (PK)</strong> en la tabla principal (la del "uno") y una <strong>Clave Foránea (FK)</strong> en la tabla secundaria (la del "muchos").</li>
+<li>Debe contener <strong>al menos tres tablas</strong> con una relación lógica entre ellas (ej: <code>jardines</code> y <code>plantas</code>).</li>
+<li>La relación debe estar correctamente implementada usando una <strong>Clave Primaria (PK)</strong> en la tabla principal (la del "uno") y una <strong>Clave Foránea (FK)</strong> en la/s tabla/s secundaria/s (la del "muchos").</li>
 </ul>
 <h3 id="estructura-del-codigo-kotlin"><strong>Estructura del Código (Kotlin):</strong></h3>
 <ul>
 <li><strong>Fichero de Conexión:</strong> Un único <code>ConexionBD.kt</code> que gestiona el acceso a la base de datos.</li>
-<li><strong>Modelos de Datos:</strong> Deberás tener una <code>data class</code> por cada tabla de tu base de datos (ej: <code>Familia.kt</code> y <code>Planta.kt</code>).</li>
-<li><strong>Objetos de Acceso a Datos (DAOs):</strong> Deberás tener un fichero DAO por cada modelo (ej: <code>FamiliaDAO.kt</code> y <code>PlantaDAO.kt</code>).</li>
+<li><strong>Modelos de Datos:</strong> Deberás tener una <code>data class</code> por cada tabla de tu base de datos (ej: <code>Jardin.kt</code> y <code>Planta.kt</code>).</li>
+<li><strong>Objetos de Acceso a Datos (DAOs):</strong> Deberás tener un fichero DAO por cada modelo (ej: <code>JardinDAO.kt</code> y <code>PlantaDAO.kt</code>).</li>
 <li>Ambos DAOs deben implementar las <strong>operaciones CRUD</strong> completas para su respectiva tabla.</li>
-<li><strong>Reto extra:</strong> El DAO de la tabla secundaria (la del "muchos", ej: <code>PlantaDAO</code>) debe incluir un método adicional para consultar todos los elementos que pertenecen a una entidad principal (ej: <code>fun obtenerPlantasPorFamilia(idFamilia: Int): List&lt;Planta&gt;</code>).</li>
+<li><strong>Reto extra:</strong> El DAO de la tabla secundaria (la del "muchos", ej: <code>JardinesDAO</code>) debe incluir un método adicional para consultar todos los elementos que pertenecen a una entidad principal (ej: <code>fun obtenerPlantasPorJardin(idFamilia: Int): List&lt;Planta&gt;</code>).</li>
 </ul>
 <h3 id="aplicacion-principal-mainkt"><strong>Aplicación Principal (<code>Main.kt</code>):</strong></h3>
 <ul>
@@ -1076,7 +1099,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Pie" >
         
           
-          <a href="../avanzados/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Conceptos avanzados">
+          <a href="../migracion/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Migración del SGBD">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1086,7 +1109,7 @@
                 Anterior
               </span>
               <div class="md-ellipsis">
-                Conceptos avanzados
+                Migración del SGBD
               </div>
             </div>
           </a>

@@ -5,6 +5,16 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
+
+fun main() {
+    val conn = ConexionBD.getConnection();
+    if(conn!=null) {
+        println("Conectado correctamente");
+        ConexionBD.closeConnection(conn);
+    }
+
+}
+
 object ConexionBD {
     private val dbPath = "datos/plantas.sqlite" // Modificar según tu fichero
     private val dbFile = File(dbPath)
