@@ -4,7 +4,7 @@ import java.sql.Connection
 import java.sql.SQLException
 
 fun main() {
-    actualizarAlturasConTransaccion(1, 0.9, 3, 0.95)
+    //actualizarAlturasConTransaccion(1, 0.8, 3, 0.9)
     llevarPlantasAJardin(1,1,10)
 }
 

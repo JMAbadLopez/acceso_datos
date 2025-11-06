@@ -4,8 +4,8 @@ import java.sql.Connection
 import java.sql.SQLException
 
 fun main() {
-    /*println("--- LISTAR CON USE ---")
-    listarConUse()*/
+    println("--- LISTAR CON USE ---")
+    listarConUse()
     println("\n--- LISTAR CON FINALLY---")
     listarConFinally()
 }

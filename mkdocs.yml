@@ -20,7 +20,7 @@ nav:
       - Arquitectura de Acceso a Datos (Patrón DAO): unidades/ud03/dao.md
       - Transacciones: unidades/ud03/transacciones.md
       - Migración del SGBD: unidades/ud03/migracion.md
-      - Documentación y entrega final: unidades/ud03/entrega.md
+      - Entrega y documentación final: unidades/ud03/entrega.md
     # - UD4 - Mapeo Objeto Relacional (ORM):
       # - Introducción: unidades/ud04/introduccion.md
 

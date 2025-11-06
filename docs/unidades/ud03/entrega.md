@@ -6,33 +6,59 @@ Has construido el núcleo de la aplicación. Ahora es el momento de dar un salto
 
 En este punto de control, vamos a ampliar nuestra base de datos para que contenga **al menos tres tablas relacionadas entre sí**. Esto nos obligará a gestionar claves primarias y foráneas, y a crear la lógica necesaria en el código para manejar estas nuevas entidades.
 
-Por ejemplo, si tu proyecto es sobre **plantas**, una planta pertenece a un **jardín**. Si es sobre **videojuegos**, un videojuego es desarrollado por un **estudio**. Si es sobre **recetas**, una receta pertenece a una **categoría** (entrantes, postres, etc.).
+Por ejemplo, si tu proyecto es sobre **plantas**, un **jardín** puede tener muchas **plantas** y una **planta** puede estar en varios **jardines** (relación N:N). Si es sobre **videojuegos**, un videojuego es desarrollado por un **estudio** (1:N). Si es sobre **recetas**, una **receta** tiene varios **ingredientes**, un **ingreciente** puede estar en muchas **recetas**, etc.
 
 ## **Requisitos del Proyecto**
 
-Para superar este punto de control, tu aplicación debe ser funcional y cumplir con lo siguiente:
+!!! warning "Requisito imprescindible"
+    No debe existir ningún rastro de los ejemplos o prácticas realizados durante la Unidad. La entrega contendrá sólo los archivos necesarios para tu proyecto: **ConexionBD, Data Classes, DAOs y Main**
 
-### **Base de Datos (MySQL o PostgreSQL):**
+Para superar esta entrega, tu aplicación debe ser funcional y cumplir con lo siguiente:
 
-* Debe contener **al menos tres tablas** con una relación lógica entre ellas (ej: `jardines` y `plantas`).
-* La relación debe estar correctamente implementada usando una **Clave Primaria (PK)** en la tabla principal (la del "uno") y una **Clave Foránea (FK)** en la/s tabla/s secundaria/s (la del "muchos").
+### **Base de Datos (MySQL o PostgreSQL)**
 
-### **Estructura del Código (Kotlin):**
+* Debe contener **al menos tres tablas** con una relación lógica entre ellas (ej: `jardines`, `plantas` y `jardines_plantas`).
+* La relación debe estar correctamente implementada usando una **Clave Primaria (PK)** en la tabla principal (la del "uno") y una **Clave Foránea (FK)** (o varias) en la/s tabla/s secundaria/s (la del "muchos").
+* **Puebla** las tablas de tu proyecto con datos de ejemplo.
+
+### **Estructura del Código (Kotlin)**
 
 * **Fichero de Conexión:** Un único `ConexionBD.kt` que gestiona el acceso a la base de datos.
-* **Modelos de Datos:** Deberás tener una `data class` por cada tabla de tu base de datos (ej: `Jardin.kt` y `Planta.kt`).
-* **Objetos de Acceso a Datos (DAOs):** Deberás tener un fichero DAO por cada modelo (ej: `JardinDAO.kt` y `PlantaDAO.kt`).
-* Ambos DAOs deben implementar las **operaciones CRUD** completas para su respectiva tabla.
-* **Reto extra:** El DAO de la tabla secundaria (la del "muchos", ej: `JardinesDAO`) debe incluir un método adicional para consultar todos los elementos que pertenecen a una entidad principal (ej: `fun obtenerPlantasPorJardin(idFamilia: Int): List<Planta>`).
+* **Modelos de Datos:** Deberás tener una `data class` por cada tabla de tu base de datos (ej: `Jardin.kt`, `Planta.kt` y `JardinesPlantas.kt`).
+* **Objetos de Acceso a Datos (DAOs):** Deberás tener un fichero DAO por cada modelo (ej: `JardinDAO.kt`, `PlantaDAO.kt` y `JardinesPlantasDAO.kt`).
+* Los DAOs deben implementar las **operaciones CRUD** completas para sus respectivas tabla.
+* **Reto extra:** El DAO de la tabla/s secundaria/s (la/s del "muchos", ej: `JardinesPlantasDAO`) debe incluir un método adicional para consultar todos los elementos que pertenecen a una entidad principal (ej: `fun obtenerPlantasPorJardin(idJardin: Int): List<Planta>`).
+* **Aplicación Main:** Se explica en el siguiente punto.
 
 ### **Aplicación Principal (`Main.kt`):**
 
 * El fichero `main` debe demostrar que toda la funcionalidad se ha implementado correctamente. Debe ser capaz de:
-    1. Insertar datos en ambas tablas (ej: crear una familia y luego crear una planta asociada a esa familia).
-    2. Listar todos los elementos de ambas tablas.
-    3. Listar los elementos de la tabla secundaria filtrando por la principal (usando el "reto extra").
-    4. Actualizar un registro de cada tabla.
-    5. Eliminar un registro de cada tabla (¡cuidado con la integridad referencial!).
+    1. **Insertar**, **Actualizar** y **Eliminar** (¡cuidado con la integridad referencial!) datos en todas las tablas (cuidado: por ejemplo, para relacionar plantas y jardines, necesitas tener al menos una inserción en ambas tablas).
+    2. **Listar todos los elementos** de las tablas principales.
+    3. **Listar los elementos de la tabla secundaria** filtrando por la principal (usando el "reto extra").
+
+#### Ejemplo de menú de la aplicación
+
+```text
+--- JARDINES ---
+1. Nuevo jardín
+2. Modificar jardín
+3. Eliminar jardín
+4. Ver jardines
+
+--- PLANTAS ---
+5. Nueva planta
+6. Modificar stock de planta
+7. Eliminar planta
+8. Ver plantas
+
+--- JARDINES Y PLANTAS ---
+9. Añadir planta a jardín
+10. (EXTRA) Listar plantas de un jardín
+11. Salir
+
+Escoge una opción:
+```
 
 ### **Documentación: El Fichero LEEME.md**
 
