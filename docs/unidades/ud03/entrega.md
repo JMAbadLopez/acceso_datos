@@ -20,9 +20,11 @@ Para superar esta entrega, tu aplicación debe ser funcional y cumplir con lo si
 * Debe contener **al menos tres tablas** con una relación lógica entre ellas (ej: `jardines`, `plantas` y `jardines_plantas`).
 * La relación debe estar correctamente implementada usando una **Clave Primaria (PK)** en la tabla principal (la del "uno") y una **Clave Foránea (FK)** (o varias) en la/s tabla/s secundaria/s (la del "muchos").
 * **Puebla** las tablas de tu proyecto con datos de ejemplo.
+* **Exporta la BD a un fichero**. Deberás entregar un fichero `SQL` con la **creación de las tablas y la inserción de los datos**.
 
 ### **Estructura del Código (Kotlin)**
 
+* **Carpeta datos:** Deberá contener un fichero `SQL` con la creación e inserción de datos de tu BD (por ejemplos `datos/plantas.sql`).
 * **Fichero de Conexión:** Un único `ConexionBD.kt` que gestiona el acceso a la base de datos.
 * **Modelos de Datos:** Deberás tener una `data class` por cada tabla de tu base de datos (ej: `Jardin.kt`, `Planta.kt` y `JardinesPlantas.kt`).
 * **Objetos de Acceso a Datos (DAOs):** Deberás tener un fichero DAO por cada modelo (ej: `JardinDAO.kt`, `PlantaDAO.kt` y `JardinesPlantasDAO.kt`).

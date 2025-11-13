@@ -1068,9 +1068,11 @@
 <li>Debe contener <strong>al menos tres tablas</strong> con una relación lógica entre ellas (ej: <code>jardines</code>, <code>plantas</code> y <code>jardines_plantas</code>).</li>
 <li>La relación debe estar correctamente implementada usando una <strong>Clave Primaria (PK)</strong> en la tabla principal (la del "uno") y una <strong>Clave Foránea (FK)</strong> (o varias) en la/s tabla/s secundaria/s (la del "muchos").</li>
 <li><strong>Puebla</strong> las tablas de tu proyecto con datos de ejemplo.</li>
+<li><strong>Exporta la BD a un fichero</strong>. Deberás entregar un fichero <code>SQL</code> con la <strong>creación de las tablas y la inserción de los datos</strong>.</li>
 </ul>
 <h3 id="estructura-del-codigo-kotlin"><strong>Estructura del Código (Kotlin)</strong></h3>
 <ul>
+<li><strong>Carpeta datos:</strong> Deberá contener un fichero <code>SQL</code> con la creación e inserción de datos de tu BD (por ejemplos <code>datos/plantas.sql</code>).</li>
 <li><strong>Fichero de Conexión:</strong> Un único <code>ConexionBD.kt</code> que gestiona el acceso a la base de datos.</li>
 <li><strong>Modelos de Datos:</strong> Deberás tener una <code>data class</code> por cada tabla de tu base de datos (ej: <code>Jardin.kt</code>, <code>Planta.kt</code> y <code>JardinesPlantas.kt</code>).</li>
 <li><strong>Objetos de Acceso a Datos (DAOs):</strong> Deberás tener un fichero DAO por cada modelo (ej: <code>JardinDAO.kt</code>, <code>PlantaDAO.kt</code> y <code>JardinesPlantasDAO.kt</code>).</li>
