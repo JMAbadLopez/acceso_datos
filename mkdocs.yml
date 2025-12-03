@@ -2,7 +2,6 @@ site_name: Acceso a Datos DAM
 site_url: https://jmabadlopez.github.io/acceso_datos/site/
 
 nav:
-  - Inicio: index.md
   - Unidades:
     - UD1 - Programación en el entorno Kotlin.: unidades/ud01/ud01.md
     - UD2 - Persistencia en ficheros:
@@ -21,29 +20,39 @@ nav:
       - Transacciones: unidades/ud03/transacciones.md
       - Migración del SGBD: unidades/ud03/migracion.md
       - Entrega y documentación final: unidades/ud03/entrega.md
-    # - UD4 - Mapeo Objeto Relacional (ORM):
-      # - Introducción: unidades/ud04/introduccion.md
+    - UD4 - Mapeo Objeto Relacional (ORM):
+      - Introducción: unidades/ud04/introduccion.md
+  - Presentación: index.md
 
 repo_url: https://github.com/jmabadlopez/acceso_datos
 repo_name: jmabadlopez/acceso_datos
+
 
 theme:
   name: material
   language: es
   logo: ./assets/images/camp.png
   favicon: ./assets/images/camp.png
-  icon: fontawesome/brands/mastodon
+  icon:
+    previous: fontawesome/solid/angle-left
+    next: fontawesome/solid/angle-right
+  font: 
+    code: Roboto Mono
   hljs_languages:
     - python
     - java
     - c
-    - kotlin
   features:
-    - navigation.top
     - optimize
     - content.code.copy
+    - search.suggest
+    - search.highlight
+    - navigation.top
     - navigation.footer
     - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.path
+
   palette:
     # Palette toggle for light mode
     - scheme: default
@@ -51,7 +60,7 @@ theme:
         icon: material/brightness-7 
         name: Modo oscuro
       primary: orange
-      accent: orange
+      accent: orange 
 
     # Palette toggle for dark mode
     - scheme: slate
@@ -64,16 +73,13 @@ markdown_extensions:
   - sane_lists
   - pymdownx.highlight:
       anchor_linenums: true
-  - pymdownx.superfences
+      linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
   - admonition
-
-
-# plugins:
-#   - to-pdf:
-#       author: José Manuel Abad López
-#       copyright: 🄯 Creative Commons CC BY-SA 4.0 2025
-#       cover_title: Acceso a Datos
-#       cover_subtitle: 2º DAM
-#       toc_title: "Contenidos"
-#       toc_level: 3
-#       output_path: ../public/libro.pdf
+extra:
+  social:
+    - icon: fontawesome/brands/github 
+      link: https://github.com/jmabadlopez/acceso_datos

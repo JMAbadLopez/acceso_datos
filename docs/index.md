@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Acceso a datos DAM
 
 <img src="./assets/images/portada_ad.png" alt="Portada" style="zoom:40%;" />
