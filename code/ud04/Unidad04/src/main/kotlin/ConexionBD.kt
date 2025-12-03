@@ -1,6 +1,9 @@
 package es.gva.edu
 
+import es.gva.edu.schema.Usuarios
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.sql.DriverManager
 import java.sql.SQLException
 
@@ -9,7 +12,7 @@ object ConexionBD {
     // Configuración de la unidad anterior
     private const val HOST = "192.168.56.101"
     private const val PORT = 3306
-    private const val DATABASE = "plantas" // Nombre de nuestra BD
+    private const val DATABASE = "orm" // Nombre de nuestra BD
     private const val USER = "dam"
     private const val PASSWORD = "Dam2526"
 
@@ -21,7 +24,6 @@ object ConexionBD {
 
     /**
      * Intenta establecer la conexión con Exposed e inicializa el esquema de la BD.
-     * (CE b: Configuración de la herramienta ORM)
      */
     fun conectar() {
         try {
@@ -33,7 +35,12 @@ object ConexionBD {
             )
             println("Conexión a MySQL establecida con éxito usando Exposed.")
 
-
+            // Pasamos 'db' para indicar qué conexión usar.
+            transaction(db) {
+                // Crea la tabla 'Usuarios' (y cualquier otra tabla que definamos e importemos)
+                SchemaUtils.create(Usuarios)
+                println("Esquema de la tabla 'Usuarios' verificado/creado.")
+            }
 
         } catch (e: Exception) {
             println("Error al conectar o inicializar la base de datos: ${e.message}")
