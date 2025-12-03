@@ -58,8 +58,8 @@ dependencies {
     // 3. Exposed DAO (Opcional, para el enfoque de Entidades)
     implementation("org.jetbrains.exposed:exposed-dao:0.52.0")
 
-    // 4. Driver JDBC MariaDB (Necesario para conectar con nuestro servidor MySQL)
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.3.3") 
+    // 4. Driver JDBC MySQL (Necesario para conectar con nuestro servidor MySQL)
+    implementation("mysql:mysql-connector-java:8.0.29")
     
     // Dependencia estándar de Kotlin...
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -72,10 +72,18 @@ Vamos a preparar ahora nuestro **Objeto de conexión a la Base de Datos**.
 
 Como vimos en la anterior unidad, este objeto nos facilitará gestionar la manera en la que nos conectamos con nuestro servidor. En nuestro caso, seguiremos trabajando con *MySQL*.
 
-Aquí tienes el código de nuestro objeto **ConexionDB** (ubicado en `ConexionDB.kt`), con la configuración de la unidad anterior y la integración de Exposed.
+Aquí tienes el código de nuestro objeto **ConexionBD** (ubicado en `ConexionBD.kt`), con la configuración de la unidad anterior y la integración de Exposed.
 
 ```kotlin
-object ConexionDB {
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.Table // Importación necesaria para definir la tabla
+import java.sql.DriverManager
+import java.sql.SQLException
+import java.sql.Connection 
+
+object ConexionBD {
     
     // Configuración de la unidad anterior 
     private const val HOST = "IP_HOST"
@@ -86,7 +94,6 @@ object ConexionDB {
     
     // URL JDBC para MySQL, ahora utilizada por Exposed
     private val URL = "jdbc:mysql://$HOST:$PORT/$DATABASE?useSSL=false&serverTimezone=Europe/Madrid"
-    private const val DRIVER = "org.mariadb.jdbc.Driver"
 
     // Propiedad para almacenar la instancia de la base de datos de Exposed
     lateinit var db: Database // LA INSTANCIA DE LA CONEXIÓN EXPOSED
@@ -100,7 +107,6 @@ object ConexionDB {
             // 1. Establece la conexión con la base de datos a través de Exposed
             db = Database.connect(
                 url = URL, 
-                driver = DRIVER, 
                 user = USER, 
                 password = PASSWORD
             )
@@ -109,7 +115,7 @@ object ConexionDB {
         
          
         } catch (e: Exception) {
-            println("❌ Error al conectar o inicializar la base de datos: ${e.message}")
+            println("Error al conectar o inicializar la base de datos: ${e.message}")
             if (e.message?.contains("Communications link failure") == true) {
                 println("   Pista: Asegúrate de que el servidor MySQL está activo y las credenciales son correctas.")
             }
@@ -157,12 +163,12 @@ lateinit var db: Database
 La variable `db` se utiliza como argumento obligatorio en los bloques transaccionales:
 
 ```kotlin
-transaction(<span style="color: blue;">ConexionDB.db</span>) {
+transaction(ConexionBD.db) {
     // Aquí se ejecutan consultas o DDL
 }
 ```
 
-* Al pasar `ConexionDB.db` a la función `transaction()`, aseguramos que Exposed dirija todas las sentencias SQL (INSERT, SELECT, CREATE TABLE) al servidor MySQL que definimos en la `URL`.
+* Al pasar `ConexionBD.db` a la función `transaction()`, aseguramos que Exposed dirija todas las sentencias SQL (INSERT, SELECT, CREATE TABLE) al servidor MySQL que definimos en la `URL`.
 
 ## 🎯 **Práctica 1. Creación del Proyecto y la Base de Datos**
 
