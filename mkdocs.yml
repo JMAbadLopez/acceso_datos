@@ -23,6 +23,8 @@ nav:
     - UD4 - ORM. Mapeo Objeto Relacional:
       - Introducción: unidades/ud04/introduccion.md
       - Creación de esquemas de BD: unidades/ud04/tablas.md
+      - CRUD Básico y Persistencia: unidades/ud04/operaciones.md
+      - Consultas avanzadas con un ORM: unidades/ud04/consultas.md
   - Presentación: index.md
 
 repo_url: https://github.com/jmabadlopez/acceso_datos

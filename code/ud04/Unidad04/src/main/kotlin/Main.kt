@@ -1,5 +1,5 @@
 package es.gva.edu
 
 fun main() {
-    ConexionBD.conectar()
+    ConexionDB.conectar()
 }

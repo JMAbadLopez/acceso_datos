@@ -24,7 +24,7 @@ En Exposed, el **fichero de mapeo** se define como un `object` que hereda de la 
 
 ### Definiendo la Tabla `Usuarios`
 
-Creamos el archivo `Usuarios.kt` que define el mapeo de la tabla `users` con los campos solicitados, especificando los tipos de datos de Exposed.
+Creamos el archivo `Usuarios.kt` que define el mapeo de la tabla `usuarios` con los campos solicitados, especificando los tipos de datos de Exposed.
 
 | Campo SQL | Tipo de Dato en Exposed | Tipo de Dato en Kotlin | Restricciones |
 | :--- | :--- | :--- | :--- |
@@ -74,7 +74,7 @@ object Usuarios : Table("usuarios") {
 
 ## Integración con la Conexión
 
-Ahora debemos asegurar que la tabla `Usuarios` se cree o se verifique cada vez que la aplicación se inicia. Para ello, añadimos lo siguiente en el método `conectar()` de nuestro objeto `ConexionBD`.
+Ahora debemos asegurar que la tabla `Usuarios` se cree o se verifique cada vez que la aplicación se inicia. Para ello, añadimos lo siguiente en el método `conectar()` de nuestro objeto `ConexionDB`.
 
 ```kotlin
     // Pasamos 'db' para indicar qué conexión usar.
@@ -86,9 +86,9 @@ Ahora debemos asegurar que la tabla `Usuarios` se cree o se verifique cada vez q
 ```
 
 !!! success "🔍 Ejecutar y Analizar"
-    Asegúrate de que tu archivo `ConexionBD.kt` incluya la función nueva de `conectar` con la creación del objeto `Usuarios`. **OJO** posiblemente, tendrás que actualizar o importar librerías.
+    Asegúrate de que tu archivo `ConexionDB.kt` incluya la función nueva de `conectar` con la creación del objeto `Usuarios`. **OJO** posiblemente, tendrás que actualizar o importar librerías.
 
-El archivo `ConexionBD.kt` debe ser algo así:
+El archivo `ConexionDB.kt` debe ser algo así:
 
 ```kotlin
 import org.jetbrains.exposed.sql.Database
@@ -97,7 +97,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.sql.DriverManager
 import java.sql.SQLException
 
-object ConexionBD {
+object ConexionDB {
 
     // Configuración de la unidad anterior 
     private const val HOST = "IP_HOST"

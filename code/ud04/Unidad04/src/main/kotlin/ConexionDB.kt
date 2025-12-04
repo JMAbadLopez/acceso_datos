@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.sql.DriverManager
 import java.sql.SQLException
 
-object ConexionBD {
+object ConexionDB {
 
     // Configuración de la unidad anterior
     private const val HOST = "192.168.56.101"

@@ -14,7 +14,7 @@
         <link rel="prev" href="../introduccion/">
       
       
-        <link rel="next" href="../../..">
+        <link rel="next" href="../operaciones/">
       
       
       <link rel="icon" href="../../../assets/images/camp.png">
@@ -972,6 +972,52 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operaciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CRUD Básico y Persistencia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consultas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Consultas avanzadas con un ORM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1169,7 +1215,7 @@
 <p><strong>Modularidad:</strong> Separar estas definiciones en archivos específicos (<code>Usuarios.kt</code>, <code>Productos.kt</code>, etc.) es la mejor práctica para mantener el proyecto organizado y escalable. Además, podemos incluirlas dentro de un <em>package</em>, por ejemplo, <strong>schemas</strong>.</p>
 </blockquote>
 <h3 id="definiendo-la-tabla-usuarios">Definiendo la Tabla <code>Usuarios</code></h3>
-<p>Creamos el archivo <code>Usuarios.kt</code> que define el mapeo de la tabla <code>users</code> con los campos solicitados, especificando los tipos de datos de Exposed.</p>
+<p>Creamos el archivo <code>Usuarios.kt</code> que define el mapeo de la tabla <code>usuarios</code> con los campos solicitados, especificando los tipos de datos de Exposed.</p>
 <table>
 <thead>
 <tr>
@@ -1278,7 +1324,7 @@
 <a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="integracion-con-la-conexion">Integración con la Conexión</h2>
-<p>Ahora debemos asegurar que la tabla <code>Usuarios</code> se cree o se verifique cada vez que la aplicación se inicia. Para ello, añadimos lo siguiente en el método <code>conectar()</code> de nuestro objeto <code>ConexionBD</code>.</p>
+<p>Ahora debemos asegurar que la tabla <code>Usuarios</code> se cree o se verifique cada vez que la aplicación se inicia. Para ello, añadimos lo siguiente en el método <code>conectar()</code> de nuestro objeto <code>ConexionDB</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span>
@@ -1293,9 +1339,9 @@
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
 <p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Asegúrate de que tu archivo <code>ConexionBD.kt</code> incluya la función nueva de <code>conectar</code> con la creación del objeto <code>Usuarios</code>. <strong>OJO</strong> posiblemente, tendrás que actualizar o importar librerías.</p>
+<p>Asegúrate de que tu archivo <code>ConexionDB.kt</code> incluya la función nueva de <code>conectar</code> con la creación del objeto <code>Usuarios</code>. <strong>OJO</strong> posiblemente, tendrás que actualizar o importar librerías.</p>
 </div>
-<p>El archivo <code>ConexionBD.kt</code> debe ser algo así:</p>
+<p>El archivo <code>ConexionDB.kt</code> debe ser algo así:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
@@ -1365,7 +1411,7 @@
 <a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.DriverManager</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span>
 <a id="__codelineno-2-6" name="__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="kd">object</span><span class="w"> </span><span class="nc">ConexionBD</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="kd">object</span><span class="w"> </span><span class="nc">ConexionDB</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-8" name="__codelineno-2-8"></a>
 <a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="c1">// Configuración de la unidad anterior </span>
 <a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">HOST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;IP_HOST&quot;</span>
@@ -1488,13 +1534,13 @@
         
         
           
-          <a href="../../.." class="md-footer__link md-footer__link--next" aria-label="Siguiente: Presentación">
+          <a href="../operaciones/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: CRUD Básico y Persistencia">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Siguiente
               </span>
               <div class="md-ellipsis">
-                Presentación
+                CRUD Básico y Persistencia
               </div>
             </div>
             <div class="md-footer__button md-icon">

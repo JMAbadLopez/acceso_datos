@@ -79,7 +79,7 @@ Vamos a preparar ahora nuestro **Objeto de conexión a la Base de Datos**.
 
 Como vimos en la anterior unidad, este objeto nos facilitará gestionar la manera en la que nos conectamos con nuestro servidor. En nuestro caso, seguiremos trabajando con *MySQL*.
 
-Aquí tienes el código de nuestro objeto **ConexionBD** (ubicado en `ConexionBD.kt`), con la configuración de la unidad anterior y la integración de Exposed.
+Aquí tienes el código de nuestro objeto **ConexionDB** (ubicado en `ConexionDB.kt`), con la configuración de la unidad anterior y la integración de Exposed.
 
 ```kotlin
 import org.jetbrains.exposed.sql.Database
@@ -90,7 +90,7 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.sql.Connection 
 
-object ConexionBD {
+object ConexionDB {
     
     // Configuración de la unidad anterior 
     private const val HOST = "IP_HOST"
@@ -162,7 +162,7 @@ lateinit var db: Database
 ##### ¿Por qué `lateinit`?
 
 * **Definición:** `lateinit` es una palabra clave de Kotlin que significa "inicialización tardía" (*late initialization*).
-* **Necesidad:** La conexión a la base de datos es una operación de E/S que ocurre **después** de que el objeto `ConexionBD` se construye, específicamente dentro de la función `conectar()`.
+* **Necesidad:** La conexión a la base de datos es una operación de E/S que ocurre **después** de que el objeto `ConexionDB` se construye, específicamente dentro de la función `conectar()`.
 * **Solución:** Al usar `lateinit`, le decimos al compilador de Kotlin: "Confía en mí, esta variable será inicializada con un valor válido antes de que sea utilizada por primera vez." Esto evita errores de compilación sin forzarnos a declarar la variable como `null` o inicializarla con un valor falso.
 
 ##### Uso dentro de Exposed: La Transacción
@@ -170,12 +170,12 @@ lateinit var db: Database
 La variable `db` se utiliza como argumento obligatorio en los bloques transaccionales:
 
 ```kotlin
-transaction(ConexionBD.db) {
+transaction(ConexionDB.db) {
     // Aquí se ejecutan consultas o DDL
 }
 ```
 
-* Al pasar `ConexionBD.db` a la función `transaction()`, aseguramos que Exposed dirija todas las sentencias SQL (INSERT, SELECT, CREATE TABLE) al servidor MySQL que definimos en la `URL`.
+* Al pasar `ConexionDB.db` a la función `transaction()`, aseguramos que Exposed dirija todas las sentencias SQL (INSERT, SELECT, CREATE TABLE) al servidor MySQL que definimos en la `URL`.
 
 ## 🎯 **Práctica 1. Creación del Proyecto y la Base de Datos**
 
