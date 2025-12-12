@@ -1,6 +1,5 @@
 package es.gva.edu
 
-import es.gva.edu.schema.Usuarios
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction

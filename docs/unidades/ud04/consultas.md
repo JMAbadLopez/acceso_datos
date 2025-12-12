@@ -23,17 +23,12 @@ Exposed proporciona operadores idiomáticos que reemplazan a los operadores SQL:
 Vamos a crear una función que busque usuarios que hayan nacido antes de un año específico (por ejemplo, mayores de 25 años).
 
 ```kotlin
-import Usuarios
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.LocalDate
-
 fun obtenerUsuariosMayoresQue(fechaLimite: LocalDate): List<UsuarioDTO> {
-    
+
     return transaction(ConexionDB.db) {
-        
+
         // WHERE fecha_nacimiento < 'fechaLimite'
-        Usuarios.select { Usuarios.fechaNacimiento less fechaLimite }
+        Usuarios.selectAll().where { Usuarios.fechaNacimiento less fechaLimite }
             .map { resultRow ->
                 // Mapeamos el resultado a nuestro DTO
                 UsuarioDTO(
@@ -47,29 +42,43 @@ fun obtenerUsuariosMayoresQue(fechaLimite: LocalDate): List<UsuarioDTO> {
 }
 ```
 
+!!! success "🔍 Ejecutar y Analizar"
+    Crea un archivo `Consultas.kt` con las consultas que veamos en esta sección. Llama a la función `obtenerUsuariosMayoresQue` desde tu `main` para obtener datos de la tabla.
+
+```kotlin
+fun main() {
+
+    ConexionDB.conectar()
+
+    val fechaLimite = LocalDate.of(2001, 1, 1)
+    val consulta = obtenerUsuariosMayoresQue(fechaLimite)
+
+    consulta.forEach { usuario ->
+        println("ID: ${usuario.id} | Nombre: ${usuario.nombre} | Email: ${usuario.mail}")
+    }
+
+
+}
+```
+
 ## 2. Combinación de Condiciones (`AND`, `OR`)
 
 Podemos combinar múltiples condiciones utilizando los operadores de Kotlin **`and`** y **`or`** entre las expresiones.
 
 ### 2.1. Ejemplo: Usuarios con Nombre y Edad
 
-Buscamos usuarios cuyo nombre empiece por 'A' **Y** que hayan nacido después del año 2000.
+Buscamos usuarios cuyo nombre empiece por 'I' **Y** que hayan nacido después del año 2000.
 
 ```kotlin
-import Usuarios
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.transactions.transaction
-import java.time.LocalDate
-
 fun buscarUsuariosPorFiltro(): List<UsuarioDTO> {
     val limiteNacimiento = LocalDate.of(2000, 1, 1)
-    
+
     return transaction(ConexionDB.db) {
-        
-        // WHERE nombre LIKE 'A%' AND fecha_nacimiento > '2000-01-01'
-        Usuarios.select { 
-            (Usuarios.nombre like "A%") and (Usuarios.fechaNacimiento greater limiteNacimiento)
-        }.map { resultRow -> 
+
+        // WHERE nombre LIKE 'I%' AND fecha_nacimiento > '2000-01-01'
+        Usuarios.selectAll()
+            .where { (Usuarios.nombre like "A%") and (Usuarios.fechaNacimiento greater limiteNacimiento) }
+            .map { resultRow ->
             // ... (Mapeo a UsuarioDTO)
             UsuarioDTO(
                 id = resultRow[Usuarios.id],
@@ -82,6 +91,17 @@ fun buscarUsuariosPorFiltro(): List<UsuarioDTO> {
 }
 ```
 
+!!! success "🔍 Ejecutar y Analizar"
+    Añade la consulta a tu `main`.
+
+```kotlin
+    val consultaFiltro = buscarUsuariosPorFiltro()
+
+    consultaFiltro.forEach { usuario ->
+        println("ID: ${usuario.id} | Nombre: ${usuario.nombre} | Email: ${usuario.mail}")
+    }
+```
+
 ## 3. Consultas con Ordenación (`ORDER BY`)
 
 Para ordenar los resultados, utilizamos el método `.orderBy()` después de la selección.
@@ -91,11 +111,6 @@ Para ordenar los resultados, utilizamos el método `.orderBy()` después de la s
 Listamos todos los usuarios ordenados por su fecha de nacimiento (los más jóvenes primero).
 
 ```kotlin
-import Usuarios
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.transactions.transaction
-
 fun obtenerUsuariosOrdenadosPorNacimiento(): List<UsuarioDTO> {
     
     return transaction(ConexionDB.db) {
@@ -114,6 +129,17 @@ fun obtenerUsuariosOrdenadosPorNacimiento(): List<UsuarioDTO> {
             }.toList()
     }
 }
+```
+
+!!! success "🔍 Ejecutar y Analizar"
+    Añade la consulta a tu `main`.
+
+```kotlin
+    val consultaOrdenacion = obtenerUsuariosOrdenadosPorNacimiento()
+
+    consultaOrdenacion.forEach { usuario ->
+        println("ID: ${usuario.id} | Nombre: ${usuario.nombre} | Email: ${usuario.mail}")
+    }
 ```
 
 ## 🎯 Práctica 4. Consultas Avanzadas
