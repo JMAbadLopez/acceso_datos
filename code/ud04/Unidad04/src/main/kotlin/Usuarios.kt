@@ -1,12 +1,13 @@
-package es.gva.edu.schema
+package es.gva.edu
 
-import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
+import java.time.LocalDate
 
 /**
  * Define la tabla 'usuarios' en la base de datos (CE c: Fichero de mapeo).
- * Hereda de [Table] de Exposed. Cada propiedad es una columna.
+ * Hereda de [org.jetbrains.exposed.sql.Table] de Exposed. Cada propiedad es una columna.
  */
 object Usuarios : Table("usuarios") {
 
@@ -23,7 +24,7 @@ object Usuarios : Table("usuarios") {
     val password: Column<String> = varchar("password", 255)
 
     // 5. Fecha de Nacimiento: (DATE)
-    val fechaNacimiento: Column<java.time.LocalDate> = date("fecha_nacimiento")
+    val fechaNacimiento: Column<LocalDate> = date("fecha_nacimiento")
 
     // 6. Definición explícita de la clave primaria para Exposed
     override val primaryKey = PrimaryKey(id)

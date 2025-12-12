@@ -26,6 +26,7 @@ La inserción es el primer mecanismo de persistencia. Utilizamos el método `ins
 ```kotlin
 import Usuarios // Importamos el objeto de la tabla
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 
 fun insertarUsuario(nombre: String, mail: String, passwordHash: String, fechaNac: LocalDate) {
@@ -34,10 +35,10 @@ fun insertarUsuario(nombre: String, mail: String, passwordHash: String, fechaNac
         // 1. Ejecutamos la función insert en el objeto de la tabla
         val idGenerado = Usuarios.insert {
             // CE d: Aplicamos mecanismos de persistencia a los objetos
-            it[nombre] = nombre
-            it[mail] = mail
-            it[password] = passwordHash
-            it[fechaNacimiento] = fechaNac // Uso del LocalDate
+            it[Usuarios.nombre] = nombre
+            it[Usuarios.mail] = mail
+            it[Usuarios.password] = passwordHash
+            it[Usuarios.fechaNacimiento] = fechaNac // Uso del LocalDate
         } get Usuarios.id // Capturamos el ID que genera MySQL (AutoIncrement)
         
         println("Usuario '$nombre' insertado con ID: $idGenerado")
@@ -48,18 +49,15 @@ fun insertarUsuario(nombre: String, mail: String, passwordHash: String, fechaNac
 ### 2.2 Uso Práctico
 
 !!! success "🔍 Ejecutar y Analizar"
-    Llama a la función `insertarUsuario` desde tu `main` para añadir datos a la tabla.
+    Crea un archivo `Operaciones.kt` con las operaciones CRUD. Llama a la función `insertarUsuario` desde tu `main` para añadir datos a la tabla.
 
 ```kotlin
-import ConexionDB // Importa tu objeto de conexión
-import java.time.LocalDate
-
 fun main() {
     ConexionDB.conectar()
     
-    insertarUsuario("Atenea", "atenea@mail.com", "hash123", LocalDate.of(1995, 5, 20))
-    insertarUsuario("Hera", "hera@mail.com", "hash456", LocalDate.of(1990, 10, 15))
-    insertarUsuario("Iris", "iris@mail.com", "hash789", LocalDate.of(2001, 1, 1))
+    insertarUsuario("Atenea", "atenea@mail.com", "hash123", LocalDate.of(1999, 5, 20))
+    insertarUsuario("Hera", "hera@mail.com", "hash456", LocalDate.of(2004, 10, 15))
+    insertarUsuario("Iris", "iris@mail.com", "hash789", LocalDate.of(2005, 1, 1))
 }
 ```
 
@@ -71,9 +69,9 @@ Para recuperar datos, usamos el método `selectAll()` y luego transformamos cada
 
 Primero, definimos una clase de datos simple para almacenar el resultado, manteniendo la coherencia objeto-relacional.
 
-```kotlin
-import java.time.LocalDate
+Cada objeto de la `data class UsuarioDTO` va a funcionar como un espacio en el que volquemos el resultado de cada **fila (row)** de nuestra tabla, mientras se recorre.
 
+```kotlin
 data class UsuarioDTO( // Data Transfer Object (DTO)
     val id: Int,
     val nombre: String,
@@ -85,7 +83,6 @@ data class UsuarioDTO( // Data Transfer Object (DTO)
 ### 3.2 Código de Lectura
 
 ```kotlin
-import Usuarios
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -110,7 +107,7 @@ fun obtenerTodosLosUsuarios(): List<UsuarioDTO> {
 ### 3.3 Uso Práctico
 
 !!! success "🔍 Ejecutar y Analizar"
-    Añade esta llamada al `main` después de las inserciones.
+    Añade esta llamada al `main`. Recuerda **comentar las inserciones**, pues dará un error porque hemos definido el `mail` como un campo único en la BD.
 
 ```kotlin
 // ... (código en main)
@@ -136,13 +133,13 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 fun actualizarMail(usuarioId: Int, nuevoMail: String) {
     transaction(ConexionDB.db) {
-        
+
         // 1. Usamos la función update y le pasamos la condición 'where'
         val filasAfectadas = Usuarios.update({ Usuarios.id eq usuarioId }) {
             // CE e: Modificamos el objeto persistente
-            it[mail] = nuevoMail 
+            it[Usuarios.mail] = nuevoMail
         }
-        
+
         if (filasAfectadas > 0) {
             println("Usuario ID $usuarioId actualizado. Nuevo email: $nuevoMail")
         } else {
@@ -150,6 +147,17 @@ fun actualizarMail(usuarioId: Int, nuevoMail: String) {
         }
     }
 }
+```
+
+### 4.2 Uso Práctico
+
+!!! success "🔍 Ejecutar y Analizar"
+    Añade esta llamada al `main` después del listado. Luego comprueba si ha cambiado en la **Base de Datos**.
+
+```kotlin
+// ... (código en main)
+actualizarMail(1, "atena@olympus.com")
+// ...
 ```
 
 ## 5. Operación D: Eliminación (Borrar Registros)
@@ -177,6 +185,17 @@ fun eliminarUsuario(usuarioId: Int) {
         }
     }
 }
+```
+
+### 5.2 Uso Práctico
+
+!!! success "🔍 Ejecutar y Analizar"
+    Añade esta llamada al `main` después de la actualización. Luego comprueba si se ha eliminado en la **Base de Datos**.
+
+```kotlin
+// ... (código en main)
+actualizarMail(1, "atena@olympus.com")
+// ...
 ```
 
 ---
