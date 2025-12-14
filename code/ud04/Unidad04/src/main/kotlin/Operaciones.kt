@@ -19,9 +19,9 @@ fun main() {
 
     ConexionDB.conectar()
 
-    //insertarUsuario("Atenea", "atenea@mail.com", "hash123", LocalDate.of(1999, 5, 20))
-    //insertarUsuario("Hera", "hera@mail.com", "hash456", LocalDate.of(2004, 10, 15))
-    //insertarUsuario("Iris", "iris@mail.com", "hash789", LocalDate.of(2005, 1, 1))
+    insertarUsuario("Atenea", "atenea@mail.com", "hash123", LocalDate.of(1999, 5, 20))
+    insertarUsuario("Hera", "hera@mail.com", "hash456", LocalDate.of(2004, 10, 15))
+    insertarUsuario("Iris", "iris@mail.com", "hash789", LocalDate.of(2005, 1, 1))
 
     println("\n--- LISTADO DE USUARIOS ---")
     val listaUsuarios = obtenerTodosLosUsuarios()

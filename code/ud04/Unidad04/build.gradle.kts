@@ -3,10 +3,21 @@ plugins {
 }
 
 group = "es.gva.edu"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+// Define el archivo JAR
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "es.gva.edu.Mainkt" // ¡Importante! Reemplaza esto con tu clase principal
+    }
+    // Copia todas las dependencias al JAR
+    configurations["compileClasspath"].forEach { file: File ->
+        from(zipTree(file))
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 dependencies {
