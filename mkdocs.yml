@@ -25,7 +25,11 @@ nav:
       - Creación de esquemas de BD: unidades/ud04/tablas.md
       - CRUD Básico y Persistencia: unidades/ud04/operaciones.md
       - Consultas avanzadas con un ORM: unidades/ud04/consultas.md
+    - UD5 - Diseño de componentes. API REST:
+      - Introducción: unidades/ud05/introduccion.md
+      - Configuración del entorno y persistencia: unidades/ud05/configuracion_persistencia.md
   - Presentación: index.md
+  - Recursos: recursos/guion_ud5.md
 
 repo_url: https://github.com/jmabadlopez/acceso_datos
 repo_name: jmabadlopez/acceso_datos
