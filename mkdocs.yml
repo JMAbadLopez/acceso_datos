@@ -29,8 +29,8 @@ nav:
       - Introducción: unidades/ud05/introduccion.md
       - Configuración del entorno y persistencia: unidades/ud05/configuracion_persistencia.md
       - Capa de dominio y de servicio: unidades/ud05/servicio.md
+      - Rutas. Implementación del CRUD completo: unidades/ud05/rutas.md
   - Presentación: index.md
-  - Recursos: recursos/guion_ud5.md
 
 repo_url: https://github.com/jmabadlopez/acceso_datos
 repo_name: jmabadlopez/acceso_datos
