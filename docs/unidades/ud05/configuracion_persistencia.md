@@ -310,6 +310,7 @@ src/main/kotlin/com/tu.proyecto/
 │   └── UsuariosDAO.kt   // M: CRUD con Exposed
 ├── domain/
 │   └── UsuarioDTO.kt    // M: Modelo de datos serializable
+│   └── LocalDateSerializer.kt // Ayudante de serialización
 ├── plugins/
 │   ├── Serialization.kt // V: Configuración JSON
 │   └── Routing.kt       // C: Rutas de la API
@@ -319,6 +320,7 @@ src/main/kotlin/com/tu.proyecto/
 ## 🎯 Práctica 2. Preparando las conexiones y la estructura del proyecto
 
 !!! warning "🎯 Práctica para Aplicar"
-    1. Verifica que tu estructura de carpetas coincide con el árbol modular mostrado arriba.
-    2. Asegúrate de que `Application.kt` llama tanto a la base de datos como a los plugins de serialización y routing.
-    3. Ejecuta el proyecto. Si ves los logs de Ktor sin errores, ¡tu arquitectura MVC está lista!
+    1. Sigue los pasos de creación de toda la estructura y componentes de Persistencia del Proyecto.
+    2. Verifica que tu estructura de carpetas coincide con el árbol modular mostrado arriba.
+    3. Asegúrate de que `Application.kt` llama tanto a la base de datos como a los plugins de serialización y routing.
+    4. Ejecuta el proyecto. Si ves los logs de Ktor sin errores, ¡tu arquitectura MVC está lista!

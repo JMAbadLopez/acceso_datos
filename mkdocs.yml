@@ -28,6 +28,7 @@ nav:
     - UD5 - Diseño de componentes. API REST:
       - Introducción: unidades/ud05/introduccion.md
       - Configuración del entorno y persistencia: unidades/ud05/configuracion_persistencia.md
+      - Capa de dominio y de servicio: unidades/ud05/servicio.md
   - Presentación: index.md
   - Recursos: recursos/guion_ud5.md
 

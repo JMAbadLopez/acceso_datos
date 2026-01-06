@@ -14,7 +14,7 @@
         <link rel="prev" href="../introduccion/">
       
       
-        <link rel="next" href="../../..">
+        <link rel="next" href="../servicio/">
       
       
       <link rel="icon" href="../../../assets/images/camp.png">
@@ -1264,6 +1264,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../servicio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Capa de dominio y de servicio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2006,7 +2029,8 @@
 <span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-10-10">10</a></span>
 <span class="normal"><a href="#__codelineno-10-11">11</a></span>
-<span class="normal"><a href="#__codelineno-10-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>src/main/kotlin/com/tu.proyecto/
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>src/main/kotlin/com/tu.proyecto/
 <a id="__codelineno-10-2" name="__codelineno-10-2"></a>├── core/
 <a id="__codelineno-10-3" name="__codelineno-10-3"></a>│   └── ConexionDB.kt    // M: Conexión y Schema
 <a id="__codelineno-10-4" name="__codelineno-10-4"></a>├── data/
@@ -2014,15 +2038,17 @@
 <a id="__codelineno-10-6" name="__codelineno-10-6"></a>│   └── UsuariosDAO.kt   // M: CRUD con Exposed
 <a id="__codelineno-10-7" name="__codelineno-10-7"></a>├── domain/
 <a id="__codelineno-10-8" name="__codelineno-10-8"></a>│   └── UsuarioDTO.kt    // M: Modelo de datos serializable
-<a id="__codelineno-10-9" name="__codelineno-10-9"></a>├── plugins/
-<a id="__codelineno-10-10" name="__codelineno-10-10"></a>│   ├── Serialization.kt // V: Configuración JSON
-<a id="__codelineno-10-11" name="__codelineno-10-11"></a>│   └── Routing.kt       // C: Rutas de la API
-<a id="__codelineno-10-12" name="__codelineno-10-12"></a>└── Application.kt       // Unión de capas
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>│   └── LocalDateSerializer.kt // Ayudante de serialización
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>├── plugins/
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a>│   ├── Serialization.kt // V: Configuración JSON
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>│   └── Routing.kt       // C: Rutas de la API
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a>└── Application.kt       // Unión de capas
 </code></pre></div></td></tr></table></div>
 <h2 id="practica-2-preparando-las-conexiones-y-la-estructura-del-proyecto">🎯 Práctica 2. Preparando las conexiones y la estructura del proyecto</h2>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica para Aplicar</p>
 <ol>
+<li>Sigue los pasos de creación de toda la estructura y componentes de Persistencia del Proyecto.</li>
 <li>Verifica que tu estructura de carpetas coincide con el árbol modular mostrado arriba.</li>
 <li>Asegúrate de que <code>Application.kt</code> llama tanto a la base de datos como a los plugins de serialización y routing.</li>
 <li>Ejecuta el proyecto. Si ves los logs de Ktor sin errores, ¡tu arquitectura MVC está lista!</li>
@@ -2080,13 +2106,13 @@
         
         
           
-          <a href="../../.." class="md-footer__link md-footer__link--next" aria-label="Siguiente: Presentación">
+          <a href="../servicio/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Capa de dominio y de servicio">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Siguiente
               </span>
               <div class="md-ellipsis">
-                Presentación
+                Capa de dominio y de servicio
               </div>
             </div>
             <div class="md-footer__button md-icon">
