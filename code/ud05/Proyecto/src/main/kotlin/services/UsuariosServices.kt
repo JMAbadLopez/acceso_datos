@@ -10,6 +10,16 @@ import edu.gva.es.domain.UsuarioDTO
 object UsuariosService {
 
     /**
+     * Valida las credenciales de un usuario.
+     * @return El usuario si el email y password coinciden, null en caso contrario.
+     */
+    fun buscarPorEmail(mail: String, pass: String): UsuarioDTO? {
+        val usuario = UsuariosDAO.seleccionarPorEmail(mail)
+        // Regla de negocio: Validamos la contraseña en la capa de servicio
+        return if (usuario != null && usuario.password == pass) usuario else null
+    }
+
+    /**
      * Obtiene todos los usuarios. Podría aplicar filtros o lógica adicional.
      */
     fun listarUsuarios(): List<UsuarioDTO> {

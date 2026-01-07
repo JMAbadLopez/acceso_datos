@@ -27,6 +27,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-config-yaml")
 
+
     // 2. EXPOSED: Nuestro ORM
 
     implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
@@ -39,7 +40,8 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.29")
 
     // 4. LOGGING: Para ver qué pasa en el servidor
-    implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jvm:${ktor_version}")
+    implementation("io.ktor:ktor-server-sessions-jvm:${ktor_version}")
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
 
     testImplementation("io.ktor:ktor-server-test-host")

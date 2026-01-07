@@ -46,4 +46,10 @@ object UsuariosDAO {
     fun eliminar(id: Int) = transaction {
         Usuarios.deleteWhere { Usuarios.id eq id }
     }
+
+    fun seleccionarPorEmail(email: String): UsuarioDTO? = transaction {
+        Usuarios.selectAll().where { Usuarios.mail eq email }
+            .map { it.toUsuarioDTO() }
+            .singleOrNull()
+    }
 }

@@ -1,6 +1,7 @@
 package edu.gva.es
 
 import edu.gva.es.plugins.configureRouting
+import edu.gva.es.plugins.configureSecurity
 import edu.gva.es.plugins.configureSerialization
 import io.ktor.server.application.*
 
@@ -14,5 +15,6 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureSerialization()
+    configureSecurity()      // INSTALACIÓN DEL GUARDIÁN (Auth y Sesiones)
     configureRouting()
 }
