@@ -87,7 +87,7 @@ object UsuariosService {
 
 ## 3 El Contrato de API: DTOs Serializables
 
-Como vimos en el módulo 5.2, el **UsuarioDTO** es nuestro contrato. Es la promesa de cómo se ven los datos tanto para el cliente (Frontend) como para el servidor.
+Como vimos, el **UsuarioDTO** es nuestro contrato. Es la promesa de cómo se ven los datos tanto para el cliente (Frontend) como para el servidor.
 
 !!! success "🔍 Recordatorio del Modelo de Dominio"
     Asegúrate de que tu `UsuarioDTO.kt` sea el único objeto que viaja entre el Servicio y el Controlador. Esto mantiene la **Capa de Datos** (Tablas y Rows) totalmente oculta para el exterior.
