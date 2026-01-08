@@ -116,9 +116,9 @@ object ConexionDB {
                 user = USER, 
                 password = PASSWORD
             )
-            println("✅ Conexión establecida con éxito en $HOST")
+            println("Conexión establecida con éxito en $HOST")
         } catch (e: Exception) {
-            println("❌ Error al conectar con la base de datos: ${e.message}")
+            println("Error al conectar con la base de datos: ${e.message}")
         }
     }
 }
@@ -248,7 +248,7 @@ data class UsuarioDTO(
     El DAO encapsula todas las operaciones sobre la tabla. Observa la función `actualizar`, que permite modificar registros por su ID.
 
 ```kotlin
-import edu.gva.es.domain.UsuarioDTO
+import com.tu.proyecto.domain.UsuarioDTO
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.selectAll
