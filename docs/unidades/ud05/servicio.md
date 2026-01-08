@@ -1,4 +1,4 @@
-# Capa de Dominio y Servicios (CE d)
+# Capa de Dominio y Servicios
 
 En los apartados anteriores hemos construido los cimientos (Base de Datos) y las herramientas de traducción (JSON). Ahora vamos a crear la **Capa de Servicio**, el lugar donde reside la lógica de nuestra aplicación.
 
@@ -32,10 +32,10 @@ El Servicio es el "empleado" que recibe órdenes del Controlador y utiliza al "e
     Crea el archivo `UsuariosService.kt` en la carpeta `services`. Observa cómo esta capa gestiona la lógica antes de tocar la base de datos.
 
 ```kotlin
-package edu.gva.es.services
+package com.tu.proyecto.servicesf
 
-import edu.gva.es.data.UsuariosDAO
-import edu.gva.es.domain.UsuarioDTO
+import com.tu.proyecto.data.UsuariosDAO
+import com.tu.proyecto.domain.UsuarioDTO
 
 /**
  * Capa de Servicio: Aquí reside la lógica de negocio.
