@@ -1407,7 +1407,7 @@
 <span class="normal"><a href="#__codelineno-0-48">48</a></span>
 <span class="normal"><a href="#__codelineno-0-49">49</a></span>
 <span class="normal"><a href="#__codelineno-0-50">50</a></span>
-<span class="normal"><a href="#__codelineno-0-51">51</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.tu.proyecto.servicesf</span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.tu.proyecto.services</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.tu.proyecto.data.UsuariosDAO</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.tu.proyecto.domain.UsuarioDTO</span>
@@ -1459,6 +1459,10 @@
 <a id="__codelineno-0-50" name="__codelineno-0-50"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-0-51" name="__codelineno-0-51"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Recuerda</p>
+<p><strong>TODA</strong> la lógica de negocio (reglas de validación, seguridad de datos, búsquedas previas, etc.) se realiza en la capa de Servicio (en el Controlador) y <strong>no en el DAO</strong>.</p>
+</div>
 <h2 id="3-el-contrato-de-api-dtos-serializables">3 El Contrato de API: DTOs Serializables</h2>
 <p>Como vimos, el <strong>UsuarioDTO</strong> es nuestro contrato. Es la promesa de cómo se ven los datos tanto para el cliente (Frontend) como para el servidor.</p>
 <div class="admonition success">

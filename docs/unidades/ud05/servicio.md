@@ -32,7 +32,7 @@ El Servicio es el "empleado" que recibe órdenes del Controlador y utiliza al "e
     Crea el archivo `UsuariosService.kt` en la carpeta `services`. Observa cómo esta capa gestiona la lógica antes de tocar la base de datos.
 
 ```kotlin
-package com.tu.proyecto.servicesf
+package com.tu.proyecto.services
 
 import com.tu.proyecto.data.UsuariosDAO
 import com.tu.proyecto.domain.UsuarioDTO
@@ -84,6 +84,9 @@ object UsuariosService {
     }
 }
 ```
+
+!!! warning "Recuerda"
+    **TODA** la lógica de negocio (reglas de validación, seguridad de datos, búsquedas previas, etc.) se realiza en la capa de Servicio (en el Controlador) y **no en el DAO**.
 
 ## 3 El Contrato de API: DTOs Serializables
 
