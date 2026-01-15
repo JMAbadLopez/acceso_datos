@@ -283,7 +283,7 @@ src/main/kotlin/com/tu.proyecto/
 !!! warning "Tarea de Verificación Total"
     Para completar esta unidad, debes validar que cada componente de la arquitectura cumple su función. Sigue este orden estrictamente:
 
-    1. **Verificación de Estructura:** Comprueba que tienes los 10 archivos principales distribuidos en los 6 paquetes (`core`, `data`, `domain`, `services`, `routes`, `plugins`) tal como indica el esquema superior.
+    1. **Verificación de Estructura:** Comprueba que tienes los archivos principales distribuidos en los 6 paquetes (`core`, `data`, `domain`, `services`, `routes`, `plugins`) tal como indica el esquema superior.
     2. **Verificación de Arranque:** Ejecuta la aplicación y confirma que en los logs de la consola aparece tanto la conexión exitosa a MySQL como el inicio del motor Netty sin errores de "MissingPlugin".
     3. **Test de Intrusión (Fallo esperado):** Abre Postman e intenta borrar un usuario (`DELETE /usuarios/1`). 
         * *Resultado esperado:* Código **401 Unauthorized**. Si el borrado funciona, revisa el bloque `authenticate`.

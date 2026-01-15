@@ -14,7 +14,7 @@
         <link rel="prev" href="../rutas/">
       
       
-        <link rel="next" href="../../..">
+        <link rel="next" href="../despliegue/">
       
       
       <link rel="icon" href="../../../assets/images/camp.png">
@@ -1275,6 +1275,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../despliegue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Arquitectura y despliegue
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1896,7 +1919,7 @@
 <p class="admonition-title">Tarea de Verificación Total</p>
 <p>Para completar esta unidad, debes validar que cada componente de la arquitectura cumple su función. Sigue este orden estrictamente:</p>
 <ol>
-<li><strong>Verificación de Estructura:</strong> Comprueba que tienes los 10 archivos principales distribuidos en los 6 paquetes (<code>core</code>, <code>data</code>, <code>domain</code>, <code>services</code>, <code>routes</code>, <code>plugins</code>) tal como indica el esquema superior.</li>
+<li><strong>Verificación de Estructura:</strong> Comprueba que tienes los archivos principales distribuidos en los 6 paquetes (<code>core</code>, <code>data</code>, <code>domain</code>, <code>services</code>, <code>routes</code>, <code>plugins</code>) tal como indica el esquema superior.</li>
 <li><strong>Verificación de Arranque:</strong> Ejecuta la aplicación y confirma que en los logs de la consola aparece tanto la conexión exitosa a MySQL como el inicio del motor Netty sin errores de "MissingPlugin".</li>
 <li><strong>Test de Intrusión (Fallo esperado):</strong> Abre Postman e intenta borrar un usuario (<code>DELETE /usuarios/1</code>). <ul>
 <li><em>Resultado esperado:</em> Código <strong>401 Unauthorized</strong>. Si el borrado funciona, revisa el bloque <code>authenticate</code>.</li>
@@ -1969,13 +1992,13 @@
         
         
           
-          <a href="../../.." class="md-footer__link md-footer__link--next" aria-label="Siguiente: Presentación">
+          <a href="../despliegue/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Arquitectura y despliegue">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Siguiente
               </span>
               <div class="md-ellipsis">
-                Presentación
+                Arquitectura y despliegue
               </div>
             </div>
             <div class="md-footer__button md-icon">
