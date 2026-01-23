@@ -1,4 +1,4 @@
-# Proyecto Intermodular: Desarrollo de Backend Seguro y Escalable
+# 💡Proyecto Intermodular: Desarrollo de Backend Seguro y Escalable
 
 Este documento constituye el enunciado oficial para el proyecto del módulo, integrando los conocimientos adquiridos en la **Unidad 4 (Mapeo Objeto Relacional)** y la **Unidad 5 (Diseño de componentes API REST)**.
 
@@ -23,11 +23,11 @@ El equipo debe realizar una labor de síntesis explicando los fundamentos tecnol
 * **Modelado de Datos:** Importancia de la integridad referencial y la normalización.
 * **Arquitectura API REST:** Explicación del protocolo HTTP, el patrón **MVC** (Modelo-Vista-Controlador) y la importancia de la asincronía en servidores modernos con **Ktor**.
 
-## 4. Diseño de Datos (Unidad 4)
+## 4. Diseño de Datos
 
 Se debe definir el universo de datos que manejará la aplicación.
 
-* **Esquema Relacional:** Descripción detallada de las tablas, atributos, tipos de datos y relaciones (1:N, N:M).
+* **Esquema Relacional:** Descripción y diagramas detallados de las tablas, atributos, tipos de datos y relaciones (1:N, N:M).
 * **Código SQL:** Script completo para la creación de la base de datos en un entorno **MySQL / MariaDB**.
 
 ```sql
@@ -45,7 +45,7 @@ CREATE TABLE usuarios (
 -- Añadir el resto de tablas del modelo
 ```
 
-## 5. Desarrollo del Backend Funcional (Unidad 5)
+## 5. Desarrollo del Backend Funcional
 
 El núcleo del proyecto consiste en un servidor funcional escrito en **Kotlin** que cumpla con los siguientes requisitos técnicos:
 
@@ -63,10 +63,11 @@ El código debe estar organizado estrictamente por capas:
 * Implementación de **Session Authentication**.
 * Protección de rutas: las operaciones de escritura (POST, PUT, DELETE) deben requerir una sesión activa.
 
-### 5.3 Despliegue
+### 5.3 Arquitectura y Despliegue
 
-* Configuración de **Gradle** para la generación del ejecutable (ShadowJar).
-* El servidor debe ser capaz de correr de forma independiente y conectar con la BD MySQL.
+* **Arquitectura:** Diagrama de la arquitectura del servidor.
+* **Gradle:** Configuración de **Gradle** para la generación del ejecutable (ShadowJar).
+* **Despliegue:** El servidor debe ser capaz de correr de forma independiente y conectar con la BD MySQL.
 
 ## 6. Documentación de la API
 
@@ -76,13 +77,56 @@ Se debe incluir una guía de uso para los desarrolladores de la App Cliente. Est
 * **Cuerpo de petición/respuesta:** Ejemplos reales de JSON. ¿Qué envío? ¿Qué recibo?
 * **Códigos de Estado:** Qué responde la API en caso de éxito (200, 201) o error (400, 401, 404).
 
-* **Ejemplos:**
+Aquí tenéis una guía de cómo desarrollar la documentación de la API en Markdown:
 
-| Método | Ruta | Acción | Protegido | 
-| ----- | ----- | ----- | ----- | 
-| POST | `/auth/login` | Inicio de sesión | No | 
-| GET | `/usuarios` | Lista de usuarios | No | 
-| DELETE | `/usuarios/{id}` | Borrado de usuario | **SÍ** | 
+[Guía de documentación de la API](https://andros.dev/blog/e6a134c6/ejemplo-en-markdown-de-como-documentar-una-api/)
+
+### 6.1 Ejemplo de documentación de la API en markdown
+
+````markdown
+# API Documentation
+
+## Endpoints clients
+
+### `/api/v1/clients/`
+
+GET - List all clients
+
+#### Parameters
+
+Nothing
+
+#### Request body
+
+```json
+{}
+```
+
+#### Response
+
+```json
+[
+    {
+        "id": 1,
+        "alias": "Client 1",
+        "name": "Client 1 description",
+        "logo": {
+            "dark": "http://localhost:8000/media/clients/1/logo_dark.png",
+            "light": "http://localhost:8000/media/clients/1/logo_light.png"
+        },
+    },
+    {
+        "id": 2,
+        "alias": "Client 2",
+        "name": "Client 2 description",
+        "logo": {
+            "dark": "http://localhost:8000/media/clients/2/logo_dark.png",
+            "light": "http://localhost:8000/media/clients/2/logo_light.png"
+        },
+    }
+]
+```
+```` 
 
 ## 7. Conexión con la App Cliente
 
@@ -105,4 +149,5 @@ Reflexión final sobre el proceso de desarrollo.
 1. **Memoria Técnica (PDF):** Con todos los puntos anteriores desarrollados.
 2. **Backend Funcional:** Código fuente en un repositorio o carpeta comprimida.
 3. **Script SQL:** Para la recreación del entorno.
-4. **Demostración:** Verificación de los endpoints mediante Postman.
+4. **README.md:** Documentación de la API.
+5. **Demostración:** Verificación de los endpoints mediante Postman.

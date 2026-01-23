@@ -32,7 +32,7 @@ nav:
       - Rutas. Implementación del CRUD completo: unidades/ud05/rutas.md
       - Autenticación y Sesiones: unidades/ud05/autenticacion_sesiones.md
       - Arquitectura y despliegue: unidades/ud05/despliegue.md
-      - Proyecto Final: unidades/proyecto/proyecto.md
+      - 💡Proyecto Final: unidades/proyecto/proyecto.md
   - Presentación: index.md
 
 repo_url: https://github.com/jmabadlopez/acceso_datos
