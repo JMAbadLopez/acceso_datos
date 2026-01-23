@@ -2,6 +2,8 @@ package edu.gva.es.services
 
 import edu.gva.es.data.UsuariosDAO
 import edu.gva.es.domain.UsuarioDTO
+import edu.gva.es.domain.UsuarioPublicoDTO
+import edu.gva.es.domain.toPublico
 
 /**
  * Capa de Servicio: Aquí reside la lógica de negocio.
@@ -22,15 +24,15 @@ object UsuariosService {
     /**
      * Obtiene todos los usuarios. Podría aplicar filtros o lógica adicional.
      */
-    fun listarUsuarios(): List<UsuarioDTO> {
-        return UsuariosDAO.seleccionarTodos()
+    fun listarUsuarios(): List<UsuarioPublicoDTO> {
+        return UsuariosDAO.seleccionarTodos().map{ it.toPublico() }
     }
 
     /**
      * Busca un usuario por ID.
      */
-    fun buscarPorId(id: Int): UsuarioDTO? {
-        return UsuariosDAO.seleccionarPorId(id)
+    fun buscarPorId(id: Int): UsuarioPublicoDTO? {
+        return UsuariosDAO.seleccionarPorId(id)?.toPublico()
     }
 
     /**
