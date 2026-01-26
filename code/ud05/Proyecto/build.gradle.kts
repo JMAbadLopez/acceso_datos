@@ -43,6 +43,7 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jvm:${ktor_version}")
     implementation("io.ktor:ktor-server-sessions-jvm:${ktor_version}")
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
 
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
