@@ -146,9 +146,12 @@
 }
 
 /* Tabs de navegación superior — naranja más oscuro */
+/* Forzamos --md-primary-bg-color a blanco para que el indicador activo sea blanco */
 .md-tabs {
     background-color: #b85e3a !important;
     border-bottom: 1px solid #924929;
+    --md-primary-bg-color: #ffffff;
+    --md-primary-bg-color--light: rgba(255, 255, 255, 0.70);
 }
 
 /* Tabs — texto base blanco semitransparente */
@@ -161,24 +164,12 @@
 .md-tabs__link:hover {
     color: #ffffff !important;
     opacity: 1;
-}
-
-/* Indicador de tab activa — línea inferior blanca */
-.md-tabs__link--active {
     border-bottom-color: #ffffff !important;
 }
 
-.md-tabs__link--active::after {
+.md-tabs__link--active::after,
+.md-tabs__link:hover::after {
     background-color: #ffffff !important;
-}
-
-/* Indicador de hover — línea inferior blanca semitransparente */
-.md-tabs__link:not(.md-tabs__link--active):hover::after {
-    background-color: rgba(255, 255, 255, 0.60) !important;
-}
-
-.md-tabs__link:not(.md-tabs__link--active):hover {
-    border-bottom-color: rgba(255, 255, 255, 0.60) !important;
 }
 
 /* Todos los elementos de la barra superior — oscuros */
