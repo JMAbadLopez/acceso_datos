@@ -159,8 +159,9 @@
     color: rgba(255, 255, 255, 0.75) !important;
 }
 
-/* Tab activa y hover — blanco puro */
+/* Tab activa: el active puede estar en el <li> o en el <a> según versión */
 .md-tabs__link--active,
+.md-tabs__item--active .md-tabs__link,
 .md-tabs__link:hover {
     color: #ffffff !important;
     opacity: 1;
@@ -168,21 +169,24 @@
 }
 
 .md-tabs__link--active::after,
+.md-tabs__item--active .md-tabs__link::after,
 .md-tabs__link:hover::after {
     background-color: #ffffff !important;
 }
 
-/* Todos los elementos de la barra superior — oscuros */
+/* Todos los elementos de la barra superior — blancos */
 .md-header__button,
 .md-header__topic,
 .md-header__title,
 .md-header__source,
 .md-header .md-icon,
-.md-header nav a {
-    color: #2b2b2b !important;
+.md-header nav a,
+.md-tabs,
+.md-tabs * {
+    color: #ffffff !important;
 }
 
-/* Icono de búsqueda — oscuro para contrastar con el input claro */
+/* Icono de la lupa — oscuro para contrastar con el input claro */
 .md-header [data-md-component="search"] .md-search__icon,
 .md-search__icon {
     color: #2b2b2b !important;
