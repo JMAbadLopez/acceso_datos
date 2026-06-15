@@ -27,12 +27,7 @@ El módulo tiene como objetivo que el alumnado adquiera las competencias necesar
 | UD3 | [Persistencia en Bases de Datos](unidades/ud03/introduccion.md) |
 | UD4 | [ORM. Mapeo Objeto Relacional](unidades/ud04/introduccion.md) |
 | UD5 | [Diseño de componentes. API REST](unidades/ud05/introduccion.md) |
-
-### Proyecto Final
-
-| | |
-| :--- | :--- |
-| Proyecto intermodular | [Enunciado y criterios de evaluación](unidades/proyecto/proyecto.md) |
+| Proyecto intermodular | [Desarrollo de Backend](unidades/proyecto/proyecto.md) |
 
 ---
 
