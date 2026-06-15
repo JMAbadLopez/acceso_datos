@@ -1,4 +1,7 @@
-# 📁 **Entrega: Aplicación CRUD Funcional**
+# Entrega: Aplicación CRUD Funcional
+
+!!! danger "📁 Entrega Final"
+    Esta es la entrega definitiva de la UD3. El proyecto debe ejecutarse sin errores para poder ser calificado.
 
 Has construido el núcleo de la aplicación. Ahora es el momento de dar un salto cualitativo y convertir nuestro proyecto en una aplicación con una estructura de datos más robusta y profesional. Una sola tabla está bien para empezar, pero el verdadero poder de las bases de datos reside en cómo se **relacionan** las distintas informaciones.
 

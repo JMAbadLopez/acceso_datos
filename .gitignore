@@ -13,3 +13,11 @@ idea/
 # OS generated files #
 *.DS_Store
 Thumbs.db
+
+# MkDocs generated site (regenerar con: mkdocs build)
+site/
+site.zip
+
+# Archivos temporales de Word/LibreOffice
+~$*
+*.~lock.*

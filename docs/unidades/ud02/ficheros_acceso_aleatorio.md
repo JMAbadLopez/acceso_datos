@@ -173,7 +173,8 @@ fun leerMediciones(ruta: Path) {
 }
 ```
 
-🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
 
 ```bash
 Medición (ID: 101) escrita correctamente.
@@ -266,7 +267,8 @@ Se vuelve a llamar a `leerMediciones` para comprobar que la información del sen
 leerMediciones(rutaFichero)
 ```
 
-🔍 **Realiza los siguientes pasos:**
+!!! success "🔍 Ejecutar y Analizar"
+    Realiza los siguientes pasos:
 
 * Añade el código de la función `actualizarMedicion()` al proyecto del ejemplo anterior.
 * Comenta en el `main` las llamadas a la función `escribirMedicion()`.
@@ -385,7 +387,8 @@ Se vuelve a llamar a `leerMediciones` para comprobar que la información del sen
 leerMediciones(rutaFichero)
 ```
 
-🔍 **Realiza los siguientes pasos:**
+!!! success "🔍 Ejecutar y Analizar"
+    Realiza los siguientes pasos:
 
 * Añade el código de la función `eliminarMedicion()` al ejemplo anterior.
 * Comenta en el `main` la llamada a la función `actualizarMedicion()`.
@@ -412,7 +415,8 @@ Medición (ID: 104) escrita correctamente.
 
 ---
 
-## 🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat
+!!! warning "🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat"
+
 
 Realiza lo siguiente:
 

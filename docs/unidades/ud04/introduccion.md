@@ -1,4 +1,19 @@
-# UD4 - Mapeo Objeto Relacional (ORM)
+# UD4 — Mapeo Objeto Relacional (ORM)
+
+!!! abstract "Resultado de Aprendizaje"
+    **RA3** — Gestiona la persistencia de los datos mediante herramientas de mapeo objeto-relacional (ORM), desarrollando aplicaciones que la utilizan.
+
+## Objetivos de la Unidad
+
+| # | Objetivo |
+| :---: | :--- |
+| 1 | Comprender qué es un ORM y las ventajas de Kotlin Exposed frente a JDBC puro |
+| 2 | Configurar Exposed en un proyecto Kotlin con Gradle |
+| 3 | Definir esquemas de base de datos mediante clases Kotlin (`Table`, `IntIdTable`) |
+| 4 | Ejecutar operaciones CRUD utilizando el DSL y el DAO de Exposed |
+| 5 | Realizar consultas avanzadas, filtros y joins con Exposed |
+
+---
 
 ## Guía de Uso
 

@@ -1,31 +1,48 @@
 ---
 hide:
   - navigation
+  - toc
 ---
 
-# Acceso a datos DAM
+# Módulo de Acceso a Datos — 2º DAM
 
-## Descripción
+**IES Camp de Morvedre · Ciclo Formativo de Grado Superior · Desarrollo de Aplicaciones Multiplataforma**
 
-Material del módulo de **Acceso a Datos de 2º de DAM del IES CAMP DE MORVEDRE**.
+---
 
-| Fecha      | Versión | Descripción                                |
-| ---------- | ------- | ------------------------------------------ |
-| 19/09/2025 | 1.0.0   | Adaptación del material. Estructura web con **mkdocs**.|
-| 06/01/2026 | 1.1.0   | Ampliación de unidades 3, 4 y 5|
+Este sitio recoge el material didáctico completo del módulo de **Acceso a Datos** de **2º de DAM**. Aquí encontrarás las unidades teóricas y los recursos de apoyo que se utilizan a lo largo del curso.
 
-## Enlaces de interés
+El módulo tiene como objetivo que el alumnado adquiera las competencias necesarias para desarrollar software con persistencia de datos: desde el manejo de ficheros hasta el diseño de APIs REST, pasando por el acceso a bases de datos con JDBC, el mapeo objeto-relacional con ORM y la programación en Kotlin.
 
-* Todo el material está disponible en el [repositorio del módulo](https://github.com/jmabadlopez/acceso_datos)
+---
 
-## Autoría y revisión
+## Contenidos del Módulo
 
-1. Las unidades **1,2 y 3** están realizadas por **Begoña Paterna** basado en materiales de **Alicia Salvador**. Adaptado, revisado y ampliado por **José Manuel Abad López**.
-2. Las unidades **4 y 5** creadas por **José Manuel Abad López**.
+### Unidades Didácticas (Teoría)
 
-Publicada bajo licencia [Creative Commons Atribución/Reconocimiento-CompartirIgual 4.0 Internacional](https://creativecommons.org/licenses/by-sa/4.0/deed.es)
+| Unidad | Título |
+| :---: | :--- |
+| UD1 | [Programación en el entorno Kotlin](unidades/ud01/ud01.md) |
+| UD2 | [Persistencia en ficheros](unidades/ud02/introduccion.md) |
+| UD3 | [Persistencia en Bases de Datos](unidades/ud03/introduccion.md) |
+| UD4 | [ORM. Mapeo Objeto Relacional](unidades/ud04/introduccion.md) |
+| UD5 | [Diseño de componentes. API REST](unidades/ud05/introduccion.md) |
 
-## Repositorio y contacto
+### Proyecto Final
 
-<https://jmabadlopez.github.io>
-<jmabadlopez@edu.gva.es>
+| | |
+| :--- | :--- |
+| Proyecto integrador | [Enunciado y criterios de evaluación](unidades/proyecto/proyecto.md) |
+
+---
+
+## Autoría
+
+Este material ha sido elaborado y es mantenido por **José Manuel Abad López** — docente del IES Camp de Morvedre.
+
+- 📧 <jm.abadlopez@edu.gva.es>
+- 🌐 <https://jmabadlopez.github.io>
+
+Las unidades UD1, UD2 y UD3 están basadas en el trabajo original de **Begoña Paterna** (a partir de materiales de **Alicia Salvador**), adaptadas y ampliadas para el presente curso. Las unidades UD4 y UD5 han sido creadas íntegramente por José Manuel Abad López.
+
+Distribuido bajo licencia [Creative Commons CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).

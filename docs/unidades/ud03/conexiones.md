@@ -8,7 +8,7 @@ Existen dos estrategias principales para interactuar con una base de datos:
 
 * **ORM (Object-Relational Mapping)**: Herramientas como *Hibernate* o *Exposed* que mapean tablas a clases de código, permitiendo trabajar con objetos en lugar de escribir SQL directamente.
   
-> **Algunos ejemplos de ORMs**
+!!! info "Algunos ejemplos de ORMs"
 >
 > ORM / Framework| Lenguaje| Descripción
 > ---------------|---------|-----------------
@@ -48,7 +48,7 @@ De todas las formas posibles de interactuar con una base de datos, nos vamos a c
 * Requiere gestionar manualmente conexiones, sentencias y resultados.
 * Se necesita un driver específico (conector) para cada SGBD.
 
-> **Algunos ejemplos de conectores**
+!!! info "Algunos ejemplos de conectores"
 >
 > SGBD|Conector (Driver JDBC)|URL de conexión típica
 > ----|-------------------------|-----------------------
@@ -93,7 +93,8 @@ dependencies {
 
 Una buena práctica es centralizar la lógica de conexión en un único objeto. Esto facilita el mantenimiento, ya que cualquier cambio en la configuración solo requiere modificar un fichero.
 
-🔍 **Ejecutar y Analizar: Conexión Básica**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecutar y Analizar: Conexión Básica
 
 El siguiente código muestra una conexión directa en un **proyecto en Kotlin** a una base de datos **SQLite**, en concreto `plantas.sqlite`. Ejecútalo para comprobar que se establece la comunicación.
 
@@ -180,7 +181,8 @@ fun main() {
 }
 ```
 
-## 🎯 **Práctica 2: Implementar el Gestor de Conexión**
+!!! warning "🎯 Práctica 2: Implementar el Gestor de Conexión"
+
 
 1. Crea un nuevo fichero `ConexionBD.kt` en tu proyecto.
 2. Implementa el `object` anterior, modificando `dbPath` para que apunte a tu fichero `.sqlite`.

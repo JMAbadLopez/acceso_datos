@@ -1,4 +1,19 @@
-# Unidad 5. Diseño de componentes. API REST
+# UD5 — Diseño de Componentes. API REST
+
+!!! abstract "Resultado de Aprendizaje"
+    **RA5** — Desarrolla componentes de acceso a datos, diseñando e implementando aplicaciones que gestionan la información almacenada mediante APIs REST.
+
+## Objetivos de la Unidad
+
+| # | Objetivo |
+| :---: | :--- |
+| 1 | Comprender los principios REST y el patrón MVC aplicado a Ktor/Exposed |
+| 2 | Configurar un proyecto Ktor con los plugins necesarios (Routing, ContentNegotiation, Serialization) |
+| 3 | Integrar la capa de persistencia (Exposed) con la capa de negocio (Servicio) y la de presentación (Rutas) |
+| 4 | Implementar un CRUD completo en una API REST con Ktor |
+| 5 | Gestionar autenticación, sesiones y despliegue de la API |
+
+---
 
 ## Guía de Uso
 

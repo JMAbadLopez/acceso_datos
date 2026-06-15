@@ -1,9 +1,9 @@
 site_name: Acceso a Datos DAM
-site_url: https://jmabadlopez.github.io/acceso_datos/site/
+site_url: https://jmabadlopez.github.io/acceso_datos/
 
 nav:
   - Unidades:
-    - UD1 - Programación en el entorno Kotlin.: unidades/ud01/ud01.md
+    - UD1 - Programación en el entorno Kotlin: unidades/ud01/ud01.md
     - UD2 - Persistencia en ficheros:
       - Introducción: unidades/ud02/introduccion.md
       - Ficheros y directorios: unidades/ud02/ficheros_directorios.md
@@ -32,12 +32,11 @@ nav:
       - Rutas. Implementación del CRUD completo: unidades/ud05/rutas.md
       - Autenticación y Sesiones: unidades/ud05/autenticacion_sesiones.md
       - Arquitectura y despliegue: unidades/ud05/despliegue.md
-      - 💡Proyecto Final: unidades/proyecto/proyecto.md
+      - Proyecto Final: unidades/proyecto/proyecto.md
   - Presentación: index.md
 
-repo_url: https://github.com/jmabadlopez/acceso_datos
-repo_name: jmabadlopez/acceso_datos
-
+repo_url: https://github.com/JMAbadLopez/acceso_datos
+repo_name: JMAbadLopez/acceso_datos
 
 theme:
   name: material
@@ -47,12 +46,8 @@ theme:
   icon:
     previous: fontawesome/solid/angle-left
     next: fontawesome/solid/angle-right
-  font: 
+  font:
     code: Roboto Mono
-  hljs_languages:
-    - python
-    - java
-    - c
   features:
     - optimize
     - content.code.copy
@@ -65,23 +60,27 @@ theme:
     - navigation.path
 
   palette:
-    # Palette toggle for light mode
     - scheme: default
       toggle:
-        icon: material/brightness-7 
+        icon: material/brightness-7
         name: Modo oscuro
-      primary: orange
-      accent: orange 
+      primary: black
+      accent: black
 
-    # Palette toggle for dark mode
     - scheme: slate
       toggle:
         icon: material/brightness-4
         name: Modo claro
-      primary: orange
-      accent: orange
+      primary: black
+      accent: black
+
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - sane_lists
+  - admonition
+  - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
       linenums: true
@@ -89,8 +88,13 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-  - admonition
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+
 extra:
   social:
-    - icon: fontawesome/brands/github 
-      link: https://github.com/jmabadlopez/acceso_datos
+    - icon: fontawesome/brands/github
+      link: https://github.com/JMAbadLopez/acceso_datos

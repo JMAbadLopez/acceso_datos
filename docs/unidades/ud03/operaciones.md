@@ -28,7 +28,8 @@ Método|Uso principal|Tipo de sentencia SQL|Resultado que devuelve
 * **Seguridad con `PreparedStatement`**: Se debe utilizar **siempre** `PreparedStatement` para ejecutar consultas con datos variables. A diferencia de `Statement`, precompila la sentencia SQL y trata los parámetros como datos, no como código ejecutable, previniendo así ataques de **Inyección SQL**.
 * **Gestión de Recursos con `.use`**: Es **imprescindible** cerrar los recursos JDBC (`Connection`, `Statement`, `ResultSet`). La función de extensión `.use` de Kotlin es la forma recomendada, ya que asegura el cierre automático del recurso.
 
-🔍 **Ejecutar y Analizar: Gestión de Recursos con y sin .use**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecutar y Analizar: Gestión de Recursos con y sin .use
 
 Compara las dos siguientes funciones. Ambas hacen lo mismo, pero la versión con `.use` es más concisa y segura.
 

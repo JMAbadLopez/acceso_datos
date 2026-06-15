@@ -1,4 +1,7 @@
-# 7. 📁 **Entrega y documentación final**
+# Entrega y Documentación Final
+
+!!! danger "📁 Entrega Final"
+    Esta es la entrega definitiva de la UD2. El proyecto entregado deberá ejecutarse sin errores; si no compila o da error de ejecución no podrá ser calificado.
 
 ## El proyecto
 

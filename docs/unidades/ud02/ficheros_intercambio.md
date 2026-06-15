@@ -91,7 +91,8 @@ fun main() {
 }
 ```
 
-🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
 
 ```bash
 Persona serializada.
@@ -260,7 +261,8 @@ fun escribirDatosCSV(ruta: Path, plantas: List<Planta>) {
 }
 ```
 
-🔍 **Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.csv` y que su contenido es correcto:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.csv` y que su contenido es correcto:
 
 ```bash
   - ID: 1, Nombre común: Aloe Vera, Nombre científico: Aloe barbadensis miller, Frecuencia de riego: 7 días, Altura: 0.6 metros
@@ -417,7 +419,8 @@ fun escribirDatosXML(ruta: Path, plantas: List<PlantaXML>) {
 }
 ```
 
-🔍 **Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.xml` y que su contenido es correcto:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.xml` y que su contenido es correcto:
 
 ```bash
   - ID: 1, Nombre común: Aloe Vera, Nombre científico: Aloe barbadensis miller, Frecuencia de riego: 7 días, Altura: 0.6 metros
@@ -564,7 +567,8 @@ fun escribirDatosJSON(ruta: Path, plantas: List<PlantaJSON>) {
 }
 ```
 
-🔍 **Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.json` y que su contenido es correcto:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero `mis_plantas2.json` y que su contenido es correcto:
 
 ```bash
   - ID: 1, Nombre común: Aloe Vera, Nombre científico: Aloe barbadensis miller, Frecuencia de riego: 7 días, Altura: 0.6 metros
@@ -584,11 +588,13 @@ Una vez vistas las características de los ficheros de intercambio de informaci�
 
 El patrón para convertir datos de un formato a otro es casi siempre el mismo. En lugar de intentar una conversión directa, utilizamos nuestras clases de Kotlin (`data class`) como un paso intermedio universal: **Formato Origen → Objetos Kotlin en Memoria → Formato Destino**
 
-> 🔍 **Realiza algunas conversiones entre ficheros CSV, JSON y XML para practicar la lectura / escritura y la serialización / deserialización. Puedes reutilizar el código de los ejemplos.**
+!!! success "🔍 Ejecutar y Analizar"
+    Realiza algunas conversiones entre ficheros CSV, JSON y XML para practicar la lectura / escritura y la serialización / deserialización. Puedes reutilizar el código de los ejemplos.
 
 ---
 
-## 🎯 Práctica 3: Creación y lectura de un fichero de datos
+!!! warning "🎯 Práctica 3: Creación y lectura de un fichero de datos"
+
 
 Abre tu _proyecto creado en la práctica 2_ . Realiza lo siguiente:
 
@@ -604,6 +610,6 @@ Abre tu _proyecto creado en la práctica 2_ . Realiza lo siguiente:
 
 ---
 
-## 📁 Entrega parcial
+!!! danger "📁 Entrega parcial"
 
 Entrega el código fuente del proyecto comprimido en un fichero `.zip` para que el profesor te dé sugerencias de mejora (el programa entregado deberá ejecutarse, si da error de ejecución, no se podrá revisar).

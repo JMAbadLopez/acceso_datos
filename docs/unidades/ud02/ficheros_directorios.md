@@ -27,7 +27,8 @@ fun main() {
     println ("Ruta absoluta: " + rutaAbsolutaNix)
 }
 ```
-🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
 ```
 Ruta relativa: documentos\ejemplo.txt
 Ruta absoluta: F:\kot\1-ficheros\documentos\ejemplo.txt
@@ -95,7 +96,8 @@ fun main() {
     }
 }
 ```
-🔍 **Crea una carpeta, dentro de tu proyecto llamada `multimedia` y guarda diferentes archivos (_pdf, jpg, txt, etc._). Ejecuta el ejemplo anterior y comprueba que la salida es parecida a la siguiente.**
+!!! success "🔍 Ejecutar y Analizar"
+    Crea una carpeta, dentro de tu proyecto llamada `multimedia` y guarda diferentes archivos (_pdf, jpg, txt, etc._). Ejecuta el ejemplo anterior y comprueba que la salida es parecida a la siguiente.
 
 ```
 --- Iniciando la organización de la carpeta: multimedia---
@@ -172,7 +174,8 @@ fun main() {
     }
 }
 ```
-🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
 ```
 --- Mostrando la estructura final con Files.walk() ---
     [DIR] jpg
@@ -194,7 +197,7 @@ fun main() {
 
 ---
 
-### 🎯 Práctica 2: Directorios y comprobaciones
+!!! warning "🎯 Práctica 2: Directorios y comprobaciones"
 Prepara **la estructura de tu proyecto**. Crea la ruta `proyecto/datos`. Basándote en los ejemplos anteriores, **desarrolla un programa** en tu proyecto haga lo siguiente:
 
 1. **Defina dos rutas**: una para una carpeta llamada `datos_ini` y otra para una carpeta llamada `datos_fin` (ambas dentro de la carpeta `proyecto/datos` de tu proyecto).

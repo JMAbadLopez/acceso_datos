@@ -1,16 +1,33 @@
-# UD3 - Persistencia en Bases de Datos Relacionales
+# UD3 — Persistencia en Bases de Datos Relacionales
 
-<img src="../../../assets/images/ud03/portada_ud03.png" alt="Portada Unidad 3" style="zoom: 50%;" />
+!!! abstract "Resultado de Aprendizaje"
+    **RA2** — Desarrolla aplicaciones que gestionan información almacenada en bases de datos relacionales, manteniendo la integridad y consistencia de los datos.
+
+## Objetivos de la Unidad
+
+| # | Objetivo |
+| :---: | :--- |
+| 1 | Comprender el modelo relacional y los fundamentos del lenguaje SQL (CRUD) |
+| 2 | Configurar la conexión a una base de datos desde Kotlin mediante JDBC |
+| 3 | Ejecutar operaciones CRUD utilizando `PreparedStatement` de forma segura |
+| 4 | Implementar el patrón DAO para separar la lógica de acceso a datos |
+| 5 | Gestionar transacciones para garantizar la integridad de los datos |
+| 6 | Migrar la aplicación entre distintos SGBD (SQLite → MySQL/PostgreSQL) |
+
+---
 
 ## Guía de Uso
 
-Estos apuntes están diseñados para un aprendizaje práctico. A lo largo de la unidad se aplicarán los conceptos teóricos para construir, paso a paso, una aplicación completa de gestión de datos. La temática de la aplicación es de libre elección, pero la estructura y los pasos a seguir serán comunes.
+Estos apuntes están diseñados para un aprendizaje práctico. A lo largo de la unidad se aplicarán los conceptos teóricos para construir, paso a paso, una aplicación completa de gestión de datos. La temática es de libre elección, pero los pasos serán comunes.
 
-Intercaladas con la teoría y los ejemplos, se utilizarán las siguientes cajas de contenido:
+!!! success "🔍 Ejecutar y Analizar"
+    Contienen fragmentos de código que deben ser ejecutados y comprendidos en detalle. El objetivo es observar su funcionamiento y salida.
 
-* 🔍 **Ejecutar y Analizar**: Contienen fragmentos de código que deben ser ejecutados y comprendidos en detalle. El objetivo es observar su funcionamiento y salida.
-* 🎯 **Práctica para Aplicar**: Indican la necesidad de programar y aplicar los conceptos aprendidos para avanzar en el desarrollo del proyecto personal.
-* 📁 **Entrega**: Marcan los puntos de entrega del trabajo, que serán revisados y calificados por el profesor.
+!!! warning "🎯 Práctica para Aplicar"
+    Indican la necesidad de programar y aplicar los conceptos aprendidos para avanzar en el desarrollo del proyecto personal.
+
+!!! danger "📁 Entrega"
+    Marcan los puntos de entrega del trabajo, que serán revisados y calificados por el profesor.
 
 ---
 
@@ -91,9 +108,8 @@ Esta guía te mostrará cómo configurar esta conexión paso a paso.
 
 * Para trabajar en esta unidad, primero debes descargar el fichero [plantas.sqlite](../../assets/resources/plantas.sqlite)
 
-> **NOTA IMPORTANTE:** Para hacer uso de esta funcionalidad de IntelliJ, tienes que tener activada la versión **Ultimate de IntelliJ**.
->
-> Como estudiante, puedes activarla gratis. Para ello date de alta y [sigue la guía desde este enlace](https://www.jetbrains.com/es-es/academy/student-pack/).
+!!! warning "Requisito: IntelliJ Ultimate"
+    Para usar la herramienta de base de datos integrada necesitas la versión **Ultimate de IntelliJ**. Como estudiante puedes activarla gratis — [sigue la guía del student pack](https://www.jetbrains.com/es-es/academy/student-pack/).
 
 ---
 
@@ -148,10 +164,9 @@ Si haces **doble clic sobre el nombre de la tabla** (`plantas`), se abrirá un v
 
 Esta integración es una herramienta muy potente para comprobar en tiempo real que las operaciones de tu DAO en Kotlin están funcionando como esperas.
 
-## 🎯 **Práctica 1. Creación del Proyecto y la Base de Datos**
-
-1. Crea un nuevo proyecto en Kotlin con Gradle.
-2. A partir de la información anterior, utiliza la herramienta de **SQLite en IntelliJ** para crear un fichero `nombre_de_tu_BD.sqlite`.
-3. Siguiendo con los **datos definidos en la Unidad Anterior** crea una tabla en tu nueva Base de Datos. Se debe definir con una clave primaria y los tipos de datos adecuados para cada columna.
-4. Recuerda crear una carpeta `datos` en la raíz de tu proyecto y almacenar en ella el archivo `.sqlite`.
-5. Realiza distintas operaciones `CRUD`sobre la Base de Datos `SELECT, INSERT, UPDATE y DELETE`sobre la tabla definida para probar su funcionamiento. Puedes usar la misma herramienta de **IntelliJ**.
+!!! warning "🎯 Práctica 1: Creación del Proyecto y la Base de Datos"
+    1. Crea un nuevo proyecto en Kotlin con Gradle.
+    2. Utiliza la herramienta de **SQLite en IntelliJ** para crear un fichero `nombre_de_tu_BD.sqlite`.
+    3. Siguiendo los **datos definidos en la Unidad Anterior**, crea una tabla con clave primaria y tipos de datos adecuados.
+    4. Crea una carpeta `datos` en la raíz del proyecto y almacena en ella el archivo `.sqlite`.
+    5. Realiza operaciones CRUD (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) sobre la tabla para probar su funcionamiento desde la herramienta de IntelliJ.

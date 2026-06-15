@@ -60,7 +60,8 @@ fun main() {
 }
 ```
 
-🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
 
 ```bash
 Directorio creado: F:\kot\1-ficheros\ejemplos1\multimedia\bin
@@ -141,7 +142,8 @@ fun main() {
 }
 ```
 
-🔍 **Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
 
 ```bash
 Fichero binario escrito con DataOutputStream.

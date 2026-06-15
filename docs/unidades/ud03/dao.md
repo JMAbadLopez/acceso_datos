@@ -27,7 +27,8 @@ data class Planta(
 )
 ```
 
-## 🎯 **Práctica 3: Definir el Modelo de Datos**
+!!! warning "🎯 Práctica 3: Definir el Modelo de Datos"
+
 
 1. Crea un nuevo fichero Kotlin para tu modelo (ej: `Videojuego.kt`).
 2. Define una `data class` cuyas propiedades se correspondan con las columnas de tu tabla.
@@ -41,7 +42,8 @@ En el ejemplo se declaran funciones para leer la información de la tabla, añdi
 
 Para ello se utiliza un data class **Planta.kt** con la estructura definida anteriormente.
 
-🔍 **Ejecutar y Analizar: Implementación del Objeto DAO**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecutar y Analizar: Implementación del Objeto DAO
 
 El siguiente código muestra una implementación completa de `PlantasDAO`. Analiza cómo cada función utiliza `PreparedStatement`, gestiona los recursos con `.use` y mapea los datos entre el `ResultSet` y la `data class Planta`.
 
@@ -145,7 +147,8 @@ object PlantasDAO {
 }
 ```
 
-🔍 **Ejecutar y Analizar: Uso del Objeto DAO**
+!!! success "🔍 Ejecutar y Analizar"
+    Ejecutar y Analizar: Uso del Objeto DAO
 
 Un ejemplo de uso de `PlantasDAO` y las llamadas a sus funciones desde **Main.kt** podría ser el siguiente:
 
@@ -192,7 +195,8 @@ fun main() {
 }
 ```
 
-## 🎯 **Práctica 4: Construir el DAO y orquestar la Aplicación desde Main**
+!!! warning "🎯 Práctica 4: Construir el DAO y orquestar la Aplicación desde Main"
+
 
 1. Crea un fichero para tu DAO (ej: `VideojuegoDAO.kt`).
 2. Implementa las cuatro funciones CRUD (`listar`, `insertar`, `actualizar`, `eliminar`) y una de consulta por ID (`consultarPorId`).
