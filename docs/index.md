@@ -32,7 +32,7 @@ El módulo tiene como objetivo que el alumnado adquiera las competencias necesar
 
 | | |
 | :--- | :--- |
-| Proyecto integrador | [Enunciado y criterios de evaluación](unidades/proyecto/proyecto.md) |
+| Proyecto intermodular | [Enunciado y criterios de evaluación](unidades/proyecto/proyecto.md) |
 
 ---
 

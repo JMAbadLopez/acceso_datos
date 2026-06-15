@@ -156,7 +156,7 @@
     color: rgba(255, 255, 255, 0.75) !important;
 }
 
-/* Tab activa y hover — blanco puro con subrayado claro */
+/* Tab activa y hover — blanco puro */
 .md-tabs__link--active,
 .md-tabs__link:hover {
     color: #ffffff !important;
@@ -164,6 +164,10 @@
 }
 
 /* Indicador de tab activa — línea inferior blanca */
+.md-tabs__link--active {
+    border-bottom-color: #ffffff !important;
+}
+
 .md-tabs__link--active::after {
     background-color: #ffffff !important;
 }
@@ -171,6 +175,10 @@
 /* Indicador de hover — línea inferior blanca semitransparente */
 .md-tabs__link:not(.md-tabs__link--active):hover::after {
     background-color: rgba(255, 255, 255, 0.60) !important;
+}
+
+.md-tabs__link:not(.md-tabs__link--active):hover {
+    border-bottom-color: rgba(255, 255, 255, 0.60) !important;
 }
 
 /* Todos los elementos de la barra superior — oscuros */
