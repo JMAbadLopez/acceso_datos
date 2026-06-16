@@ -33,7 +33,7 @@ nav:
       - Autenticación y Sesiones: unidades/ud05/autenticacion_sesiones.md
       - Arquitectura y despliegue: unidades/ud05/despliegue.md
       - Proyecto Final: unidades/proyecto/proyecto.md
-  - Presentación: index.md
+  - Inicio: index.md
 
 repo_url: https://github.com/JMAbadLopez/acceso_datos
 repo_name: JMAbadLopez/acceso_datos
@@ -57,7 +57,6 @@ theme:
     - navigation.footer
     - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.path
 
   palette:
     - scheme: default
