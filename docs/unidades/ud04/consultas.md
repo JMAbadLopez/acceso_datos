@@ -147,7 +147,7 @@ fun obtenerUsuariosOrdenadosPorNacimiento(): List<UsuarioDTO> {
 Una vez que domines los filtros y la ordenación, estarás listo para realizar cualquier consulta de datos en Exposed.
 
 !!! warning "🎯 Práctica 4. Consultas Avanzadas"
+    1. **Filtro Compuesto:** Crea una función que filtre tu entidad (`Producto`, `Libro`, etc.) utilizando una combinación de `AND` y `OR` (ej: `Stock > 10 AND (Nombre LIKE 'A%' OR Precio < 50)`).
+    2. **Consulta Ordenada:** Crea una función que obtenga los 5 registros más recientes o más caros, utilizando `.orderBy()` y el método `.limit(5)`.
+    3. **Verificación:** Ejecuta las consultas y verifica que el listado retornado coincida exactamente con lo esperado de la base de datos.
 
-1. **Filtro Compuesto:** Crea una función que filtre tu entidad (`Producto`, `Libro`, etc.) utilizando una combinación de `AND` y `OR` (ej: `Stock > 10 AND (Nombre LIKE 'A%' OR Precio < 50)`).
-2. **Consulta Ordenada:** Crea una función que obtenga los 5 registros más recientes o más caros, utilizando `.orderBy()` y el método `.limit(5)`.
-3. **Verificación:** Ejecuta las consultas y verifica que el listado retornado coincida exactamente con lo esperado de la base de datos.

@@ -197,8 +197,8 @@ transaction(ConexionDB.db) {
 Comenzaremos con nuestro proyecto. Como siempre, preparemos el entorno para poder trabajar durante toda la **Unidad 4** con el **ORM Exposed**.
 
 !!! warning "Sigue las instrucciones de la **Práctica 1**"
+    1. Crea un nuevo proyecto Kotlin/JVM.
+    2. Actualiza el fichero `build.gradle.kts` con las dependencias de Exposed y MariaDB.
+    3. Crea el archivo `ConexionDB.kt` (mira el Canvas) y el `MainApp.kt`.
+    4. Ejecuta la función `testConexion()` para asegurarte de que tu servidor MySQL está operativo.
 
-1. Crea un nuevo proyecto Kotlin/JVM.
-2. Actualiza el fichero `build.gradle.kts` con las dependencias de Exposed y MariaDB.
-3. Crea el archivo `ConexionDB.kt` (mira el Canvas) y el `MainApp.kt`.
-4. Ejecuta la función `testConexion()` para asegurarte de que tu servidor MySQL está operativo.

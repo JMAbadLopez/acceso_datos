@@ -415,13 +415,14 @@ Medición (ID: 104) escrita correctamente.
 
 ---
 
+## 🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat
+
 !!! warning "🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat"
+    Realiza lo siguiente:
 
+    * **Siguiendo con tu Proyecto anterior**: Crea una nueva estructura para registrar los datos que has definido pero en modo **Fichero de Acceso Aleatorio**.
+    * **Crea las funciones `escribirRegistros()`y `leerRegistros()`**. Adaptlo a tus datos.
+    * **Crea la función `modificarReg()`**: Pedirá al usuario el ID del registro a modificar y buscará ese registro en el fichero. Si lo encuentra, pedirá los nuevos datos. Utilizará acceso aleatorio (`FileChannel.position()`) para saltar a la posición exacta de ese registro y sobrescribir únicamente los campos modificados, sin alterar el resto del fichero.
+    * **Crea la función `eliminarReg()`**: Debe recibir un ID y eliminar el registro correspondiente. Implementa la técnica de streaming (leer el fichero original registro a registro, escribir los que se conservan en un fichero temporal, borrar el original y renombrar el temporal).
+    * **Comprueba**: Prueba estas funciones desde `main`, llamando a `leerRegistros()` antes y después de cada operación para verificar los resultados.
 
-Realiza lo siguiente:
-
-* **Siguiendo con tu Proyecto anterior**: Crea una nueva estructura para registrar los datos que has definido pero en modo **Fichero de Acceso Aleatorio**.
-* **Crea las funciones `escribirRegistros()`y `leerRegistros()`**. Adaptlo a tus datos.
-* **Crea la función `modificarReg()`**: Pedirá al usuario el ID del registro a modificar y buscará ese registro en el fichero. Si lo encuentra, pedirá los nuevos datos. Utilizará acceso aleatorio (`FileChannel.position()`) para saltar a la posición exacta de ese registro y sobrescribir únicamente los campos modificados, sin alterar el resto del fichero.
-* **Crea la función `eliminarReg()`**: Debe recibir un ID y eliminar el registro correspondiente. Implementa la técnica de streaming (leer el fichero original registro a registro, escribir los que se conservan en un fichero temporal, borrar el original y renombrar el temporal).
-* **Comprueba**: Prueba estas funciones desde `main`, llamando a `leerRegistros()` antes y después de cada operación para verificar los resultados.

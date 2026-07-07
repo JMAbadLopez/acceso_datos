@@ -101,10 +101,11 @@ El paso final es modificar el archivo `ConexionBD.kt` de nuestro proyecto. Busca
     }
 ```
 
+## 🎯 Práctica 6: Migración a Mysql o PostgreSQL
+
 !!! warning "🎯 Práctica 6: Migración a Mysql o PostgreSQL"
+    1. Instala MySQL o PostgreSQL, preferiblemente mediante un contenedor Docker, AWS o VirtualBox.
+    2. Migra la base de datos que has creado y la/s tabla/s en el nuevo SGBD con la misma estructura.
+    3. Modifica `ConexionBD.kt` con los nuevos parámetros de conexión (URL, usuario, contraseña).
+    4. Ejecuta la aplicación. Debería funcionar sin alterar el DAO o la lógica principal.
 
-
-1. Instala MySQL o PostgreSQL, preferiblemente mediante un contenedor Docker, AWS o VirtualBox.
-2. Migra la base de datos que has creado y la/s tabla/s en el nuevo SGBD con la misma estructura.
-3. Modifica `ConexionBD.kt` con los nuevos parámetros de conexión (URL, usuario, contraseña).
-4. Ejecuta la aplicación. Debería funcionar sin alterar el DAO o la lógica principal.

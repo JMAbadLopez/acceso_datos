@@ -196,9 +196,9 @@ fun main() {
 }
 ```
 
+## 🎯 Práctica 5: Transacciones
+
 !!! warning "🎯 Práctica 5: Transacciones"
-
-
-1. Diseña un bloque de transacciones de actualización para tu proyecto.
-2. La operación de transacción debe incluir varios `UPDATE`, `INSERT` o `DELETE`, que afecten a **varios registros que cumplan ciertas condiciones**.
-3. Si lo deseas, puedes comenzar a **añadir nuevas tablas** en la BD de tu Proyecto.
+    1. Diseña un bloque de transacciones de actualización para tu proyecto.
+    2. La operación de transacción debe incluir varios `UPDATE`, `INSERT` o `DELETE`, que afecten a **varios registros que cumplan ciertas condiciones**.
+    3. Si lo deseas, puedes comenzar a **añadir nuevas tablas** en la BD de tu Proyecto.

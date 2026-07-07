@@ -181,9 +181,10 @@ fun main() {
 }
 ```
 
+## 🎯 Práctica 2: Implementar el Gestor de Conexión
+
 !!! warning "🎯 Práctica 2: Implementar el Gestor de Conexión"
+    1. Crea un nuevo fichero `ConexionBD.kt` en tu proyecto.
+    2. Implementa el `object` anterior, modificando `dbPath` para que apunte a tu fichero `.sqlite`.
+    3. En `Main.kt`, utiliza `ConexionBD.getConnection()` para verificar que la conexión se establece.
 
-
-1. Crea un nuevo fichero `ConexionBD.kt` en tu proyecto.
-2. Implementa el `object` anterior, modificando `dbPath` para que apunte a tu fichero `.sqlite`.
-3. En `Main.kt`, utiliza `ConexionBD.getConnection()` para verificar que la conexión se establece.

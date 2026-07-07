@@ -162,9 +162,9 @@ object ConexionDB {
 El primer paso para consolidar el conocimiento es aplicar esta técnica a tu propio proyecto.
 
 !!! warning "🎯 Práctica 2. Diseño de Esquemas"
+    1. **Diseña tu Propia Entidad:** Basado en la temática de tu proyecto personal (ej: si es una tienda, crea la tabla `Productos`, si es una biblioteca, crea la tabla `Libros`).
+    2. **Define el Objeto `Table`:** Crea un nuevo `object` en tu código (ej: `object Productos : Table("productos")`) que herede de `Table`.
+    3. **Añade Columnas:** Define al menos **cinco columnas** usando tipos como `varchar`, `integer`, `bool` o `double`.
+    4. **Actualiza el Conector:** Modifica la función `conectar()` en `ConexionDB.kt` para que use `SchemaUtils.create()` y cree **tu nueva tabla** dentro de la transacción.
+    5. **Verificación:** Ejecuta el proyecto y verifica en tu gestor de BD (IntelliJ, MySQL Workbench, etc.) que tu nueva tabla se haya creado correctamente.
 
-1. **Diseña tu Propia Entidad:** Basado en la temática de tu proyecto personal (ej: si es una tienda, crea la tabla `Productos`, si es una biblioteca, crea la tabla `Libros`).
-2. **Define el Objeto `Table`:** Crea un nuevo `object` en tu código (ej: `object Productos : Table("productos")`) que herede de `Table`.
-3. **Añade Columnas:** Define al menos **cinco columnas** usando tipos como `varchar`, `integer`, `bool` o `double`.
-4. **Actualiza el Conector:** Modifica la función `conectar()` en `ConexionDB.kt` para que use `SchemaUtils.create()` y cree **tu nueva tabla** dentro de la transacción.
-5. **Verificación:** Ejecuta el proyecto y verifica en tu gestor de BD (IntelliJ, MySQL Workbench, etc.) que tu nueva tabla se haya creado correctamente.

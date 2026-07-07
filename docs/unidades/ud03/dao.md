@@ -27,12 +27,11 @@ data class Planta(
 )
 ```
 
+## 🎯 Práctica 3: Definir el Modelo de Datos
+
 !!! warning "🎯 Práctica 3: Definir el Modelo de Datos"
-
-
-1. Crea un nuevo fichero Kotlin para tu modelo (ej: `Videojuego.kt`).
-2. Define una `data class` cuyas propiedades se correspondan con las columnas de tu tabla.
-
+    1. Crea un nuevo fichero Kotlin para tu modelo (ej: `Videojuego.kt`).
+    2. Define una `data class` cuyas propiedades se correspondan con las columnas de tu tabla.
 
 ## Implementación del DAO
 
@@ -195,12 +194,13 @@ fun main() {
 }
 ```
 
+## 🎯 Práctica 4: Construir el DAO y orquestar la Aplicación desde Main
+
 !!! warning "🎯 Práctica 4: Construir el DAO y orquestar la Aplicación desde Main"
+    1. Crea un fichero para tu DAO (ej: `VideojuegoDAO.kt`).
+    2. Implementa las cuatro funciones CRUD (`listar`, `insertar`, `actualizar`, `eliminar`) y una de consulta por ID (`consultarPorId`).
+    3. Adapta el código SQL y los parámetros a tu tabla y tu `data class`.
+    4. El fichero `Main.kt` orquesta las llamadas al DAO para ejecutar la lógica de la aplicación. En tu fichero `Main.kt`, utiliza los métodos de tu DAO para probar todas las operaciones sobre tu tabla de datos.
+    5. Inserta datos, consulta uno por su ID, actualízalo y borra otro.
+    6. Muestra por consola los resultados para verificar el correcto funcionamiento.
 
-
-1. Crea un fichero para tu DAO (ej: `VideojuegoDAO.kt`).
-2. Implementa las cuatro funciones CRUD (`listar`, `insertar`, `actualizar`, `eliminar`) y una de consulta por ID (`consultarPorId`).
-3. Adapta el código SQL y los parámetros a tu tabla y tu `data class`.
-4. El fichero `Main.kt` orquesta las llamadas al DAO para ejecutar la lógica de la aplicación. En tu fichero `Main.kt`, utiliza los métodos de tu DAO para probar todas las operaciones sobre tu tabla de datos.
-5. Inserta datos, consulta uno por su ID, actualízalo y borra otro.
-6. Muestra por consola los resultados para verificar el correcto funcionamiento.

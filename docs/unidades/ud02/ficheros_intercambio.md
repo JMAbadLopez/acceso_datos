@@ -593,20 +593,20 @@ El patrón para convertir datos de un formato a otro es casi siempre el mismo. E
 
 ---
 
+## 🎯 Práctica 3: Creación y lectura de un fichero de datos
+
 !!! warning "🎯 Práctica 3: Creación y lectura de un fichero de datos"
+    Abre tu _proyecto creado en la práctica 2_ . Realiza lo siguiente:
 
-
-Abre tu _proyecto creado en la práctica 2_ . Realiza lo siguiente:
-
-* **Diseña tu data class**: Define la `data class` de Kotlin que represente un único elemento de tu colección de datos. Debe tener un ID único de tipo `Int`, un nombre de tipo `String` y, al menos, otros dos campos (al menos uno de tipo `Double`).
-* **Crea tu fichero de datos**: (.csv, .json o .xml) con al menos 5 registros de tu colección dentro de la carpeta `datos_ini`.
-* **Añade dependencias necesarias**: Añade las librerías necesarias para leer tu fichero y _serializar / deserializar_ datos en `build.gradle.kts`.
-* **Crea la función de lectura**: La función debe leer el fichero y devolver una lista de objetos `leerDatosIniciales(): List<DataClass>`.
-* **Verifica que funciona**: Imprime por consola la información leída.
-* **Filtra la información leída**: Crea una función que filtre según un atributo del `data class` y guarde la información resultante en `datos_fin`. Por ejemplo, en el caso de las _plantas_ podemos guardar las que superen una altura.
-* **Aspectos Técnicos Obligatorios**:
-    1. Se debe incluir un **manejo básico de errores** (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
-    2. **Organiza la información**. Es decir, crea las _clases_ en su correspondiente fichero, organizando la lógica del programa.
+    * **Diseña tu data class**: Define la `data class` de Kotlin que represente un único elemento de tu colección de datos. Debe tener un ID único de tipo `Int`, un nombre de tipo `String` y, al menos, otros dos campos (al menos uno de tipo `Double`).
+    * **Crea tu fichero de datos**: (.csv, .json o .xml) con al menos 5 registros de tu colección dentro de la carpeta `datos_ini`.
+    * **Añade dependencias necesarias**: Añade las librerías necesarias para leer tu fichero y _serializar / deserializar_ datos en `build.gradle.kts`.
+    * **Crea la función de lectura**: La función debe leer el fichero y devolver una lista de objetos `leerDatosIniciales(): List<DataClass>`.
+    * **Verifica que funciona**: Imprime por consola la información leída.
+    * **Filtra la información leída**: Crea una función que filtre según un atributo del `data class` y guarde la información resultante en `datos_fin`. Por ejemplo, en el caso de las _plantas_ podemos guardar las que superen una altura.
+    * **Aspectos Técnicos Obligatorios**:
+        1. Se debe incluir un **manejo básico de errores** (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
+        2. **Organiza la información**. Es decir, crea las _clases_ en su correspondiente fichero, organizando la lógica del programa.
 
 ---
 

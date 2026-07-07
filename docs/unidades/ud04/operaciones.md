@@ -205,12 +205,12 @@ actualizarMail(1, "atena@olympus.com")
 Hemos visto todas las operaciones básicas. Ahora es tu turno de aplicarlas:
 
 !!! warning "🎯 Práctica 3. Implementación del CRUD"
+    1. Crea la clase de datos (`data class`) para tu entidad del proyecto (ej: `ProductoDTO`).
+    2. Crea e implementa las funciones **CRUD** completas para tu entidad:
+        * `insertarProducto(...)` (INSERT)
+        * `obtenerTodosLosProductos()` (SELECT ALL)
+        * `actualizarStock(id, nuevoStock)` (UPDATE)
+        * `eliminarProducto(id)` (DELETE)
+    3. Asegúrate de que **TODAS** las funciones que interactúan con la base de datos están envueltas en `transaction(ConexionDB.db) { ... }`.
+    4. Llama a estas funciones desde tu `main` para simular la gestión de tu aplicación.
 
-1. Crea la clase de datos (`data class`) para tu entidad del proyecto (ej: `ProductoDTO`).
-2. Crea e implementa las funciones **CRUD** completas para tu entidad:
-    * `insertarProducto(...)` (INSERT)
-    * `obtenerTodosLosProductos()` (SELECT ALL)
-    * `actualizarStock(id, nuevoStock)` (UPDATE)
-    * `eliminarProducto(id)` (DELETE)
-3. Asegúrate de que **TODAS** las funciones que interactúan con la base de datos están envueltas en `transaction(ConexionDB.db) { ... }`.
-4. Llama a estas funciones desde tu `main` para simular la gestión de tu aplicación.

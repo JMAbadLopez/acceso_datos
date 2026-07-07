@@ -77,6 +77,8 @@ A medida que necesitemos utilizar dependencias en nuestro proyecto, las iremos a
 
 ---
 
+## 🎯 Práctica 1: Proyecto Kotlin con Gradle
+
 !!! warning "🎯 Práctica 1: Proyecto Kotlin con Gradle"
     En esta práctica crearás el proyecto que irás ampliando a lo largo de toda la unidad.
 
