@@ -1686,7 +1686,6 @@
 <p>El primer paso para consolidar el conocimiento es aplicar esta técnica a tu propio proyecto.</p>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica 2. Diseño de Esquemas</p>
-</div>
 <ol>
 <li><strong>Diseña tu Propia Entidad:</strong> Basado en la temática de tu proyecto personal (ej: si es una tienda, crea la tabla <code>Productos</code>, si es una biblioteca, crea la tabla <code>Libros</code>).</li>
 <li><strong>Define el Objeto <code>Table</code>:</strong> Crea un nuevo <code>object</code> en tu código (ej: <code>object Productos : Table("productos")</code>) que herede de <code>Table</code>.</li>
@@ -1694,6 +1693,7 @@
 <li><strong>Actualiza el Conector:</strong> Modifica la función <code>conectar()</code> en <code>ConexionDB.kt</code> para que use <code>SchemaUtils.create()</code> y cree <strong>tu nueva tabla</strong> dentro de la transacción.</li>
 <li><strong>Verificación:</strong> Ejecuta el proyecto y verifica en tu gestor de BD (IntelliJ, MySQL Workbench, etc.) que tu nueva tabla se haya creado correctamente.</li>
 </ol>
+</div>
 
 
 
