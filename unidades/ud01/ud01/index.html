@@ -812,7 +812,12 @@
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#11-funciones-lambda" class="md-nav__link">
     <span class="md-ellipsis">
       11. Funciones lambda
@@ -820,8 +825,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#12-excepciones" class="md-nav__link">
     <span class="md-ellipsis">
       12. Excepciones
@@ -829,18 +834,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#13-package-e-import" class="md-nav__link">
     <span class="md-ellipsis">
       13. Package e import
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2088,7 +2088,12 @@
   
 </li>
         
-          <li class="md-nav__item">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#11-funciones-lambda" class="md-nav__link">
     <span class="md-ellipsis">
       11. Funciones lambda
@@ -2096,8 +2101,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#12-excepciones" class="md-nav__link">
     <span class="md-ellipsis">
       12. Excepciones
@@ -2105,18 +2110,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#13-package-e-import" class="md-nav__link">
     <span class="md-ellipsis">
       13. Package e import
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2452,7 +2452,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>readLine()</code> devuelve un valor de tipo String (que puede ser nulo). Hay que convertirlo si se espera otro tipo de dato (<code>toInt()</code>, <code>toDouble()</code>, etc.). Antes de la conversión hay que asegurarse de que no está vacío.</p>
+<p><code>readLine()</code> devuelve un valor de tipo <code>String?</code> (puede ser nulo). Desde Kotlin 1.6 se prefiere <code>readln()</code>, que devuelve <code>String</code> (no nulo) y lanza excepción si no hay entrada. En ambos casos hay que convertir el valor si se espera otro tipo de dato (<code>toInt()</code>, <code>toDouble()</code>, etc.).</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
@@ -2463,14 +2463,14 @@
 <span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-8-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">    </span><span class="n">print</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Introduce tu edad: &quot;</span><span class="p">)</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">entrada</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">readLine</span><span class="p">()</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">entrada</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">entrada</span><span class="p">.</span><span class="na">isNotBlank</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">       </span><span class="kd">val</span><span class="w"> </span><span class="nv">edad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entrada</span><span class="p">.</span><span class="na">toInt</span><span class="p">()</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Tendrás </span><span class="si">${</span><span class="n">edad</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="si">}</span><span class="s"> años el próximo año&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Edad no válida&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">   </span><span class="p">}</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Introduce tu edad: &quot;</span><span class="p">)</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">entrada</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readln</span><span class="p">()</span><span class="w">  </span><span class="c1">// String (no nulo); usa readLine() si necesitas null</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">entrada</span><span class="p">.</span><span class="na">isNotBlank</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">edad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entrada</span><span class="p">.</span><span class="na">toInt</span><span class="p">()</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Tendrás </span><span class="si">${</span><span class="n">edad</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="si">}</span><span class="s"> años el próximo año&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Edad no válida&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="6-condicionales">6. Condicionales</h2>
@@ -2763,19 +2763,31 @@ Se usa cuando <strong>sabemos cuántas veces</strong> queremos repetir algo.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="n">println</span><span class="p">(</span><span class="s">&quot;Tamaño del array: </span><span class="si">${</span><span class="n">numeros</span><span class="p">.</span><span class="na">size</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <ul>
-<li><strong>2 formas de recorrer un array con un for:</strong></li>
+<li><strong>Formas de recorrer un array con un for:</strong></li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
-<span class="normal"><a href="#__codelineno-26-2">2</a></span>
-<span class="normal"><a href="#__codelineno-26-3">3</a></span>
-<span class="normal"><a href="#__codelineno-26-4">4</a></span>
-<span class="normal"><a href="#__codelineno-26-5">5</a></span>
-<span class="normal"><a href="#__codelineno-26-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">numero</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">numeros</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span>
-<a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="p">}</span>
-<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0.</span><span class="p">.</span><span class="na">numeros</span><span class="p">.</span><span class="na">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-26-5" name="__codelineno-26-5"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">numeros</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
-<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-26-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-26-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-26-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-26-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-26-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-26-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-26-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-26-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-26-10">10</a></span>
+<span class="normal"><a href="#__codelineno-26-11">11</a></span>
+<span class="normal"><a href="#__codelineno-26-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="c1">// Recorrer por valor (más habitual)</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">numero</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">numeros</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="p">}</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a><span class="c1">// Recorrer por índice (forma idiomática en Kotlin)</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">numeros</span><span class="p">.</span><span class="na">indices</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">numeros</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8"></a><span class="p">}</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9"></a><span class="c1">// Equivalente pero menos idiomático</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0.</span><span class="p">.</span><span class="na">numeros</span><span class="p">.</span><span class="na">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">numeros</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="82-list-lista">8.2. List (lista)</h3>
 <p>Colección ordenada que permite elementos duplicados. Puede ser inmutable (<code>List</code>) o mutable (<code>MutableList</code>). Se utiliza cuando se quiere mantener un orden y permitir elementos repetidos.</p>
@@ -3719,7 +3731,7 @@ Por seguridad, en Kotlin:</p>
 <span class="normal"><a href="#__codelineno-61-19">19</a></span>
 <span class="normal"><a href="#__codelineno-61-20">20</a></span>
 <span class="normal"><a href="#__codelineno-61-21">21</a></span>
-<span class="normal"><a href="#__codelineno-61-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Libro</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">titulo</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">autor</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">any</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-61-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">Libro</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">titulo</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">autor</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">anio</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span>
 <a id="__codelineno-61-2" name="__codelineno-61-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-61-3" name="__codelineno-61-3"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">libro1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Libro</span><span class="p">(</span><span class="s">&quot;1984&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;George Orwell&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1949</span><span class="p">)</span>
 <a id="__codelineno-61-4" name="__codelineno-61-4"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">libro2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Libro</span><span class="p">(</span><span class="s">&quot;Cien años de soledad&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gabriel García Márquez&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">1967</span><span class="p">)</span>
@@ -3728,18 +3740,18 @@ Por seguridad, en Kotlin:</p>
 <a id="__codelineno-61-7" name="__codelineno-61-7"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">biblioteca</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span><span class="n">libro1</span><span class="p">,</span><span class="w"> </span><span class="n">libro2</span><span class="p">,</span><span class="w"> </span><span class="n">libro3</span><span class="p">,</span><span class="w"> </span><span class="n">libro4</span><span class="p">)</span>
 <a id="__codelineno-61-8" name="__codelineno-61-8"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Biblioteca completa:&quot;</span><span class="p">)</span>
 <a id="__codelineno-61-9" name="__codelineno-61-9"></a><span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">libro</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">biblioteca</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-61-10" name="__codelineno-61-10"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="n">libro</span><span class="p">.</span><span class="na">titulo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; - &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">libro</span><span class="p">.</span><span class="na">autor</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; (&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">libro</span><span class="p">.</span><span class="na">any</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="p">)</span>
+<a id="__codelineno-61-10" name="__codelineno-61-10"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">libro</span><span class="p">.</span><span class="na">titulo</span><span class="si">}</span><span class="s"> - </span><span class="si">${</span><span class="n">libro</span><span class="p">.</span><span class="na">autor</span><span class="si">}</span><span class="s"> (</span><span class="si">${</span><span class="n">libro</span><span class="p">.</span><span class="na">anio</span><span class="si">}</span><span class="s">)&quot;</span><span class="p">)</span>
 <a id="__codelineno-61-11" name="__codelineno-61-11"></a><span class="w">   </span><span class="p">}</span>
 <a id="__codelineno-61-12" name="__codelineno-61-12"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\nLibros ordenados por año (de menor a mayor):&quot;</span><span class="p">)</span>
-<a id="__codelineno-61-13" name="__codelineno-61-13"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">ordenados</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">biblioteca</span><span class="p">.</span><span class="na">sortedBy</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">any</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-61-13" name="__codelineno-61-13"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">ordenados</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">biblioteca</span><span class="p">.</span><span class="na">sortedBy</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">anio</span><span class="w"> </span><span class="p">}</span>
 <a id="__codelineno-61-14" name="__codelineno-61-14"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">libro</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ordenados</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-61-15" name="__codelineno-61-15"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="n">libro</span><span class="p">.</span><span class="na">titulo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; -&gt; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">libro</span><span class="p">.</span><span class="na">any</span><span class="p">)</span>
+<a id="__codelineno-61-15" name="__codelineno-61-15"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="si">${</span><span class="n">libro</span><span class="p">.</span><span class="na">titulo</span><span class="si">}</span><span class="s"> -&gt; </span><span class="si">${</span><span class="n">libro</span><span class="p">.</span><span class="na">anio</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
 <a id="__codelineno-61-16" name="__codelineno-61-16"></a><span class="w">   </span><span class="p">}</span>
 <a id="__codelineno-61-17" name="__codelineno-61-17"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\nCopiar un libro y cambiar su año:&quot;</span><span class="p">)</span>
-<a id="__codelineno-61-18" name="__codelineno-61-18"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">libroModificado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libro1</span><span class="p">.</span><span class="na">copy</span><span class="p">(</span><span class="n">any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2025</span><span class="p">)</span>
-<a id="__codelineno-61-19" name="__codelineno-61-19"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Original: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">libro1</span><span class="p">.</span><span class="na">toString</span><span class="p">())</span>
-<a id="__codelineno-61-20" name="__codelineno-61-20"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Modificado: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">libroModificado</span><span class="p">.</span><span class="na">toString</span><span class="p">())</span>
-<a id="__codelineno-61-21" name="__codelineno-61-21"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n¿Son iguales los objetos? &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">libro1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">libroModificado</span><span class="p">))</span>
+<a id="__codelineno-61-18" name="__codelineno-61-18"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">libroModificado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libro1</span><span class="p">.</span><span class="na">copy</span><span class="p">(</span><span class="n">anio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2025</span><span class="p">)</span>
+<a id="__codelineno-61-19" name="__codelineno-61-19"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Original: </span><span class="si">$</span><span class="n">libro1</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-61-20" name="__codelineno-61-20"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Modificado: </span><span class="si">$</span><span class="n">libroModificado</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-61-21" name="__codelineno-61-21"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n¿Son iguales los objetos? </span><span class="si">${</span><span class="n">libro1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">libroModificado</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
 <a id="__codelineno-61-22" name="__codelineno-61-22"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="109-sobrecarga-de-operadores">10.9. Sobrecarga de operadores</h3>
@@ -3796,7 +3808,7 @@ Por seguridad, en Kotlin:</p>
 <a id="__codelineno-63-11" name="__codelineno-63-11"></a><span class="w">   </span><span class="n">println</span><span class="p">(</span><span class="n">a1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">a3</span><span class="p">)</span>
 <a id="__codelineno-63-12" name="__codelineno-63-12"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="11-funciones-lambda">11. Funciones lambda</h3>
+<h2 id="11-funciones-lambda">11. Funciones lambda</h2>
 <p>Las funciones lambda son funciones definidas sin un nombre, utilizadas para operaciones simples y rápidas, mejorando la legibilidad del código y el rendimiento.</p>
 <ul>
 <li><strong>Ejemplo básico:</strong></li>
@@ -3851,7 +3863,7 @@ Por seguridad, en Kotlin:</p>
 <a id="__codelineno-70-2" name="__codelineno-70-2"></a><span class="kd">val</span><span class="w"> </span><span class="nv">pares</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numeros</span><span class="p">.</span><span class="na">filter</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">}</span>
 <a id="__codelineno-70-3" name="__codelineno-70-3"></a><span class="n">println</span><span class="p">(</span><span class="n">pares</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="12-excepciones">12. Excepciones</h3>
+<h2 id="12-excepciones">12. Excepciones</h2>
 <p>Una excepción es un error que ocurre en tiempo de ejecución y que interrumpe el flujo normal del programa.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-71-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-71-2"> 2</a></span>
@@ -3877,7 +3889,7 @@ Por seguridad, en Kotlin:</p>
 <a id="__codelineno-71-11" name="__codelineno-71-11"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-71-12" name="__codelineno-71-12"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="13-package-e-import">13. Package e import</h3>
+<h2 id="13-package-e-import">13. Package e import</h2>
 <p>Un <strong>package</strong> es una forma de <strong>agrupar clases, funciones, objetos y otros archivos</strong> relacionados bajo un mismo nombre. La palabra clave <strong>import</strong> se usa para <strong>acceder a clases, funciones u objetos definidos en otros paquetes</strong>.</p>
 <ul>
 <li><strong>Ejemplo 1 - package e import:</strong></li>
@@ -3909,51 +3921,65 @@ Por seguridad, en Kotlin:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-74-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.ejemplo.util.*</span>
 </code></pre></div></td></tr></table></div>
 <ul>
-<li><strong>Ejemplo completo:</strong></li>
+<li><strong>Ejemplo completo (tres archivos en el mismo proyecto):</strong></li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-75-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-75-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-75-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-75-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-75-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-75-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-75-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-75-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-75-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-75-10">10</a></span>
-<span class="normal"><a href="#__codelineno-75-11">11</a></span>
-<span class="normal"><a href="#__codelineno-75-12">12</a></span>
-<span class="normal"><a href="#__codelineno-75-13">13</a></span>
-<span class="normal"><a href="#__codelineno-75-14">14</a></span>
-<span class="normal"><a href="#__codelineno-75-15">15</a></span>
-<span class="normal"><a href="#__codelineno-75-16">16</a></span>
-<span class="normal"><a href="#__codelineno-75-17">17</a></span>
-<span class="normal"><a href="#__codelineno-75-18">18</a></span>
-<span class="normal"><a href="#__codelineno-75-19">19</a></span>
-<span class="normal"><a href="#__codelineno-75-20">20</a></span>
-<span class="normal"><a href="#__codelineno-75-21">21</a></span>
-<span class="normal"><a href="#__codelineno-75-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">util</span>
-<a id="__codelineno-75-2" name="__codelineno-75-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">saludar</span><span class="p">(</span><span class="n">nombre</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-75-3" name="__codelineno-75-3"></a><span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;¡Hola, </span><span class="si">$</span><span class="n">nombre</span><span class="s">!&quot;</span>
-<a id="__codelineno-75-4" name="__codelineno-75-4"></a><span class="p">}</span>
-<a id="__codelineno-75-5" name="__codelineno-75-5"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">despedir</span><span class="p">(</span><span class="n">nombre</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-75-6" name="__codelineno-75-6"></a><span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Adiós, </span><span class="si">$</span><span class="n">nombre</span><span class="s">.&quot;</span>
-<a id="__codelineno-75-7" name="__codelineno-75-7"></a><span class="p">}</span>
-<a id="__codelineno-75-8" name="__codelineno-75-8"></a><span class="k">package</span><span class="w"> </span><span class="nn">util</span>
-<a id="__codelineno-75-9" name="__codelineno-75-9"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">sumar</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
-<a id="__codelineno-75-10" name="__codelineno-75-10"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">multiplicar</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span>
-<a id="__codelineno-75-11" name="__codelineno-75-11"></a><span class="k">package</span><span class="w"> </span><span class="nn">app</span>
-<a id="__codelineno-75-12" name="__codelineno-75-12"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.saludar</span>
-<a id="__codelineno-75-13" name="__codelineno-75-13"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.despedir</span>
-<a id="__codelineno-75-14" name="__codelineno-75-14"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.sumar</span>
-<a id="__codelineno-75-15" name="__codelineno-75-15"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.multiplicar</span>
-<a id="__codelineno-75-16" name="__codelineno-75-16"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-75-17" name="__codelineno-75-17"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Kotlin&quot;</span>
-<a id="__codelineno-75-18" name="__codelineno-75-18"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">saludar</span><span class="p">(</span><span class="n">nombre</span><span class="p">))</span>
-<a id="__codelineno-75-19" name="__codelineno-75-19"></a><span class="w">   </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Suma: </span><span class="si">${</span><span class="n">sumar</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-75-20" name="__codelineno-75-20"></a><span class="w">   </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Multiplicación: </span><span class="si">${</span><span class="n">multiplicar</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-75-21" name="__codelineno-75-21"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">despedir</span><span class="p">(</span><span class="n">nombre</span><span class="p">))</span>
-<a id="__codelineno-75-22" name="__codelineno-75-22"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-75-1">1</a></span>
+<span class="normal"><a href="#__codelineno-75-2">2</a></span>
+<span class="normal"><a href="#__codelineno-75-3">3</a></span>
+<span class="normal"><a href="#__codelineno-75-4">4</a></span>
+<span class="normal"><a href="#__codelineno-75-5">5</a></span>
+<span class="normal"><a href="#__codelineno-75-6">6</a></span>
+<span class="normal"><a href="#__codelineno-75-7">7</a></span>
+<span class="normal"><a href="#__codelineno-75-8">8</a></span>
+<span class="normal"><a href="#__codelineno-75-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1"></a><span class="c1">// Archivo: util/Saludos.kt</span>
+<a id="__codelineno-75-2" name="__codelineno-75-2"></a><span class="k">package</span><span class="w"> </span><span class="nn">util</span>
+<a id="__codelineno-75-3" name="__codelineno-75-3"></a>
+<a id="__codelineno-75-4" name="__codelineno-75-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">saludar</span><span class="p">(</span><span class="n">nombre</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-75-5" name="__codelineno-75-5"></a><span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;¡Hola, </span><span class="si">$</span><span class="n">nombre</span><span class="s">!&quot;</span>
+<a id="__codelineno-75-6" name="__codelineno-75-6"></a><span class="p">}</span>
+<a id="__codelineno-75-7" name="__codelineno-75-7"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">despedir</span><span class="p">(</span><span class="n">nombre</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-75-8" name="__codelineno-75-8"></a><span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Adiós, </span><span class="si">$</span><span class="n">nombre</span><span class="s">.&quot;</span>
+<a id="__codelineno-75-9" name="__codelineno-75-9"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-76-1">1</a></span>
+<span class="normal"><a href="#__codelineno-76-2">2</a></span>
+<span class="normal"><a href="#__codelineno-76-3">3</a></span>
+<span class="normal"><a href="#__codelineno-76-4">4</a></span>
+<span class="normal"><a href="#__codelineno-76-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1"></a><span class="c1">// Archivo: util/Matematicas.kt</span>
+<a id="__codelineno-76-2" name="__codelineno-76-2"></a><span class="k">package</span><span class="w"> </span><span class="nn">util</span>
+<a id="__codelineno-76-3" name="__codelineno-76-3"></a>
+<a id="__codelineno-76-4" name="__codelineno-76-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">sumar</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
+<a id="__codelineno-76-5" name="__codelineno-76-5"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">multiplicar</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">):</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-77-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-77-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-77-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-77-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-77-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-77-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-77-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-77-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-77-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-77-10">10</a></span>
+<span class="normal"><a href="#__codelineno-77-11">11</a></span>
+<span class="normal"><a href="#__codelineno-77-12">12</a></span>
+<span class="normal"><a href="#__codelineno-77-13">13</a></span>
+<span class="normal"><a href="#__codelineno-77-14">14</a></span>
+<span class="normal"><a href="#__codelineno-77-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1"></a><span class="c1">// Archivo: app/Main.kt</span>
+<a id="__codelineno-77-2" name="__codelineno-77-2"></a><span class="k">package</span><span class="w"> </span><span class="nn">app</span>
+<a id="__codelineno-77-3" name="__codelineno-77-3"></a>
+<a id="__codelineno-77-4" name="__codelineno-77-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.saludar</span>
+<a id="__codelineno-77-5" name="__codelineno-77-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.despedir</span>
+<a id="__codelineno-77-6" name="__codelineno-77-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.sumar</span>
+<a id="__codelineno-77-7" name="__codelineno-77-7"></a><span class="k">import</span><span class="w"> </span><span class="nn">util.multiplicar</span>
+<a id="__codelineno-77-8" name="__codelineno-77-8"></a>
+<a id="__codelineno-77-9" name="__codelineno-77-9"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-77-10" name="__codelineno-77-10"></a><span class="w">   </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Kotlin&quot;</span>
+<a id="__codelineno-77-11" name="__codelineno-77-11"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">saludar</span><span class="p">(</span><span class="n">nombre</span><span class="p">))</span>
+<a id="__codelineno-77-12" name="__codelineno-77-12"></a><span class="w">   </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Suma: </span><span class="si">${</span><span class="n">sumar</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-77-13" name="__codelineno-77-13"></a><span class="w">   </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Multiplicación: </span><span class="si">${</span><span class="n">multiplicar</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-77-14" name="__codelineno-77-14"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">despedir</span><span class="p">(</span><span class="n">nombre</span><span class="p">))</span>
+<a id="__codelineno-77-15" name="__codelineno-77-15"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 
 
