@@ -2,8 +2,6 @@
 
 **IES Camp de Morvedre · CFGS Desarrollo de Aplicaciones Multiplataforma**
 
-![Logo Europa](assets/images/europa.jpg){ width="30%" }
-
 Repositorio del material didáctico del módulo de **Acceso a Datos** de **2º de DAM**. El sitio web con el contenido publicado está disponible en:
 
 🌐 **<https://jmabadlopez.github.io/acceso_datos/>**
