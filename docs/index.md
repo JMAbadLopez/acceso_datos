@@ -8,8 +8,6 @@ hide:
 
 **IES Camp de Morvedre · Ciclo Formativo de Grado Superior · Desarrollo de Aplicaciones Multiplataforma**
 
-![Logo Europa](assets/images/europa.jpg){ width="30%" }
-
 ---
 
 Este sitio recoge el material didáctico completo del módulo de **Acceso a Datos** de **2º de DAM**. Aquí encontrarás las unidades teóricas y los recursos de apoyo que se utilizan a lo largo del curso.
