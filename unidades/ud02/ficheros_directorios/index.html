@@ -1634,7 +1634,7 @@
 </code></pre></div></td></tr></table></div>
 <p>En el ejemplo anterior hemos recorrido un directorio para organizar los ficheros que contenía. Recorrer un directorio para "mirar" su contenido es útil en muchas situaciones y hay varias formas de hacerlo. A continuación veremos algunas:</p>
 <ul>
-<li><code>Files.list(path)</code>: Es la utilizada en el ejemplo anterior. Lista únicamente el contenido de un directorio sin acceder a las subcarpetas. Será útil cuando solamente sea necesario acceder al contenido directo de una carpeta, por ejemplo para organizar ficheros en un directorio, mostrar el contenido de la carpeta actual o buscar un fichero específico solo en este nivel.<ul>
+<li><code>Files.list(path)</code>: Es la utilizada en el ejemplo anterior. Lista únicamente el contenido de un directorio sin acceder a las subcarpetas. Será útil cuando solamente sea necesario acceder al contenido directo de una carpeta, por ejemplo para organizar ficheros en un directorio, mostrar el contenido de la carpeta actual o buscar un fichero específico solo en este nivel.</li>
 <li><strong>Ventajas:</strong><ul>
 <li>Rápido y eficiente al no ser recursivo.</li>
 <li>Ofrece un control preciso, operando solo en el primer nivel del directorio.</li>
@@ -1646,9 +1646,7 @@
 <li>Para recorrer un árbol completo, se necesita implementar lógica recursiva manualmente.</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><code>Files.walk(path)</code>: Recorre un directorio y todo su contenido recursivamente. Entra en cada subcarpeta, y en sus subcarpetas hasta el final. Será útil para operar sobre un directorio y todo lo que contiene, sin importar la profundidad, por ejemplo para buscar un fichero por nombre en cualquier subcarpeta, eliminar todos los ficheros temporales de un proyecto o contar todos los ficheros .kt de un repositorio.<ul>
+<li><code>Files.walk(path)</code>: Recorre un directorio y todo su contenido recursivamente. Entra en cada subcarpeta, y en sus subcarpetas hasta el final. Será útil para operar sobre un directorio y todo lo que contiene, sin importar la profundidad, por ejemplo para buscar un fichero por nombre en cualquier subcarpeta, eliminar todos los ficheros temporales de un proyecto o contar todos los ficheros .kt de un repositorio.</li>
 <li><strong>Ventajas:</strong><ul>
 <li>Recorre árboles de directorios completos (recursivo) de forma muy sencilla.</li>
 <li>Extremadamente potente para búsquedas profundas o aplicar operaciones a todos los elementos anidados.</li>
@@ -1660,9 +1658,7 @@
 <li>Es una herramienta excesiva ('overkill') para tareas que solo requieren acceder al nivel actual.</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><code>Files.newDirectoryStream(path)</code>: Es similar a <code>Files.list()</code>, listando solo el contenido inmediato. La diferencia es que no devuelve un <code>Stream</code> de Java 8 (que permite usar <code>.filter</code>, <code>.forEach</code>, etc.), sino un <code>DirectoryStream</code>, que es una versión más antigua que se usa con bucles for. Es menos común en código Kotlin moderno, pero es bueno reconocerlo para poder entender en proyectos antiguos (legacy). Para cualquier tarea nueva, <code>Files.list()</code> y <code>Files.walk()</code> son superiores en seguridad y expresividad.<ul>
+<li><code>Files.newDirectoryStream(path)</code>: Es similar a <code>Files.list()</code>, listando solo el contenido inmediato. La diferencia es que no devuelve un <code>Stream</code> de Java 8 (que permite usar <code>.filter</code>, <code>.forEach</code>, etc.), sino un <code>DirectoryStream</code>, que es una versión más antigua que se usa con bucles for. Es menos común en código Kotlin moderno, pero es bueno reconocerlo para poder entender en proyectos antiguos (legacy). Para cualquier tarea nueva, <code>Files.list()</code> y <code>Files.walk()</code> son superiores en seguridad y expresividad.</li>
 <li><strong>Ventajas:</strong><ul>
 <li>Utiliza un bucle <code>for-each</code> tradicional, que puede resultar familiar.</li>
 </ul>
@@ -1671,8 +1667,6 @@
 <li><strong>¡PELIGRO!</strong> Requiere cerrar el recurso manualmente (<code>.close()</code>). Si se olvida, provoca fugas de recursos (<code>resource leaks</code>).</li>
 <li>Es menos expresivo que los Streams. No se pueden encadenar operadores funcionales fácilmente.</li>
 <li>Considerado obsoleto en código Kotlin idiomático, que prefiere <code>Files.list().use{...}</code>.</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -1770,12 +1764,12 @@
 <h2 id="practica-2-directorios-y-comprobaciones">🎯 Práctica 2: Directorios y comprobaciones</h2>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica 2: Directorios y comprobaciones</p>
-<p>Prepara <strong>la estructura de tu proyecto</strong>. Crea la ruta <code>proyecto/datos</code>. Basándote en los ejemplos anteriores, <strong>desarrolla un programa</strong> en tu proyecto haga lo siguiente:</p>
+<p>Prepara <strong>la estructura de tu proyecto</strong>. Crea la ruta <code>proyecto/datos</code>. Basándote en los ejemplos anteriores, <strong>desarrolla un programa</strong> que haga lo siguiente:</p>
 <ol>
 <li><strong>Defina dos rutas</strong>: una para una carpeta llamada <code>datos_ini</code> y otra para una carpeta llamada <code>datos_fin</code> (ambas dentro de la carpeta <code>proyecto/datos</code> de tu proyecto).</li>
-<li><strong>Comprueba los directorios</strong>: Si las carpetas no existen las deberá crear utilizando <code>Files.createDirectories</code>.</li>
-<li><strong>Añade ficheros</strong>: Añade (manualmente y vacío) el fichero <code>mis_datos.json</code> dentro de la carpeta <code>datos_ini</code>.</li>
-<li><strong>Comprueba ficheros</strong>: Después de la comprobación de la existencia del fichero de datos dentro de la carpeta <code>datos_ini</code> (<code>mis_datos.json</code>) imprimirá un mensaje por consola mostrando la estrctura de directorios y ficheros.</li>
+<li><strong>Comprueba los directorios</strong>: Si las carpetas no existen, las deberá crear utilizando <code>Files.createDirectories</code>.</li>
+<li><strong>Añade el fichero de datos</strong>: Crea manualmente (y vacío por ahora) el fichero <code>videojuegos.csv</code> dentro de la carpeta <code>datos_ini</code>. Este fichero lo rellenarás en la Práctica 3.</li>
+<li><strong>Comprueba ficheros</strong>: Comprueba si el fichero <code>videojuegos.csv</code> existe dentro de <code>datos_ini</code> e imprime por consola la estructura de directorios y ficheros.</li>
 </ol>
 <p><strong>La salida de tu programa</strong> debe ser parecida a esta, la primera vez que se ejecuta:
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
@@ -1786,15 +1780,15 @@
 <span class="normal"><a href="#__codelineno-6-6">6</a></span>
 <span class="normal"><a href="#__codelineno-6-7">7</a></span>
 <span class="normal"><a href="#__codelineno-6-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>CREACIÓN DE RUTAS PROYECTO
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>    Creando rutas...
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a>    Creación de ruta para DATOS_INI
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a>    Creación de ruta para DATOS_FIN
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a> Creando rutas...
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a> Creación de ruta para DATOS_INI
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a> Creación de ruta para DATOS_FIN
 <a id="__codelineno-6-5" name="__codelineno-6-5"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a>    [DIR] datos
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a>        [DIR] datos_fin
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a>        [DIR] datos_ini
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a> [DIR] datos
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>  [DIR] datos_fin
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a>  [DIR] datos_ini
 </code></pre></div></td></tr></table></div></p>
-<p>Y la segunda vez que se ejecuta, tras añadir el fichero <code>mis_datos.json</code>:
+<p>Y la segunda vez que se ejecuta, tras crear el fichero <code>videojuegos.csv</code>:
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
 <span class="normal"><a href="#__codelineno-7-2">2</a></span>
 <span class="normal"><a href="#__codelineno-7-3">3</a></span>
@@ -1802,15 +1796,13 @@
 <span class="normal"><a href="#__codelineno-7-5">5</a></span>
 <span class="normal"><a href="#__codelineno-7-6">6</a></span>
 <span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>CREACIÓN DE RUTAS PROYECTO
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    Creando rutas...
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a> Creando rutas...
 <a id="__codelineno-7-3" name="__codelineno-7-3"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a>    [DIR] datos
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a>        [DIR] datos_fin
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a>        [DIR] datos_ini
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a>            [FILE] mis_datos.json
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a> [DIR] datos
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>  [DIR] datos_fin
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>  [DIR] datos_ini
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>   [FILE] videojuegos.csv
 </code></pre></div></td></tr></table></div></p>
-<p><strong>La estructura en tu proyecto</strong> debe ser parecida a esta:</p>
-<p><img alt="Proyecto 01" src="../../../assets/images/ud02/proy01.png" /></p>
 </div>
 
 

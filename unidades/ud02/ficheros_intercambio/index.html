@@ -586,7 +586,7 @@
           <li class="md-nav__item">
   <a href="#ejemplo-de-lectura-y-escritura-de-ficheros-csv" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo de lectura y escritura de ficheros CSV:
+      Ejemplo de lectura y escritura de ficheros CSV
     </span>
   </a>
   
@@ -619,7 +619,7 @@
           <li class="md-nav__item">
   <a href="#ejemplo-de-lectura-y-escritura-de-ficheros-xml" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo de lectura y escritura de ficheros XML:
+      Ejemplo de lectura y escritura de ficheros XML
     </span>
   </a>
   
@@ -1429,7 +1429,7 @@
           <li class="md-nav__item">
   <a href="#ejemplo-de-lectura-y-escritura-de-ficheros-csv" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo de lectura y escritura de ficheros CSV:
+      Ejemplo de lectura y escritura de ficheros CSV
     </span>
   </a>
   
@@ -1462,7 +1462,7 @@
           <li class="md-nav__item">
   <a href="#ejemplo-de-lectura-y-escritura-de-ficheros-xml" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo de lectura y escritura de ficheros XML:
+      Ejemplo de lectura y escritura de ficheros XML
     </span>
   </a>
   
@@ -1780,7 +1780,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="ejemplo-de-lectura-y-escritura-de-ficheros-csv">Ejemplo de lectura y escritura de ficheros CSV:</h3>
+<h3 id="ejemplo-de-lectura-y-escritura-de-ficheros-csv">Ejemplo de lectura y escritura de ficheros CSV</h3>
 <p>Partimos de un fichero llamado <code>mis_plantas.csv</code> con la información siguiente:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
 <span class="normal"><a href="#__codelineno-2-2">2</a></span>
@@ -2085,7 +2085,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="ejemplo-de-lectura-y-escritura-de-ficheros-xml">Ejemplo de lectura y escritura de ficheros XML:</h3>
+<h3 id="ejemplo-de-lectura-y-escritura-de-ficheros-xml">Ejemplo de lectura y escritura de ficheros XML</h3>
 <p>Partimos de un fichero llamado <code>mis_plantas.xml</code> con la información siguiente:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
@@ -2600,26 +2600,71 @@
 <h2 id="practica-3-creacion-y-lectura-de-un-fichero-de-datos">🎯 Práctica 3: Creación y lectura de un fichero de datos</h2>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica 3: Creación y lectura de un fichero de datos</p>
-<p>Abre tu <em>proyecto creado en la práctica 2</em> . Realiza lo siguiente:</p>
+<p>El proyecto de esta unidad es un <strong>catálogo de videojuegos</strong>. Los datos de partida son los siguientes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">Título</th>
+<th style="text-align: left;">Género</th>
+<th style="text-align: center;">Año</th>
+<th style="text-align: center;">Nota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">The Legend of Zelda: Breath of the Wild</td>
+<td style="text-align: left;">Aventura</td>
+<td style="text-align: center;">2017</td>
+<td style="text-align: center;">9.5</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Red Dead Redemption 2</td>
+<td style="text-align: left;">Acción</td>
+<td style="text-align: center;">2018</td>
+<td style="text-align: center;">9.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Hades</td>
+<td style="text-align: left;">Roguelike</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">9.3</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Hollow Knight</td>
+<td style="text-align: left;">Plataformas</td>
+<td style="text-align: center;">2017</td>
+<td style="text-align: center;">9.1</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Celeste</td>
+<td style="text-align: left;">Plataformas</td>
+<td style="text-align: center;">2018</td>
+<td style="text-align: center;">8.9</td>
+</tr>
+</tbody>
+</table>
+<p>Abre tu <em>proyecto creado en la práctica 2</em>. Realiza lo siguiente:</p>
 <ul>
-<li><strong>Diseña tu data class</strong>: Define la <code>data class</code> de Kotlin que represente un único elemento de tu colección de datos. Debe tener un ID único de tipo <code>Int</code>, un nombre de tipo <code>String</code> y, al menos, otros dos campos (al menos uno de tipo <code>Double</code>).</li>
-<li><strong>Crea tu fichero de datos</strong>: (.csv, .json o .xml) con al menos 5 registros de tu colección dentro de la carpeta <code>datos_ini</code>.</li>
-<li><strong>Añade dependencias necesarias</strong>: Añade las librerías necesarias para leer tu fichero y <em>serializar / deserializar</em> datos en <code>build.gradle.kts</code>.</li>
-<li><strong>Crea la función de lectura</strong>: La función debe leer el fichero y devolver una lista de objetos <code>leerDatosIniciales(): List&lt;DataClass&gt;</code>.</li>
-<li><strong>Verifica que funciona</strong>: Imprime por consola la información leída.</li>
-<li><strong>Filtra la información leída</strong>: Crea una función que filtre según un atributo del <code>data class</code> y guarde la información resultante en <code>datos_fin</code>. Por ejemplo, en el caso de las <em>plantas</em> podemos guardar las que superen una altura.</li>
+<li><strong>Diseña tu <code>data class</code></strong>: Define la <code>data class</code> de Kotlin que represente un único videojuego. Debe tener un <strong>ID único</strong> de tipo <code>Int</code>, un campo de <strong>nombre/título</strong> de tipo <code>String</code> y al menos <strong>otros dos campos</strong> (al menos uno numérico de tipo <code>Double</code>). Los nombres de los atributos los decides tú.</li>
+<li><strong>Crea el fichero de datos</strong>: Crea el fichero <code>videojuegos.csv</code> dentro de la carpeta <code>datos_ini</code> con los 5 videojuegos de la tabla anterior.</li>
+<li><strong>Añade dependencias necesarias</strong>: Añade las librerías necesarias para leer el fichero y <em>serializar / deserializar</em> datos en <code>build.gradle.kts</code>.</li>
+<li><strong>Crea la función de lectura</strong>: <code>leerVideojuegos(ruta: Path): List&lt;NombreDeTuDataClass&gt;</code> que lea el fichero y devuelva la lista de objetos.</li>
+<li><strong>Verifica que funciona</strong>: Imprime por consola todos los videojuegos leídos.</li>
+<li><strong>Filtra la información leída</strong>: Crea una función que filtre los videojuegos según el campo numérico que hayas elegido y guarde el resultado en <code>datos_fin</code>.<br />
+<em>Ejemplos: guardar los juegos con <code>nota &gt; 9.2</code>, o los publicados a partir de un año concreto.</em></li>
 <li><strong>Aspectos Técnicos Obligatorios</strong>:<ol>
-<li>Se debe incluir un <strong>manejo básico de errores</strong> (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).</li>
-<li><strong>Organiza la información</strong>. Es decir, crea las <em>clases</em> en su correspondiente fichero, organizando la lógica del programa.</li>
+<li>Se debe incluir un <strong>manejo básico de errores</strong> (comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).</li>
+<li><strong>Organiza el código</strong>: la <code>data class</code> y las funciones de I/O en sus propios ficheros.</li>
 </ol>
 </li>
 </ul>
 </div>
-<hr />
-<div class="admonition danger">
-<p class="admonition-title">📁 Entrega parcial</p>
-</div>
-<p>Entrega el código fuente del proyecto comprimido en un fichero <code>.zip</code> para que el profesor te dé sugerencias de mejora (el programa entregado deberá ejecutarse, si da error de ejecución, no se podrá revisar).</p>
 
 
 
