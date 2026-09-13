@@ -17,7 +17,7 @@
 
 ## Guía de Uso
 
-Estos apuntes están diseñados para que aprendas haciendo. A lo largo de la unidad aplicarás los conceptos teóricos para construir, paso a paso, una aplicación completa de gestión de datos. El tema de la aplicación lo eliges tú, pero los pasos serán los mismos para todos.
+Estos apuntes están diseñados para que aprendas haciendo. A lo largo de la unidad aplicarás los conceptos teóricos para construir, paso a paso, una **aplicación de catálogo de videojuegos**. Cada práctica amplía la anterior, de modo que al final de la unidad tendrás un proyecto completo que trabaja con ficheros CSV, JSON, XML y binarios de acceso aleatorio.
 
 !!! success "🔍 Ejecutar y Analizar"
     Contienen fragmentos de código que deben ser ejecutados y comprendidos en detalle. Tu tarea es ejecutar ese código, observar la salida y asegurarte de entender cómo y por qué funciona.
@@ -80,9 +80,9 @@ A medida que necesitemos utilizar dependencias en nuestro proyecto, las iremos a
 ## 🎯 Práctica 1: Proyecto Kotlin con Gradle
 
 !!! warning "🎯 Práctica 1: Proyecto Kotlin con Gradle"
-    En esta práctica crearás el proyecto que irás ampliando a lo largo de toda la unidad.
+    En esta práctica crearás el proyecto que irás ampliando a lo largo de toda la unidad: un **catálogo de videojuegos**.
 
-    - **Piensa** en una aplicación de gestión orientada al sector que prefieras y busca un nombre original (será el nombre de tu proyecto).
-    - **Crea** un nuevo proyecto con Gradle y comprueba que se ejecuta correctamente (puedes utilizar el código de ejemplo de IntelliJ).
+    - **Elige un nombre** original para tu proyecto (será el nombre del proyecto en IntelliJ). Puede ser algo como `GameLibrary`, `MiCatalogo`, `VideoGameDB`... lo que prefieras.
+    - **Crea** un nuevo proyecto Kotlin con Gradle y comprueba que se ejecuta correctamente (puedes utilizar el código de ejemplo de IntelliJ).
 
 ---

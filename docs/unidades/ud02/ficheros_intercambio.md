@@ -123,7 +123,7 @@ Son ficheros de texto plano con valores separados por un delimitador (coma, punt
 | `writeAllWithHeader(data, File)` | `csvWriter().writeAllWithHeader(listOf(mapOf("nombre" to "Eli", "nota" to "10")), File("salida.csv"))` |
 | `delimiter`, `quoteChar`, etc. | `csvReader { delimiter = ';' }` |
 
-### Ejemplo de lectura y escritura de ficheros CSV:
+### Ejemplo de lectura y escritura de ficheros CSV
 
 Partimos de un fichero llamado `mis_plantas.csv` con la información siguiente:
 
@@ -295,7 +295,7 @@ Los ficheros XML son muy estructurados y extensibles. Se basan en etiquetas anid
 | `configure(MapperFeature, boolean)` | Configura opciones generales del mapeo. |
 | `setDefaultPrettyPrinter(...)` | Establece un formateador personalizado. |
 
-### Ejemplo de lectura y escritura de ficheros XML:
+### Ejemplo de lectura y escritura de ficheros XML
 
 Partimos de un fichero llamado `mis_plantas.xml` con la información siguiente:
 
@@ -441,7 +441,7 @@ Son ficheros ligeros, fáciles de leer y con una estructura de pares clave-valor
 ### Métodos de kotlinx.serialization
 
 | Método | Ejemplo | Descripción |
-| :--- | :--- | :---|
+| :--- | :--- | :--- |
 | `Json.encodeToString(objeto)` | `Json.encodeToString(persona)` | Convierte un objeto Kotlin a una cadena JSON. |
 | `Json.encodeToString(serializer, obj)` | `Json.encodeToString(Persona.serializer(), persona)` | Igual que el anterior pero especificando el serializador. |
 | `Json.decodeFromString(json)` | `Json.decodeFromString<Persona>(json)` | Convierte una cadena JSON a un objeto Kotlin. |
@@ -596,20 +596,25 @@ El patrón para convertir datos de un formato a otro es casi siempre el mismo. E
 ## 🎯 Práctica 3: Creación y lectura de un fichero de datos
 
 !!! warning "🎯 Práctica 3: Creación y lectura de un fichero de datos"
-    Abre tu _proyecto creado en la práctica 2_ . Realiza lo siguiente:
+    El proyecto de esta unidad es un **catálogo de videojuegos**. Los datos de partida son los siguientes:
 
-    * **Diseña tu data class**: Define la `data class` de Kotlin que represente un único elemento de tu colección de datos. Debe tener un ID único de tipo `Int`, un nombre de tipo `String` y, al menos, otros dos campos (al menos uno de tipo `Double`).
-    * **Crea tu fichero de datos**: (.csv, .json o .xml) con al menos 5 registros de tu colección dentro de la carpeta `datos_ini`.
-    * **Añade dependencias necesarias**: Añade las librerías necesarias para leer tu fichero y _serializar / deserializar_ datos en `build.gradle.kts`.
-    * **Crea la función de lectura**: La función debe leer el fichero y devolver una lista de objetos `leerDatosIniciales(): List<DataClass>`.
-    * **Verifica que funciona**: Imprime por consola la información leída.
-    * **Filtra la información leída**: Crea una función que filtre según un atributo del `data class` y guarde la información resultante en `datos_fin`. Por ejemplo, en el caso de las _plantas_ podemos guardar las que superen una altura.
+    | # | Título | Género | Año | Nota |
+    | :---: | :--- | :--- | :---: | :---: |
+    | 1 | The Legend of Zelda: Breath of the Wild | Aventura | 2017 | 9.5 |
+    | 2 | Red Dead Redemption 2 | Acción | 2018 | 9.7 |
+    | 3 | Hades | Roguelike | 2020 | 9.3 |
+    | 4 | Hollow Knight | Plataformas | 2017 | 9.1 |
+    | 5 | Celeste | Plataformas | 2018 | 8.9 |
+
+    Abre tu _proyecto creado en la práctica 2_. Realiza lo siguiente:
+
+    * **Diseña tu `data class`**: Define la `data class` de Kotlin que represente un único videojuego. Debe tener un **ID único** de tipo `Int`, un campo de **nombre/título** de tipo `String` y al menos **otros dos campos** (al menos uno numérico de tipo `Double`). Los nombres de los atributos los decides tú.
+    * **Crea el fichero de datos**: Crea el fichero `videojuegos.csv` dentro de la carpeta `datos_ini` con los 5 videojuegos de la tabla anterior.
+    * **Añade dependencias necesarias**: Añade las librerías necesarias para leer el fichero y _serializar / deserializar_ datos en `build.gradle.kts`.
+    * **Crea la función de lectura**: `leerVideojuegos(ruta: Path): List<NombreDeTuDataClass>` que lea el fichero y devuelva la lista de objetos.
+    * **Verifica que funciona**: Imprime por consola todos los videojuegos leídos.
+    * **Filtra la información leída**: Crea una función que filtre los videojuegos según el campo numérico que hayas elegido y guarde el resultado en `datos_fin`.  
+      _Ejemplos: guardar los juegos con `nota > 9.2`, o los publicados a partir de un año concreto._
     * **Aspectos Técnicos Obligatorios**:
-        1. Se debe incluir un **manejo básico de errores** (ej: comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
-        2. **Organiza la información**. Es decir, crea las _clases_ en su correspondiente fichero, organizando la lógica del programa.
-
----
-
-!!! danger "📁 Entrega parcial"
-
-Entrega el código fuente del proyecto comprimido en un fichero `.zip` para que el profesor te dé sugerencias de mejora (el programa entregado deberá ejecutarse, si da error de ejecución, no se podrá revisar).
+        1. Se debe incluir un **manejo básico de errores** (comprobar si el fichero existe antes de leerlo, try-catch para conversiones numéricas, etc.).
+        2. **Organiza el código**: la `data class` y las funciones de I/O en sus propios ficheros.

@@ -1,9 +1,11 @@
 ## 2. Gestión de ficheros y directorios
+
 La gestión de ficheros y directorios se realiza a través de **Path** y **Files**.
 
 * **Path**: Representa una **ruta** en el sistema de ficheros (ej. `/home/usuario/foto.png` o `C:\usuarios\docs\informe.txt`). Un objeto Path es una dirección y no significa que el fichero o directorio exista.
 
 ### Métodos principales de Path
+
 | Método | Descripción |
 | :--- | :--- |
 | `Path.of(String)` | Crea un objeto `Path` a partir de un String de ruta (Java 11+). Por debajo llama a `Paths.get()` que es el método original de la clase `Paths` (Java 7+). |
@@ -12,6 +14,7 @@ La gestión de ficheros y directorios se realiza a través de **Path** y **Files
 | `fileName()` | Devuelve el nombre del fichero o directorio final de la ruta. |
 
 ### Ejemplo 1
+
 ```kotlin
 import java.nio.file.Path
 fun main() {
@@ -27,8 +30,10 @@ fun main() {
     println ("Ruta absoluta: " + rutaAbsolutaNix)
 }
 ```
+
 !!! success "🔍 Ejecutar y Analizar"
     Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
+
 ```
 Ruta relativa: documentos\ejemplo.txt
 Ruta absoluta: F:\kot\1-ficheros\documentos\ejemplo.txt
@@ -39,6 +44,7 @@ Ruta absoluta: \home\pol\documentos
 * **Files**: Es una clase de utilidad con las acciones (borrar, copiar, mover, leer, etc) que podemos realizar sobre las rutas (`Path`).
 
 ### Métodos principales de Files
+
 | Método | Descripción |
 | :--- | :--- |
 | `exists()`, `isDirectory()`, `isRegularFile()`, `isReadable()` | Verificar de existencia y accesibilidad. |
@@ -52,6 +58,7 @@ Ruta absoluta: \home\pol\documentos
 | `copy(origen, destino)` | Copiar un fichero o directorio. Si el destino ya existe se puede sobreescribir utilizando `copy(Path, Path, REPLACE_EXISTING)`. Si se copia un directorio no se copiará su contenido, el nuevo directorio estará vacío. |
 
 ### Ejemplo 2
+
 El siguiente ejemplo es un organizador de ficheros. Imagina una carpeta de "multimedia" donde todo está desordenado. El programa organizará los ficheros en subcarpetas según su extensión (.pdf, .jpg, .mp3, etc).
 
 ```kotlin
@@ -96,6 +103,7 @@ fun main() {
     }
 }
 ```
+
 !!! success "🔍 Ejecutar y Analizar"
     Crea una carpeta, dentro de tu proyecto llamada `multimedia` y guarda diferentes archivos (_pdf, jpg, txt, etc._). Ejecuta el ejemplo anterior y comprueba que la salida es parecida a la siguiente.
 
@@ -120,30 +128,31 @@ fun main() {
 En el ejemplo anterior hemos recorrido un directorio para organizar los ficheros que contenía. Recorrer un directorio para "mirar" su contenido es útil en muchas situaciones y hay varias formas de hacerlo. A continuación veremos algunas:
 
 * `Files.list(path)`: Es la utilizada en el ejemplo anterior. Lista únicamente el contenido de un directorio sin acceder a las subcarpetas. Será útil cuando solamente sea necesario acceder al contenido directo de una carpeta, por ejemplo para organizar ficheros en un directorio, mostrar el contenido de la carpeta actual o buscar un fichero específico solo en este nivel.
-    * **Ventajas:**
-        * Rápido y eficiente al no ser recursivo.
-        * Ofrece un control preciso, operando solo en el primer nivel del directorio.
-        * Devuelve un `Stream` de Java que permite usar operadores funcionales (`filter`, `map`, etc.) de forma segura con `.use`.
-    * **Inconvenientes:**
-        * No explora subdirectorios.
-        * Para recorrer un árbol completo, se necesita implementar lógica recursiva manualmente.
+  * **Ventajas:**
+    * Rápido y eficiente al no ser recursivo.
+    * Ofrece un control preciso, operando solo en el primer nivel del directorio.
+    * Devuelve un `Stream` de Java que permite usar operadores funcionales (`filter`, `map`, etc.) de forma segura con `.use`.
+  * **Inconvenientes:**
+    * No explora subdirectorios.
+    * Para recorrer un árbol completo, se necesita implementar lógica recursiva manualmente.
 * `Files.walk(path)`: Recorre un directorio y todo su contenido recursivamente. Entra en cada subcarpeta, y en sus subcarpetas hasta el final. Será útil para operar sobre un directorio y todo lo que contiene, sin importar la profundidad, por ejemplo para buscar un fichero por nombre en cualquier subcarpeta, eliminar todos los ficheros temporales de un proyecto o contar todos los ficheros .kt de un repositorio.
-    * **Ventajas:**
-        * Recorre árboles de directorios completos (recursivo) de forma muy sencilla.
-        * Extremadamente potente para búsquedas profundas o aplicar operaciones a todos los elementos anidados.
-        * También devuelve un `Stream`, permitiendo un filtrado y procesamiento muy expresivo.
-    * **Inconvenientes:**
-        * Puede ser lento y consumir más memoria en directorios con miles de ficheros.
-        * Es una herramienta excesiva ('overkill') para tareas que solo requieren acceder al nivel actual.
+  * **Ventajas:**
+    * Recorre árboles de directorios completos (recursivo) de forma muy sencilla.
+    * Extremadamente potente para búsquedas profundas o aplicar operaciones a todos los elementos anidados.
+    * También devuelve un `Stream`, permitiendo un filtrado y procesamiento muy expresivo.
+  * **Inconvenientes:**
+    * Puede ser lento y consumir más memoria en directorios con miles de ficheros.
+    * Es una herramienta excesiva ('overkill') para tareas que solo requieren acceder al nivel actual.
 * `Files.newDirectoryStream(path)`: Es similar a `Files.list()`, listando solo el contenido inmediato. La diferencia es que no devuelve un `Stream` de Java 8 (que permite usar `.filter`, `.forEach`, etc.), sino un `DirectoryStream`, que es una versión más antigua que se usa con bucles for. Es menos común en código Kotlin moderno, pero es bueno reconocerlo para poder entender en proyectos antiguos (legacy). Para cualquier tarea nueva, `Files.list()` y `Files.walk()` son superiores en seguridad y expresividad.
-    * **Ventajas:**
-        * Utiliza un bucle `for-each` tradicional, que puede resultar familiar.
-    * **Inconvenientes:**
-        * **¡PELIGRO!** Requiere cerrar el recurso manualmente (`.close()`). Si se olvida, provoca fugas de recursos (`resource leaks`).
-        * Es menos expresivo que los Streams. No se pueden encadenar operadores funcionales fácilmente.
-        * Considerado obsoleto en código Kotlin idiomático, que prefiere `Files.list().use{...}`.
+  * **Ventajas:**
+    * Utiliza un bucle `for-each` tradicional, que puede resultar familiar.
+  * **Inconvenientes:**
+    * **¡PELIGRO!** Requiere cerrar el recurso manualmente (`.close()`). Si se olvida, provoca fugas de recursos (`resource leaks`).
+    * Es menos expresivo que los Streams. No se pueden encadenar operadores funcionales fácilmente.
+    * Considerado obsoleto en código Kotlin idiomático, que prefiere `Files.list().use{...}`.
 
 ### Ejemplo 3
+
 Queremos crear un informe de toda la estructura de la carpeta resultante del ejemplo anterior. Por tanto necesitamos entrar en las nuevas carpetas (pdf, jpg, txt) y ver qué ficheros hay dentro de cada una. Para ello se utiliza `Files.walk()` que calcula la profundidad, recorre la jerarquía de carpetas y muestra cada elemento indicando si es un directorio o un fichero.
 
 ```kotlin
@@ -174,8 +183,10 @@ fun main() {
     }
 }
 ```
+
 !!! success "🔍 Ejecutar y Analizar"
     Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
+
 ```
 --- Mostrando la estructura final con Files.walk() ---
     [DIR] jpg
@@ -200,37 +211,32 @@ fun main() {
 ## 🎯 Práctica 2: Directorios y comprobaciones
 
 !!! warning "🎯 Práctica 2: Directorios y comprobaciones"
-    Prepara **la estructura de tu proyecto**. Crea la ruta `proyecto/datos`. Basándote en los ejemplos anteriores, **desarrolla un programa** en tu proyecto haga lo siguiente:
+    Prepara **la estructura de tu proyecto**. Crea la ruta `proyecto/datos`. Basándote en los ejemplos anteriores, **desarrolla un programa** que haga lo siguiente:
 
     1. **Defina dos rutas**: una para una carpeta llamada `datos_ini` y otra para una carpeta llamada `datos_fin` (ambas dentro de la carpeta `proyecto/datos` de tu proyecto).
-    2. **Comprueba los directorios**: Si las carpetas no existen las deberá crear utilizando `Files.createDirectories`.
-    3. **Añade ficheros**: Añade (manualmente y vacío) el fichero `mis_datos.json` dentro de la carpeta `datos_ini`.
-    4. **Comprueba ficheros**: Después de la comprobación de la existencia del fichero de datos dentro de la carpeta `datos_ini` (`mis_datos.json`) imprimirá un mensaje por consola mostrando la estrctura de directorios y ficheros.
+    2. **Comprueba los directorios**: Si las carpetas no existen, las deberá crear utilizando `Files.createDirectories`.
+    3. **Añade el fichero de datos**: Crea manualmente (y vacío por ahora) el fichero `videojuegos.csv` dentro de la carpeta `datos_ini`. Este fichero lo rellenarás en la Práctica 3.
+    4. **Comprueba ficheros**: Comprueba si el fichero `videojuegos.csv` existe dentro de `datos_ini` e imprime por consola la estructura de directorios y ficheros.
 
     **La salida de tu programa** debe ser parecida a esta, la primera vez que se ejecuta:
     ```
     CREACIÓN DE RUTAS PROYECTO
-    	Creando rutas...
-    	Creación de ruta para DATOS_INI
-    	Creación de ruta para DATOS_FIN
+     Creando rutas...
+     Creación de ruta para DATOS_INI
+     Creación de ruta para DATOS_FIN
     MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
-    	[DIR] datos
-    		[DIR] datos_fin
-    		[DIR] datos_ini
+     [DIR] datos
+      [DIR] datos_fin
+      [DIR] datos_ini
     ```
 
-    Y la segunda vez que se ejecuta, tras añadir el fichero `mis_datos.json`:
+    Y la segunda vez que se ejecuta, tras crear el fichero `videojuegos.csv`:
     ```
     CREACIÓN DE RUTAS PROYECTO
-    	Creando rutas...
+     Creando rutas...
     MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
-    	[DIR] datos
-    		[DIR] datos_fin
-    		[DIR] datos_ini
-    			[FILE] mis_datos.json
+     [DIR] datos
+      [DIR] datos_fin
+      [DIR] datos_ini
+       [FILE] videojuegos.csv
     ```
-
-    **La estructura en tu proyecto** debe ser parecida a esta:
-
-    ![Proyecto 01](../../assets/images/ud02/proy01.png)
-

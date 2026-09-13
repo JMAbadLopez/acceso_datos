@@ -418,11 +418,13 @@ Medición (ID: 104) escrita correctamente.
 ## 🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat
 
 !!! warning "🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat"
-    Realiza lo siguiente:
+    Continuando con el **catálogo de videojuegos** de la práctica anterior, vamos a persistir los mismos datos en un fichero binario de acceso aleatorio.
 
-    * **Siguiendo con tu Proyecto anterior**: Crea una nueva estructura para registrar los datos que has definido pero en modo **Fichero de Acceso Aleatorio**.
-    * **Crea las funciones `escribirRegistros()`y `leerRegistros()`**. Adaptlo a tus datos.
-    * **Crea la función `modificarReg()`**: Pedirá al usuario el ID del registro a modificar y buscará ese registro en el fichero. Si lo encuentra, pedirá los nuevos datos. Utilizará acceso aleatorio (`FileChannel.position()`) para saltar a la posición exacta de ese registro y sobrescribir únicamente los campos modificados, sin alterar el resto del fichero.
-    * **Crea la función `eliminarReg()`**: Debe recibir un ID y eliminar el registro correspondiente. Implementa la técnica de streaming (leer el fichero original registro a registro, escribir los que se conservan en un fichero temporal, borrar el original y renombrar el temporal).
-    * **Comprueba**: Prueba estas funciones desde `main`, llamando a `leerRegistros()` antes y después de cada operación para verificar los resultados.
+    * **Define las constantes de tamaño**: Antes de escribir nada, decide cuántos bytes reservas para cada campo. Recuerda que los campos de tipo `String` deben ocupar un tamaño **fijo** en disco.  
+      _Ejemplo orientativo: `TAMANO_TITULO = 40`, `TAMANO_GENERO = 20`... Elige el tamaño que consideres suficiente para cada campo de tu `data class`._
+    * **Calcula `TAMANO_REGISTRO`**: La suma de todos los bytes de los campos. Este valor determina en qué posición empieza cada registro.
+    * **Crea las funciones `escribirRegistro()` y `leerRegistros()`**: Adapta los tipos y las constantes a los campos concretos de tu `data class`.
+    * **Crea la función `modificarNota()`** (o el campo `Double` que hayas elegido): Pide al usuario el ID del videojuego a modificar, localiza el registro con acceso aleatorio (`FileChannel.position()`) y sobrescribe únicamente ese campo sin tocar el resto del registro.
+    * **Crea la función `eliminarRegistro()`**: Recibe un ID y elimina el registro usando la técnica del fichero temporal: leer el original registro a registro → copiar los que no se eliminan en un `.dat` temporal → borrar el original → renombrar el temporal.
+    * **Comprueba**: Prueba las cuatro funciones desde `main` llamando a `leerRegistros()` antes y después de cada operación para verificar los resultados.
 
