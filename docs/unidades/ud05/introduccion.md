@@ -1,7 +1,7 @@
 # UD5 — Diseño de Componentes. API REST
 
 !!! abstract "Resultado de Aprendizaje"
-    **RA5** — Desarrolla componentes de acceso a datos, diseñando e implementando aplicaciones que gestionan la información almacenada mediante APIs REST.
+    - **RA6** - Programa componentes de acceso a datos identificando las características que debe poseer un componente y utilizando herramientas de desarrollo.
 
 ## Objetivos de la Unidad
 
@@ -127,7 +127,7 @@ La forma más sencilla y profesional de empezar es utilizando el asistente de pr
 
 Al finalizar, IntelliJ generará toda la estructura de archivos necesaria y configurará el *build.gradle.kts* por ti.
 
-Para testear que todo ha ido bien, lanza la función **main** del archivo **Application.kt**. Mostrará una ruta donde el servidor de tu API esté funcionando y *escuchando* peticiones (por ejempo, http://0.0.0.0:8080).
+Para testear que todo ha ido bien, lanza la función **main** del archivo **Application.kt**. Mostrará una ruta donde el servidor de tu API esté funcionando y *escuchando* peticiones (por ejempo, <http://0.0.0.0:8080>).
 
 Haz click y se abrirá un navegador con nuestro primer *Hello world!*
 

@@ -1,7 +1,7 @@
 # UD4 — Mapeo Objeto Relacional (ORM)
 
 !!! abstract "Resultado de Aprendizaje"
-    **RA3** — Gestiona la persistencia de los datos mediante herramientas de mapeo objeto-relacional (ORM), desarrollando aplicaciones que la utilizan.
+    - **RA3** - Gestiona la persistencia de los datos mediante herramientas de mapeo objeto-relacional (ORM), desarrollando aplicaciones que la utilizan.
 
 ## Objetivos de la Unidad
 
@@ -201,4 +201,3 @@ Comenzaremos con nuestro proyecto. Como siempre, preparemos el entorno para pode
     2. Actualiza el fichero `build.gradle.kts` con las dependencias de Exposed y MariaDB.
     3. Crea el archivo `ConexionDB.kt` (mira el Canvas) y el `MainApp.kt`.
     4. Ejecuta la función `testConexion()` para asegurarte de que tu servidor MySQL está operativo.
-

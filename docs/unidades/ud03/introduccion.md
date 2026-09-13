@@ -1,7 +1,8 @@
 # UD3 — Persistencia en Bases de Datos Relacionales
 
 !!! abstract "Resultado de Aprendizaje"
-    **RA2** — Desarrolla aplicaciones que gestionan información almacenada en bases de datos relacionales, manteniendo la integridad y consistencia de los datos.
+    - **RA2** - Desarrolla aplicaciones que gestionan información almacenada en bases de datos relacionales, manteniendo la integridad y consistencia de los datos.
+    - **RA4** - Desarrolla aplicaciones que gestionan la información almacenada en bases de datos objeto relacionales y orientadas a objetos valorando sus características y utilizando los mecanismos de acceso incorporados.
 
 ## Objetivos de la Unidad
 
