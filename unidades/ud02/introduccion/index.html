@@ -1490,6 +1490,23 @@
 <li><strong>De bases de datos</strong>: Se utilizan para almacenar grandes volúmenes de datos estructurados (.db, .sql).</li>
 <li><strong>Historial</strong>: de eventos o errores en un sistema (.log).</li>
 </ul>
+<pre class="mermaid"><code>graph TD
+    F[📁 Ficheros] --&gt; T[📄 Texto]
+    F --&gt; B[⚙️ Binario]
+
+    T --&gt; T1["Plano\n.txt · .log · .csv"]
+    T --&gt; T2["Intercambio estructurado\n.json · .xml · .yaml"]
+    T --&gt; T3["Código fuente\n.kt · .java · .py"]
+    T --&gt; T4["Configuración\n.ini · .conf · .properties"]
+
+    B --&gt; B1["Ejecutable\n.exe · .jar · .apk"]
+    B --&gt; B2["Multimedia\n.jpg · .mp3 · .mp4"]
+    B --&gt; B3["Base de datos\n.db · .sqlite"]
+    B --&gt; B4["Acceso aleatorio\n.dat"]</code></pre>
+<div class="admonition info">
+<p class="admonition-title">Texto vs Binario</p>
+<p>La diferencia fundamental es la <strong>legibilidad humana</strong>: un fichero de texto puede abrirse con cualquier editor y entenderse directamente. Un fichero binario almacena los datos en su representación numérica nativa (bytes) y necesita un programa específico para interpretarlo correctamente.</p>
+</div>
 <h3 id="api-para-manejo-de-ficheros">API para manejo de ficheros</h3>
 <p><strong>Java.nio</strong> (New IO) es una API disponible desde la versión 7 de Java que permite mejorar el rendimiento, así como simplificar el manejo de muchas operaciones. Funciona a través de interfaces y clases para que la máquina virtual Java tenga acceso a ficheros, atributos de ficheros y sistemas de ficheros. En los siguientes apartados veremos cómo trabajar con ella.</p>
 <h3 id="formas-de-acceso">Formas de acceso</h3>

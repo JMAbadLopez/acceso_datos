@@ -519,6 +519,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#streams-de-java-con-ficheros" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streams de Java con ficheros
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#metodos-principales-de-files" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos principales de Files
@@ -1334,6 +1343,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#streams-de-java-con-ficheros" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streams de Java con ficheros
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#metodos-principales-de-files" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos principales de Files
@@ -1469,6 +1487,91 @@
 <ul>
 <li><strong>Files</strong>: Es una clase de utilidad con las acciones (borrar, copiar, mover, leer, etc) que podemos realizar sobre las rutas (<code>Path</code>).</li>
 </ul>
+<hr />
+<h3 id="streams-de-java-con-ficheros">Streams de Java con ficheros</h3>
+<p>Varios métodos de <code>Files</code> (como <code>Files.list()</code> y <code>Files.walk()</code>) devuelven un <strong><code>Stream&lt;Path&gt;</code></strong> en lugar de una lista. Un <code>Stream</code> es una <strong>vista perezosa</strong> sobre una secuencia de datos: no carga todos los elementos en memoria de golpe, sino que los procesa uno a uno conforme se necesitan. Esto lo hace eficiente para directorios con muchos ficheros.</p>
+<div class="admonition info">
+<p class="admonition-title">Stream ≠ InputStream / OutputStream</p>
+<p>Un <code>Stream&lt;T&gt;</code> (paquete <code>java.util.stream</code>) es una secuencia de elementos para procesar con operaciones funcionales. No tiene nada que ver con <code>InputStream</code> / <code>OutputStream</code>, que son flujos de bytes para leer y escribir datos.</p>
+</div>
+<p>Un <code>Stream</code> se construye como una <strong>cadena de operaciones</strong> que se divide en dos grupos:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Operación</th>
+<th style="text-align: left;">Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Intermedia</strong></td>
+<td style="text-align: left;"><code>filter(predicado)</code></td>
+<td style="text-align: left;">Descarta elementos que no cumplen la condición</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Intermedia</strong></td>
+<td style="text-align: left;"><code>map(función)</code></td>
+<td style="text-align: left;">Transforma cada elemento en otro</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Intermedia</strong></td>
+<td style="text-align: left;"><code>sorted()</code> / <code>sorted(comparador)</code></td>
+<td style="text-align: left;">Ordena los elementos</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Intermedia</strong></td>
+<td style="text-align: left;"><code>distinct()</code></td>
+<td style="text-align: left;">Elimina duplicados</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Intermedia</strong></td>
+<td style="text-align: left;"><code>limit(n)</code></td>
+<td style="text-align: left;">Toma como máximo <code>n</code> elementos</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Terminal</strong></td>
+<td style="text-align: left;"><code>forEach(acción)</code></td>
+<td style="text-align: left;">Ejecuta una acción por cada elemento</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Terminal</strong></td>
+<td style="text-align: left;"><code>count()</code></td>
+<td style="text-align: left;">Devuelve el número de elementos</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Terminal</strong></td>
+<td style="text-align: left;"><code>toList()</code></td>
+<td style="text-align: left;">Recoge los elementos en una lista</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Terminal</strong></td>
+<td style="text-align: left;"><code>findFirst()</code></td>
+<td style="text-align: left;">Devuelve el primer elemento (si existe)</td>
+</tr>
+</tbody>
+</table>
+<p>Las operaciones <strong>intermedias</strong> son <strong>perezosas</strong>: no se ejecutan hasta que se llama a una operación <strong>terminal</strong>. La cadena completa se evalúa de una sola pasada.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1">// Ejemplo: listar solo los ficheros .kt de un directorio, ordenados por nombre</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">Files</span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">)).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="n">stream</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">isRegularFile</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">          </span><span class="c1">// intermedia: solo ficheros</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">toString</span><span class="p">().</span><span class="na">endsWith</span><span class="p">(</span><span class="s">&quot;.kt&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">    </span><span class="c1">// intermedia: solo .kt</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="p">.</span><span class="na">sorted</span><span class="p">()</span><span class="w">                                    </span><span class="c1">// intermedia: orden alfabético</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="nb">it</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">            </span><span class="c1">// terminal: imprime cada uno</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Cierra siempre el Stream con <code>.use {}</code></p>
+<p>Los streams de <code>Files.list()</code> y <code>Files.walk()</code> mantienen abierto un <strong>descriptor del sistema de ficheros</strong> mientras existen. Si no se cierran, se produce una <strong>fuga de recursos</strong> (<em>resource leak</em>). El bloque <code>.use { }</code> garantiza el cierre automático, equivalente a un <code>try-finally</code>.</p>
+</div>
 <h3 id="metodos-principales-de-files">Métodos principales de Files</h3>
 <table>
 <thead>
@@ -1518,90 +1621,6 @@
 </table>
 <h3 id="ejemplo-2">Ejemplo 2</h3>
 <p>El siguiente ejemplo es un organizador de ficheros. Imagina una carpeta de "multimedia" donde todo está desordenado. El programa organizará los ficheros en subcarpetas según su extensión (.pdf, .jpg, .mp3, etc).</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span>
-<span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span>
-<span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span>
-<span class="normal"><a href="#__codelineno-2-20">20</a></span>
-<span class="normal"><a href="#__codelineno-2-21">21</a></span>
-<span class="normal"><a href="#__codelineno-2-22">22</a></span>
-<span class="normal"><a href="#__codelineno-2-23">23</a></span>
-<span class="normal"><a href="#__codelineno-2-24">24</a></span>
-<span class="normal"><a href="#__codelineno-2-25">25</a></span>
-<span class="normal"><a href="#__codelineno-2-26">26</a></span>
-<span class="normal"><a href="#__codelineno-2-27">27</a></span>
-<span class="normal"><a href="#__codelineno-2-28">28</a></span>
-<span class="normal"><a href="#__codelineno-2-29">29</a></span>
-<span class="normal"><a href="#__codelineno-2-30">30</a></span>
-<span class="normal"><a href="#__codelineno-2-31">31</a></span>
-<span class="normal"><a href="#__codelineno-2-32">32</a></span>
-<span class="normal"><a href="#__codelineno-2-33">33</a></span>
-<span class="normal"><a href="#__codelineno-2-34">34</a></span>
-<span class="normal"><a href="#__codelineno-2-35">35</a></span>
-<span class="normal"><a href="#__codelineno-2-36">36</a></span>
-<span class="normal"><a href="#__codelineno-2-37">37</a></span>
-<span class="normal"><a href="#__codelineno-2-38">38</a></span>
-<span class="normal"><a href="#__codelineno-2-39">39</a></span>
-<span class="normal"><a href="#__codelineno-2-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.StandardCopyOption</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.io.path.extension</span><span class="w"> </span><span class="c1">// Extensión de Kotlin para obtener la extensión</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="c1">// 1. Ruta de la carpeta a organizar</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpeta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;multimedia&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;--- Iniciando la organización de la carpeta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">carpeta</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;---&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">        </span><span class="c1">// 2. Recorrer la carpeta desordenada y utilizar .use para asegurar que los recursos del sistema se cierren correctamente</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="n">carpeta</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">streamDePaths</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">            </span><span class="n">streamDePaths</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pathFichero</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">                </span><span class="c1">// 3. Solo interesan los ficheros, ignorar subcarpetas</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isRegularFile</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">                    </span><span class="c1">// 4. Obteners la extensión del fichero (ej: &quot;pdf&quot;, &quot;jpg&quot;)</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">extension</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">extension</span><span class="p">.</span><span class="na">isBlank</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">                        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Ignorando: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">                        </span><span class="k">return</span><span class="nd">@forEach</span><span class="w"> </span><span class="c1">// Salta a la siguiente iteración del bucle</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">                    </span><span class="p">}</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">                    </span><span class="c1">// 5. Crear la ruta del directorio de destino</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpeta</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">                    </span><span class="c1">// 6. Crear el directorio de destino si no existe</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">notExists</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">                        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Creando nueva carpeta &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">                        </span><span class="n">Files</span><span class="p">.</span><span class="na">createDirectories</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">)</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">                    </span><span class="p">}</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">                    </span><span class="c1">// 7. Mover el fichero a su nueva carpeta</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">pathDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpetaDestino</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">                    </span><span class="n">Files</span><span class="p">.</span><span class="na">move</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">,</span><span class="w"> </span><span class="n">pathDestino</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCopyOption</span><span class="p">.</span><span class="na">REPLACE_EXISTING</span><span class="p">)</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">                    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Moviendo &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; a &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span>
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- ¡Organización completada con éxito! ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante la organización ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
-<a id="__codelineno-2-39" name="__codelineno-2-39"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-40" name="__codelineno-2-40"></a><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-<div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Crea una carpeta, dentro de tu proyecto llamada <code>multimedia</code> y guarda diferentes archivos (<em>pdf, jpg, txt, etc.</em>). Ejecuta el ejemplo anterior y comprueba que la salida es parecida a la siguiente.</p>
-</div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
@@ -1616,23 +1635,148 @@
 <span class="normal"><a href="#__codelineno-3-12">12</a></span>
 <span class="normal"><a href="#__codelineno-3-13">13</a></span>
 <span class="normal"><a href="#__codelineno-3-14">14</a></span>
-<span class="normal"><a href="#__codelineno-3-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>--- Iniciando la organización de la carpeta: multimedia---
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>-&gt; Creando nueva carpeta jpg
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a>-&gt; Moviendo 20191106_071048.jpg a jpg
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a>-&gt; Moviendo 20191101_071830.jpg a jpg
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a>-&gt; Creando nueva carpeta txt
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a>-&gt; Moviendo libros.txt a txt
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>-&gt; Moviendo peliculas.txt a txt
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>-&gt; Creando nueva carpeta pdf
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a>-&gt; Moviendo lorem-ipsum-2.pdf a pdf
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a>-&gt; Moviendo lorem-ipsum-1.pdf a pdf
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a>-&gt; Creando nueva carpeta mp3
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>-&gt; Moviendo dark-cinematic-atmosphere.mp3 a mp3
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a>-&gt; Moviendo pad-harmonious-and-soothing-voice-like-background.mp3 a mp3
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>--- ¡Organización completada con éxito! ---
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.StandardCopyOption</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.io.path.extension</span><span class="w"> </span><span class="c1">// Extensión de Kotlin para obtener la extensión</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="c1">// 1. Ruta de la carpeta a organizar</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpeta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;multimedia&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;--- Iniciando la organización de la carpeta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">carpeta</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;---&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">        </span><span class="c1">// 2. Recorrer la carpeta desordenada y utilizar .use para asegurar que los recursos del sistema se cierren correctamente</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="n">carpeta</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">streamDePaths</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">            </span><span class="n">streamDePaths</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pathFichero</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">                </span><span class="c1">// 3. Solo interesan los ficheros, ignorar subcarpetas</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isRegularFile</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">                    </span><span class="c1">// 4. Obteners la extensión del fichero (ej: &quot;pdf&quot;, &quot;jpg&quot;)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">extension</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">extension</span><span class="p">.</span><span class="na">isBlank</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">                        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Ignorando: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">                        </span><span class="k">return</span><span class="nd">@forEach</span><span class="w"> </span><span class="c1">// Salta a la siguiente iteración del bucle</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">                    </span><span class="p">}</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">                    </span><span class="c1">// 5. Crear la ruta del directorio de destino</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpeta</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">                    </span><span class="c1">// 6. Crear el directorio de destino si no existe</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">notExists</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">                        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Creando nueva carpeta &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">                        </span><span class="n">Files</span><span class="p">.</span><span class="na">createDirectories</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">                    </span><span class="p">}</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">                    </span><span class="c1">// 7. Mover el fichero a su nueva carpeta</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">pathDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpetaDestino</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">                    </span><span class="n">Files</span><span class="p">.</span><span class="na">move</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">,</span><span class="w"> </span><span class="n">pathDestino</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCopyOption</span><span class="p">.</span><span class="na">REPLACE_EXISTING</span><span class="p">)</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="w">                    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Moviendo &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; a &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- ¡Organización completada con éxito! ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante la organización ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>En el ejemplo anterior hemos recorrido un directorio para organizar los ficheros que contenía. Recorrer un directorio para "mirar" su contenido es útil en muchas situaciones y hay varias formas de hacerlo. A continuación veremos algunas:</p>
+<div class="admonition success">
+<p class="admonition-title">🔍 Ejecutar y Analizar</p>
+<p>Crea una carpeta, dentro de tu proyecto llamada <code>multimedia</code> y guarda diferentes archivos (<em>pdf, jpg, txt, etc.</em>). Ejecuta el ejemplo anterior y comprueba que la salida es parecida a la siguiente.</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>--- Iniciando la organización de la carpeta: multimedia---
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>-&gt; Creando nueva carpeta jpg
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>-&gt; Moviendo 20191106_071048.jpg a jpg
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>-&gt; Moviendo 20191101_071830.jpg a jpg
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>-&gt; Creando nueva carpeta txt
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>-&gt; Moviendo libros.txt a txt
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>-&gt; Moviendo peliculas.txt a txt
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>-&gt; Creando nueva carpeta pdf
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>-&gt; Moviendo lorem-ipsum-2.pdf a pdf
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>-&gt; Moviendo lorem-ipsum-1.pdf a pdf
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>-&gt; Creando nueva carpeta mp3
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>-&gt; Moviendo dark-cinematic-atmosphere.mp3 a mp3
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>-&gt; Moviendo pad-harmonious-and-soothing-voice-like-background.mp3 a mp3
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>--- ¡Organización completada con éxito! ---
+</code></pre></div></td></tr></table></div>
+<p>En el ejemplo anterior hemos recorrido un directorio para organizar los ficheros que contenía. Recorrer un directorio para "mirar" su contenido es útil en muchas situaciones y hay varias formas de hacerlo.</p>
+<p>El árbol de directorios del ejemplo tiene esta estructura:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">7</a></span>
+<span class="normal"><a href="#__codelineno-5-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>multimedia/
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>├── foto1.jpg
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>├── foto2.jpg
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>├── cancion.mp3
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>├── documento.pdf
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>└── notas/
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>    ├── apuntes.txt
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    └── borrador.txt
+</code></pre></div></td></tr></table></div>
+<p>El siguiente diagrama muestra <strong>qué nodos visita cada método</strong>:</p>
+<pre class="mermaid"><code>graph TD
+    subgraph FILES_LIST["Files.list(multimedia) — solo nivel 1"]
+        direction LR
+        A1[📁 multimedia] --&gt; B1[🖼 foto1.jpg]
+        A1 --&gt; B2[🖼 foto2.jpg]
+        A1 --&gt; B3[🎵 cancion.mp3]
+        A1 --&gt; B4[📄 documento.pdf]
+        A1 --&gt; B5[📁 notas]
+        B5 -. "no entra" .-&gt; C1[📝 apuntes.txt]
+        B5 -. "no entra" .-&gt; C2[📝 borrador.txt]
+    end
+
+    subgraph FILES_WALK["Files.walk(multimedia) — recursivo"]
+        direction LR
+        A2[📁 multimedia] --&gt; B6[🖼 foto1.jpg]
+        A2 --&gt; B7[🖼 foto2.jpg]
+        A2 --&gt; B8[🎵 cancion.mp3]
+        A2 --&gt; B9[📄 documento.pdf]
+        A2 --&gt; B10[📁 notas]
+        B10 --&gt; C3[📝 apuntes.txt]
+        B10 --&gt; C4[📝 borrador.txt]
+    end</code></pre>
+<p>A continuación veremos algunas formas de recorrer directorios:</p>
 <ul>
 <li><code>Files.list(path)</code>: Es la utilizada en el ejemplo anterior. Lista únicamente el contenido de un directorio sin acceder a las subcarpetas. Será útil cuando solamente sea necesario acceder al contenido directo de una carpeta, por ejemplo para organizar ficheros en un directorio, mostrar el contenido de la carpeta actual o buscar un fichero específico solo en este nivel.</li>
 <li><strong>Ventajas:</strong><ul>
@@ -1672,93 +1816,93 @@
 </ul>
 <h3 id="ejemplo-3">Ejemplo 3</h3>
 <p>Queremos crear un informe de toda la estructura de la carpeta resultante del ejemplo anterior. Por tanto necesitamos entrar en las nuevas carpetas (pdf, jpg, txt) y ver qué ficheros hay dentro de cada una. Para ello se utiliza <code>Files.walk()</code> que calcula la profundidad, recorre la jerarquía de carpetas y muestra cada elemento indicando si es un directorio o un fichero.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span>
-<span class="normal"><a href="#__codelineno-4-21">21</a></span>
-<span class="normal"><a href="#__codelineno-4-22">22</a></span>
-<span class="normal"><a href="#__codelineno-4-23">23</a></span>
-<span class="normal"><a href="#__codelineno-4-24">24</a></span>
-<span class="normal"><a href="#__codelineno-4-25">25</a></span>
-<span class="normal"><a href="#__codelineno-4-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaPrincipal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;multimedia&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;--- Mostrando la estructura final con Files.walk() ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">walk</span><span class="p">(</span><span class="n">carpetaPrincipal</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">            </span><span class="c1">// Ordenar el stream para una visualización más predecible</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">            </span><span class="n">stream</span><span class="p">.</span><span class="na">sorted</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">                </span><span class="c1">// Calcular profundidad para la indentación</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">                </span><span class="c1">// Restamos el número de componentes de la ruta base para que el directorio principal no tenga indentación</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">profundidad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">nameCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">carpetaPrincipal</span><span class="p">.</span><span class="na">nameCount</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">indentacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">.</span><span class="na">repeat</span><span class="p">(</span><span class="n">profundidad</span><span class="p">)</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">                </span><span class="c1">// Determinamos si es directorio o fichero para el prefijo</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">prefijo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">(</span><span class="n">path</span><span class="p">))</span><span class="w"> </span><span class="s">&quot;[DIR]&quot;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s">&quot;[FILE]&quot;</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">                </span><span class="c1">// No imprimimos la propia carpeta raíz, solo su contenido</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">profundidad</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">                    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="si">$</span><span class="n">indentacion</span><span class="si">$</span><span class="n">prefijo</span><span class="s"> </span><span class="si">${</span><span class="n">path</span><span class="p">.</span><span class="na">fileName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante el recorrido ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaPrincipal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;multimedia&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;--- Mostrando la estructura final con Files.walk() ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">walk</span><span class="p">(</span><span class="n">carpetaPrincipal</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">            </span><span class="c1">// Ordenar el stream para una visualización más predecible</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">            </span><span class="n">stream</span><span class="p">.</span><span class="na">sorted</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">                </span><span class="c1">// Calcular profundidad para la indentación</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">                </span><span class="c1">// Restamos el número de componentes de la ruta base para que el directorio principal no tenga indentación</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">profundidad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">nameCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">carpetaPrincipal</span><span class="p">.</span><span class="na">nameCount</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">indentacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">.</span><span class="na">repeat</span><span class="p">(</span><span class="n">profundidad</span><span class="p">)</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">                </span><span class="c1">// Determinamos si es directorio o fichero para el prefijo</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">prefijo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">(</span><span class="n">path</span><span class="p">))</span><span class="w"> </span><span class="s">&quot;[DIR]&quot;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s">&quot;[FILE]&quot;</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">                </span><span class="c1">// No imprimimos la propia carpeta raíz, solo su contenido</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">profundidad</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">                    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="si">$</span><span class="n">indentacion</span><span class="si">$</span><span class="n">prefijo</span><span class="s"> </span><span class="si">${</span><span class="n">path</span><span class="p">.</span><span class="na">fileName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante el recorrido ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
 <p class="admonition-title">🔍 Ejecutar y Analizar</p>
 <p>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</p>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-5-10">10</a></span>
-<span class="normal"><a href="#__codelineno-5-11">11</a></span>
-<span class="normal"><a href="#__codelineno-5-12">12</a></span>
-<span class="normal"><a href="#__codelineno-5-13">13</a></span>
-<span class="normal"><a href="#__codelineno-5-14">14</a></span>
-<span class="normal"><a href="#__codelineno-5-15">15</a></span>
-<span class="normal"><a href="#__codelineno-5-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>--- Mostrando la estructura final con Files.walk() ---
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    [DIR] jpg
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a>        [FILE] 20191101_071830.jpg
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a>        [FILE] 20191106_071048.jpg
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a>    [DIR] mp3
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a>        [FILE] dark-cinematic-atmosphere.mp3
-<a id="__codelineno-5-7" name="__codelineno-5-7"></a>        [FILE] pad-harmonious-and-soothing-voice-like-background.mp3
-<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    [DIR] mp4
-<a id="__codelineno-5-9" name="__codelineno-5-9"></a>        [FILE] 283533_small.mp4
-<a id="__codelineno-5-10" name="__codelineno-5-10"></a>        [FILE] 293968_small.mp4
-<a id="__codelineno-5-11" name="__codelineno-5-11"></a>    [DIR] pdf
-<a id="__codelineno-5-12" name="__codelineno-5-12"></a>        [FILE] lorem-ipsum-1.pdf
-<a id="__codelineno-5-13" name="__codelineno-5-13"></a>        [FILE] lorem-ipsum-2.pdf
-<a id="__codelineno-5-14" name="__codelineno-5-14"></a>    [DIR] txt
-<a id="__codelineno-5-15" name="__codelineno-5-15"></a>        [FILE] libros.txt
-<a id="__codelineno-5-16" name="__codelineno-5-16"></a>        [FILE] peliculas.txt
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>--- Mostrando la estructura final con Files.walk() ---
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    [DIR] jpg
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>        [FILE] 20191101_071830.jpg
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>        [FILE] 20191106_071048.jpg
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>    [DIR] mp3
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>        [FILE] dark-cinematic-atmosphere.mp3
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>        [FILE] pad-harmonious-and-soothing-voice-like-background.mp3
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    [DIR] mp4
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>        [FILE] 283533_small.mp4
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>        [FILE] 293968_small.mp4
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>    [DIR] pdf
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>        [FILE] lorem-ipsum-1.pdf
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>        [FILE] lorem-ipsum-2.pdf
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    [DIR] txt
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>        [FILE] libros.txt
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>        [FILE] peliculas.txt
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="practica-2-directorios-y-comprobaciones">🎯 Práctica 2: Directorios y comprobaciones</h2>
@@ -1772,36 +1916,36 @@
 <li><strong>Comprueba ficheros</strong>: Comprueba si el fichero <code>videojuegos.csv</code> existe dentro de <code>datos_ini</code> e imprime por consola la estructura de directorios y ficheros.</li>
 </ol>
 <p><strong>La salida de tu programa</strong> debe ser parecida a esta, la primera vez que se ejecuta:
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span>
-<span class="normal"><a href="#__codelineno-6-3">3</a></span>
-<span class="normal"><a href="#__codelineno-6-4">4</a></span>
-<span class="normal"><a href="#__codelineno-6-5">5</a></span>
-<span class="normal"><a href="#__codelineno-6-6">6</a></span>
-<span class="normal"><a href="#__codelineno-6-7">7</a></span>
-<span class="normal"><a href="#__codelineno-6-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>CREACIÓN DE RUTAS PROYECTO
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a> Creando rutas...
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a> Creación de ruta para DATOS_INI
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a> Creación de ruta para DATOS_FIN
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a> [DIR] datos
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a>  [DIR] datos_fin
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a>  [DIR] datos_ini
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>CREACIÓN DE RUTAS PROYECTO
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a> Creando rutas...
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a> Creación de ruta para DATOS_INI
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a> Creación de ruta para DATOS_FIN
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a> [DIR] datos
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>  [DIR] datos_fin
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>  [DIR] datos_ini
 </code></pre></div></td></tr></table></div></p>
 <p>Y la segunda vez que se ejecuta, tras crear el fichero <code>videojuegos.csv</code>:
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span>
-<span class="normal"><a href="#__codelineno-7-3">3</a></span>
-<span class="normal"><a href="#__codelineno-7-4">4</a></span>
-<span class="normal"><a href="#__codelineno-7-5">5</a></span>
-<span class="normal"><a href="#__codelineno-7-6">6</a></span>
-<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>CREACIÓN DE RUTAS PROYECTO
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a> Creando rutas...
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a> [DIR] datos
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a>  [DIR] datos_fin
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a>  [DIR] datos_ini
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a>   [FILE] videojuegos.csv
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>CREACIÓN DE RUTAS PROYECTO
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a> Creando rutas...
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>MOSTRANDO ESTRUCTURA DE DIRECTORIOS Y FICHEROS
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a> [DIR] datos
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>  [DIR] datos_fin
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>  [DIR] datos_ini
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>   [FILE] videojuegos.csv
 </code></pre></div></td></tr></table></div></p>
 </div>
 

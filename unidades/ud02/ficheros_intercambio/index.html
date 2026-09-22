@@ -664,9 +664,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#45-conversiones-entre-ficheros" class="md-nav__link">
+  <a href="#45-cuando-usar-csv-json-o-xml" class="md-nav__link">
     <span class="md-ellipsis">
-      4.5. Conversiones entre ficheros
+      4.5. ¿Cuándo usar CSV, JSON o XML?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-conversiones-entre-ficheros" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7. Conversiones entre ficheros
     </span>
   </a>
   
@@ -1507,9 +1516,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#45-conversiones-entre-ficheros" class="md-nav__link">
+  <a href="#45-cuando-usar-csv-json-o-xml" class="md-nav__link">
     <span class="md-ellipsis">
-      4.5. Conversiones entre ficheros
+      4.5. ¿Cuándo usar CSV, JSON o XML?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-conversiones-entre-ficheros" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7. Conversiones entre ficheros
     </span>
   </a>
   
@@ -1550,6 +1568,19 @@
 <li><strong>Serialización</strong>: Proceso de convertir un <strong>objeto en memoria</strong> (por ejemplo, una data class) en una representación textual o binaria (como un String en formato JSON o XML) que se puede guardar en un fichero o enviar por red.</li>
 <li><strong>Deserialización</strong>: Es el proceso inverso de leer un <strong>fichero</strong> (JSON, XML, etc.) y <strong>reconstruir el objeto original</strong> en memoria para poder trabajar con él.</li>
 </ul>
+<pre class="mermaid"><code>flowchart LR
+    OBJ["🧩 Objeto Kotlin\n(data class en memoria)"]
+    TXT["📄 String / Bytes\n(JSON · XML · binario)"]
+    FILE["💾 Fichero en disco\n(.json · .xml · .dat)"]
+
+    OBJ -- "Serializar\n(encodeToString, writeValue...)" --&gt; TXT
+    TXT -- "Deserializar\n(decodeFromString, readValue...)" --&gt; OBJ
+    TXT -- "Files.writeString / FileChannel.write" --&gt; FILE
+    FILE -- "Files.readString / FileChannel.read" --&gt; TXT</code></pre>
+<div class="admonition info">
+<p class="admonition-title">El patrón universal</p>
+<p>Sea cual sea el formato (CSV, JSON, XML o binario), el flujo es siempre el mismo: <strong>Fichero → Texto/Bytes → Objeto Kotlin</strong> para leer, y <strong>Objeto Kotlin → Texto/Bytes → Fichero</strong> para escribir. Las librerías se ocupan del paso intermedio.</p>
+</div>
 <p>A continuación se muestra una tabla con clases y herramientas que se utilizan para serializar / deserializar:</p>
 <h2 id="41-metodos-de-serializaciondeserializacion">4.1 Métodos de Serialización/Deserialización</h2>
 <table>
@@ -1960,7 +1991,7 @@
 <a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">filas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">readAll</span><span class="p">(</span><span class="n">ruta</span><span class="p">.</span><span class="na">toFile</span><span class="p">())</span>
 <a id="__codelineno-5-48" name="__codelineno-5-48"></a>
 <a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="w">        </span><span class="cm">/* Convertir la lista de texto plano en una lista de objetos &#39;Planta&#39;.</span>
-<a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="cm">        `mapNotNull` funciona como un `map` y descartando todos los `null` de la lista final.</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="cm">        `mapNotNull` funciona como un `map` descartando todos los `null` de la lista final.</span>
 <a id="__codelineno-5-51" name="__codelineno-5-51"></a><span class="cm">        Si una fila del CSV es inválida, devolvemos `null`</span>
 <a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="cm">        y `mapNotNull` se encarga de ignorarla. */</span>
 <a id="__codelineno-5-53" name="__codelineno-5-53"></a><span class="w">        </span><span class="n">plantas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filas</span><span class="p">.</span><span class="na">mapNotNull</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">columnas</span><span class="w"> </span><span class="o">-&gt;</span>
@@ -2013,23 +2044,42 @@
 <a id="__codelineno-5-100" name="__codelineno-5-100"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-5-101" name="__codelineno-5-101"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero <code>mis_plantas2.csv</code> y que su contenido es correcto:</p>
-</div>
+<div class="admonition info">
+<p class="admonition-title">¿Qué hace <code>mapNotNull</code>?</p>
+<p><code>mapNotNull</code> es una función de orden superior que combina dos pasos en uno: <strong>transforma</strong> cada elemento (como haría <code>map</code>) y <strong>descarta automáticamente</strong> los resultados <code>null</code>. Es equivalente a <code>map { ... }.filterNotNull()</code>, pero más conciso y eficiente.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
 <span class="normal"><a href="#__codelineno-6-2">2</a></span>
 <span class="normal"><a href="#__codelineno-6-3">3</a></span>
 <span class="normal"><a href="#__codelineno-6-4">4</a></span>
 <span class="normal"><a href="#__codelineno-6-5">5</a></span>
 <span class="normal"><a href="#__codelineno-6-6">6</a></span>
-<span class="normal"><a href="#__codelineno-6-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Aloe<span class="w"> </span>Vera,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">7</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span>metros
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Lavanda,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Lavandula<span class="w"> </span>angustifolia,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">3</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>metros
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Nephrolepis<span class="w"> </span>exaltata,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">5</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.9<span class="w"> </span>metros
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">4</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Dracaena<span class="w"> </span>sanderiana,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">4</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>metros
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Girasol,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Helianthus<span class="w"> </span>annuus,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">2</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>metros
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a>Información<span class="w"> </span>guardada<span class="w"> </span>en:<span class="w"> </span>datos_ini<span class="se">\m</span>is_plantas2.csv
+<span class="normal"><a href="#__codelineno-6-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1">// Sin mapNotNull (dos pasos)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="kd">val</span><span class="w"> </span><span class="nv">resultado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lista</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">elemento</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">transformar</span><span class="p">(</span><span class="n">elemento</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="c1">// puede devolver null</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="p">.</span><span class="na">filterNotNull</span><span class="p">()</span><span class="w">                             </span><span class="c1">// elimina los null</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="c1">// Con mapNotNull (un solo paso — equivalente)</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="kd">val</span><span class="w"> </span><span class="nv">resultado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lista</span><span class="p">.</span><span class="na">mapNotNull</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">elemento</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">transformar</span><span class="p">(</span><span class="n">elemento</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>En el ejemplo del CSV, si una fila tiene formato incorrecto (pocas columnas o un valor no numérico), el bloque <code>try-catch</code> devuelve <code>null</code> y <code>mapNotNull</code> la ignora silenciosamente, sin abortar la lectura del resto del fichero.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">🔍 Ejecutar y Analizar</p>
+<p>Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero <code>mis_plantas2.csv</code> y que su contenido es correcto:</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Aloe<span class="w"> </span>Vera,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">7</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span>metros
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Lavanda,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Lavandula<span class="w"> </span>angustifolia,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">3</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>metros
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Nephrolepis<span class="w"> </span>exaltata,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">5</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.9<span class="w"> </span>metros
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">4</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Dracaena<span class="w"> </span>sanderiana,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">4</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>metros
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Girasol,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Helianthus<span class="w"> </span>annuus,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">2</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>metros
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>Información<span class="w"> </span>guardada<span class="w"> </span>en:<span class="w"> </span>datos_ini<span class="se">\m</span>is_plantas2.csv
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="43-xml-extensible-markup-language">4.3. XML (eXtensible Markup Language)</h2>
@@ -2087,242 +2137,242 @@
 </table>
 <h3 id="ejemplo-de-lectura-y-escritura-de-ficheros-xml">Ejemplo de lectura y escritura de ficheros XML</h3>
 <p>Partimos de un fichero llamado <code>mis_plantas.xml</code> con la información siguiente:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-7-10">10</a></span>
-<span class="normal"><a href="#__codelineno-7-11">11</a></span>
-<span class="normal"><a href="#__codelineno-7-12">12</a></span>
-<span class="normal"><a href="#__codelineno-7-13">13</a></span>
-<span class="normal"><a href="#__codelineno-7-14">14</a></span>
-<span class="normal"><a href="#__codelineno-7-15">15</a></span>
-<span class="normal"><a href="#__codelineno-7-16">16</a></span>
-<span class="normal"><a href="#__codelineno-7-17">17</a></span>
-<span class="normal"><a href="#__codelineno-7-18">18</a></span>
-<span class="normal"><a href="#__codelineno-7-19">19</a></span>
-<span class="normal"><a href="#__codelineno-7-20">20</a></span>
-<span class="normal"><a href="#__codelineno-7-21">21</a></span>
-<span class="normal"><a href="#__codelineno-7-22">22</a></span>
-<span class="normal"><a href="#__codelineno-7-23">23</a></span>
-<span class="normal"><a href="#__codelineno-7-24">24</a></span>
-<span class="normal"><a href="#__codelineno-7-25">25</a></span>
-<span class="normal"><a href="#__codelineno-7-26">26</a></span>
-<span class="normal"><a href="#__codelineno-7-27">27</a></span>
-<span class="normal"><a href="#__codelineno-7-28">28</a></span>
-<span class="normal"><a href="#__codelineno-7-29">29</a></span>
-<span class="normal"><a href="#__codelineno-7-30">30</a></span>
-<span class="normal"><a href="#__codelineno-7-31">31</a></span>
-<span class="normal"><a href="#__codelineno-7-32">32</a></span>
-<span class="normal"><a href="#__codelineno-7-33">33</a></span>
-<span class="normal"><a href="#__codelineno-7-34">34</a></span>
-<span class="normal"><a href="#__codelineno-7-35">35</a></span>
-<span class="normal"><a href="#__codelineno-7-36">36</a></span>
-<span class="normal"><a href="#__codelineno-7-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">&lt;plantas&gt;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>1<span class="nt">&lt;/id_planta&gt;</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Aloe<span class="w"> </span>Vera<span class="nt">&lt;/nombre_comun&gt;</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller<span class="nt">&lt;/nombre_cientifico&gt;</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>7<span class="nt">&lt;/frecuencia_riego&gt;</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>0.6<span class="nt">&lt;/altura_maxima&gt;</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>2<span class="nt">&lt;/id_planta&gt;</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Lavanda<span class="nt">&lt;/nombre_comun&gt;</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Lavandula<span class="w"> </span>angustifolia<span class="nt">&lt;/nombre_cientifico&gt;</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>3<span class="nt">&lt;/frecuencia_riego&gt;</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>1.0<span class="nt">&lt;/altura_maxima&gt;</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>3<span class="nt">&lt;/id_planta&gt;</span>
-<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston<span class="nt">&lt;/nombre_comun&gt;</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Nephrolepis<span class="w"> </span>exaltata<span class="nt">&lt;/nombre_cientifico&gt;</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>5<span class="nt">&lt;/frecuencia_riego&gt;</span>
-<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>0.9<span class="nt">&lt;/altura_maxima&gt;</span>
-<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
-<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
-<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>4<span class="nt">&lt;/id_planta&gt;</span>
-<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte<span class="nt">&lt;/nombre_comun&gt;</span>
-<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Dracaena<span class="w"> </span>sanderiana<span class="nt">&lt;/nombre_cientifico&gt;</span>
-<a id="__codelineno-7-27" name="__codelineno-7-27"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>4<span class="nt">&lt;/frecuencia_riego&gt;</span>
-<a id="__codelineno-7-28" name="__codelineno-7-28"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>1.5<span class="nt">&lt;/altura_maxima&gt;</span>
-<a id="__codelineno-7-29" name="__codelineno-7-29"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
-<a id="__codelineno-7-30" name="__codelineno-7-30"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
-<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>5<span class="nt">&lt;/id_planta&gt;</span>
-<a id="__codelineno-7-32" name="__codelineno-7-32"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Girasol<span class="nt">&lt;/nombre_comun&gt;</span>
-<a id="__codelineno-7-33" name="__codelineno-7-33"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Helianthus<span class="w"> </span>annuus<span class="nt">&lt;/nombre_cientifico&gt;</span>
-<a id="__codelineno-7-34" name="__codelineno-7-34"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>2<span class="nt">&lt;/frecuencia_riego&gt;</span>
-<a id="__codelineno-7-35" name="__codelineno-7-35"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>3.0<span class="nt">&lt;/altura_maxima&gt;</span>
-<a id="__codelineno-7-36" name="__codelineno-7-36"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
-<a id="__codelineno-7-37" name="__codelineno-7-37"></a><span class="nt">&lt;/plantas&gt;</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span>
+<span class="normal"><a href="#__codelineno-8-21">21</a></span>
+<span class="normal"><a href="#__codelineno-8-22">22</a></span>
+<span class="normal"><a href="#__codelineno-8-23">23</a></span>
+<span class="normal"><a href="#__codelineno-8-24">24</a></span>
+<span class="normal"><a href="#__codelineno-8-25">25</a></span>
+<span class="normal"><a href="#__codelineno-8-26">26</a></span>
+<span class="normal"><a href="#__codelineno-8-27">27</a></span>
+<span class="normal"><a href="#__codelineno-8-28">28</a></span>
+<span class="normal"><a href="#__codelineno-8-29">29</a></span>
+<span class="normal"><a href="#__codelineno-8-30">30</a></span>
+<span class="normal"><a href="#__codelineno-8-31">31</a></span>
+<span class="normal"><a href="#__codelineno-8-32">32</a></span>
+<span class="normal"><a href="#__codelineno-8-33">33</a></span>
+<span class="normal"><a href="#__codelineno-8-34">34</a></span>
+<span class="normal"><a href="#__codelineno-8-35">35</a></span>
+<span class="normal"><a href="#__codelineno-8-36">36</a></span>
+<span class="normal"><a href="#__codelineno-8-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nt">&lt;plantas&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>1<span class="nt">&lt;/id_planta&gt;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Aloe<span class="w"> </span>Vera<span class="nt">&lt;/nombre_comun&gt;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller<span class="nt">&lt;/nombre_cientifico&gt;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>7<span class="nt">&lt;/frecuencia_riego&gt;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>0.6<span class="nt">&lt;/altura_maxima&gt;</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>2<span class="nt">&lt;/id_planta&gt;</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Lavanda<span class="nt">&lt;/nombre_comun&gt;</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Lavandula<span class="w"> </span>angustifolia<span class="nt">&lt;/nombre_cientifico&gt;</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>3<span class="nt">&lt;/frecuencia_riego&gt;</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>1.0<span class="nt">&lt;/altura_maxima&gt;</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>3<span class="nt">&lt;/id_planta&gt;</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston<span class="nt">&lt;/nombre_comun&gt;</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Nephrolepis<span class="w"> </span>exaltata<span class="nt">&lt;/nombre_cientifico&gt;</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>5<span class="nt">&lt;/frecuencia_riego&gt;</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>0.9<span class="nt">&lt;/altura_maxima&gt;</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>4<span class="nt">&lt;/id_planta&gt;</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte<span class="nt">&lt;/nombre_comun&gt;</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Dracaena<span class="w"> </span>sanderiana<span class="nt">&lt;/nombre_cientifico&gt;</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>4<span class="nt">&lt;/frecuencia_riego&gt;</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>1.5<span class="nt">&lt;/altura_maxima&gt;</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30"></a><span class="w">  </span><span class="nt">&lt;planta&gt;</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31"></a><span class="w">    </span><span class="nt">&lt;id_planta&gt;</span>5<span class="nt">&lt;/id_planta&gt;</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32"></a><span class="w">    </span><span class="nt">&lt;nombre_comun&gt;</span>Girasol<span class="nt">&lt;/nombre_comun&gt;</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33"></a><span class="w">    </span><span class="nt">&lt;nombre_cientifico&gt;</span>Helianthus<span class="w"> </span>annuus<span class="nt">&lt;/nombre_cientifico&gt;</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34"></a><span class="w">    </span><span class="nt">&lt;frecuencia_riego&gt;</span>2<span class="nt">&lt;/frecuencia_riego&gt;</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35"></a><span class="w">    </span><span class="nt">&lt;altura_maxima&gt;</span>3.0<span class="nt">&lt;/altura_maxima&gt;</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36"></a><span class="w">  </span><span class="nt">&lt;/planta&gt;</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37"></a><span class="nt">&lt;/plantas&gt;</span>
 </code></pre></div></td></tr></table></div>
 <p>Utilizaremos la librería <strong>Jackson XML</strong>. Por tanto habrá que indicarlo en el fichero <code>build.gradle.kts</code> añadiendo las siguientes líneas:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
-<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>implementation<span class="w"> </span><span class="o">(</span><span class="s2">&quot;com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.0&quot;</span><span class="o">)</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a>implementation<span class="w"> </span><span class="o">(</span><span class="s2">&quot;com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0&quot;</span><span class="o">)</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>implementation<span class="w"> </span><span class="o">(</span><span class="s2">&quot;com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.0&quot;</span><span class="o">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>implementation<span class="w"> </span><span class="o">(</span><span class="s2">&quot;com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0&quot;</span><span class="o">)</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-9-10">10</a></span>
-<span class="normal"><a href="#__codelineno-9-11">11</a></span>
-<span class="normal"><a href="#__codelineno-9-12">12</a></span>
-<span class="normal"><a href="#__codelineno-9-13">13</a></span>
-<span class="normal"><a href="#__codelineno-9-14">14</a></span>
-<span class="normal"><a href="#__codelineno-9-15">15</a></span>
-<span class="normal"><a href="#__codelineno-9-16">16</a></span>
-<span class="normal"><a href="#__codelineno-9-17">17</a></span>
-<span class="normal"><a href="#__codelineno-9-18">18</a></span>
-<span class="normal"><a href="#__codelineno-9-19">19</a></span>
-<span class="normal"><a href="#__codelineno-9-20">20</a></span>
-<span class="normal"><a href="#__codelineno-9-21">21</a></span>
-<span class="normal"><a href="#__codelineno-9-22">22</a></span>
-<span class="normal"><a href="#__codelineno-9-23">23</a></span>
-<span class="normal"><a href="#__codelineno-9-24">24</a></span>
-<span class="normal"><a href="#__codelineno-9-25">25</a></span>
-<span class="normal"><a href="#__codelineno-9-26">26</a></span>
-<span class="normal"><a href="#__codelineno-9-27">27</a></span>
-<span class="normal"><a href="#__codelineno-9-28">28</a></span>
-<span class="normal"><a href="#__codelineno-9-29">29</a></span>
-<span class="normal"><a href="#__codelineno-9-30">30</a></span>
-<span class="normal"><a href="#__codelineno-9-31">31</a></span>
-<span class="normal"><a href="#__codelineno-9-32">32</a></span>
-<span class="normal"><a href="#__codelineno-9-33">33</a></span>
-<span class="normal"><a href="#__codelineno-9-34">34</a></span>
-<span class="normal"><a href="#__codelineno-9-35">35</a></span>
-<span class="normal"><a href="#__codelineno-9-36">36</a></span>
-<span class="normal"><a href="#__codelineno-9-37">37</a></span>
-<span class="normal"><a href="#__codelineno-9-38">38</a></span>
-<span class="normal"><a href="#__codelineno-9-39">39</a></span>
-<span class="normal"><a href="#__codelineno-9-40">40</a></span>
-<span class="normal"><a href="#__codelineno-9-41">41</a></span>
-<span class="normal"><a href="#__codelineno-9-42">42</a></span>
-<span class="normal"><a href="#__codelineno-9-43">43</a></span>
-<span class="normal"><a href="#__codelineno-9-44">44</a></span>
-<span class="normal"><a href="#__codelineno-9-45">45</a></span>
-<span class="normal"><a href="#__codelineno-9-46">46</a></span>
-<span class="normal"><a href="#__codelineno-9-47">47</a></span>
-<span class="normal"><a href="#__codelineno-9-48">48</a></span>
-<span class="normal"><a href="#__codelineno-9-49">49</a></span>
-<span class="normal"><a href="#__codelineno-9-50">50</a></span>
-<span class="normal"><a href="#__codelineno-9-51">51</a></span>
-<span class="normal"><a href="#__codelineno-9-52">52</a></span>
-<span class="normal"><a href="#__codelineno-9-53">53</a></span>
-<span class="normal"><a href="#__codelineno-9-54">54</a></span>
-<span class="normal"><a href="#__codelineno-9-55">55</a></span>
-<span class="normal"><a href="#__codelineno-9-56">56</a></span>
-<span class="normal"><a href="#__codelineno-9-57">57</a></span>
-<span class="normal"><a href="#__codelineno-9-58">58</a></span>
-<span class="normal"><a href="#__codelineno-9-59">59</a></span>
-<span class="normal"><a href="#__codelineno-9-60">60</a></span>
-<span class="normal"><a href="#__codelineno-9-61">61</a></span>
-<span class="normal"><a href="#__codelineno-9-62">62</a></span>
-<span class="normal"><a href="#__codelineno-9-63">63</a></span>
-<span class="normal"><a href="#__codelineno-9-64">64</a></span>
-<span class="normal"><a href="#__codelineno-9-65">65</a></span>
-<span class="normal"><a href="#__codelineno-9-66">66</a></span>
-<span class="normal"><a href="#__codelineno-9-67">67</a></span>
-<span class="normal"><a href="#__codelineno-9-68">68</a></span>
-<span class="normal"><a href="#__codelineno-9-69">69</a></span>
-<span class="normal"><a href="#__codelineno-9-70">70</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1">// Anotaciones y clases de la librería Jackson para el mapeo a XML.</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.XmlMapper</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.module.kotlin.readValue</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.module.kotlin.registerKotlinModule</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10"></a>
-<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="cm">/*Representa la estructura de una única planta. La propiedad &#39;id_planta&#39; será la etiqueta &lt;id_planta&gt;...&lt;/id_planta&gt; (así todas) */</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">PlantaXML</span><span class="p">(</span>
-<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;id_planta&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id_planta</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
-<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;nombre_comun&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_comun</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;nombre_cientifico&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_cientifico</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;frecuencia_riego&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">frecuencia_riego</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
-<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;altura_maxima&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">altura_maxima</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span>
-<a id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="p">)</span>
-<a id="__codelineno-9-24" name="__codelineno-9-24"></a>
-<a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="c1">//nombre del elemento raíz</span>
-<a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="nd">@JacksonXmlRootElement</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;plantas&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="c1">// Data class que representa el elemento raíz del XML.</span>
-<a id="__codelineno-9-28" name="__codelineno-9-28"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">PlantasXML</span><span class="p">(</span>
-<a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="w">    </span><span class="nd">@JacksonXmlElementWrapper</span><span class="p">(</span><span class="n">useWrapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="c1">// No necesitamos la etiqueta &lt;plantas&gt; aquí</span>
-<a id="__codelineno-9-30" name="__codelineno-9-30"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;planta&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-31" name="__codelineno-9-31"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">listaPlantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emptyList</span><span class="p">()</span>
-<a id="__codelineno-9-32" name="__codelineno-9-32"></a><span class="p">)</span>
-<a id="__codelineno-9-33" name="__codelineno-9-33"></a>
-<a id="__codelineno-9-34" name="__codelineno-9-34"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-35" name="__codelineno-9-35"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">entradaXML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas.xml&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-36" name="__codelineno-9-36"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">salidaXML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas2.xml&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-37" name="__codelineno-9-37"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">datos</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span>
-<a id="__codelineno-9-38" name="__codelineno-9-38"></a><span class="w">    </span><span class="n">datos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leerDatosInicialesXML</span><span class="p">(</span><span class="n">entradaXML</span><span class="p">)</span>
-<a id="__codelineno-9-39" name="__codelineno-9-39"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">dato</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-40" name="__codelineno-9-40"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;  - ID: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">id_planta</span><span class="si">}</span><span class="s">, Nombre común: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_comun</span><span class="si">}</span><span class="s">, Nombre científico: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_cientifico</span><span class="si">}</span><span class="s">, Frecuencia de riego: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">frecuencia_riego</span><span class="si">}</span><span class="s"> días, Altura: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">altura_maxima</span><span class="si">}</span><span class="s"> metros&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-41" name="__codelineno-9-41"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-9-42" name="__codelineno-9-42"></a><span class="w">    </span><span class="n">escribirDatosXML</span><span class="p">(</span><span class="n">salidaXML</span><span class="p">,</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span>
-<a id="__codelineno-9-43" name="__codelineno-9-43"></a><span class="p">}</span>
-<a id="__codelineno-9-44" name="__codelineno-9-44"></a>
-<a id="__codelineno-9-45" name="__codelineno-9-45"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">leerDatosInicialesXML</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">):</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-46" name="__codelineno-9-46"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">fichero</span><span class="p">:</span><span class="w"> </span><span class="n">File</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ruta</span><span class="p">.</span><span class="na">toFile</span><span class="p">()</span>
-<a id="__codelineno-9-47" name="__codelineno-9-47"></a><span class="w">    </span><span class="c1">// Deserializar el XML a objetos Kotlin</span>
-<a id="__codelineno-9-48" name="__codelineno-9-48"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">xmlMapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XmlMapper</span><span class="p">().</span><span class="na">registerKotlinModule</span><span class="p">()</span>
-<a id="__codelineno-9-49" name="__codelineno-9-49"></a><span class="w">    </span><span class="c1">// &#39;readValue&#39; convierte el contenido XML en una instancia de la clase &#39;Plantas&#39;</span>
-<a id="__codelineno-9-50" name="__codelineno-9-50"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">plantasWrapper</span><span class="p">:</span><span class="w"> </span><span class="n">PlantasXML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlMapper</span><span class="p">.</span><span class="na">readValue</span><span class="p">(</span><span class="n">fichero</span><span class="p">)</span>
-<a id="__codelineno-9-51" name="__codelineno-9-51"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">plantasWrapper</span><span class="p">.</span><span class="na">listaPlantas</span>
-<a id="__codelineno-9-52" name="__codelineno-9-52"></a><span class="p">}</span>
-<a id="__codelineno-9-53" name="__codelineno-9-53"></a>
-<a id="__codelineno-9-54" name="__codelineno-9-54"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">escribirDatosXML</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">plantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-55" name="__codelineno-9-55"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-56" name="__codelineno-9-56"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">fichero</span><span class="p">:</span><span class="w"> </span><span class="n">File</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ruta</span><span class="p">.</span><span class="na">toFile</span><span class="p">()</span>
-<a id="__codelineno-9-57" name="__codelineno-9-57"></a><span class="w">        </span><span class="c1">// Creamos instancia de la clase &#39;Plantas&#39; (raíz del XML).</span>
-<a id="__codelineno-9-58" name="__codelineno-9-58"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">contenedorXml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlantasXML</span><span class="p">(</span><span class="n">plantas</span><span class="p">)</span>
-<a id="__codelineno-9-59" name="__codelineno-9-59"></a><span class="w">        </span><span class="c1">// Configuramos el &#39;XmlMapper&#39; (motor de Jackson) para la conversión a XML.</span>
-<a id="__codelineno-9-60" name="__codelineno-9-60"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">xmlMapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XmlMapper</span><span class="p">().</span><span class="na">registerKotlinModule</span><span class="p">()</span>
-<a id="__codelineno-9-61" name="__codelineno-9-61"></a><span class="w">        </span><span class="c1">// Convertimos &#39;contenedorXml&#39; en un String con formato XML.</span>
-<a id="__codelineno-9-62" name="__codelineno-9-62"></a><span class="w">        </span><span class="c1">// .writerWithDefaultPrettyPrinter() formatea con indentación y saltos de línea</span>
-<a id="__codelineno-9-63" name="__codelineno-9-63"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">xmlString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlMapper</span><span class="p">.</span><span class="na">writerWithDefaultPrettyPrinter</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">contenedorXml</span><span class="p">)</span>
-<a id="__codelineno-9-64" name="__codelineno-9-64"></a><span class="w">        </span><span class="c1">// escribir un String en un fichero con &#39;writeText&#39;</span>
-<a id="__codelineno-9-65" name="__codelineno-9-65"></a><span class="w">        </span><span class="n">fichero</span><span class="p">.</span><span class="na">writeText</span><span class="p">(</span><span class="n">xmlString</span><span class="p">)</span>
-<a id="__codelineno-9-66" name="__codelineno-9-66"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\nInformación guardada en: </span><span class="si">$</span><span class="n">fichero</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-67" name="__codelineno-9-67"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-68" name="__codelineno-9-68"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-69" name="__codelineno-9-69"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-9-70" name="__codelineno-9-70"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span>
+<span class="normal"><a href="#__codelineno-10-27">27</a></span>
+<span class="normal"><a href="#__codelineno-10-28">28</a></span>
+<span class="normal"><a href="#__codelineno-10-29">29</a></span>
+<span class="normal"><a href="#__codelineno-10-30">30</a></span>
+<span class="normal"><a href="#__codelineno-10-31">31</a></span>
+<span class="normal"><a href="#__codelineno-10-32">32</a></span>
+<span class="normal"><a href="#__codelineno-10-33">33</a></span>
+<span class="normal"><a href="#__codelineno-10-34">34</a></span>
+<span class="normal"><a href="#__codelineno-10-35">35</a></span>
+<span class="normal"><a href="#__codelineno-10-36">36</a></span>
+<span class="normal"><a href="#__codelineno-10-37">37</a></span>
+<span class="normal"><a href="#__codelineno-10-38">38</a></span>
+<span class="normal"><a href="#__codelineno-10-39">39</a></span>
+<span class="normal"><a href="#__codelineno-10-40">40</a></span>
+<span class="normal"><a href="#__codelineno-10-41">41</a></span>
+<span class="normal"><a href="#__codelineno-10-42">42</a></span>
+<span class="normal"><a href="#__codelineno-10-43">43</a></span>
+<span class="normal"><a href="#__codelineno-10-44">44</a></span>
+<span class="normal"><a href="#__codelineno-10-45">45</a></span>
+<span class="normal"><a href="#__codelineno-10-46">46</a></span>
+<span class="normal"><a href="#__codelineno-10-47">47</a></span>
+<span class="normal"><a href="#__codelineno-10-48">48</a></span>
+<span class="normal"><a href="#__codelineno-10-49">49</a></span>
+<span class="normal"><a href="#__codelineno-10-50">50</a></span>
+<span class="normal"><a href="#__codelineno-10-51">51</a></span>
+<span class="normal"><a href="#__codelineno-10-52">52</a></span>
+<span class="normal"><a href="#__codelineno-10-53">53</a></span>
+<span class="normal"><a href="#__codelineno-10-54">54</a></span>
+<span class="normal"><a href="#__codelineno-10-55">55</a></span>
+<span class="normal"><a href="#__codelineno-10-56">56</a></span>
+<span class="normal"><a href="#__codelineno-10-57">57</a></span>
+<span class="normal"><a href="#__codelineno-10-58">58</a></span>
+<span class="normal"><a href="#__codelineno-10-59">59</a></span>
+<span class="normal"><a href="#__codelineno-10-60">60</a></span>
+<span class="normal"><a href="#__codelineno-10-61">61</a></span>
+<span class="normal"><a href="#__codelineno-10-62">62</a></span>
+<span class="normal"><a href="#__codelineno-10-63">63</a></span>
+<span class="normal"><a href="#__codelineno-10-64">64</a></span>
+<span class="normal"><a href="#__codelineno-10-65">65</a></span>
+<span class="normal"><a href="#__codelineno-10-66">66</a></span>
+<span class="normal"><a href="#__codelineno-10-67">67</a></span>
+<span class="normal"><a href="#__codelineno-10-68">68</a></span>
+<span class="normal"><a href="#__codelineno-10-69">69</a></span>
+<span class="normal"><a href="#__codelineno-10-70">70</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="c1">// Anotaciones y clases de la librería Jackson para el mapeo a XML.</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.XmlMapper</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.module.kotlin.readValue</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="k">import</span><span class="w"> </span><span class="nn">com.fasterxml.jackson.module.kotlin.registerKotlinModule</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="cm">/*Representa la estructura de una única planta. La propiedad &#39;id_planta&#39; será la etiqueta &lt;id_planta&gt;...&lt;/id_planta&gt; (así todas) */</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">PlantaXML</span><span class="p">(</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;id_planta&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id_planta</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;nombre_comun&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_comun</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;nombre_cientifico&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_cientifico</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;frecuencia_riego&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">frecuencia_riego</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;altura_maxima&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">altura_maxima</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="p">)</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="c1">//nombre del elemento raíz</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a><span class="nd">@JacksonXmlRootElement</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;plantas&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27"></a><span class="c1">// Data class que representa el elemento raíz del XML.</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">PlantasXML</span><span class="p">(</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29"></a><span class="w">    </span><span class="nd">@JacksonXmlElementWrapper</span><span class="p">(</span><span class="n">useWrapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="c1">// No necesitamos la etiqueta &lt;plantas&gt; aquí</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30"></a><span class="w">    </span><span class="nd">@JacksonXmlProperty</span><span class="p">(</span><span class="n">localName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;planta&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">listaPlantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emptyList</span><span class="p">()</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32"></a><span class="p">)</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33"></a>
+<a id="__codelineno-10-34" name="__codelineno-10-34"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">entradaXML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas.xml&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">salidaXML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas2.xml&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">datos</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38"></a><span class="w">    </span><span class="n">datos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leerDatosInicialesXML</span><span class="p">(</span><span class="n">entradaXML</span><span class="p">)</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">dato</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;  - ID: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">id_planta</span><span class="si">}</span><span class="s">, Nombre común: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_comun</span><span class="si">}</span><span class="s">, Nombre científico: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_cientifico</span><span class="si">}</span><span class="s">, Frecuencia de riego: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">frecuencia_riego</span><span class="si">}</span><span class="s"> días, Altura: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">altura_maxima</span><span class="si">}</span><span class="s"> metros&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42"></a><span class="w">    </span><span class="n">escribirDatosXML</span><span class="p">(</span><span class="n">salidaXML</span><span class="p">,</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43"></a><span class="p">}</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44"></a>
+<a id="__codelineno-10-45" name="__codelineno-10-45"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">leerDatosInicialesXML</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">):</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">fichero</span><span class="p">:</span><span class="w"> </span><span class="n">File</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ruta</span><span class="p">.</span><span class="na">toFile</span><span class="p">()</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47"></a><span class="w">    </span><span class="c1">// Deserializar el XML a objetos Kotlin</span>
+<a id="__codelineno-10-48" name="__codelineno-10-48"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">xmlMapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XmlMapper</span><span class="p">().</span><span class="na">registerKotlinModule</span><span class="p">()</span>
+<a id="__codelineno-10-49" name="__codelineno-10-49"></a><span class="w">    </span><span class="c1">// &#39;readValue&#39; convierte el contenido XML en una instancia de la clase &#39;Plantas&#39;</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">plantasWrapper</span><span class="p">:</span><span class="w"> </span><span class="n">PlantasXML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlMapper</span><span class="p">.</span><span class="na">readValue</span><span class="p">(</span><span class="n">fichero</span><span class="p">)</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">plantasWrapper</span><span class="p">.</span><span class="na">listaPlantas</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52"></a><span class="p">}</span>
+<a id="__codelineno-10-53" name="__codelineno-10-53"></a>
+<a id="__codelineno-10-54" name="__codelineno-10-54"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">escribirDatosXML</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">plantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaXML</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-55" name="__codelineno-10-55"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-56" name="__codelineno-10-56"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">fichero</span><span class="p">:</span><span class="w"> </span><span class="n">File</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ruta</span><span class="p">.</span><span class="na">toFile</span><span class="p">()</span>
+<a id="__codelineno-10-57" name="__codelineno-10-57"></a><span class="w">        </span><span class="c1">// Creamos instancia de la clase &#39;Plantas&#39; (raíz del XML).</span>
+<a id="__codelineno-10-58" name="__codelineno-10-58"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">contenedorXml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlantasXML</span><span class="p">(</span><span class="n">plantas</span><span class="p">)</span>
+<a id="__codelineno-10-59" name="__codelineno-10-59"></a><span class="w">        </span><span class="c1">// Configuramos el &#39;XmlMapper&#39; (motor de Jackson) para la conversión a XML.</span>
+<a id="__codelineno-10-60" name="__codelineno-10-60"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">xmlMapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XmlMapper</span><span class="p">().</span><span class="na">registerKotlinModule</span><span class="p">()</span>
+<a id="__codelineno-10-61" name="__codelineno-10-61"></a><span class="w">        </span><span class="c1">// Convertimos &#39;contenedorXml&#39; en un String con formato XML.</span>
+<a id="__codelineno-10-62" name="__codelineno-10-62"></a><span class="w">        </span><span class="c1">// .writerWithDefaultPrettyPrinter() formatea con indentación y saltos de línea</span>
+<a id="__codelineno-10-63" name="__codelineno-10-63"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">xmlString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlMapper</span><span class="p">.</span><span class="na">writerWithDefaultPrettyPrinter</span><span class="p">().</span><span class="na">writeValueAsString</span><span class="p">(</span><span class="n">contenedorXml</span><span class="p">)</span>
+<a id="__codelineno-10-64" name="__codelineno-10-64"></a><span class="w">        </span><span class="c1">// escribir un String en un fichero con &#39;writeText&#39;</span>
+<a id="__codelineno-10-65" name="__codelineno-10-65"></a><span class="w">        </span><span class="n">fichero</span><span class="p">.</span><span class="na">writeText</span><span class="p">(</span><span class="n">xmlString</span><span class="p">)</span>
+<a id="__codelineno-10-66" name="__codelineno-10-66"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\nInformación guardada en: </span><span class="si">$</span><span class="n">fichero</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-67" name="__codelineno-10-67"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-68" name="__codelineno-10-68"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-69" name="__codelineno-10-69"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-70" name="__codelineno-10-70"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
 <p class="admonition-title">🔍 Ejecutar y Analizar</p>
 <p>Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero <code>mis_plantas2.xml</code> y que su contenido es correcto:</p>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
-<span class="normal"><a href="#__codelineno-10-2">2</a></span>
-<span class="normal"><a href="#__codelineno-10-3">3</a></span>
-<span class="normal"><a href="#__codelineno-10-4">4</a></span>
-<span class="normal"><a href="#__codelineno-10-5">5</a></span>
-<span class="normal"><a href="#__codelineno-10-6">6</a></span>
-<span class="normal"><a href="#__codelineno-10-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Aloe<span class="w"> </span>Vera,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">7</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span>metros
-<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Lavanda,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Lavandula<span class="w"> </span>angustifolia,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">3</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>metros
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Nephrolepis<span class="w"> </span>exaltata,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">5</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.9<span class="w"> </span>metros
-<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">4</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Dracaena<span class="w"> </span>sanderiana,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">4</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>metros
-<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Girasol,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Helianthus<span class="w"> </span>annuus,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">2</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>metros
-<a id="__codelineno-10-6" name="__codelineno-10-6"></a>
-<a id="__codelineno-10-7" name="__codelineno-10-7"></a>Información<span class="w"> </span>guardada<span class="w"> </span>en:<span class="w"> </span>datos_ini<span class="se">\m</span>is_plantas2.xml
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span>
+<span class="normal"><a href="#__codelineno-11-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Aloe<span class="w"> </span>Vera,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">7</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span>metros
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Lavanda,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Lavandula<span class="w"> </span>angustifolia,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">3</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>metros
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Nephrolepis<span class="w"> </span>exaltata,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">5</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.9<span class="w"> </span>metros
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">4</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Dracaena<span class="w"> </span>sanderiana,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">4</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>metros
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Girasol,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Helianthus<span class="w"> </span>annuus,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">2</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>metros
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>Información<span class="w"> </span>guardada<span class="w"> </span>en:<span class="w"> </span>datos_ini<span class="se">\m</span>is_plantas2.xml
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="44-json-javascript-object-notation">4.4. JSON (JavaScript Object Notation)</h2>
@@ -2376,226 +2426,298 @@
 </table>
 <h3 id="ejemplo-de-lectura-y-escritura-de-ficheros-json">Ejemplo de lectura y escritura de ficheros JSON</h3>
 <p>Partimos de un fichero llamado <code>mis_plantas.json</code> con la información siguiente:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-11-10">10</a></span>
-<span class="normal"><a href="#__codelineno-11-11">11</a></span>
-<span class="normal"><a href="#__codelineno-11-12">12</a></span>
-<span class="normal"><a href="#__codelineno-11-13">13</a></span>
-<span class="normal"><a href="#__codelineno-11-14">14</a></span>
-<span class="normal"><a href="#__codelineno-11-15">15</a></span>
-<span class="normal"><a href="#__codelineno-11-16">16</a></span>
-<span class="normal"><a href="#__codelineno-11-17">17</a></span>
-<span class="normal"><a href="#__codelineno-11-18">18</a></span>
-<span class="normal"><a href="#__codelineno-11-19">19</a></span>
-<span class="normal"><a href="#__codelineno-11-20">20</a></span>
-<span class="normal"><a href="#__codelineno-11-21">21</a></span>
-<span class="normal"><a href="#__codelineno-11-22">22</a></span>
-<span class="normal"><a href="#__codelineno-11-23">23</a></span>
-<span class="normal"><a href="#__codelineno-11-24">24</a></span>
-<span class="normal"><a href="#__codelineno-11-25">25</a></span>
-<span class="normal"><a href="#__codelineno-11-26">26</a></span>
-<span class="normal"><a href="#__codelineno-11-27">27</a></span>
-<span class="normal"><a href="#__codelineno-11-28">28</a></span>
-<span class="normal"><a href="#__codelineno-11-29">29</a></span>
-<span class="normal"><a href="#__codelineno-11-30">30</a></span>
-<span class="normal"><a href="#__codelineno-11-31">31</a></span>
-<span class="normal"><a href="#__codelineno-11-32">32</a></span>
-<span class="normal"><a href="#__codelineno-11-33">33</a></span>
-<span class="normal"><a href="#__codelineno-11-34">34</a></span>
-<span class="normal"><a href="#__codelineno-11-35">35</a></span>
-<span class="normal"><a href="#__codelineno-11-36">36</a></span>
-<span class="normal"><a href="#__codelineno-11-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="p">[</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">  </span><span class="p">{</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Aloe Vera&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Aloe barbadensis miller&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.6</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">  </span><span class="p">{</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lavanda&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lavandula angustifolia&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
-<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">  </span><span class="p">{</span>
-<a id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<a id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Helecho de Boston&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-19" name="__codelineno-11-19"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Nephrolepis exaltata&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-20" name="__codelineno-11-20"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-<a id="__codelineno-11-21" name="__codelineno-11-21"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span>
-<a id="__codelineno-11-22" name="__codelineno-11-22"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-11-23" name="__codelineno-11-23"></a><span class="w">  </span><span class="p">{</span>
-<a id="__codelineno-11-24" name="__codelineno-11-24"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
-<a id="__codelineno-11-25" name="__codelineno-11-25"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bambú de la suerte&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-26" name="__codelineno-11-26"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dracaena sanderiana&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-27" name="__codelineno-11-27"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
-<a id="__codelineno-11-28" name="__codelineno-11-28"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span>
-<a id="__codelineno-11-29" name="__codelineno-11-29"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-11-30" name="__codelineno-11-30"></a><span class="w">  </span><span class="p">{</span>
-<a id="__codelineno-11-31" name="__codelineno-11-31"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-<a id="__codelineno-11-32" name="__codelineno-11-32"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Girasol&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-33" name="__codelineno-11-33"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Helianthus annuus&quot;</span><span class="p">,</span>
-<a id="__codelineno-11-34" name="__codelineno-11-34"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<a id="__codelineno-11-35" name="__codelineno-11-35"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span>
-<a id="__codelineno-11-36" name="__codelineno-11-36"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-11-37" name="__codelineno-11-37"></a><span class="p">]</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span>
+<span class="normal"><a href="#__codelineno-12-14">14</a></span>
+<span class="normal"><a href="#__codelineno-12-15">15</a></span>
+<span class="normal"><a href="#__codelineno-12-16">16</a></span>
+<span class="normal"><a href="#__codelineno-12-17">17</a></span>
+<span class="normal"><a href="#__codelineno-12-18">18</a></span>
+<span class="normal"><a href="#__codelineno-12-19">19</a></span>
+<span class="normal"><a href="#__codelineno-12-20">20</a></span>
+<span class="normal"><a href="#__codelineno-12-21">21</a></span>
+<span class="normal"><a href="#__codelineno-12-22">22</a></span>
+<span class="normal"><a href="#__codelineno-12-23">23</a></span>
+<span class="normal"><a href="#__codelineno-12-24">24</a></span>
+<span class="normal"><a href="#__codelineno-12-25">25</a></span>
+<span class="normal"><a href="#__codelineno-12-26">26</a></span>
+<span class="normal"><a href="#__codelineno-12-27">27</a></span>
+<span class="normal"><a href="#__codelineno-12-28">28</a></span>
+<span class="normal"><a href="#__codelineno-12-29">29</a></span>
+<span class="normal"><a href="#__codelineno-12-30">30</a></span>
+<span class="normal"><a href="#__codelineno-12-31">31</a></span>
+<span class="normal"><a href="#__codelineno-12-32">32</a></span>
+<span class="normal"><a href="#__codelineno-12-33">33</a></span>
+<span class="normal"><a href="#__codelineno-12-34">34</a></span>
+<span class="normal"><a href="#__codelineno-12-35">35</a></span>
+<span class="normal"><a href="#__codelineno-12-36">36</a></span>
+<span class="normal"><a href="#__codelineno-12-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="p">[</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Aloe Vera&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Aloe barbadensis miller&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.6</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lavanda&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lavandula angustifolia&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Helecho de Boston&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Nephrolepis exaltata&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bambú de la suerte&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dracaena sanderiana&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<a id="__codelineno-12-28" name="__codelineno-12-28"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span>
+<a id="__codelineno-12-29" name="__codelineno-12-29"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-12-30" name="__codelineno-12-30"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-12-31" name="__codelineno-12-31"></a><span class="w">    </span><span class="nt">&quot;id_planta&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-12-32" name="__codelineno-12-32"></a><span class="w">    </span><span class="nt">&quot;nombre_comun&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Girasol&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-33" name="__codelineno-12-33"></a><span class="w">    </span><span class="nt">&quot;nombre_cientifico&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Helianthus annuus&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-34" name="__codelineno-12-34"></a><span class="w">    </span><span class="nt">&quot;frecuencia_riego&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-12-35" name="__codelineno-12-35"></a><span class="w">    </span><span class="nt">&quot;altura_maxima&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span>
+<a id="__codelineno-12-36" name="__codelineno-12-36"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-37" name="__codelineno-12-37"></a><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
 <p>Utilizaremos la librería <strong>kotlinx.serialization</strong>. Por tanto habrá que indicarlo en el fichero <code>build.gradle.kts</code> añadiendo las siguientes líneas:</p>
 <ul>
 <li><strong>En <code>plugins</code>:</strong></li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>kotlin<span class="o">(</span><span class="s2">&quot;plugin.serialization&quot;</span><span class="o">)</span><span class="w"> </span>version<span class="w"> </span><span class="s2">&quot;1.9.0&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>kotlin<span class="o">(</span><span class="s2">&quot;plugin.serialization&quot;</span><span class="o">)</span><span class="w"> </span>version<span class="w"> </span><span class="s2">&quot;1.9.0&quot;</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li><strong>En <code>dependencies</code>:</strong></li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>implementation<span class="w"> </span><span class="o">(</span><span class="s2">&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0&quot;</span><span class="o">)</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>implementation<span class="w"> </span><span class="o">(</span><span class="s2">&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0&quot;</span><span class="o">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Llamaremos a <code>Json.encodeToString()</code> para serializar una instancia de esta clase y a <code>Json.decodeFromString()</code> para deserializarla.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-14-10">10</a></span>
-<span class="normal"><a href="#__codelineno-14-11">11</a></span>
-<span class="normal"><a href="#__codelineno-14-12">12</a></span>
-<span class="normal"><a href="#__codelineno-14-13">13</a></span>
-<span class="normal"><a href="#__codelineno-14-14">14</a></span>
-<span class="normal"><a href="#__codelineno-14-15">15</a></span>
-<span class="normal"><a href="#__codelineno-14-16">16</a></span>
-<span class="normal"><a href="#__codelineno-14-17">17</a></span>
-<span class="normal"><a href="#__codelineno-14-18">18</a></span>
-<span class="normal"><a href="#__codelineno-14-19">19</a></span>
-<span class="normal"><a href="#__codelineno-14-20">20</a></span>
-<span class="normal"><a href="#__codelineno-14-21">21</a></span>
-<span class="normal"><a href="#__codelineno-14-22">22</a></span>
-<span class="normal"><a href="#__codelineno-14-23">23</a></span>
-<span class="normal"><a href="#__codelineno-14-24">24</a></span>
-<span class="normal"><a href="#__codelineno-14-25">25</a></span>
-<span class="normal"><a href="#__codelineno-14-26">26</a></span>
-<span class="normal"><a href="#__codelineno-14-27">27</a></span>
-<span class="normal"><a href="#__codelineno-14-28">28</a></span>
-<span class="normal"><a href="#__codelineno-14-29">29</a></span>
-<span class="normal"><a href="#__codelineno-14-30">30</a></span>
-<span class="normal"><a href="#__codelineno-14-31">31</a></span>
-<span class="normal"><a href="#__codelineno-14-32">32</a></span>
-<span class="normal"><a href="#__codelineno-14-33">33</a></span>
-<span class="normal"><a href="#__codelineno-14-34">34</a></span>
-<span class="normal"><a href="#__codelineno-14-35">35</a></span>
-<span class="normal"><a href="#__codelineno-14-36">36</a></span>
-<span class="normal"><a href="#__codelineno-14-37">37</a></span>
-<span class="normal"><a href="#__codelineno-14-38">38</a></span>
-<span class="normal"><a href="#__codelineno-14-39">39</a></span>
-<span class="normal"><a href="#__codelineno-14-40">40</a></span>
-<span class="normal"><a href="#__codelineno-14-41">41</a></span>
-<span class="normal"><a href="#__codelineno-14-42">42</a></span>
-<span class="normal"><a href="#__codelineno-14-43">43</a></span>
-<span class="normal"><a href="#__codelineno-14-44">44</a></span>
-<span class="normal"><a href="#__codelineno-14-45">45</a></span>
-<span class="normal"><a href="#__codelineno-14-46">46</a></span>
-<span class="normal"><a href="#__codelineno-14-47">47</a></span>
-<span class="normal"><a href="#__codelineno-14-48">48</a></span>
-<span class="normal"><a href="#__codelineno-14-49">49</a></span>
-<span class="normal"><a href="#__codelineno-14-50">50</a></span>
-<span class="normal"><a href="#__codelineno-14-51">51</a></span>
-<span class="normal"><a href="#__codelineno-14-52">52</a></span>
-<span class="normal"><a href="#__codelineno-14-53">53</a></span>
-<span class="normal"><a href="#__codelineno-14-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="c1">// Clases de la librería oficial de Kotlin para la serialización/deserialización.</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.*</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.json.*</span>
-<a id="__codelineno-14-7" name="__codelineno-14-7"></a>
-<a id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="c1">//Usamos una &#39;data class&#39; para representar la estructura de una planta e indicamos que es serializable</span>
-<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="nd">@Serializable</span>
-<a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">PlantaJSON</span><span class="p">(</span>
-<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id_planta</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
-<a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_comun</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_cientifico</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">frecuencia_riego</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
-<a id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">altura_maxima</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span>
-<a id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="p">)</span>
-<a id="__codelineno-14-17" name="__codelineno-14-17"></a>
-<a id="__codelineno-14-18" name="__codelineno-14-18"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">entradaJSON</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas.json&quot;</span><span class="p">)</span>
-<a id="__codelineno-14-20" name="__codelineno-14-20"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">salidaJSON</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas2.json&quot;</span><span class="p">)</span>
-<a id="__codelineno-14-21" name="__codelineno-14-21"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">datos</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span>
-<a id="__codelineno-14-22" name="__codelineno-14-22"></a><span class="w">    </span><span class="n">datos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leerDatosInicialesJSON</span><span class="p">(</span><span class="n">entradaJSON</span><span class="p">)</span>
-<a id="__codelineno-14-23" name="__codelineno-14-23"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">dato</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-24" name="__codelineno-14-24"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;  - ID: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">id_planta</span><span class="si">}</span><span class="s">, Nombre común: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_comun</span><span class="si">}</span><span class="s">, Nombre científico: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_cientifico</span><span class="si">}</span><span class="s">, Frecuencia de riego: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">frecuencia_riego</span><span class="si">}</span><span class="s"> días, Altura: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">altura_maxima</span><span class="si">}</span><span class="s"> metros&quot;</span><span class="p">)</span>
-<a id="__codelineno-14-25" name="__codelineno-14-25"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-14-26" name="__codelineno-14-26"></a><span class="w">    </span><span class="n">escribirDatosJSON</span><span class="p">(</span><span class="n">salidaJSON</span><span class="p">,</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span>
-<a id="__codelineno-14-27" name="__codelineno-14-27"></a><span class="p">}</span>
-<a id="__codelineno-14-28" name="__codelineno-14-28"></a>
-<a id="__codelineno-14-29" name="__codelineno-14-29"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">leerDatosInicialesJSON</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">):</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-30" name="__codelineno-14-30"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">plantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emptyList</span><span class="p">()</span>
-<a id="__codelineno-14-31" name="__codelineno-14-31"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">jsonString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readString</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
-<a id="__codelineno-14-32" name="__codelineno-14-32"></a><span class="w">    </span><span class="cm">/* A `Json.decodeFromString` le pasamos el String con el JSON.</span>
-<a id="__codelineno-14-33" name="__codelineno-14-33"></a><span class="cm">    Con `&lt;List&lt;PlantaJSON&gt;&gt;`, le indicamos que debe interpretarlo como</span>
-<a id="__codelineno-14-34" name="__codelineno-14-34"></a><span class="cm">    una lista de objetos de tipo planta&quot;.</span>
-<a id="__codelineno-14-35" name="__codelineno-14-35"></a><span class="cm">    La librería usará la anotación @Serializable de la clase PlantaJSON para saber cómo mapear los campos del JSON (&quot;id_planta&quot;, &quot;nombre_comun&quot;, etc.)</span>
-<a id="__codelineno-14-36" name="__codelineno-14-36"></a><span class="cm">    a las propiedades del objeto. */</span>
-<a id="__codelineno-14-37" name="__codelineno-14-37"></a><span class="w">    </span><span class="n">plantas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Json</span><span class="p">.</span><span class="na">decodeFromString</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">jsonString</span><span class="p">)</span>
-<a id="__codelineno-14-38" name="__codelineno-14-38"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">plantas</span>
-<a id="__codelineno-14-39" name="__codelineno-14-39"></a><span class="p">}</span>
-<a id="__codelineno-14-40" name="__codelineno-14-40"></a>
-<a id="__codelineno-14-41" name="__codelineno-14-41"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">escribirDatosJSON</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">plantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-42" name="__codelineno-14-42"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-43" name="__codelineno-14-43"></a><span class="w">        </span><span class="cm">/* La librería `kotlinx.serialization`</span>
-<a id="__codelineno-14-44" name="__codelineno-14-44"></a><span class="cm">        toma la lista de objetos `PlantaJSON` (`List&lt;PlantaJSON&gt;`) y la convierte en una</span>
-<a id="__codelineno-14-45" name="__codelineno-14-45"></a><span class="cm">        única cadena de texto con formato JSON.</span>
-<a id="__codelineno-14-46" name="__codelineno-14-46"></a><span class="cm">        `prettyPrint` formatea el JSON para que sea legible. */</span>
-<a id="__codelineno-14-47" name="__codelineno-14-47"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Json</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">prettyPrint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}.</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">plantas</span><span class="p">)</span>
-<a id="__codelineno-14-48" name="__codelineno-14-48"></a><span class="w">        </span><span class="c1">// Con `Files.writeString` escribimos el String JSON en el fichero de salida</span>
-<a id="__codelineno-14-49" name="__codelineno-14-49"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">writeString</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="w"> </span><span class="n">json</span><span class="p">)</span>
-<a id="__codelineno-14-50" name="__codelineno-14-50"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\nInformación guardada en: </span><span class="si">$</span><span class="n">ruta</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-14-51" name="__codelineno-14-51"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-52" name="__codelineno-14-52"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-14-53" name="__codelineno-14-53"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-14-54" name="__codelineno-14-54"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span>
+<span class="normal"><a href="#__codelineno-15-18">18</a></span>
+<span class="normal"><a href="#__codelineno-15-19">19</a></span>
+<span class="normal"><a href="#__codelineno-15-20">20</a></span>
+<span class="normal"><a href="#__codelineno-15-21">21</a></span>
+<span class="normal"><a href="#__codelineno-15-22">22</a></span>
+<span class="normal"><a href="#__codelineno-15-23">23</a></span>
+<span class="normal"><a href="#__codelineno-15-24">24</a></span>
+<span class="normal"><a href="#__codelineno-15-25">25</a></span>
+<span class="normal"><a href="#__codelineno-15-26">26</a></span>
+<span class="normal"><a href="#__codelineno-15-27">27</a></span>
+<span class="normal"><a href="#__codelineno-15-28">28</a></span>
+<span class="normal"><a href="#__codelineno-15-29">29</a></span>
+<span class="normal"><a href="#__codelineno-15-30">30</a></span>
+<span class="normal"><a href="#__codelineno-15-31">31</a></span>
+<span class="normal"><a href="#__codelineno-15-32">32</a></span>
+<span class="normal"><a href="#__codelineno-15-33">33</a></span>
+<span class="normal"><a href="#__codelineno-15-34">34</a></span>
+<span class="normal"><a href="#__codelineno-15-35">35</a></span>
+<span class="normal"><a href="#__codelineno-15-36">36</a></span>
+<span class="normal"><a href="#__codelineno-15-37">37</a></span>
+<span class="normal"><a href="#__codelineno-15-38">38</a></span>
+<span class="normal"><a href="#__codelineno-15-39">39</a></span>
+<span class="normal"><a href="#__codelineno-15-40">40</a></span>
+<span class="normal"><a href="#__codelineno-15-41">41</a></span>
+<span class="normal"><a href="#__codelineno-15-42">42</a></span>
+<span class="normal"><a href="#__codelineno-15-43">43</a></span>
+<span class="normal"><a href="#__codelineno-15-44">44</a></span>
+<span class="normal"><a href="#__codelineno-15-45">45</a></span>
+<span class="normal"><a href="#__codelineno-15-46">46</a></span>
+<span class="normal"><a href="#__codelineno-15-47">47</a></span>
+<span class="normal"><a href="#__codelineno-15-48">48</a></span>
+<span class="normal"><a href="#__codelineno-15-49">49</a></span>
+<span class="normal"><a href="#__codelineno-15-50">50</a></span>
+<span class="normal"><a href="#__codelineno-15-51">51</a></span>
+<span class="normal"><a href="#__codelineno-15-52">52</a></span>
+<span class="normal"><a href="#__codelineno-15-53">53</a></span>
+<span class="normal"><a href="#__codelineno-15-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="c1">// Clases de la librería oficial de Kotlin para la serialización/deserialización.</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.*</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.serialization.json.*</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="c1">//Usamos una &#39;data class&#39; para representar la estructura de una planta e indicamos que es serializable</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="nd">@Serializable</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">PlantaJSON</span><span class="p">(</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id_planta</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_comun</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre_cientifico</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">frecuencia_riego</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">altura_maxima</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a><span class="p">)</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a>
+<a id="__codelineno-15-18" name="__codelineno-15-18"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">entradaJSON</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas.json&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">salidaJSON</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/mis_plantas2.json&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">datos</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22"></a><span class="w">    </span><span class="n">datos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leerDatosInicialesJSON</span><span class="p">(</span><span class="n">entradaJSON</span><span class="p">)</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">dato</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;  - ID: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">id_planta</span><span class="si">}</span><span class="s">, Nombre común: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_comun</span><span class="si">}</span><span class="s">, Nombre científico: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">nombre_cientifico</span><span class="si">}</span><span class="s">, Frecuencia de riego: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">frecuencia_riego</span><span class="si">}</span><span class="s"> días, Altura: </span><span class="si">${</span><span class="n">dato</span><span class="p">.</span><span class="na">altura_maxima</span><span class="si">}</span><span class="s"> metros&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26"></a><span class="w">    </span><span class="n">escribirDatosJSON</span><span class="p">(</span><span class="n">salidaJSON</span><span class="p">,</span><span class="w"> </span><span class="n">datos</span><span class="p">)</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27"></a><span class="p">}</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28"></a>
+<a id="__codelineno-15-29" name="__codelineno-15-29"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">leerDatosInicialesJSON</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">):</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">plantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emptyList</span><span class="p">()</span>
+<a id="__codelineno-15-31" name="__codelineno-15-31"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">jsonString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readString</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+<a id="__codelineno-15-32" name="__codelineno-15-32"></a><span class="w">    </span><span class="cm">/* A `Json.decodeFromString` le pasamos el String con el JSON.</span>
+<a id="__codelineno-15-33" name="__codelineno-15-33"></a><span class="cm">    Con `&lt;List&lt;PlantaJSON&gt;&gt;`, le indicamos que debe interpretarlo como</span>
+<a id="__codelineno-15-34" name="__codelineno-15-34"></a><span class="cm">    una lista de objetos de tipo planta&quot;.</span>
+<a id="__codelineno-15-35" name="__codelineno-15-35"></a><span class="cm">    La librería usará la anotación @Serializable de la clase PlantaJSON para saber cómo mapear los campos del JSON (&quot;id_planta&quot;, &quot;nombre_comun&quot;, etc.)</span>
+<a id="__codelineno-15-36" name="__codelineno-15-36"></a><span class="cm">    a las propiedades del objeto. */</span>
+<a id="__codelineno-15-37" name="__codelineno-15-37"></a><span class="w">    </span><span class="n">plantas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Json</span><span class="p">.</span><span class="na">decodeFromString</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">jsonString</span><span class="p">)</span>
+<a id="__codelineno-15-38" name="__codelineno-15-38"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">plantas</span>
+<a id="__codelineno-15-39" name="__codelineno-15-39"></a><span class="p">}</span>
+<a id="__codelineno-15-40" name="__codelineno-15-40"></a>
+<a id="__codelineno-15-41" name="__codelineno-15-41"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">escribirDatosJSON</span><span class="p">(</span><span class="n">ruta</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">plantas</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PlantaJSON</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-42" name="__codelineno-15-42"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-43" name="__codelineno-15-43"></a><span class="w">        </span><span class="cm">/* La librería `kotlinx.serialization`</span>
+<a id="__codelineno-15-44" name="__codelineno-15-44"></a><span class="cm">        toma la lista de objetos `PlantaJSON` (`List&lt;PlantaJSON&gt;`) y la convierte en una</span>
+<a id="__codelineno-15-45" name="__codelineno-15-45"></a><span class="cm">        única cadena de texto con formato JSON.</span>
+<a id="__codelineno-15-46" name="__codelineno-15-46"></a><span class="cm">        `prettyPrint` formatea el JSON para que sea legible. */</span>
+<a id="__codelineno-15-47" name="__codelineno-15-47"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Json</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">prettyPrint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}.</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">plantas</span><span class="p">)</span>
+<a id="__codelineno-15-48" name="__codelineno-15-48"></a><span class="w">        </span><span class="c1">// Con `Files.writeString` escribimos el String JSON en el fichero de salida</span>
+<a id="__codelineno-15-49" name="__codelineno-15-49"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">writeString</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="w"> </span><span class="n">json</span><span class="p">)</span>
+<a id="__codelineno-15-50" name="__codelineno-15-50"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\nInformación guardada en: </span><span class="si">$</span><span class="n">ruta</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-51" name="__codelineno-15-51"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-52" name="__codelineno-15-52"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-53" name="__codelineno-15-53"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-54" name="__codelineno-15-54"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
 <p class="admonition-title">🔍 Ejecutar y Analizar</p>
 <p>Ejecuta el ejemplo anterior, comprueba que la salida es la siguiente, que se ha creado el fichero <code>mis_plantas2.json</code> y que su contenido es correcto:</p>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
-<span class="normal"><a href="#__codelineno-15-2">2</a></span>
-<span class="normal"><a href="#__codelineno-15-3">3</a></span>
-<span class="normal"><a href="#__codelineno-15-4">4</a></span>
-<span class="normal"><a href="#__codelineno-15-5">5</a></span>
-<span class="normal"><a href="#__codelineno-15-6">6</a></span>
-<span class="normal"><a href="#__codelineno-15-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Aloe<span class="w"> </span>Vera,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">7</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span>metros
-<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Lavanda,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Lavandula<span class="w"> </span>angustifolia,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">3</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>metros
-<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Nephrolepis<span class="w"> </span>exaltata,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">5</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.9<span class="w"> </span>metros
-<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">4</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Dracaena<span class="w"> </span>sanderiana,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">4</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>metros
-<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Girasol,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Helianthus<span class="w"> </span>annuus,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">2</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>metros
-<a id="__codelineno-15-6" name="__codelineno-15-6"></a>
-<a id="__codelineno-15-7" name="__codelineno-15-7"></a>Información<span class="w"> </span>guardada<span class="w"> </span>en:<span class="w"> </span>datos_ini<span class="se">\m</span>is_plantas2.json
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span>
+<span class="normal"><a href="#__codelineno-16-6">6</a></span>
+<span class="normal"><a href="#__codelineno-16-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Aloe<span class="w"> </span>Vera,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Aloe<span class="w"> </span>barbadensis<span class="w"> </span>miller,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">7</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span>metros
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Lavanda,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Lavandula<span class="w"> </span>angustifolia,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">3</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>metros
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">3</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Helecho<span class="w"> </span>de<span class="w"> </span>Boston,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Nephrolepis<span class="w"> </span>exaltata,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">5</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">0</span>.9<span class="w"> </span>metros
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">4</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Bambú<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>suerte,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Dracaena<span class="w"> </span>sanderiana,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">4</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>metros
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="w">  </span>-<span class="w"> </span>ID:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>Nombre<span class="w"> </span>común:<span class="w"> </span>Girasol,<span class="w"> </span>Nombre<span class="w"> </span>científico:<span class="w"> </span>Helianthus<span class="w"> </span>annuus,<span class="w"> </span>Frecuencia<span class="w"> </span>de<span class="w"> </span>riego:<span class="w"> </span><span class="m">2</span><span class="w"> </span>días,<span class="w"> </span>Altura:<span class="w"> </span><span class="m">3</span>.0<span class="w"> </span>metros
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a>Información<span class="w"> </span>guardada<span class="w"> </span>en:<span class="w"> </span>datos_ini<span class="se">\m</span>is_plantas2.json
 </code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="45-conversiones-entre-ficheros">4.5. Conversiones entre ficheros</h2>
+<h2 id="45-cuando-usar-csv-json-o-xml">4.5. ¿Cuándo usar CSV, JSON o XML?</h2>
+<p>Una vez vistos los tres formatos, la pregunta natural es: <strong>¿cuál elegir?</strong> La respuesta depende del contexto:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Criterio</th>
+<th style="text-align: center;">CSV</th>
+<th style="text-align: center;">JSON</th>
+<th style="text-align: center;">XML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Legibilidad humana</td>
+<td style="text-align: center;">Simple</td>
+<td style="text-align: center;">Buena</td>
+<td style="text-align: center;">Verboso</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tamaño del fichero</td>
+<td style="text-align: center;">Pequeño</td>
+<td style="text-align: center;">Compacto</td>
+<td style="text-align: center;">Grande</td>
+</tr>
+<tr>
+<td style="text-align: left;">Datos jerárquicos / anidados</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Sí</td>
+<td style="text-align: center;">Sí</td>
+</tr>
+<tr>
+<td style="text-align: left;">Compatible con Excel / Sheets</td>
+<td style="text-align: center;">Sí</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;">Usado en APIs REST</td>
+<td style="text-align: center;">Raro</td>
+<td style="text-align: center;">Estándar</td>
+<td style="text-align: center;">Legacy</td>
+</tr>
+<tr>
+<td style="text-align: left;">Validación de esquema (XSD)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">JSON Schema</td>
+<td style="text-align: center;">Sí (XSD)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Facilidad de parseo en Kotlin</td>
+<td style="text-align: center;">Kotlin-CSV</td>
+<td style="text-align: center;">kotlinx.serialization</td>
+<td style="text-align: center;">Jackson XML</td>
+</tr>
+<tr>
+<td style="text-align: left;">Soporte en sistemas empresariales</td>
+<td style="text-align: center;">Parcial</td>
+<td style="text-align: center;">Amplio</td>
+<td style="text-align: center;">Muy amplio</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Regla práctica</p>
+<ul>
+<li>Usa <strong>CSV</strong> cuando los datos son tablas planas (sin anidación) y necesitas importarlos en Excel o exportarlos desde una base de datos.</li>
+<li>Usa <strong>JSON</strong> para APIs REST, configuraciones modernas y datos con estructura jerárquica.</li>
+<li>Usa <strong>XML</strong> cuando trabajas con sistemas empresariales o legacy que lo exigen, o cuando necesitas validación estricta de esquema.</li>
+</ul>
+</div>
+<hr />
+<h2 id="47-conversiones-entre-ficheros">4.7. Conversiones entre ficheros</h2>
 <p>Una vez vistas las características de los ficheros de intercambio de información más comunes podemos llegar a la conclusión que en programación y gestión de datos, no todos los formatos sirven igual para todos los casos. <strong>Convertir entre CSV, JSON y XML</strong> permite aprovechar las ventajas de cada uno.</p>
 <p>El patrón para convertir datos de un formato a otro es casi siempre el mismo. En lugar de intentar una conversión directa, utilizamos nuestras clases de Kotlin (<code>data class</code>) como un paso intermedio universal: <strong>Formato Origen → Objetos Kotlin en Memoria → Formato Destino</strong></p>
 <div class="admonition success">
 <p class="admonition-title">🔍 Ejecutar y Analizar</p>
 <p>Realiza algunas conversiones entre ficheros CSV, JSON y XML para practicar la lectura / escritura y la serialización / deserialización. Puedes reutilizar el código de los ejemplos.</p>
 </div>
+<hr />
 <hr />
 <h2 id="practica-3-creacion-y-lectura-de-un-fichero-de-datos">🎯 Práctica 3: Creación y lectura de un fichero de datos</h2>
 <div class="admonition warning">
