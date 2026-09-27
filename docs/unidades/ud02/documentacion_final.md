@@ -1,65 +1,57 @@
-# Entrega y Documentación Final
+## Entrega y Documentación Final
 
 !!! danger "📁 Entrega Final"
     Esta es la entrega definitiva de la UD2. El proyecto entregado deberá ejecutarse sin errores; si no compila o da error de ejecución no podrá ser calificado.
 
-## El proyecto
+### 🎯 Proyecto final de Gestión de Ficheros
 
-¡Enhorabuena! Si has seguido _todas las prácticas_, deberás tener un **Proyecto de Acceso a Ficheros** completo con los siguientes apartados.
+!!! warning "🎯 Proyecto final de Gestión de Ficheros"
 
-* **Organización de directorios**
-* **Ficheros de intercambio**
-* **Ficheros binarios de Acceso Aleatorio**
-* **Programa de conversión entre formatos**
+    En esta última práctica ampliarás tu proyecto con un CRUD para gestionar la información de tu aplicación en un fichero binario de acceso aleatorio.
 
-## Programa de conversión entre formatos
 
-Una aplicación real a menudo necesita intercambiar datos con otros sistemas que usan formatos distintos. En esta parte del proyecto añadirás un fichero `Conversor.kt` que encadene tres transformaciones usando tu `data class` de videojuegos como modelo intermedio:
+    1. Añade al menú de tu aplicación una opción más llamada `5. Gestión fichero BIN`:
 
-```
-videojuegos.csv  →  videojuegos.json  →  videojuegos.dat  →  videojuegos_export.csv
-```
+        ```text
+        ===== CATÁLOGO DE VIDEOJUEGOS =====
+        1. Gestión CSV
+        2. Leer catálogo desde XML
+        3. Leer catálogo desde JSON
+        4. Conversiones entre formatos
+        5. Gestión fichero BIN
+        0. Salir
+        ====================================
+        ```
 
-El patrón es siempre el mismo que ya conoces: **Formato Origen → Objetos Kotlin → Formato Destino**.
 
-### Lo que debes implementar
+    2. Crea un submenú para gestionar la información del fichero binario con las opciones siguientes:
 
-Crea en `Conversor.kt` las siguientes funciones y un `main` que las ejecute en orden:
+        ```text
+        ===== CRUD fichero BIN =====
+        1. Importar información de un fichero de intercambio.
+        2. Leer información del fichero binario.
+        3. Añadir un registro nuevo
+        4. Modificar un registro existente (por ID)
+        5. Eliminar un registro existente (por ID)
+        0. Volver
+        ```
 
-* **`csvAJson(origen: Path, destino: Path)`**: Lee `videojuegos.csv` usando Kotlin-CSV, deserializa los datos en objetos de tu `data class` y los serializa a `videojuegos.json` con `kotlinx.serialization`.
-* **`jsonABinario(origen: Path, destino: Path)`**: Lee `videojuegos.json`, reconstruye la lista de objetos y escribe cada uno como un registro de tamaño fijo en `videojuegos.dat` usando `FileChannel` y `ByteBuffer`.
-* **`binarioACsv(origen: Path, destino: Path)`**: Lee `videojuegos.dat` registro a registro, reconstruye los objetos y los escribe en `videojuegos_export.csv`.
+    3. Define las longitudes en bytes de los datos de tu registro (Int = 4 bytes, Double = 8 bytes, String = longitud fija rellenada con espacios, etc) para que coincida con la `data class` que has utilizado en las prácticas anteriores.
 
-Tras las tres conversiones, el `main` debe comprobar que `videojuegos_export.csv` contiene los mismos datos que `videojuegos.csv` original e imprimir un mensaje de verificación.
 
-```kotlin
-fun main() {
-    val csv     = Path.of("datos_ini/videojuegos.csv")
-    val json    = Path.of("datos_fin/videojuegos.json")
-    val binario = Path.of("datos_fin/videojuegos.dat")
-    val export  = Path.of("datos_fin/videojuegos_export.csv")
 
-    println("=== CSV → JSON ===")
-    csvAJson(csv, json)
+    **Requisitos de funcionamiento:** mismos que en la práctica anterior. Además:
 
-    println("=== JSON → Binario ===")
-    jsonABinario(json, binario)
+    - Opción **IMPORTAR**: Vacía el fichero binario (o lo crea si no existe) e importa los datos desde un CSV, XML o JSON (elige el que prefieras).
+    - Opción **LEER**: Muestra por consola la información del fichero binario.
+    - Opción **AÑADIR**: Pide el ID y comprueba se quea válido (para ser válido ha de ser un número y no existir en el fichero binario), si no es válido lo vuelve a pedir hasta que lo sea. Después pide el resto de campos (los campos numéricos se pedirán hasta que sean válidos, es decir, ser número y ser del tipo correcto). Por último añade un registro al final del fichero con toda la información.
+    - Opción **MODIFICAR**: Pide ID hasta que sea válido (debe ser un número entero) y recorre el fichero binario para ver si existe, si no lo encuentra informa con un mensaje y no realiza ningún cambio pero si lo encuentra muestra el nombre o algún otro campo representativo, pide alguno de los otros campos (comprobando que es correcto) y actualiza la información en el fichero informando con un mensaje.
+    - Opción **ELIMINAR**: Pide ID hasta que sea válido (debe ser un número entero) y recorre el fichero binario para ver si existe, si no lo encuentra informa con un mensaje pero si lo encuentra muestra el nombre o algún otro campo representativo y pide confirmación para eliminar, entonces, si se confirma el borrado se elimina el registro y en caso contrario no se elimina (en ambos casos se informa con un mensaje).
 
-    println("=== Binario → CSV ===")
-    binarioACsv(binario, export)
 
-    println("=== Verificación ===")
-    // Compara el CSV original con el exportado e imprime si coinciden
-}
-```
+    **Aspectos técnicos:** mismos que en la páctica anterior.
 
-### Aspectos Técnicos Obligatorios
-
-1. Reutiliza las funciones de lectura y escritura que ya implementaste en las prácticas anteriores.
-2. Añade manejo de errores en cada función (`try-catch` y comprobación de existencia del fichero).
-3. Las tres funciones deben estar en `Conversor.kt` y la `data class` en su propio fichero.
-
-## El fichero README.md
+### El fichero README.md
 
 En un proyecto de software el código fuente por sí solo no cuenta toda la historia y es fundamental crear documentación adicional. La forma estándar y más extendida de hacerlo es a través de un fichero `LEEME.md` (o `README.md`). Un proyecto sin un `LEEME.md` se considera incompleto o poco profesional.
 
@@ -74,7 +66,7 @@ Un buen fichero `LEEME.md` debería contener, como mínimo, las siguientes secci
 
 La extensión `.md` significa **Markdown** que es un lenguaje de marcado ligero que permite dar formato a un texto plano usando caracteres simples. Podemos crearlo con cualquier editor de texto (IntelliJ, VSCode, Bloc de notas...) y guardarlo con la extensión `.md`. Plataformas como GitHub, GitLab y otros sistemas de documentación convierten estos ficheros en páginas web.
 
-## Sintaxis básica de Markdown para empezar
+#### Sintaxis básica de Markdown para empezar
 
 ```markdown
 # Título de Nivel 1
@@ -96,7 +88,7 @@ fun main() {
 ```
 ````
 
-## Ejemplo Markdown
+#### Ejemplo Markdown
 
 ````markdown
 # Catálogo de Videojuegos

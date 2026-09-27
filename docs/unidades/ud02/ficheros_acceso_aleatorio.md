@@ -1,430 +1,612 @@
-# 6. Ficheros de acceso aleatorio
+## 6. Ficheros de acceso aleatorio
 
-Un fichero de acceso aleatorio es un tipo de fichero que permite leer o escribir en cualquier posición del fichero directamente, sin necesidad de procesar secuencialmente todo el contenido previo. El sistema puede “saltar” a una posición concreta (medida en bytes desde el inicio del fichero) y comenzar la lectura o escritura desde ahí. Por ejemplo, si cada registro ocupa 200 bytes, para acceder al registro número 100 hay que saltar 200×99=19.800 bytes desde el inicio.
+A diferencia del acceso secuencial, el **acceso aleatorio** nos permite situarnos (*saltar*) de forma instantánea a cualquier posición física del fichero para leer o modificar un fragmento de datos específico, sin necesidad de procesar todo lo que hay antes. Para poder utilizar esta técnica, nuestros registros en el fichero binario deben tener un **tamaño fijo en bytes**.
 
-Las clases **FileChannel**, **ByteBuffer** y **StandardOpenOption** se utilizan juntas para leer y escribir en ficheros binarios y en el acceso aleatorio a ficheros. `ByteBuffer` se utiliza en ficheros de acceso aleatorio porque permite leer y escribir bloques binarios de datos en posiciones específicas del fichero.
+> Por ejemplo, si cada registro de nuestra colección botánica ocupa exactamente 32 bytes, para acceder al registro número 100 no tenemos que leer los 99 anteriores; podemos saltar directamente a la **posición de inicio** del registro número 100 calculándola: **Posición = 32 bytes × (100−1) = 3168 bytes**
 
-## Métodos de FileChannel
+Para que este cálculo matemático se cumpla con total precisión, el tamaño en bytes de los campos de texto debe cuplir siempre que 1 carácter = 1 byte y, dependiendo del charset que se utilice, esto puede no cumplirse. Por ejemplo, en un charset variable como UTF-8, caracteres como la 'ñ' o las tildes ocuparán más de un byte.
+
+A continuación se muestra una tabla comparativa con las características de algunas codificaciones:
+
+| Característica | `Charset.defaultCharset()` | `Charsets.US_ASCII` | `Charsets.ISO_8859_1` (Latin-1) |
+| :--- | :--- | :--- | :--- |
+| **Descripción** | La codificación predeterminada de la Máquina Virtual de Java (JVM). | El estándar clásico americano de 7 bits. | Extensión de 8 bits para idiomas de Europa Occidental. |
+| **Tamaño en bytes por carácter** | **Variable** (generalmente entre 1 y 4 bytes si la máquina usa UTF-8). | **Estricto: 1 byte** por carácter. | **Estricto: 1 byte** por carácter. |
+| **Caracteres soportados** | Depende de la versión de Java:<br>- **Java 18+:** UTF-8 por defecto (soporta casi todo: tildes, emojis, caracteres asiáticos, etc.).<br>- **Java 17 o anterior:** Varía según el S.O. (Windows-1252 en Windows, UTF-8 en macOS/Linux). | Extremadamente limitado. Solo alfabeto inglés básico (A-Z, a-z), números (0-9) y signos estándar. **No soporta tildes ni la "ñ"**. | Alfabeto inglés, caracteres de Europa occidental, tildes (á, é, í...), diéresis y la **"ñ"**. *(Nota: No soporta el símbolo del Euro `€`)*. |
+| **Portabilidad** | **Baja** (en Java 17 o inferior, un archivo creado en Windows puede leerse mal en Linux). **Alta** en Java 18+. | **Total**. Es el estándar base universal. | **Alta** en entornos occidentales. |
+| **Uso ideal en programación** | Lectura/escritura rápida de archivos de texto locales para el usuario. | Protocolos de red muy básicos, comandos de consola ingleses y optimización extrema. | Estructuras de datos binarias con **registros de tamaño fijo** que requieran soporte para el idioma español (tildes, eñes). |
+
+> En nuestros ejemplos utilizaremos `ISO_8859_1` para asegurarnos que **1 carácter sea siempre estrictamente igual a 1 byte** en el archivo binario, permitiendo de forma segura guardar tildes y eñes sin romper la matemática de los desplazamientos de bytes de tu acceso aleatorio (`canal.position()`).
+
+Para el acceso aleatorio en la API moderna de Java/Kotlin (`java.nio`), trabajamos con tres herramientas en equipo:
+
+1. **`FileChannel`**: Funciona como un "canal o autopista de datos" bidireccional hacia el fichero en el disco. Es el que nos permite modificar la posición del puntero del fichero en tiempo de ejecución mediante `canal.position(long)`.
+2. **`ByteBuffer`**: Es un contenedor en la memoria RAM que empaqueta y prepara exactamente los bytes que queremos transferir (escribir) o recibir (leer) a través del canal (`FileChannel`).
+3. **`StandardOpenOption`**: Es un enumerado que funciona como el "semáforo de permisos" del canal. Le indica a `FileChannel` cómo debe abrirse el fichero (por ejemplo, si se abre solo para lectura `READ`, para escritura `WRITE`, si debe crear el fichero si no existe `CREATE` o si debe añadir los datos al final `APPEND`). Sin estas opciones de configuración, el canal no sabrá qué operaciones tiene permitido realizar sobre el disco.
+
+A continuación se describen algunos de los métodos que utilizaremos:
+
+**Métodos de `FileChannel`**
 
 | Método | Descripción |
 | :--- | :--- |
-| `position()` | Devuelve la posición actual del puntero en el fichero y permite saltar a cualquier posición en él (tanto para leer como para escribir). |
-| `position(long)` | Establece una posición exacta para lectura/escritura. |
-| `truncate(long)` | Recorta o amplía el tamaño del fichero. |
-| `size()` | Devuelve el tamaño total actual del fichero. |
-| `read(ByteBuffer)`, `write(ByteBuffer)` | Usa `FileChannel` para secuencial o aleatorio. |
+| `position()` | Devuelve la posición actual del puntero en el fichero (medida en bytes). |
+| `position(long)` | Establece una posición exacta en bytes para la próxima lectura o escritura. |
+| `truncate(long)` | Recorta o amplía el tamaño del fichero a los bytes indicados. |
+| `size()` | Devuelve el tamaño total actual del fichero en bytes. |
+| `read(ByteBuffer)` | Lee una secuencia de bytes del canal y los guarda en el buffer proporcionado. |
+| `write(ByteBuffer)` | Escribe una secuencia de bytes desde el buffer indicado hacia el canal. |
 
-## Métodos de ByteBuffer
-
-| Método | Descripción |
-| :--- | :--- |
-| `allocate(capacidad)` | Crea un buffer con capacidad fija en memoria (no compartida). |
-| `wrap(byteArray)` | Crea un buffer que envuelve un array de bytes existente (memoria compartida). |
-| `wrap(byteArray, offset, length)` | Crea un buffer desde una porción del array existente. |
-| `put(byte)`, `putInt(int)`, `putDouble(double)`, `putFloat(float)`, `putChar(char)`, `putShort(short)`, `putLong(long)` | Escribe un byte, int, double, float, char, short o long en la posición actual. |
-| `put(byte[], offset, length)` | Escribe una porción de un array de bytes. |
-| `get()`, `getInt()`, `getDouble()`, `getFloat()`, `getChar()`, `getShort()`, `getLong()` | Lee un byte, int, double, float, char, short o long desde la posición actual. |
-| `get(byte[], offset, length)` | Lee una porción del buffer a un array. |
-
-## Métodos de control del buffer
+**Métodos de `ByteBuffer`**
 
 | Método | Descripción |
 | :--- | :--- |
-| `position()` | Devuelve la posición actual del cursor. |
-| `position(int)` | Establece la posición del cursor. |
-| `limit()` | Devuelve el límite del buffer. |
-| `limit(int)` | Establece un nuevo límite. |
-| `capacity()` | Devuelve la capacidad total del buffer. |
-| `clear()` | Limpia el buffer: posición a 0, límite al máximo (sin borrar contenido). |
-| `flip()` | Prepara el buffer para lectura después de escribir. |
-| `rewind()` | Posición a 0 para releer desde el inicio. |
-| `remaining` | Indica cuántos elementos quedan por procesar. |
-| `hasRemaining()` | `true` si aún queda contenido por leer o escribir. |
+| `allocate(capacidad)` | Crea un nuevo buffer con una capacidad fija de bytes en memoria. |
+| `wrap(byteArray)` | Crea un buffer que envuelve un array de bytes ya existente (comparten la misma memoria). |
+| `put(byte)` | Escribe un byte en la posición actual del buffer. |
+| `putInt(int)` | Escribe un valor entero (4 bytes). |
+| `putDouble(double)` | Escribe un valor double (8 bytes). |
+| `putFloat(float)` | Escribe un valor float (4 bytes). |
+| `putChar(char)` | Escribe un carácter (2 bytes). |
+| `putLong(long)` | Escribe un valor long (8 bytes). |
+| `get()` | Lee un byte desde la posición actual del cursor. |
+| `getInt()` | Lee un valor entero (4 bytes). |
+| `getDouble()` | Lee un valor double (8 bytes). |
+| `get(byteArray)` | Extrae bytes del buffer y los vuelca en un array de bytes de destino. |
 
-**IMPORTANTE**: un fichero `.dat` no es un fichero de texto. No se puede abrir con el Bloc de Notas, TextEdit, o un editor de código en modo texto normal. Si se abre con estos programas se ve una mezcla de caracteres extraños, símbolos y espacios ("basura"). Hay herramientas online y plugins para los IDE para poder abrir los ficheros y ver la información en binario que contienen.
+**Métodos de control del buffer (`ByteBuffer`)**
 
-### Ejemplo
+| Método | Descripción |
+| :--- | :--- |
+| `position()` | Devuelve la posición actual del cursor de lectura/escritura dentro del buffer. |
+| `position(int)` | Establece la posición del cursor dentro del buffer. |
+| `limit()` | Devuelve el límite actual del buffer (hasta dónde se puede leer/escribir). |
+| `clear()` | Limpia el buffer: resetea la posición a 0 y pone el límite al máximo (no borra los datos físicos de la memoria). |
+| `flip()` | Prepara el buffer para ser leído después de haber escrito en él (establece el límite en la posición actual y devuelve el cursor a 0). |
+| `rewind()` | Devuelve la posición a 0 para poder releer el buffer desde el inicio. |
+| `hasRemaining()` | Devuelve `true` si aún quedan elementos por procesar entre la posición actual y el límite. |
 
-El siguiente ejemplo utiliza `FileChannel` y `ByteBuffer` para crear y leer un fichero llamado `mediciones.dat` con registros con la siguiente estructura:
+#### Ejemplo 12: Lectura y escritura en ficheros binarios de tamaño fijo
 
-* **ID** del sensor (`Int` - 4 bytes)
-* **Nombre** (`String` - 20 bytes)
-* **Temperatura** (`Double` - 8 bytes)
-* **Humedad** (`Double` - 8 bytes)
+En este ejemplo utilizaremos `FileChannel` y `ByteBuffer` para crear un fichero binario estructurado para nuestro herbario. Cada registro representará una planta con tres campos y ocupará exactamente **32 bytes** en total:
 
-A continuación se muestra el código con las funciones para añadir una medición al final del fichero y leer todas las mediciones que hay en él.
+| Campo | Tipo | Tamaño fijo | Rango de bytes en el registro |
+| :--------------- | :--- | :--- | :--- |
+| `id_planta` | `Int` | 4 bytes | 0 – 3 |
+| `nombre_comun` | `String` | 20 bytes (longitud fija) | 4 – 23 |
+| `precio` | `Double` | 8 bytes | 24 – 31 |
 
 ```kotlin
 import java.nio.ByteBuffer
-import java.nio.ByteOrder
 import java.nio.channels.FileChannel
+import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
-import java.io.IOException
 
-// --- CONSTANTES PARA DEFINIR EL TAMAÑO DE LOS REGISTROS (MUY IMPORTANTE) ---
+data class PlantaBinaria(
+    val idPlanta: Int,
+    val nombreComun: String,
+    val precio: Double
+)
 
-// Definimos el tamaño exacto de cada campo para garantizar que cada registro ocupe lo mismo.
-const val TAMANO_ID = Int.SIZE_BYTES        // 4 bytes para el ID (Int)
-const val TAMANO_NOMBRE = 20                // 20 bytes fijos para el nombre (String)
-const val TAMANO_TEMPERATURA = Double.SIZE_BYTES // 8 bytes para la temperatura (Double)
-const val TAMANO_HUMEDAD = Double.SIZE_BYTES     // 8 bytes para la humedad (Double)
+// Definimos los tamaños del registro binario
+const val TAMANO_ID = Int.SIZE_BYTES // 4 bytes
+const val TAMANO_NOMBRE = 20         // 20 bytes para la cadena de texto
+const val TAMANO_PRECIO = Double.SIZE_BYTES // 8 bytes
+const val TAMANO_REGISTRO = TAMANO_ID + TAMANO_NOMBRE + TAMANO_PRECIO // 32 bytes en total
 
-// Cada registro (medición) ocupará siempre 4 + 20 + 8 + 8 = 40 bytes en el archivo binario.
-const val TAMANO_REGISTRO = TAMANO_ID + TAMANO_NOMBRE + TAMANO_TEMPERATURA + TAMANO_HUMEDAD
+val archivoPath = Path.of("datos","plantas.bin")
 
-// --- FUNCIÓN MAIN: PUNTO DE ENTRADA Y FLUJO DE LA APLICACIÓN ---
+
 fun main() {
-    val rutaFichero = Path.of("multimedia/bin/mediciones.dat")
+    crearHerbario()
+    mostrarInfo()
+}
 
-    // ** Aseguramos que el directorio exista antes de escribir **
+
+fun crearHerbario(){
+    Files.createDirectories(archivoPath.parent)
+
+    val listaSemillas = listOf(
+        PlantaBinaria(1, "Rosa", 1.5),
+        PlantaBinaria(2, "Girasol", 3.0),
+        PlantaBinaria(3, "Margarita", 0.6)
+    )
+
+    vaciarCrearFichero()
+
+    for (planta in listaSemillas) {
+        anadirPlanta(planta.idPlanta, planta.nombreComun, planta.precio)
+    }
+}
+
+
+// Crea el archivo o lo vacía si ya existía
+fun vaciarCrearFichero() {
     try {
-        Files.createDirectories(rutaFichero.parent)
-        println("Directorio creado/verificado: ${rutaFichero.parent}")
-    } catch (e: IOException) {
-        println("Error al crear el directorio: ${e.message}")
-        return // Salir si no podemos asegurar la ruta
-    }
-
-    // 1. ESCRITURA: Escribir las 4 mediciones al final del archivo.
-    escribirMedicion(rutaFichero, 101, "Atenea", 25.5, 60.2)
-    escribirMedicion(rutaFichero, 102, "Hera", 26.1, 58.9)
-    escribirMedicion(rutaFichero, 103, "Iris", 28.4, 65.9)
-    escribirMedicion(rutaFichero, 104, "Selene", 28.4, 65.9)
-
-    // 2. LECTURA: Leer todos los registros escritos.
-    leerMediciones(rutaFichero)
-}
-
-// --- FUNCIÓN 1: ESCRIBIR UNA MEDICIÓN ---
-// Escribe un registro de tamaño fijo (40 bytes) al final del fichero binario.
-fun escribirMedicion(ruta: Path, idSensor: Int, nombre: String, temperatura: Double, humedad: Double) {
-    // Usamos 'APPEND' para añadir al final del archivo. El canal se cierra automáticamente con '.use'.
-    FileChannel.open(ruta, StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.APPEND).use { canal ->
-
-        // 1. Configurar el Buffer: Se reserva espacio y se define el orden de bytes nativo.
-        val buffer = ByteBuffer.allocate(TAMANO_REGISTRO)
-        buffer.order(ByteOrder.nativeOrder())
-
-        // 2. Llenar el Buffer (Modo ESCRITURA): Cada 'put' avanza la posición interna del buffer.
-        buffer.putInt(idSensor)
-
-        // Manejo del String de tamaño fijo (20 bytes):
-        val nombreCompleto = ByteArray(TAMANO_NOMBRE) { ' '.code.toByte() } // 20 bytes rellenos de espacios
-        val nombreBytes = nombre.toByteArray(Charsets.UTF_8)
-        nombreBytes.copyInto(nombreCompleto) // Copiamos la cadena, dejando los espacios si es más corta
-
-        buffer.put(nombreCompleto) // Escribe los 20 bytes fijos
-        buffer.putDouble(temperatura) // Escribe 8 bytes
-        buffer.putDouble(humedad) // Escribe 8 bytes
-
-        // 3. Preparar para el Canal: 'flip()' cambia el buffer de ESCRITURA a LECTURA.
-        //    Establece la posición a 0 y el límite al final de los datos que acabamos de poner (40 bytes).
-        buffer.flip()
-
-        // 4. Escribir al Fichero: El canal escribe desde la posición 0 hasta el límite del buffer.
-        canal.write(buffer)
-        println ("Medición (ID: $idSensor) escrita correctamente.")
+        FileChannel.open(
+            archivoPath,
+            StandardOpenOption.WRITE,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING
+        ).close()
+        println("--- El fichero '${archivoPath.fileName}' se ha creado y está vacío.")
+    } catch (e: Exception) {
+        println("Error al vaciar o crear el fichero: ${e.message}")
     }
 }
 
-// --- FUNCIÓN 2: LEER TODAS LAS MEDICIONES ---
-// Recorre el fichero y lee los registros de 40 bytes uno por uno.
-fun leerMediciones(ruta: Path) {
-    if (!Files.exists(ruta)) {
-        println ("El fichero ${ruta.fileName} no existe. No hay nada que leer.")
-        return
+// Añade un registro de planta al final del fichero
+fun anadirPlanta( idPlanta: Int, nombre: String, precio: Double) {
+    val nuevaPlanta = PlantaBinaria(idPlanta, nombre, precio)
+
+    try {
+        FileChannel.open(
+            archivoPath,
+            StandardOpenOption.WRITE,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.APPEND
+        ).use { canal ->
+            val buffer = ByteBuffer.allocate(TAMANO_REGISTRO)
+
+            // 1. Escribimos el ID (4 bytes)
+            buffer.putInt(nuevaPlanta.idPlanta)
+
+            // 2. Escribimos el Nombre (20 bytes). Rellenamos con espacios si es más corto.
+            val nombreBytes = nuevaPlanta.nombreComun
+                .padEnd(TAMANO_NOMBRE, ' ')
+                .toByteArray(Charsets.ISO_8859_1)
+            buffer.put(nombreBytes, 0, TAMANO_NOMBRE)
+
+            // 3. Escribimos precio (8 bytes)
+            buffer.putDouble(nuevaPlanta.precio)
+
+            // Preparamos el buffer para volcar la información al canal
+            buffer.flip()
+            while (buffer.hasRemaining()) {
+                canal.write(buffer)
+            }
+            println("- Planta '${nuevaPlanta.nombreComun.trim()}' añadida correctamente.")
+        }
+    } catch (e: Exception) {
+        println("Error al añadir la planta: ${e.message}")
     }
+}
 
-    println ("\n--- Leyendo todas las mediciones ---")
-    FileChannel.open(ruta, StandardOpenOption.READ).use { canal ->
+// Lee todos los registros de manera secuencial de inicio a fin
+fun leerPlantas(): List<PlantaBinaria> {
+    val plantas = mutableListOf<PlantaBinaria>()
 
-        // 1. Configurar el Buffer: Buffer del tamaño exacto de un registro.
+    if (!Files.isReadable(archivoPath)) return emptyList()
+
+    FileChannel.open(archivoPath, StandardOpenOption.READ).use { canal ->
         val buffer = ByteBuffer.allocate(TAMANO_REGISTRO)
-        buffer.order(ByteOrder.nativeOrder())
 
-        /* 2. Bucle de Lectura: Continúa leyendo mientras el canal logre cargar datos al buffer.
-        `canal.read(buffer)` devuelve la cantidad de bytes leídos (o -1 al final del archivo). */
+        // Cada lectura llena exactamente un registro de 32 bytes
         while (canal.read(buffer) > 0) {
-
-            // 3. Preparar para la Lectura: 'flip()' cambia el buffer de ESCRITURA a LECTURA.
-            //    Esto nos permite leer los datos que acabamos de cargar desde el inicio.
             buffer.flip()
 
-            // 4. Extraer Datos: Las llamadas 'get*' leen los bytes y AVANZAN la posición.
+            // 1. Leemos el ID
             val id = buffer.getInt()
 
-            val nombreCompleto = ByteArray(TAMANO_NOMBRE)
-            buffer.get(nombreCompleto) // Leemos los 20 bytes del nombre al array.
+            // 2. Leemos los bytes del nombre y los decodificamos limpiando los espacios sobrantes
+            val nombreBytes = ByteArray(TAMANO_NOMBRE)
+            buffer.get(nombreBytes)
+            val nombre = String(nombreBytes, Charsets.ISO_8859_1).trim()
 
-            // Convertir a String y usar '.trim()' para quitar los espacios de relleno.
-            val nombre = String(nombreCompleto, Charsets.UTF_8).trim()
-            val temp = buffer.getDouble()
-            val hum = buffer.getDouble()
+            // 3. Leemos precio
+            val precio = buffer.getDouble()
 
-            println ("  - ID: $id, Nombre: $nombre, Temperatura: $temp °C, Humedad: $hum %")
-
-            // 5. Preparar para el Siguiente Registro: 'clear()' resetea la posición a 0 y el límite a la capacidad total.
-            //    Esto deja el buffer listo para el siguiente `canal.read()`.
+            plantas.add(PlantaBinaria(id, nombre, precio))
             buffer.clear()
         }
     }
+    return plantas
 }
-```
 
-!!! success "🔍 Ejecutar y Analizar"
-    Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:
-
-```bash
-Medición (ID: 101) escrita correctamente.
-Medición (ID: 102) escrita correctamente.
-Medición (ID: 103) escrita correctamente.
-Medición (ID: 104) escrita correctamente.
-
---- Leyendo todas las mediciones ---
-  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-  - ID: 102, Nombre: Hera, Temperatura: 26.1 °C, Humedad: 58.9 %
-  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-```
-
-Ahora que ya tenemos la información guardada en nuestro fichero `.dat` y sabemos leerla, vamos a ampliar la aplicación con una función que recoge el ID del sensor a modificar y los nuevos datos de temperatura y humedad. Cuando localiza el registro del sensor cuyo ID coincide con el buscado, escribe los nuevos datos en las posiciones de los bytes correspondientes.
-
-```kotlin
-// --- FUNCIÓN 3: ACTUALIZAR UNA MEDICIÓN EXISTENTE ---
-// Busca un registro por ID y sobrescribe solo los campos de Temperatura y Humedad.
-fun actualizarMedicion(ruta: Path, idSensorBuscado: Int, nuevaTemperatura: Double, nuevaHumedad: Double) {
-    if (!Files.exists(ruta)) {
-        println ("Error: El fichero no existe, no se puede actualizar.")
-        return
-    }
-
-    println ("\nIntentando actualizar medición para ID: $idSensorBuscado...")
-    // Abrimos el canal para LECTURA (búsqueda) y ESCRITURA (actualización).
-    FileChannel.open(ruta, StandardOpenOption.READ, StandardOpenOption.WRITE).use { canal ->
-
-        // Buffer pequeño, solo para leer el ID de 4 bytes en cada iteración.
-        val bufferID = ByteBuffer.allocate(TAMANO_ID)
-        bufferID.order(ByteOrder.nativeOrder())
-
-        var posicionActual: Long = 0
-        var encontrado = false
-
-        // Bucle que recorre el archivo, leyendo solo el ID en cada registro.
-        while (canal.position() < canal.size() && !encontrado) {
-
-            posicionActual = canal.position() // Guardamos el byte de inicio del registro.
-
-            // 1. Leer solo el ID:
-            bufferID.clear()
-            canal.read(bufferID)
-            bufferID.flip()
-            val idActual = bufferID.getInt()
-
-            // 2. Comprobar ID:
-            if (idActual == idSensorBuscado) {
-                encontrado = true
-                println ("Sensor $idSensorBuscado encontrado en la posición: $posicionActual.")
-
-                // 3. Posicionar para la Escritura: Saltamos el ID y el Nombre para ir directo a la Temperatura.
-                // Posición = (Inicio del Registro) + (Tamaño ID) + (Tamaño Nombre)
-                canal.position(posicionActual + TAMANO_ID + TAMANO_NOMBRE)
-
-                // 4. Crear Buffer con nuevos datos (Temperatura y Humedad):
-                val bufferDatos = ByteBuffer.allocate(TAMANO_TEMPERATURA + TAMANO_HUMEDAD)
-                bufferDatos.order(ByteOrder.nativeOrder())
-                bufferDatos.putDouble(nuevaTemperatura)
-                bufferDatos.putDouble(nuevaHumedad)
-                bufferDatos.flip()
-
-                // 5. Sobrescribir: Escribimos 16 bytes (Temp + Hum) justo encima de los datos antiguos.
-                canal.write(bufferDatos)
-                println ("Medición actualizada con éxito a Temp: $nuevaTemperatura °C, Hum: $nuevaHumedad %.")
-
-            } else {
-                // 6. Si no es el ID, saltar al inicio del siguiente registro completo.
-                canal.position(posicionActual + TAMANO_REGISTRO)
-            }
-        }
-
-        if (!encontrado) {
-            println ("Medición con ID: $idSensorBuscado no encontrada.")
-        }
+fun mostrarInfo() {
+    // Mostramos la información
+    println("\n--- Plantas leídas secuencialmente del fichero .bin: ---")
+    val leidas = leerPlantas()
+    for (p in leidas) {
+        println(" - ID: ${p.idPlanta}, Nombre común: ${p.nombreComun}, ${p.precio}€")
     }
 }
 ```
 
-La llamada a esta nueva función en el main podría ser:
+!!! success "Prueba y analiza el ejemplo"
+    Prueba el código de ejemplo y verifica que la salida por consola es:
 
-```kotlin
-actualizarMedicion(rutaFichero, 102, 21.0, 72.3)
+    ```text
+    --- El fichero 'plantas.bin' se ha creado y está vacío.
+    - Planta 'Rosa' añadida correctamente.
+    - Planta 'Girasol' añadida correctamente.
+    - Planta 'Margarita' añadida correctamente.
+
+    --- Plantas leídas secuencialmente del fichero .bin: ---
+    - ID: 1, Nombre común: Rosa, 1.5€
+    - ID: 2, Nombre común: Girasol, 3.0€
+    - ID: 3, Nombre común: Margarita, 0.6€
+    ```
+
+**Representación Hexadecimal en Disco**
+
+Si abrimos el fichero resultante `plantas.bin` utilizando un visor hexadecimal (como [HexEd.it](https://hexed.it/)), observaremos los registros consecutivos de 32 bytes representados de la siguiente forma:
+
+```text
+Offset    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F   ASCII
+-------------------------------------------------------------------------
+00000000  00 00 00 01 52 6F 73 61 20 20 20 20 20 20 20 20   ....Rosa        
+00000010  20 20 20 20 20 20 3F F8 00 00 00 00 00 00 00 00   ......?.........
+00000020  00 00 00 02 47 69 72 61 73 6F 6C 20 20 20 20 20   ....Girasol     
+00000030  20 20 20 20 20 20 40 08 00 00 00 00 00 00 00 00   ......@.........
 ```
 
-Se vuelve a llamar a `leerMediciones` para comprobar que la información del sensor se ha modificado correctamente:
+- **ID (1):** Representado en los primeros 4 bytes `00 00 00 01`.
+- **Nombre ("Rosa"):** Bytes en ASCII `52 6F 73 61`, seguidos de espacios `20` hasta completar los 20 bytes fijos.
+- **Precio (1.5):** Representado en formato de doble precisión IEEE 754 ocupando los bytes `3F F8 00 00 00 00 00 00`.
 
-```kotlin
-leerMediciones(rutaFichero)
-```
+!!! example "Autoevaluación"
 
-!!! success "🔍 Ejecutar y Analizar"
-    Realiza los siguientes pasos:
-
-* Añade el código de la función `actualizarMedicion()` al proyecto del ejemplo anterior.
-* Comenta en el `main` las llamadas a la función `escribirMedicion()`.
-* Añade al `main` las llamadas a `actualizarMedicion()` y a `leerMediciones()`.
-* **Ejecuta la aplicación y comprueba que la salida es la siguiente:**
-
-```bash
---- Leyendo todas las mediciones ---
-  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-  - ID: 102, Nombre: Hera, Temperatura: 26.1 °C, Humedad: 58.9 %
-  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-
-Intentando actualizar medición para ID: 102...
-leyendo ID: 101
-leyendo ID: 102
-Sensor 102 en posición 40.
-Medición actualizada con éxito a Temp: 21.0, Hum: 72.3.
-
---- Leyendo todas las mediciones ---
-  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-  - ID: 102, Nombre: Hera, Temperatura: 21.0 °C, Humedad: 72.3 %
-  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-```
-
-Por último, ampliaremos la aplicación para poder eliminar los datos de un sensor a partir de su ID. El programa recorre todo los registros comprobando si el ID coincide con el buscado. En caso de que no coincida escribe el registro en un fichero temporal y si coincide, no hace nada. Al finalizar el fichero temporal contendrá los registros que no se quieren eliminar. Por último, se elimina el fichero original y se renombra el fichero temporal con el nombre original.
-
-```kotlin
-// --- FUNCIÓN 4: ELIMINAR UNA MEDICIÓN ---
-/* La eliminación en ficheros binarios de tamaño fijo se hace recreando el fichero.
-Se lee el archivo original registro por registro, y se copia todo excepto el registro a eliminar. */
-fun eliminarMedicion(ruta: Path, idSensorAEliminar: Int) {
-    // 1. Definir ruta temporal en el mismo directorio que el original.
-    val rutaTemp = Path.of(ruta.parent.toString(), "temp_mediciones.dat")
-    var registroEliminado = false
-
-    if (!Files.exists(ruta)) {
-        println ("Error: El fichero ${ruta.name} no existe, no se puede eliminar.")
-        return
+    **Pregunta 19: En la función `anadirPlanta` del Ejemplo 12, se preparan los datos de una planta en un `ByteBuffer` de la siguiente manera:**
+    
+    ```kotlin
+    val buffer = ByteBuffer.allocate(TAMANO_REGISTRO)
+    
+    buffer.putInt(nuevaPlanta.idPlanta)
+    buffer.put(nombreBytes, 0, TAMANO_NOMBRE)
+    buffer.putDouble(nuevaPlanta.precio)
+    
+    // Se omite intencionadamente la llamada a: buffer.flip()
+    
+    while (buffer.hasRemaining()) {
+        canal.write(buffer)
     }
+    ```
+    
+    **Si se omite la llamada al método `buffer.flip()` antes de intentar escribir en el canal (`canal.write(buffer)`), ¿cuál será el comportamiento del programa?**
+    
+    A) El canal detectará automáticamente que el búfer contiene datos nuevos y realizará la escritura física en el archivo de forma normal.
+    
+    B) Se producirá un error de compilación inmediato porque la función `canal.write` exige sintácticamente que el búfer haya sido "volteado" previamente.
+    
+    C) No se escribirá ningún dato en el archivo, ya que el puntero de posición del búfer se encuentra al final de los datos introducidos (posición 32 de 32), haciendo que `buffer.hasRemaining()` devuelva `false` y se salte el bucle de escritura.
+    
+    D) El archivo binario se creará pero se llenará únicamente con bytes de valor cero al forzar la escritura sin haber reseteado el límite máximo.
+    
+    
+    ??? quote "Solución"
+    
+        ❌ A) El canal de datos de Java NIO no realiza ninguna gestión automática de los punteros internos del búfer; depende por completo del estado en el que se le entregue el objeto `ByteBuffer`.
+        
+        ❌ B) El compilador de Kotlin no analiza el estado de los punteros del búfer, por lo que compilará el código perfectamente sin mostrar ningún error.
+        
+        ✅ C) Al introducir datos en el búfer con los métodos `put...`, el cursor de posición se desplaza hacia adelante hasta llegar al final del registro (byte 32). El método `flip()` es fundamental porque "voltea" el búfer: baja la posición a 0 y define el límite de lectura en el byte 32. Si se omite, la posición sigue estando al final, por lo que el búfer considera que no queda nada por procesar (`hasRemaining()` es falso) y el bucle de escritura no llega a ejecutarse, dejando el archivo vacío.
+        
+        ❌ D) El programa no escribirá bytes a cero ni basura en el archivo; simplemente ignorará la escritura al no cumplirse la condición del bucle `while`.
+    
+    
+    **Pregunta 20: En el diseño de registros binarios de tamaño fijo, se aplica el siguiente proceso de relleno al nombre de la planta antes de escribirlo en el búfer:**
+    
+    ```kotlin
+    val nombreBytes = nuevaPlanta.nombreComun
+        .padEnd(TAMANO_NOMBRE, ' ')
+        .toByteArray()
+    ```
+    
+    **¿Cuál es la razón práctica para rellenar con espacios en blanco (mediante `.padEnd`) el campo de texto del nombre común de la planta antes de guardarlo en el archivo?**
+    
+    A) Garantizar que el campo ocupe exactamente los 20 bytes reservados en la estructura del registro, permitiendo mantener la longitud fija total de 32 bytes por cada planta y facilitar cálculos matemáticos para saltar a registros específicos en accesos aleatorios futuros.
+    
+    B) Evitar que el codificador de caracteres de la máquina virtual de Java lance una excepción de desbordamiento de memoria al encontrarse con nombres excesivamente cortos.
+    
+    C) Convertir de forma automática los caracteres especiales del idioma español (como tildes o la letra ñ) a caracteres del formato estándar ASCII para que ocupen un solo byte.
+    
+    D) Encriptar el nombre común de la planta para que ningún visor hexadecimal pueda leer la cadena de texto real en el archivo final.
+    
+    
+    ??? quote "Solución"
+    
+        ✅ A) En los archivos de acceso aleatorio, cada registro debe medir exactamente lo mismo (en este caso, 32 bytes). Si un nombre es más corto de 20 caracteres (como "Rosa") y no se rellena, el registro mediría menos de 32 bytes, lo que rompería la estructura del archivo e impediría calcular matemáticamente la posición exacta de las siguientes plantas (por ejemplo, buscar la planta número 100 multiplicando `99 * 32 bytes`).
+        
+        ❌ B) La longitud de las cadenas de texto no genera excepciones de falta de memoria en la máquina virtual por ser cortas; el sistema puede manejar cualquier longitud de texto de forma nativa.
+        
+        ❌ C) El método `.padEnd` se limita a añadir caracteres de espacio en blanco al final de la cadena de texto, pero no realiza ninguna traducción ni filtrado de caracteres especiales o codificaciones.
+        
+        ❌ D) El relleno con espacios en blanco no oculta ni encripta la información; cualquier visor hexadecimal mostrará el nombre de la planta seguido de los bytes correspondientes a los espacios (valor hexadecimal `20`).
+    
 
-    println ("\n--- Intentando eliminar medición para el sensor con ID: $idSensorAEliminar... ---")
+#### Ejemplo 13: Modificar el campo de un registro mediante acceso aleatorio
 
-    // 2. Nos aseguramos de que el archivo temporal esté limpio antes de empezar a escribir.
-    Files.deleteIfExists(rutaTemp)
+Ahora aprovecharemos la capacidad de `FileChannel` para posicionarnos directamente sobre una propiedad de un registro concreto utilizando el ID, para actualizarla sin alterar ni leer de forma secuencial el resto del fichero.
 
-    // Abrimos el canal del archivo original para LECTURA.
-    FileChannel.open(ruta, StandardOpenOption.READ).use { canalOrigen ->
+```kotlin
+fun modificarPrecioPlanta(idPlanta: Int, nuevoPrecio: Double) {
+    try {
+        // Abrimos el canal con permisos de Lectura y Escritura
+        FileChannel.open(archivoPath, StandardOpenOption.READ, StandardOpenOption.WRITE).use { canal ->
+            val buffer = ByteBuffer.allocate(TAMANO_REGISTRO)
+            var encontrado = false
 
-        // Buffer de tamaño de registro completo (40 bytes).
-        val buffer = ByteBuffer.allocate(TAMANO_REGISTRO)
-        buffer.order(ByteOrder.nativeOrder())
+            while (canal.read(buffer) > 0 && !encontrado) {
+                // Al finalizar la lectura de un registro completo, guardamos el puntero actual
+                val posicionActual = canal.position()
+                buffer.flip()
 
-        // 3. Recorremos el archivo original, leyendo cada registro completo.
-        while (canalOrigen.read(buffer) > 0) {
+                val id = buffer.getInt()
+                if (id == idPlanta) {
+                    encontrado = true
+                    // Calculamos la posición del campo precio en bytes dentro del fichero
 
-            buffer.flip() // Poner en modo lectura
+                    // Calcular el inicio del registro actual
+                    val inicioRegistro = posicionActual - TAMANO_REGISTRO
+                    // Calcular los bytes que ocupan los campos anteriores (desplazamiento)
+                    val desplazamientoPrecio = TAMANO_ID + TAMANO_NOMBRE
+                    // "rebobinar" al inicio del registro actual y avanzar el desplazamiento
+                    val posicionPrecio = inicioRegistro + desplazamientoPrecio
 
-            // Leemos el ID (sin avanzar el buffer para no estropearlo)
-            val id = buffer.getInt(0) // Usamos getInt(0) para leer sin mover la posición
+                    // Nos situamos en el canal exactamente sobre el campo precio
+                    canal.position(posicionPrecio)
 
-            if (id != idSensorAEliminar) {
+                    val bufferPrecio = ByteBuffer.allocate(TAMANO_PRECIO)
+                    bufferPrecio.putDouble(nuevoPrecio)
+                    bufferPrecio.flip()
 
-                // Si el ID NO coincide, copiamos el registro completo.
-                // Rebobinamos el buffer (posición a 0, límite se mantiene)
-                buffer.rewind()
-
-                // El registro completo (40 bytes) se escribe en el archivo temporal.
-                // La función escribirMedicion() que usa APPEND se encargará de esto.
-
-                // --- Extracción y Escritura en temporal ---
-                val nombreCompleto = ByteArray(TAMANO_NOMBRE)
-                // Ahora sí leemos los datos, ya que estamos listos para pasar al siguiente registro.
-                buffer.getInt() // Consumimos el ID
-                buffer.get(nombreCompleto)
-                val nombre = String(nombreCompleto, Charsets.UTF_8).trim()
-                val temp = buffer.getDouble()
-                val hum = buffer.getDouble()
-
-                escribirMedicion(rutaTemp, id, nombre, temp, hum) // Escribimos en el nuevo fichero
-                // ----------------------------------------
-
-            } else {
-                // Si el ID COINCIDE, la función simplemente NO llama a escribirMedicion().
-                registroEliminado = true
-                println("-> Eliminado registro con ID: $idSensorAEliminar.")
+                    while (bufferPrecio.hasRemaining()) {
+                        canal.write(bufferPrecio)
+                    }
+                }
+                buffer.clear()
             }
 
-            buffer.clear() // Dejar el buffer limpio para la siguiente carga del canal.
+            if (encontrado) {
+                println("\n--- Precio de la planta con ID $idPlanta modificado correctamente a ${nuevoPrecio}€")
+            } else {
+                println("No se encontró ninguna planta con el ID: $idPlanta")
+            }
         }
-    } // El canal de lectura se cierra automáticamente aquí.
+    } catch (e: Exception) {
+        println("Error al modificar el registro: ${e.message}")
+    }
+}
+```
 
-    // 4. Finalización: Reemplazar el archivo original con el temporal si se encontró algo.
-    if (registroEliminado) {
-        Files.delete(ruta) // Borramos el fichero original (que aún tiene el registro a eliminar).
-        Files.move(rutaTemp, ruta) // Renombramos el temporal (que NO tiene el registro).
-        println("--- Eliminación completada. Archivo ${ruta.name} actualizado ---")
+Añadimos a la función `main` las líneas para llamar a la nueva función y volver a mostrar la información después de modificarla:
+
+```kotlin
+    modificarPrecioPlanta(2, 5.5)
+    mostrarInfo()
+```
+
+!!! success "Prueba y analiza el ejemplo"
+    Prueba el código de ejemplo y verifica que la salida por consola es:
+
+    ```text
+    --- El fichero 'plantas.bin' se ha creado y está vacío.
+    - Planta 'Rosa' añadida correctamente.
+    - Planta 'Girasol' añadida correctamente.
+    - Planta 'Margarita' añadida correctamente.
+
+    --- Plantas leídas secuencialmente del fichero .bin: ---
+    - ID: 1, Nombre común: Rosa, 1.5€
+    - ID: 2, Nombre común: Girasol, 3.0€
+    - ID: 3, Nombre común: Margarita, 0.6€
+
+    --- Precio de la planta con ID 2 modificado correctamente a 5.5€
+
+    --- Plantas leídas secuencialmente del fichero .bin: ---
+    - ID: 1, Nombre común: Rosa, 1.5€
+    - ID: 2, Nombre común: Girasol, 5.5€
+    - ID: 3, Nombre común: Margarita, 0.6€
+    ```
+
+!!! example "Autoevaluación"
+
+    **Pregunta 21: En la función `modificarPrecioPlanta`, una vez localizado el registro con el ID buscado, se calcula la posición física en bytes del campo del precio (`posicionPrecio`) mediante la siguiente fórmula:**
+    
+    ```kotlin
+    val posicionPrecio = posicionActual - TAMANO_REGISTRO + TAMANO_ID + TAMANO_NOMBRE
+    ```
+    
+    **¿Cuál es la explicación lógica detrás de esta operación matemática para situar correctamente el puntero del canal de datos?**
+    
+    A) Se realiza para vaciar los datos del búfer de la memoria RAM y notificar al sistema operativo que el archivo va a incrementar su tamaño físico en el disco duro.
+    
+    B) Como la lectura completa del registro avanza el puntero hasta el final del mismo, se resta el tamaño del registro para retroceder al inicio de este, y se suman los tamaños del ID y del Nombre para saltar sobre ellos y situarse exactamente al principio del campo precio.
+    
+    C) Es un cálculo arbitrario exigido por la sintaxis de Kotlin para evitar que la máquina virtual de Java genere un error de desbordamiento de enteros durante la modificación del archivo.
+    
+    D) Sirve para avanzar el puntero del canal directamente hasta el final del archivo binario y añadir el nuevo valor del precio de forma secuencial.
+    
+    
+    ??? quote "Solución"
+    
+        ❌ A) La operación matemática trabaja exclusivamente con índices de posiciones en bytes; no tiene relación con la gestión de la memoria RAM ni modifica el tamaño del archivo en disco.
+        
+        ✅ B) Al terminar de leer un registro de 32 bytes (`canal.read(buffer)`), el puntero del canal se queda posicionado justo al final de dicho registro (`posicionActual`). Para modificar el precio de esa planta concreta sin tocar el resto, se debe retroceder al principio del registro (`posicionActual - TAMANO_REGISTRO`). Desde ahí, para llegar al campo precio, se deben ignorar los bytes correspondientes al ID (4 bytes) y al Nombre (20 bytes), de ahí que se sumen ambas constantes (`+ TAMANO_ID + TAMANO_NOMBRE`).
+        
+        ❌ C) El compilador de Kotlin no exige ninguna fórmula específica para modificar archivos; se trata de una lógica puramente matemática diseñada por el desarrollador para navegar por la estructura de bytes fijos.
+        
+        ❌ D) El objetivo del acceso aleatorio es precisamente lo contrario: no escribir al final del archivo de manera secuencial, sino posicionarse y reescribir un campo específico en medio del archivo sin alterar el resto de la información.
+    
+
+
+    **Pregunta 22: Para abrir el canal que permite modificar el precio de una planta en el archivo binario mediante acceso aleatorio, se utiliza la siguiente instrucción:**
+    
+    ```kotlin
+    FileChannel.open(archivoPath, StandardOpenOption.READ, StandardOpenOption.WRITE)
+    ```
+    
+    **¿Qué ocurriría si se añadiese accidentalmente la opción `StandardOpenOption.TRUNCATE_EXISTING` dentro de los argumentos de configuración de apertura de este canal?**
+    
+    A) El canal funcionaría de manera normal, pero la escritura del nuevo dato se realizaría de forma más eficiente al optimizarse el almacenamiento en disco.
+    
+    B) Se producirá un error de compilación inmediato porque la clase `FileChannel` no admite la opción de truncado de archivos.
+    
+    C) El archivo binario se vaciaría por completo (quedando con un tamaño de 0 bytes) en el instante exacto de abrir el canal, perdiéndose de forma irreversible toda la información guardada en él antes de poder realizar la búsqueda del ID.
+    
+    D) El sistema de archivos del sistema operativo bloquearía el archivo impidiendo que el canal realice operaciones de lectura y provocando una excepción de acceso denegado.
+    
+    
+    ??? quote "Solución"
+    
+        ❌ A) El truncado de un archivo no es una técnica de optimización de velocidad; consiste en la eliminación física de todos los datos que contiene el archivo.
+        
+        ❌ B) El código compilaría perfectamente, ya que `StandardOpenOption.TRUNCATE_EXISTING` es una opción de configuración totalmente válida y soportada por la API de canales de Java/Kotlin.
+        
+        ✅ C) La opción `TRUNCATE_EXISTING` indica al canal que, si el archivo ya existe, debe vaciar su contenido por completo (reducir su tamaño a 0 bytes) al abrirse. Al intentar buscar el ID del registro que se desea modificar en las líneas siguientes, el programa se encontrará con un archivo vacío, haciendo que la búsqueda falle y perdiendo toda la información del herbario de manera accidental.
+        
+        ❌ D) El programa no fallará por un bloqueo de seguridad del sistema operativo, sino por un error lógico de diseño del flujo de datos al haber eliminado voluntariamente la información con la opción de truncado.
+    
+
+#### Ejemplo 14: Eliminación de un registro binario
+
+Para eliminar un registro de un fichero binario estructurado secuencial, la técnica estándar consiste en leer el fichero de inicio a fin escribiendo en un fichero temporal `.tmp` únicamente aquellos registros que **no coincidan** con el ID a eliminar. Al terminar, borramos el original y sustituimos el fichero original por el temporal.
+
+Esta técnica se utiliza porque eliminar físicamente un registro del centro de un fichero binario obligaría a desplazar todos los bytes posteriores y eso sería muy costoso.
+
+Para poder sustituir el fichero original por el temporal añadimos un import a nuestro código:
+
+```kotlin
+import java.nio.file.StandardCopyOption
+```
+
+El código de la función de eliminación es el siguiente:
+
+```kotlin
+fun eliminarPlanta(idPlanta: Int) {
+    val pathTemporal = Path.of(archivoPath.toString() + ".tmp")
+    var plantaEncontrada = false
+
+    try {
+        FileChannel.open(archivoPath, StandardOpenOption.READ).use { canalLectura ->
+            FileChannel.open(
+                pathTemporal,
+                StandardOpenOption.WRITE,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING
+            ).use { canalEscritura ->
+                val buffer = ByteBuffer.allocate(TAMANO_REGISTRO)
+
+                // Cada lectura llena exactamente un registro de 32 bytes
+                while (canalLectura.read(buffer) > 0) {
+                    buffer.flip()
+                    val id = buffer.getInt()
+
+                    if (id == idPlanta) {
+                        plantaEncontrada = true
+                        // Si coincide con el ID a eliminar, lo ignoramos (no se escribe en el temporal)
+                    } else {
+                        // Rebobinamos el puntero del buffer para escribir el registro completo original
+                        buffer.rewind()
+                        canalEscritura.write(buffer)
+                    }
+                    buffer.clear()
+                }
+            }
+        }
+
+        if (plantaEncontrada) {
+            // Reemplazamos el fichero original por el limpio temporal
+            Files.move(pathTemporal, archivoPath, StandardCopyOption.REPLACE_EXISTING)
+            println("\n**** Planta con ID $idPlanta eliminada con éxito.")
+        } else {
+            Files.deleteIfExists(pathTemporal)
+            println("No se encontró la planta con ID: $idPlanta")
+        }
+    } catch (e: Exception) {
+        println("Error durante la eliminación: ${e.message}")
+    }
+}
+```
+
+Añadimos a la función `main` las líneas para llamar a la nueva función y volver a mostrar la información después de eliminar la planta:
+
+```kotlin
+    eliminarPlanta(3)
+    mostrarInfo()
+```
+
+!!! success "Prueba y analiza el ejemplo"
+    Prueba el código de ejemplo y verifica que la salida por consola es:
+
+    ```text
+    --- El fichero 'plantas.bin' se ha creado y está vacío.
+    - Planta 'Rosa' añadida correctamente.
+    - Planta 'Girasol' añadida correctamente.
+    - Planta 'Margarita' añadida correctamente.
+
+    --- Plantas leídas secuencialmente del fichero .bin: ---
+    - ID: 1, Nombre común: Rosa, 1.5€
+    - ID: 2, Nombre común: Girasol, 3.0€
+    - ID: 3, Nombre común: Margarita, 0.6€
+
+    --- Precio de la planta con ID 2 modificada correctamente a 5.5€
+
+    --- Plantas leídas secuencialmente del fichero .bin: ---
+    - ID: 1, Nombre común: Rosa, 1.5€
+    - ID: 2, Nombre común: Girasol, 5.5€
+    - ID: 3, Nombre común: Margarita, 0.6€
+
+    **** Planta con ID 3 eliminada con éxito.
+    --- Plantas leídas secuencialmente del fichero .bin: ---
+    - ID: 1, Nombre común: Rosa, 1.5€
+    - ID: 2, Nombre común: Girasol, 5.5€
+    ```
+
+!!! example "Autoevaluación"
+
+    **Pregunta 23: En la función `eliminarPlanta`, al procesar un registro que no coincide con el ID que se desea borrar, se ejecuta el siguiente bloque de código antes de guardarlo en el archivo temporal:**
+    
+    ```kotlin
     } else {
-        // Si no se encontró el ID, eliminamos el archivo temporal (vacío o incompleto) y mantenemos el original.
-        Files.deleteIfExists(rutaTemp)
-        println("--- Medición con ID: $idSensorAEliminar no encontrada. El archivo original no fue modificado. ---")
+        // Rebobinamos el puntero del buffer para escribir el registro completo original
+        buffer.rewind()
+        canalEscritura.write(buffer)
     }
-}
-```
+    ```
+    
+    **¿Qué problema de corrupción de datos ocurriría en el archivo temporal si se omitiera la llamada al método `buffer.rewind()` antes de realizar la escritura?**
+    
+    A) Se omitirían los primeros 4 bytes del registro (el campo del ID) al escribir en el canal temporal, guardando un registro incompleto de 28 bytes y corrompiendo la estructura del archivo, debido a que el puntero del búfer se quedó desplazado tras haber leído el entero con `buffer.getInt()`.
+    
+    B) El canal escribiría el registro de 32 bytes de forma correcta, pero duplicaría el identificador de la planta al final de la cadena de texto del nombre común.
+    
+    C) Se producirá un error de compilación inmediato porque el compilador de Kotlin detecta que el búfer ha sido leído y exige que sea reiniciado obligatoriamente.
+    
+    D) El archivo temporal se corrompería por completo al llenarse con caracteres extraños e ilegibles generados automáticamente por el sistema de archivos.
+    
+    
+    ??? quote "Solución"
+    
+        ❌ A) El compilador de Kotlin no analiza el estado de los punteros internos de los búferes de Java NIO, por lo que compilará el código de forma completamente normal sin advertencias de error.
+        
+        ✅ B) Al leer el identificador del registro mediante `buffer.getInt()`, el puntero de posición del búfer se desplaza automáticamente hacia adelante 4 bytes (los que ocupa el entero). Si se escribe el búfer en el canal temporal sin rebobinarlo (`buffer.rewind()`), solo se transferirán los bytes restantes (los 28 bytes del nombre y precio). Esto provocará que los registros en el archivo temporal dejen de medir 32 bytes, desalineando todo el fichero y corrompiendo las lecturas posteriores.
+        
+        ❌ C) El programa compilará perfectamente, pero el fallo de lógica se manifestará en tiempo de ejecución al analizar el archivo resultante.
+        
+        ❌ D) El archivo temporal no se llenará de caracteres extraños generados por el sistema; simplemente contendrá los registros originales recortados (sin el ID), lo cual desmorona la estructura de tamaño fijo del archivo.
+    
 
-La llamada a esta nueva función en el main podría ser:
 
-```kotlin
-eliminarMedicion(rutaFichero, 102)
-```
-
-Se vuelve a llamar a `leerMediciones` para comprobar que la información del sensor se ha modificado correctamente:
-
-```kotlin
-leerMediciones(rutaFichero)
-```
-
-!!! success "🔍 Ejecutar y Analizar"
-    Realiza los siguientes pasos:
-
-* Añade el código de la función `eliminarMedicion()` al ejemplo anterior.
-* Comenta en el `main` la llamada a la función `actualizarMedicion()`.
-* Añade al `main` la llamada a `eliminarMedicion()`.
-* **Ejecuta la aplicación y comprueba que la salida es la siguiente:**
-
-```bash
---- Leyendo todas las mediciones ---
-  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-  - ID: 102, Nombre: Hera, Temperatura: 21.0 °C, Humedad: 72.3 %
-  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-
-Intentando eliminar medición para el sensor con ID: 102...
-Medición (ID: 101) escrita correctamente.
-Medición (ID: 103) escrita correctamente.
-Medición (ID: 104) escrita correctamente.
-
---- Leyendo todas las mediciones ---
-  - ID: 101, Nombre: Atenea, Temperatura: 25.5 °C, Humedad: 60.2 %
-  - ID: 103, Nombre: Iris, Temperatura: 28.4 °C, Humedad: 65.9 %
-  - ID: 104, Nombre: Selene, Temperatura: 28.4 °C, Humedad: 65.9 %
-```
-
----
-
-## 🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat
-
-!!! warning "🎯 Práctica 4: Modificar y eliminar registros en ficheros .dat"
-    Continuando con el **catálogo de videojuegos** de la práctica anterior, vamos a persistir los mismos datos en un fichero binario de acceso aleatorio.
-
-    * **Define las constantes de tamaño**: Antes de escribir nada, decide cuántos bytes reservas para cada campo. Recuerda que los campos de tipo `String` deben ocupar un tamaño **fijo** en disco.  
-      _Ejemplo orientativo: `TAMANO_TITULO = 40`, `TAMANO_GENERO = 20`... Elige el tamaño que consideres suficiente para cada campo de tu `data class`._
-    * **Calcula `TAMANO_REGISTRO`**: La suma de todos los bytes de los campos. Este valor determina en qué posición empieza cada registro.
-    * **Crea las funciones `escribirRegistro()` y `leerRegistros()`**: Adapta los tipos y las constantes a los campos concretos de tu `data class`.
-    * **Crea la función `modificarNota()`** (o el campo `Double` que hayas elegido): Pide al usuario el ID del videojuego a modificar, localiza el registro con acceso aleatorio (`FileChannel.position()`) y sobrescribe únicamente ese campo sin tocar el resto del registro.
-    * **Crea la función `eliminarRegistro()`**: Recibe un ID y elimina el registro usando la técnica del fichero temporal: leer el original registro a registro → copiar los que no se eliminan en un `.dat` temporal → borrar el original → renombrar el temporal.
-    * **Comprueba**: Prueba las cuatro funciones desde `main` llamando a `leerRegistros()` antes y después de cada operación para verificar los resultados.
-
+    **Pregunta 24: Para eliminar un registro de un archivo binario de tamaño fijo, se utiliza la técnica estándar de copiar los registros que se desean conservar a un archivo temporal (`.tmp`) para luego reemplazar el original. ¿Cuál es el motivo técnico por el que no se realiza la eliminación directamente sobre el propio archivo original (in-situ)?**
+    
+    A) Los sistemas operativos actuales tienen prohibido por motivos de seguridad realizar modificaciones físicas en la zona central de cualquier archivo binario una vez escrito.
+    
+    B) La clase `FileChannel` y la API de NIO carecen de la capacidad técnica de situar el puntero en posiciones intermedias del archivo original, limitando las escrituras únicamente al final de este.
+    
+    C) Eliminar físicamente un bloque de bytes de la mitad de un archivo obligaría a reescribir y desplazar hacia adelante en el disco duro todos los bytes posteriores del archivo para tapar el hueco vacío, lo cual es una operación de Entrada/Salida extremadamente lenta y costosa para el rendimiento.
+    
+    D) El uso de un archivo temporal es un requisito obligatorio impuesto por la máquina virtual de Java para poder liberar la memoria caché del procesador antes de cerrar el canal.
+    
+    
+    ??? quote "Solución"
+    
+        ❌ A) Los sistemas operativos permiten realizar cualquier operación de lectura y escritura en cualquier posición de un archivo físico si el programa cuenta con los permisos de usuario correspondientes.
+        
+        ❌ B) `FileChannel` es perfectamente capaz de situarse y escribir en cualquier posición intermedia utilizando el método `.position(long)`, tal y como se demuestra en la función de modificación de registros.
+        
+        ✅ C) Físicamente, los archivos se almacenan en bloques de disco de manera consecutiva. No existe una instrucción en los sistemas de archivos que permita "recortar" un bloque intermedio de un archivo y juntar los extremos de forma instantánea. Para simular esto en el archivo original, se tendría que leer y desplazar un byte hacia atrás toda la información posterior al hueco, lo cual consume una gran cantidad de tiempo y recursos de disco. Copiar la información filtrada a un nuevo archivo secuencial temporal resulta mucho más eficiente y seguro.
+        
+        ❌ D) La máquina virtual de Java no exige el uso de archivos temporales para la gestión de su memoria caché ni para la liberación de recursos del sistema.

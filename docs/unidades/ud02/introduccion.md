@@ -51,6 +51,25 @@ Un **fichero o archivo** es una unidad de almacenamiento de datos en un sistema 
 * **De bases de datos**: Se utilizan para almacenar grandes volúmenes de datos estructurados (.db, .sql).
 * **Historial**: de eventos o errores en un sistema (.log).
 
+```mermaid
+graph TD
+    F[📁 Ficheros] --> T[📄 Texto]
+    F --> B[⚙️ Binario]
+
+    T --> T1["Plano\n.txt · .log · .csv"]
+    T --> T2["Intercambio estructurado\n.json · .xml · .yaml"]
+    T --> T3["Código fuente\n.kt · .java · .py"]
+    T --> T4["Configuración\n.ini · .conf · .properties"]
+
+    B --> B1["Ejecutable\n.exe · .jar · .apk"]
+    B --> B2["Multimedia\n.jpg · .mp3 · .mp4"]
+    B --> B3["Base de datos\n.db · .sqlite"]
+    B --> B4["Acceso aleatorio\n.dat"]
+```
+
+!!! info "Texto vs Binario"
+    La diferencia fundamental es la **legibilidad humana**: un fichero de texto puede abrirse con cualquier editor y entenderse directamente. Un fichero binario almacena los datos en su representación numérica nativa (bytes) y necesita un programa específico para interpretarlo correctamente.
+
 ### API para manejo de ficheros
 
 **Java.nio** (New IO) es una API disponible desde la versión 7 de Java que permite mejorar el rendimiento, así como simplificar el manejo de muchas operaciones. Funciona a través de interfaces y clases para que la máquina virtual Java tenga acceso a ficheros, atributos de ficheros y sistemas de ficheros. En los siguientes apartados veremos cómo trabajar con ella.
