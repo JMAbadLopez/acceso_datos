@@ -1651,7 +1651,7 @@
 </tbody>
 </table>
 <h4 id="ejemplo-5-lectura-y-escritura-de-ficheros-csv">Ejemplo 5. Lectura y escritura de ficheros CSV</h4>
-<p>Partimos de un fichero llamado <a href="../../../assets/resources/mis_plantas.csv">mis_plantas.csv</a> con la información siguiente:</p>
+<p>Partimos de un fichero llamado <a href="../../../assets/resources/plantas.csv">plantas.csv</a> con la información siguiente:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">3</a></span>
@@ -1671,7 +1671,7 @@
 <li><code>precio</code> (Double)</li>
 </ul>
 <blockquote>
-<p>Puedes descargar el fichero desde este enlace: <a href="../../../assets/resources/mis_plantas.csv" mis_plantas.csv="mis_plantas.csv">mis_plantas.csv</a> y guardarlo en una carpeta llamada <code>datos</code> que deberás crear en la raíz del proyecto de IntelliJ (al mismo nivel que la carpeta <code>src</code> y que el archivo <code>build.gradle.kts</code>).</p>
+<p>Puedes descargar el fichero desde este enlace: <a href="../../../assets/resources/plantas.csv" plantas.csv="plantas.csv">plantas.csv</a> y guardarlo en una carpeta llamada <code>datos</code> que deberás crear en la raíz del proyecto de IntelliJ (al mismo nivel que la carpeta <code>src</code> y que el archivo <code>build.gradle.kts</code>).</p>
 </blockquote>
 <p>Para que nuestra aplicación pueda utilizar las funciones de la librería <strong>Kotlin-CSV</strong> hemos de configurar la dependencia correspondiente en el archivo <code>build.gradle.kts</code>. Esta es la línea que hay que añadir:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
@@ -1803,8 +1803,8 @@
 <a id="__codelineno-2-20" name="__codelineno-2-20"></a>
 <a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">gestionCSV</span><span class="p">(){</span>
 <a id="__codelineno-2-22" name="__codelineno-2-22"></a>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">entradaCSV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;datos&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mis_plantas.csv&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">salidaCSV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;datos&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mis_plantas2.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">entradaCSV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;datos&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;plantas.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">salidaCSV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;datos&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;plantas2.csv&quot;</span><span class="p">)</span>
 <a id="__codelineno-2-25" name="__codelineno-2-25"></a>
 <a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">    </span><span class="c1">// Leer los datos estructurados del CSV y guardarlos en una lista de objetos Planta</span>
 <a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">datos</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Planta</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leerDatosCSV</span><span class="p">(</span><span class="n">entradaCSV</span><span class="p">)</span>
