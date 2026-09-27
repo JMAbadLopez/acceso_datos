@@ -44,7 +44,7 @@ Son ficheros de texto plano con valores separados por un delimitador (coma, punt
 
 #### Ejemplo 5. Lectura y escritura de ficheros CSV
 
-Partimos de un fichero llamado [mis_plantas.csv](../../assets/resources/mis_plantas.csv) con la información siguiente:
+Partimos de un fichero llamado [plantas.csv](../../assets/resources/plantas.csv) con la información siguiente:
 
 ```bash
 1;Aloe Vera;Aloe barbadensis miller;7;0.6
@@ -62,7 +62,7 @@ Como puedes observar el carácter delimitador que separa los campos del CSV es u
 * `stock` (Int)
 * `precio` (Double)
 
-> Puedes descargar el fichero desde este enlace: [mis_plantas.csv](../../assets/resources/mis_plantas.csv){:mis_plantas.csv} y guardarlo en una carpeta llamada `datos` que deberás crear en la raíz del proyecto de IntelliJ (al mismo nivel que la carpeta `src` y que el archivo `build.gradle.kts`).
+> Puedes descargar el fichero desde este enlace: [plantas.csv](../../assets/resources/plantas.csv){:plantas.csv} y guardarlo en una carpeta llamada `datos` que deberás crear en la raíz del proyecto de IntelliJ (al mismo nivel que la carpeta `src` y que el archivo `build.gradle.kts`).
 
 Para que nuestra aplicación pueda utilizar las funciones de la librería **Kotlin-CSV** hemos de configurar la dependencia correspondiente en el archivo `build.gradle.kts`. Esta es la línea que hay que añadir:
 
@@ -99,8 +99,8 @@ fun main() {
 
 fun gestionCSV(){
 
-    val entradaCSV = Path.of("datos", "mis_plantas.csv")
-    val salidaCSV = Path.of("datos", "mis_plantas2.csv")
+    val entradaCSV = Path.of("datos", "plantas.csv")
+    val salidaCSV = Path.of("datos", "plantas2.csv")
 
     // Leer los datos estructurados del CSV y guardarlos en una lista de objetos Planta
     val datos: List<Planta> = leerDatosCSV(entradaCSV)
