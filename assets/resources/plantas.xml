@@ -1,0 +1,37 @@
+<plantas>
+<planta>
+<id_planta>1</id_planta>
+<nombre_comun>Aloe Vera</nombre_comun>
+<nombre_cientifico>Aloe barbadensis miller</nombre_cientifico>
+<stock>7</stock>
+<precio>0.6</precio>
+</planta>
+<planta>
+<id_planta>2</id_planta>
+<nombre_comun>Lavanda</nombre_comun>
+<nombre_cientifico>Lavandula angustifolia</nombre_cientifico>
+<stock>3</stock>
+<precio>1.0</precio>
+</planta>
+<planta>
+<id_planta>3</id_planta>
+<nombre_comun>Helecho de Boston</nombre_comun>
+<nombre_cientifico>Nephrolepis exaltata</nombre_cientifico>
+<stock>5</stock>
+<precio>0.9</precio>
+</planta>
+<planta>
+<id_planta>4</id_planta>
+<nombre_comun>Bambú de la suerte</nombre_comun>
+<nombre_cientifico>Dracaena sanderiana</nombre_cientifico>
+<stock>4</stock>
+<precio>1.5</precio>
+</planta>
+<planta>
+<id_planta>5</id_planta>
+<nombre_comun>Girasol</nombre_comun>
+<nombre_cientifico>Helianthus annuus</nombre_cientifico>
+<stock>2</stock>
+<precio>3.0</precio>
+</planta>
+</plantas>

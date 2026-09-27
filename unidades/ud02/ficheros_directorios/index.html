@@ -507,7 +507,8 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Métodos principales de Path">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ejemplo-1" class="md-nav__link">
@@ -518,14 +519,20 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
-  <a href="#streams-de-java-con-ficheros" class="md-nav__link">
+  <a href="#files" class="md-nav__link">
     <span class="md-ellipsis">
-      Streams de Java con ficheros
+      Files
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Files">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#metodos-principales-de-files" class="md-nav__link">
@@ -546,11 +553,25 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tecnicas-de-recorrido-de-directorios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Técnicas de recorrido de directorios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ejemplo-3" class="md-nav__link">
     <span class="md-ellipsis">
       Ejemplo 3
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1331,7 +1352,8 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Métodos principales de Path">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#ejemplo-1" class="md-nav__link">
@@ -1342,14 +1364,20 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
-  <a href="#streams-de-java-con-ficheros" class="md-nav__link">
+  <a href="#files" class="md-nav__link">
     <span class="md-ellipsis">
-      Streams de Java con ficheros
+      Files
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Files">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#metodos-principales-de-files" class="md-nav__link">
@@ -1370,11 +1398,25 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tecnicas-de-recorrido-de-directorios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Técnicas de recorrido de directorios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ejemplo-3" class="md-nav__link">
     <span class="md-ellipsis">
       Ejemplo 3
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1445,7 +1487,8 @@
 </tr>
 </tbody>
 </table>
-<h3 id="ejemplo-1">Ejemplo 1</h3>
+<h4 id="ejemplo-1">Ejemplo 1</h4>
+<p>El siguiente código demuestra cómo crear y mostrar distintos tipos de rutas (no intenta acceder a los ficheros o directorios, por tanto pueden existir o no):</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -1458,121 +1501,90 @@
 <span class="normal"><a href="#__codelineno-0-10">10</a></span>
 <span class="normal"><a href="#__codelineno-0-11">11</a></span>
 <span class="normal"><a href="#__codelineno-0-12">12</a></span>
-<span class="normal"><a href="#__codelineno-0-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="c1">// Path relativo al directorio del proyecto</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">rutaRelativa</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ejemplo.txt&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="c1">// Path absoluto en Windows</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">rutaAbsolutaWin</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;C:&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Users&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Pol&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Documentos&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="c1">// Path absoluto en Linux/macOS</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">rutaAbsolutaNix</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;/home/pol/documentos&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Ruta relativa: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaRelativa</span><span class="p">)</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Ruta absoluta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaRelativa</span><span class="p">.</span><span class="na">toAbsolutePath</span><span class="p">())</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Ruta absoluta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaAbsolutaWin</span><span class="p">)</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Ruta absoluta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaAbsolutaNix</span><span class="p">)</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="n">rutas</span><span class="p">()</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">rutas</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="c1">// Path relativo al directorio del proyecto (carpeta de muestras)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">rutaRelativa</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;muestras&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orquidea.jpg&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="c1">// Path absoluto en Windows</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">rutaAbsolutaWin</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;C:&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Herbario&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Especies&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Helechos&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="c1">// Path absoluto en Linux/macOS</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">rutaAbsolutaNix</span><span class="p">:</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;/home/botanico/jardin/flora_mediterranea&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Ruta relativa: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaRelativa</span><span class="p">)</span><span class="w"> </span><span class="c1">// Muestra la ruta relativa</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Ruta absoluta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaRelativa</span><span class="p">.</span><span class="na">toAbsolutePath</span><span class="p">())</span><span class="w"> </span><span class="c1">// Ruta completa</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Ruta absoluta Windows: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaAbsolutaWin</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Ruta absoluta Linux: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rutaAbsolutaNix</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</p>
-</div>
+<p class="admonition-title">Prueba y analiza el ejemplo</p>
+<p>Prueba el código de ejemplo y verifica que la salida por consola es:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span>
-<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>Ruta relativa: documentos\ejemplo.txt
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>Ruta absoluta: F:\kot\1-ficheros\documentos\ejemplo.txt
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>Ruta absoluta: C:\Users\Pol\Documentos
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>Ruta absoluta: \home\pol\documentos
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>Ruta relativa: muestras\orquidea.jpg
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>Ruta absoluta: D:\kot\ficheros\muestras\orquidea.jpg
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>Ruta absoluta Windows: C:\Herbario\Especies\Helechos
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>Ruta absoluta Linux: /home/botanico/jardin/flora_mediterranea
 </code></pre></div></td></tr></table></div>
-<ul>
-<li><strong>Files</strong>: Es una clase de utilidad con las acciones (borrar, copiar, mover, leer, etc) que podemos realizar sobre las rutas (<code>Path</code>).</li>
-</ul>
-<hr />
-<h3 id="streams-de-java-con-ficheros">Streams de Java con ficheros</h3>
-<p>Varios métodos de <code>Files</code> (como <code>Files.list()</code> y <code>Files.walk()</code>) devuelven un <strong><code>Stream&lt;Path&gt;</code></strong> en lugar de una lista. Un <code>Stream</code> es una <strong>vista perezosa</strong> sobre una secuencia de datos: no carga todos los elementos en memoria de golpe, sino que los procesa uno a uno conforme se necesitan. Esto lo hace eficiente para directorios con muchos ficheros.</p>
-<div class="admonition info">
-<p class="admonition-title">Stream ≠ InputStream / OutputStream</p>
-<p>Un <code>Stream&lt;T&gt;</code> (paquete <code>java.util.stream</code>) es una secuencia de elementos para procesar con operaciones funcionales. No tiene nada que ver con <code>InputStream</code> / <code>OutputStream</code>, que son flujos de bytes para leer y escribir datos.</p>
 </div>
-<p>Un <code>Stream</code> se construye como una <strong>cadena de operaciones</strong> que se divide en dos grupos:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Tipo</th>
-<th style="text-align: left;">Operación</th>
-<th style="text-align: left;">Qué hace</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Intermedia</strong></td>
-<td style="text-align: left;"><code>filter(predicado)</code></td>
-<td style="text-align: left;">Descarta elementos que no cumplen la condición</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Intermedia</strong></td>
-<td style="text-align: left;"><code>map(función)</code></td>
-<td style="text-align: left;">Transforma cada elemento en otro</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Intermedia</strong></td>
-<td style="text-align: left;"><code>sorted()</code> / <code>sorted(comparador)</code></td>
-<td style="text-align: left;">Ordena los elementos</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Intermedia</strong></td>
-<td style="text-align: left;"><code>distinct()</code></td>
-<td style="text-align: left;">Elimina duplicados</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Intermedia</strong></td>
-<td style="text-align: left;"><code>limit(n)</code></td>
-<td style="text-align: left;">Toma como máximo <code>n</code> elementos</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Terminal</strong></td>
-<td style="text-align: left;"><code>forEach(acción)</code></td>
-<td style="text-align: left;">Ejecuta una acción por cada elemento</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Terminal</strong></td>
-<td style="text-align: left;"><code>count()</code></td>
-<td style="text-align: left;">Devuelve el número de elementos</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Terminal</strong></td>
-<td style="text-align: left;"><code>toList()</code></td>
-<td style="text-align: left;">Recoge los elementos en una lista</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Terminal</strong></td>
-<td style="text-align: left;"><code>findFirst()</code></td>
-<td style="text-align: left;">Devuelve el primer elemento (si existe)</td>
-</tr>
-</tbody>
-</table>
-<p>Las operaciones <strong>intermedias</strong> son <strong>perezosas</strong>: no se ejecutan hasta que se llama a una operación <strong>terminal</strong>. La cadena completa se evalúa de una sola pasada.</p>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 1: ¿Cuál será el comportamiento del siguiente código al ejecutarse si en el disco duro no existe ninguna carpeta llamada <code>datos</code> ni ningún archivo <code>videojuegos.csv</code>?</strong></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
 <span class="normal"><a href="#__codelineno-2-2">2</a></span>
 <span class="normal"><a href="#__codelineno-2-3">3</a></span>
 <span class="normal"><a href="#__codelineno-2-4">4</a></span>
 <span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span>
-<span class="normal"><a href="#__codelineno-2-7">7</a></span>
-<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1">// Ejemplo: listar solo los ficheros .kt de un directorio, ordenados por nombre</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">Files</span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">)).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="n">stream</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">isRegularFile</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">          </span><span class="c1">// intermedia: solo ficheros</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">toString</span><span class="p">().</span><span class="na">endsWith</span><span class="p">(</span><span class="s">&quot;.kt&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">    </span><span class="c1">// intermedia: solo .kt</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="p">.</span><span class="na">sorted</span><span class="p">()</span><span class="w">                                    </span><span class="c1">// intermedia: orden alfabético</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">println</span><span class="p">(</span><span class="nb">it</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">            </span><span class="c1">// terminal: imprime cada uno</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">ruta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;datos&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;videojuegos.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Ruta: </span><span class="si">$</span><span class="n">ruta</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<div class="admonition warning">
-<p class="admonition-title">Cierra siempre el Stream con <code>.use {}</code></p>
-<p>Los streams de <code>Files.list()</code> y <code>Files.walk()</code> mantienen abierto un <strong>descriptor del sistema de ficheros</strong> mientras existen. Si no se cierran, se produce una <strong>fuga de recursos</strong> (<em>resource leak</em>). El bloque <code>.use { }</code> garantiza el cierre automático, equivalente a un <code>try-finally</code>.</p>
+<p>A) El programa lanzará una excepción en tiempo de ejecución (<code>NoSuchFileException</code>) al intentar crear un <code>Path</code> de un archivo que no existe en disco.</p>
+<p>B) El código se ejecutará correctamente y mostrará: <code>Ruta: datos\videojuegos.csv</code> (Windows) o <code>Ruta: datos/videojuegos.csv</code> (Linux/macOS).</p>
+<p>C) Se producirá un error de compilación porque <code>Path.of()</code> requiere que se pase un único String completo con las barras de separación.</p>
+<p>D) El programa se ejecutará pero imprimirá un valor vacío (<code>Ruta:</code>), ya que el sistema no puede resolver la dirección.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Un objeto <code>Path</code> representa únicamente una dirección lógica en el sistema de ficheros. Crear un <code>Path</code> no interactúa con el disco duro ni verifica si el fichero existe realmente.</p>
+<p>✅ B) <code>Path.of</code> une los fragmentos de texto con el separador del sistema operativo. El código se ejecuta con éxito e imprime la ruta, exista o no el fichero en disco.</p>
+<p>❌ C) <code>Path.of</code> está sobrecargado y acepta múltiples argumentos (<code>vararg</code>) para construir la ruta de forma independiente del sistema operativo. La sintaxis es totalmente válida.</p>
+<p>❌ D) El objeto <code>Path</code> almacena la ruta como texto estructurado. Al usarlo en <code>println</code>, se llama a su <code>.toString()</code>, que devuelve la ruta formateada.</p>
+</details>
+<p><strong>Pregunta 2: ¿Qué método de <code>Path</code> devuelve la ruta absoluta a partir de una ruta relativa?</strong></p>
+<p>A) <code>toString()</code></p>
+<p>B) <code>fileName</code></p>
+<p>C) <code>toAbsolutePath()</code></p>
+<p>D) <code>resolve(other)</code></p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) <code>toString()</code> convierte la ruta a cadena de texto con el separador del sistema operativo, pero no la convierte en absoluta.</p>
+<p>❌ B) <code>fileName</code> devuelve únicamente el último componente de la ruta (el nombre del fichero o directorio final), no la ruta completa.</p>
+<p>✅ C) <code>toAbsolutePath()</code> combina la ruta relativa con el directorio de trabajo actual del proyecto y devuelve la ruta absoluta completa.</p>
+<p>❌ D) <code>resolve(other)</code> une dos rutas (añade una subcarpeta o fichero a un <code>Path</code> base), pero no convierte una ruta relativa en absoluta por sí solo.</p>
+</details>
 </div>
-<h3 id="metodos-principales-de-files">Métodos principales de Files</h3>
+<h3 id="files">Files</h3>
+<p>Es una clase de utilidad con las acciones (borrar, copiar, mover, leer, etc) que podemos realizar sobre las rutas (<code>Path</code>).</p>
+<h4 id="metodos-principales-de-files">Métodos principales de Files</h4>
 <table>
 <thead>
 <tr>
@@ -1619,8 +1631,11 @@
 </tr>
 </tbody>
 </table>
-<h3 id="ejemplo-2">Ejemplo 2</h3>
-<p>El siguiente ejemplo es un organizador de ficheros. Imagina una carpeta de "multimedia" donde todo está desordenado. El programa organizará los ficheros en subcarpetas según su extensión (.pdf, .jpg, .mp3, etc).</p>
+<h4 id="ejemplo-2">Ejemplo 2</h4>
+<p>Partimos de una carpeta llamada <code>muestras</code> donde guardamos fotos, descripciones de texto y registros de audio de la naturaleza sin ningún orden. Este programa organizará automáticamente los archivos en subcarpetas según su formato (extensión) para que el herbario quede perfectamente estructurado.</p>
+<blockquote>
+<p>Puedes descargar la carpeta del ejemplo comprimida desde el siguiente enlace: <a href="../../../assets/resources/muestras.zip" muestras.zip="muestras.zip">muestras.zip</a>). La carpeta debe estar ubicada en la raíz del proyecto de IntelliJ (al mismo nivel que la carpeta <code>src</code> y que el archivo <code>build.gradle.kts</code>).</p>
+</blockquote>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
@@ -1660,51 +1675,70 @@
 <span class="normal"><a href="#__codelineno-3-37">37</a></span>
 <span class="normal"><a href="#__codelineno-3-38">38</a></span>
 <span class="normal"><a href="#__codelineno-3-39">39</a></span>
-<span class="normal"><a href="#__codelineno-3-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span>
+<span class="normal"><a href="#__codelineno-3-50">50</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.StandardCopyOption</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.io.path.extension</span><span class="w"> </span><span class="c1">// Extensión de Kotlin para obtener la extensión</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="c1">// 1. Ruta de la carpeta a organizar</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpeta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;multimedia&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;--- Iniciando la organización de la carpeta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">carpeta</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;---&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">        </span><span class="c1">// 2. Recorrer la carpeta desordenada y utilizar .use para asegurar que los recursos del sistema se cierren correctamente</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="n">carpeta</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">streamDePaths</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">            </span><span class="n">streamDePaths</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pathFichero</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">                </span><span class="c1">// 3. Solo interesan los ficheros, ignorar subcarpetas</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isRegularFile</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">                    </span><span class="c1">// 4. Obteners la extensión del fichero (ej: &quot;pdf&quot;, &quot;jpg&quot;)</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">extension</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">extension</span><span class="p">.</span><span class="na">isBlank</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">                        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Ignorando: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">                        </span><span class="k">return</span><span class="nd">@forEach</span><span class="w"> </span><span class="c1">// Salta a la siguiente iteración del bucle</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">                    </span><span class="p">}</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">                    </span><span class="c1">// 5. Crear la ruta del directorio de destino</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpeta</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">                    </span><span class="c1">// 6. Crear el directorio de destino si no existe</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">notExists</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">                        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Creando nueva carpeta &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">                        </span><span class="n">Files</span><span class="p">.</span><span class="na">createDirectories</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="n">organizar</span><span class="p">()</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="p">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">organizar</span><span class="p">(){</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="c1">// 1. Ruta de la carpeta de muestras botánicas a organizar</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpeta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;muestras&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;--- Iniciando la clasificación botánica en la carpeta: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">carpeta</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">        </span><span class="c1">// 2. Recorrer la carpeta desordenada y utilizar .use para asegurar el cierre de recursos</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="n">carpeta</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">streamDePaths</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">            </span><span class="n">streamDePaths</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">pathFichero</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">                </span><span class="c1">// 3. Solo nos interesan los ficheros de muestras, ignoramos subcarpetas</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isRegularFile</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">                    </span><span class="c1">// 4. Obtener la extensión del fichero (ej: &quot;jpg&quot;, &quot;txt&quot;, &quot;mp3&quot;)</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">extension</span><span class="p">.</span><span class="na">lowercase</span><span class="p">()</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">extension</span><span class="p">.</span><span class="na">isBlank</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">                        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;-&gt; Ignorando fichero sin tipo: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">                        </span><span class="k">return</span><span class="nd">@forEach</span><span class="w"> </span><span class="c1">// Salta a la siguiente muestra</span>
 <a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">                    </span><span class="p">}</span>
-<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">                    </span><span class="c1">// 7. Mover el fichero a su nueva carpeta</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">pathDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpetaDestino</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
-<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">                    </span><span class="n">Files</span><span class="p">.</span><span class="na">move</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">,</span><span class="w"> </span><span class="n">pathDestino</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCopyOption</span><span class="p">.</span><span class="na">REPLACE_EXISTING</span><span class="p">)</span>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="w">                    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;-&gt; Moviendo &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; a &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-3-34" name="__codelineno-3-34"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- ¡Organización completada con éxito! ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-37" name="__codelineno-3-37"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante la organización ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-38" name="__codelineno-3-38"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
-<a id="__codelineno-3-39" name="__codelineno-3-39"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-40" name="__codelineno-3-40"></a><span class="p">}</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">                    </span><span class="c1">// 5. Crear la ruta de destino dentro de la carpeta correspondiente</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpeta</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">                    </span><span class="c1">// 6. Crear el directorio de destino de la categoría si no existe</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">notExists</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a><span class="w">                        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;-&gt; Creando nueva sección para ficheros: .&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="p">)</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">                        </span><span class="n">Files</span><span class="p">.</span><span class="na">createDirectories</span><span class="p">(</span><span class="n">carpetaDestino</span><span class="p">)</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a><span class="w">                    </span><span class="p">}</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a><span class="w">                    </span><span class="c1">// 7. Mover la muestra botánica a su nueva ubicación clasificada</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a><span class="w">                    </span><span class="kd">val</span><span class="w"> </span><span class="nv">pathDestino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carpetaDestino</span><span class="p">.</span><span class="na">resolve</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="p">)</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a><span class="w">                    </span><span class="n">Files</span><span class="p">.</span><span class="na">move</span><span class="p">(</span><span class="n">pathFichero</span><span class="p">,</span><span class="w"> </span><span class="n">pathDestino</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCopyOption</span><span class="p">.</span><span class="na">REPLACE_EXISTING</span><span class="p">)</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;-&gt; Clasificando &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pathFichero</span><span class="p">.</span><span class="na">fileName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; en la carpeta (.&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n--- ¡Clasificación del herbario completada con éxito! ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante la clasificación de muestras ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Crea una carpeta, dentro de tu proyecto llamada <code>multimedia</code> y guarda diferentes archivos (<em>pdf, jpg, txt, etc.</em>). Ejecuta el ejemplo anterior y comprueba que la salida es parecida a la siguiente.</p>
-</div>
+<p class="admonition-title">Prueba y analiza el ejemplo</p>
+<p>Prueba el código de ejemplo y verifica que la salida por consola es:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
@@ -1719,103 +1753,131 @@
 <span class="normal"><a href="#__codelineno-4-12">12</a></span>
 <span class="normal"><a href="#__codelineno-4-13">13</a></span>
 <span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>--- Iniciando la organización de la carpeta: multimedia---
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>-&gt; Creando nueva carpeta jpg
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>-&gt; Moviendo 20191106_071048.jpg a jpg
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a>-&gt; Moviendo 20191101_071830.jpg a jpg
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>-&gt; Creando nueva carpeta txt
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a>-&gt; Moviendo libros.txt a txt
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a>-&gt; Moviendo peliculas.txt a txt
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a>-&gt; Creando nueva carpeta pdf
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a>-&gt; Moviendo lorem-ipsum-2.pdf a pdf
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a>-&gt; Moviendo lorem-ipsum-1.pdf a pdf
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a>-&gt; Creando nueva carpeta mp3
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a>-&gt; Moviendo dark-cinematic-atmosphere.mp3 a mp3
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a>-&gt; Moviendo pad-harmonious-and-soothing-voice-like-background.mp3 a mp3
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a>--- ¡Organización completada con éxito! ---
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>--- Iniciando la clasificación botánica en la carpeta: muestras ---
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>-&gt; Creando nueva sección para ficheros: .txt
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>-&gt; Clasificando flor.txt en la carpeta (.txt)
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>-&gt; Clasificando arbusto.txt en la carpeta (.txt)
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>-&gt; Creando nueva sección para ficheros: .jpg
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>-&gt; Clasificando 20191106_071048.jpg en la carpeta (.jpg)
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>-&gt; Clasificando 20191101_071830.jpg en la carpeta (.jpg)
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>-&gt; Creando nueva sección para ficheros: .mp3
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>-&gt; Clasificando pad-harmonious-and-soothing-voice-like-background.mp3 en la carpeta (.mp3)
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>-&gt; Clasificando dark-cinematic-atmosphere.mp3 en la carpeta (.mp3)
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>-&gt; Creando nueva sección para ficheros: .mp4
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>-&gt; Clasificando 293968_small.mp4 en la carpeta (.mp4)
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>-&gt; Creando nueva sección para ficheros: .pdf
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>-&gt; Clasificando lorem-ipsum-1.pdf en la carpeta (.pdf)
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>-&gt; Clasificando lorem-ipsum-2.pdf en la carpeta (.pdf)
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>--- ¡Clasificación del herbario completada con éxito! ---
 </code></pre></div></td></tr></table></div>
-<p>En el ejemplo anterior hemos recorrido un directorio para organizar los ficheros que contenía. Recorrer un directorio para "mirar" su contenido es útil en muchas situaciones y hay varias formas de hacerlo.</p>
-<p>El árbol de directorios del ejemplo tiene esta estructura:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span>
-<span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span>
-<span class="normal"><a href="#__codelineno-5-6">6</a></span>
-<span class="normal"><a href="#__codelineno-5-7">7</a></span>
-<span class="normal"><a href="#__codelineno-5-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>multimedia/
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a>├── foto1.jpg
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a>├── foto2.jpg
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a>├── cancion.mp3
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a>├── documento.pdf
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a>└── notas/
-<a id="__codelineno-5-7" name="__codelineno-5-7"></a>    ├── apuntes.txt
-<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    └── borrador.txt
+</div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 3: ¿Qué ocurrirá al ejecutar este código si dentro de la carpeta <code>proyecto/datos</code> existe una subcarpeta llamada <code>datos_fin</code> pero no contiene ningún fichero regular en su raíz?</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpeta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;proyecto/datos&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="n">carpeta</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">        </span><span class="n">stream</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">elemento</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isRegularFile</span><span class="p">(</span><span class="n">elemento</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Fichero: </span><span class="si">${</span><span class="n">elemento</span><span class="p">.</span><span class="na">fileName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">(</span><span class="n">elemento</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Directorio: </span><span class="si">${</span><span class="n">elemento</span><span class="p">.</span><span class="na">fileName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>El siguiente diagrama muestra <strong>qué nodos visita cada método</strong>:</p>
-<pre class="mermaid"><code>graph TD
-    subgraph FILES_LIST["Files.list(multimedia) — solo nivel 1"]
-        direction LR
-        A1[📁 multimedia] --&gt; B1[🖼 foto1.jpg]
-        A1 --&gt; B2[🖼 foto2.jpg]
-        A1 --&gt; B3[🎵 cancion.mp3]
-        A1 --&gt; B4[📄 documento.pdf]
-        A1 --&gt; B5[📁 notas]
-        B5 -. "no entra" .-&gt; C1[📝 apuntes.txt]
-        B5 -. "no entra" .-&gt; C2[📝 borrador.txt]
-    end
-
-    subgraph FILES_WALK["Files.walk(multimedia) — recursivo"]
-        direction LR
-        A2[📁 multimedia] --&gt; B6[🖼 foto1.jpg]
-        A2 --&gt; B7[🖼 foto2.jpg]
-        A2 --&gt; B8[🎵 cancion.mp3]
-        A2 --&gt; B9[📄 documento.pdf]
-        A2 --&gt; B10[📁 notas]
-        B10 --&gt; C3[📝 apuntes.txt]
-        B10 --&gt; C4[📝 borrador.txt]
-    end</code></pre>
-<p>A continuación veremos algunas formas de recorrer directorios:</p>
+<p>A) Se producirá un error de compilación porque <code>Files.list</code> solo puede listar ficheros, no carpetas.</p>
+<p>B) El código se ejecutará sin problemas pero no mostrará nada por consola, ya que la subcarpeta <code>datos_fin</code> está vacía de ficheros.</p>
+<p>C) Se imprimirá por consola: <code>Directorio: datos_fin</code>.</p>
+<p>D) Se producirá una excepción en tiempo de ejecución porque <code>Files.list</code> entra de forma recursiva en <code>datos_fin</code> y al estar vacía falla.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) <code>Files.list</code> devuelve cualquier elemento del primer nivel del directorio (tanto ficheros como carpetas), por lo que es totalmente válido y compila sin problemas.</p>
+<p>❌ B) Aunque <code>datos_fin</code> no contenga ficheros en su interior, ella misma es un directorio que está en el primer nivel de <code>proyecto/datos</code>. El stream sí la detectará al evaluar el segundo condicional.</p>
+<p>✅ C) Como <code>datos_fin</code> es un directorio directo dentro de <code>proyecto/datos</code>, <code>Files.list</code> lo incluye en el stream. Al no cumplir <code>isRegularFile</code> pero sí <code>isDirectory</code>, imprimirá <code>Directorio: datos_fin</code>.</p>
+<p>❌ D) <code>Files.list</code> no es recursivo (esa es la función de <code>Files.walk</code>). Solo lista el contenido directo del primer nivel y nunca inspecciona el interior de subcarpetas de forma automática.</p>
+</details>
+<p><strong>Pregunta 4: ¿Por qué es obligatorio usar <code>.use { }</code> con el stream de <code>Files.list()</code>?</strong></p>
+<p>A) Para convertir el stream en una <code>List&lt;Path&gt;</code> de Kotlin.</p>
+<p>B) Para poder encadenar operadores funcionales como <code>filter</code> y <code>sorted</code>.</p>
+<p>C) Para garantizar que el descriptor del sistema de ficheros se cierra automáticamente y no queda una fuga de recursos.</p>
+<p>D) Porque sin <code>.use { }</code> el stream devuelve solo directorios e ignora los ficheros.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) <code>.use { }</code> no convierte el stream en lista. Para eso se usaría <code>.toList()</code> como operación terminal.</p>
+<p>❌ B) Los operadores <code>filter</code>, <code>sorted</code>, etc. se pueden encadenar sobre el stream independientemente de si se usa o no <code>.use { }</code>.</p>
+<p>✅ C) <code>Files.list()</code> abre un descriptor del sistema de ficheros que permanece abierto mientras el stream existe. Si no se cierra, se produce un <em>resource leak</em>. <code>.use { }</code> garantiza el cierre automático al salir del bloque, incluso si ocurre una excepción.</p>
+<p>❌ D) <code>Files.list()</code> devuelve todos los elementos del primer nivel (ficheros y directorios). El tipo de elemento no depende del uso de <code>.use { }</code>.</p>
+</details>
+</div>
+<h4 id="tecnicas-de-recorrido-de-directorios">Técnicas de recorrido de directorios</h4>
+<p>Como hemos visto en el clasificador anterior, recorrer directorios para "mirar" o gestionar su contenido es clave. Aquí analizamos los diferentes métodos para hacerlo:</p>
+<p><strong>1. <code>Files.list(path)</code>:</strong> Lista únicamente el contenido del directorio especificado <strong>sin acceder a las subcarpetas</strong>. Es ideal para operaciones superficiales (como nuestra clasificación anterior, donde solo queríamos trabajar a primer nivel).</p>
 <ul>
-<li><code>Files.list(path)</code>: Es la utilizada en el ejemplo anterior. Lista únicamente el contenido de un directorio sin acceder a las subcarpetas. Será útil cuando solamente sea necesario acceder al contenido directo de una carpeta, por ejemplo para organizar ficheros en un directorio, mostrar el contenido de la carpeta actual o buscar un fichero específico solo en este nivel.</li>
-<li><strong>Ventajas:</strong><ul>
+<li><strong>Ventajas:</strong></li>
 <li>Rápido y eficiente al no ser recursivo.</li>
-<li>Ofrece un control preciso, operando solo en el primer nivel del directorio.</li>
-<li>Devuelve un <code>Stream</code> de Java que permite usar operadores funcionales (<code>filter</code>, <code>map</code>, etc.) de forma segura con <code>.use</code>.</li>
-</ul>
+<li>Control preciso, operando solo en el primer nivel del directorio.</li>
+<li>
+<p>Devuelve un <code>Stream</code> de Java que permite usar operadores funcionales (<code>filter</code>, <code>map</code>, etc.) de forma segura con <code>.use</code>.</p>
 </li>
-<li><strong>Inconvenientes:</strong><ul>
+<li>
+<p><strong>Inconvenientes:</strong></p>
+</li>
 <li>No explora subdirectorios.</li>
-<li>Para recorrer un árbol completo, se necesita implementar lógica recursiva manualmente.</li>
+<li>Para recorrer un árbol completo, se necesita implementar la recursividad manualmente.</li>
 </ul>
-</li>
-<li><code>Files.walk(path)</code>: Recorre un directorio y todo su contenido recursivamente. Entra en cada subcarpeta, y en sus subcarpetas hasta el final. Será útil para operar sobre un directorio y todo lo que contiene, sin importar la profundidad, por ejemplo para buscar un fichero por nombre en cualquier subcarpeta, eliminar todos los ficheros temporales de un proyecto o contar todos los ficheros .kt de un repositorio.</li>
-<li><strong>Ventajas:</strong><ul>
+<p><strong>2. <code>Files.walk(path)</code>:</strong> Recorre un directorio y todo su contenido <strong>recursivamente</strong>. Entra en cada subcarpeta y en sus subcarpetas de manera sucesiva. Es extremadamente útil para búsquedas globales en el herbario (ej. buscar fotos de flores en cualquier rincón del proyecto, borrar reportes temporales o contar ficheros de registros).</p>
+<ul>
+<li><strong>Ventajas:</strong></li>
 <li>Recorre árboles de directorios completos (recursivo) de forma muy sencilla.</li>
-<li>Extremadamente potente para búsquedas profundas o aplicar operaciones a todos los elementos anidados.</li>
-<li>También devuelve un <code>Stream</code>, permitiendo un filtrado y procesamiento muy expresivo.</li>
-</ul>
+<li>Extremadamente potente para búsquedas profundas o para aplicar operaciones en cascada.</li>
+<li>
+<p>Devuelve un <code>Stream</code>, permitiendo un filtrado muy expresivo.</p>
 </li>
-<li><strong>Inconvenientes:</strong><ul>
-<li>Puede ser lento y consumir más memoria en directorios con miles de ficheros.</li>
-<li>Es una herramienta excesiva ('overkill') para tareas que solo requieren acceder al nivel actual.</li>
-</ul>
+<li>
+<p><strong>Inconvenientes:</strong></p>
 </li>
-<li><code>Files.newDirectoryStream(path)</code>: Es similar a <code>Files.list()</code>, listando solo el contenido inmediato. La diferencia es que no devuelve un <code>Stream</code> de Java 8 (que permite usar <code>.filter</code>, <code>.forEach</code>, etc.), sino un <code>DirectoryStream</code>, que es una versión más antigua que se usa con bucles for. Es menos común en código Kotlin moderno, pero es bueno reconocerlo para poder entender en proyectos antiguos (legacy). Para cualquier tarea nueva, <code>Files.list()</code> y <code>Files.walk()</code> son superiores en seguridad y expresividad.</li>
-<li><strong>Ventajas:</strong><ul>
-<li>Utiliza un bucle <code>for-each</code> tradicional, que puede resultar familiar.</li>
+<li>Puede ser lento y consumir más memoria en estructuras gigantescas con miles de subcarpetas y ficheros.</li>
+<li>Es una herramienta excesiva ("overkill") si solo necesitas leer el nivel superior.</li>
 </ul>
+<p><strong>3. <code>Files.newDirectoryStream(path)</code>:</strong> Es similar a <code>Files.list()</code>, pues lista solo el contenido inmediato. La diferencia es que no devuelve un <code>Stream</code> de Java 8, sino un <code>DirectoryStream</code>, una versión más antigua optimizada para bucles tradicionales <code>for</code>.</p>
+<ul>
+<li><strong>Ventajas:</strong></li>
+<li>
+<p>Utiliza un bucle for-each tradicional, que puede resultar más familiar a nivel sintáctico.</p>
 </li>
-<li><strong>Inconvenientes:</strong><ul>
-<li><strong>¡PELIGRO!</strong> Requiere cerrar el recurso manualmente (<code>.close()</code>). Si se olvida, provoca fugas de recursos (<code>resource leaks</code>).</li>
-<li>Es menos expresivo que los Streams. No se pueden encadenar operadores funcionales fácilmente.</li>
-<li>Considerado obsoleto en código Kotlin idiomático, que prefiere <code>Files.list().use{...}</code>.</li>
-</ul>
+<li>
+<p><strong>Inconvenientes:</strong></p>
 </li>
+<li><strong>¡PELIGRO!</strong> Requiere cerrar el recurso manualmente (<code>.close()</code>). Si se olvida, provoca fugas de recursos (<em>resource leaks</em>).</li>
+<li>Es menos expresivo que los Streams, ya que no se pueden encadenar operadores funcionales fácilmente.</li>
+<li>Es preferible utilizar <code>Files.list().use { ... }</code>.</li>
 </ul>
-<h3 id="ejemplo-3">Ejemplo 3</h3>
-<p>Queremos crear un informe de toda la estructura de la carpeta resultante del ejemplo anterior. Por tanto necesitamos entrar en las nuevas carpetas (pdf, jpg, txt) y ver qué ficheros hay dentro de cada una. Para ello se utiliza <code>Files.walk()</code> que calcula la profundidad, recorre la jerarquía de carpetas y muestra cada elemento indicando si es un directorio o un fichero.</p>
+<h4 id="ejemplo-3">Ejemplo 3</h4>
+<p>Después de clasificar nuestros archivos, queremos crear un listado para ver como ha quedado la estructura de nuestra carpeta <code>muestras</code>. Necesitamos listar cada una de las subcarpetas de clasificación y ver qué muestras hay dentro de cada una de ellas de forma jerárquica.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
@@ -1841,37 +1903,52 @@
 <span class="normal"><a href="#__codelineno-6-23">23</a></span>
 <span class="normal"><a href="#__codelineno-6-24">24</a></span>
 <span class="normal"><a href="#__codelineno-6-25">25</a></span>
-<span class="normal"><a href="#__codelineno-6-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaPrincipal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;multimedia&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;--- Mostrando la estructura final con Files.walk() ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">walk</span><span class="p">(</span><span class="n">carpetaPrincipal</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">            </span><span class="c1">// Ordenar el stream para una visualización más predecible</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">            </span><span class="n">stream</span><span class="p">.</span><span class="na">sorted</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">                </span><span class="c1">// Calcular profundidad para la indentación</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">                </span><span class="c1">// Restamos el número de componentes de la ruta base para que el directorio principal no tenga indentación</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">profundidad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">nameCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">carpetaPrincipal</span><span class="p">.</span><span class="na">nameCount</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">indentacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">.</span><span class="na">repeat</span><span class="p">(</span><span class="n">profundidad</span><span class="p">)</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">                </span><span class="c1">// Determinamos si es directorio o fichero para el prefijo</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">prefijo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">(</span><span class="n">path</span><span class="p">))</span><span class="w"> </span><span class="s">&quot;[DIR]&quot;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s">&quot;[FILE]&quot;</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">                </span><span class="c1">// No imprimimos la propia carpeta raíz, solo su contenido</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">profundidad</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">                    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="si">$</span><span class="n">indentacion</span><span class="si">$</span><span class="n">prefijo</span><span class="s"> </span><span class="si">${</span><span class="n">path</span><span class="p">.</span><span class="na">fileName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">                </span><span class="p">}</span>
-<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante el recorrido ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
-<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="n">listado</span><span class="p">()</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="p">}</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">listado</span><span class="p">(){</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">carpetaPrincipal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;muestras&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;--- Estructura final del Herbario Digital con Files.walk() ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">        </span><span class="n">Files</span><span class="p">.</span><span class="na">walk</span><span class="p">(</span><span class="n">carpetaPrincipal</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">            </span><span class="c1">// Ordenar el stream para una visualización ordenada por categorías</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">            </span><span class="n">stream</span><span class="p">.</span><span class="na">sorted</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">                </span><span class="c1">// Calcular profundidad para la indentación</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">                </span><span class="c1">// Restamos el número de componentes de la ruta base para que la raíz no tenga sangrado</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">profundidad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="na">nameCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">carpetaPrincipal</span><span class="p">.</span><span class="na">nameCount</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">indentacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">.</span><span class="na">repeat</span><span class="p">(</span><span class="n">profundidad</span><span class="p">)</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">                </span><span class="c1">// Determinamos si es una sección (categoría/directorio) o un registro (fichero)</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">                </span><span class="kd">val</span><span class="w"> </span><span class="nv">prefijo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">isDirectory</span><span class="p">(</span><span class="n">path</span><span class="p">))</span><span class="w"> </span><span class="s">&quot;(CATEGORÍA)&quot;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s">&quot;(MUESTRA)&quot;</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">                </span><span class="c1">// No imprimimos la propia carpeta raíz, solo su contenido clasificado</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">profundidad</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="si">$</span><span class="n">indentacion</span><span class="si">$</span><span class="n">prefijo</span><span class="s"> </span><span class="si">${</span><span class="n">path</span><span class="p">.</span><span class="na">fileName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n--- Ocurrió un error durante la generación del informe botánico ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a><span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">()</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</p>
-</div>
+<p class="admonition-title">Prueba y analiza el ejemplo</p>
+<p>Prueba el código de ejemplo y verifica que la salida por consola es:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
@@ -1886,24 +1963,50 @@
 <span class="normal"><a href="#__codelineno-7-12">12</a></span>
 <span class="normal"><a href="#__codelineno-7-13">13</a></span>
 <span class="normal"><a href="#__codelineno-7-14">14</a></span>
-<span class="normal"><a href="#__codelineno-7-15">15</a></span>
-<span class="normal"><a href="#__codelineno-7-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>--- Mostrando la estructura final con Files.walk() ---
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    [DIR] jpg
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a>        [FILE] 20191101_071830.jpg
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a>        [FILE] 20191106_071048.jpg
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a>    [DIR] mp3
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a>        [FILE] dark-cinematic-atmosphere.mp3
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a>        [FILE] pad-harmonious-and-soothing-voice-like-background.mp3
-<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    [DIR] mp4
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a>        [FILE] 283533_small.mp4
-<a id="__codelineno-7-10" name="__codelineno-7-10"></a>        [FILE] 293968_small.mp4
-<a id="__codelineno-7-11" name="__codelineno-7-11"></a>    [DIR] pdf
-<a id="__codelineno-7-12" name="__codelineno-7-12"></a>        [FILE] lorem-ipsum-1.pdf
-<a id="__codelineno-7-13" name="__codelineno-7-13"></a>        [FILE] lorem-ipsum-2.pdf
-<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    [DIR] txt
-<a id="__codelineno-7-15" name="__codelineno-7-15"></a>        [FILE] libros.txt
-<a id="__codelineno-7-16" name="__codelineno-7-16"></a>        [FILE] peliculas.txt
+<span class="normal"><a href="#__codelineno-7-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>--- Estructura final del Herbario Digital con Files.walk() ---
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    (CATEGORÍA) jpg
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>        (MUESTRA) 20191101_071830.jpg
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>        (MUESTRA) 20191106_071048.jpg
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>    (CATEGORÍA) mp3
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>        (MUESTRA) dark-cinematic-atmosphere.mp3
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>        (MUESTRA) pad-harmonious-and-soothing-voice-like-background.mp3
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    (CATEGORÍA) mp4
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>        (MUESTRA) 293968_small.mp4
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>    (CATEGORÍA) pdf
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>        (MUESTRA) lorem-ipsum-1.pdf
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>        (MUESTRA) lorem-ipsum-2.pdf
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>    (CATEGORÍA) txt
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>        (MUESTRA) arbusto.txt
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>        (MUESTRA) flor.txt
 </code></pre></div></td></tr></table></div>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 5: ¿Por qué en el código del Ejemplo 3 se realiza la resta <code>path.nameCount - carpetaPrincipal.nameCount</code> para calcular la indentación?</strong></p>
+<p>A) Para evitar que el directorio raíz <code>multimedia</code> aparezca con sangrado y que los elementos directamente dentro de él tengan una sola tabulación.</p>
+<p>B) Para que el programa conozca el tamaño en bytes del fichero antes de calcular el espaciado.</p>
+<p>C) Para detectar si el elemento es un fichero o un directorio antes de asignar el prefijo.</p>
+<p>D) Para ordenar los elementos del stream de mayor a menor profundidad antes de imprimirlos.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>✅ A) La resta <code>path.nameCount - carpetaPrincipal.nameCount</code> calcula cuántos niveles de profundidad hay entre el elemento actual y el directorio raíz. Si el resultado es 0, el elemento ES la carpeta raíz (no se imprime). Si es 1, está a un nivel de profundidad y se indenta con un tabulador; si es 2, con dos, y así sucesivamente.</p>
+<p>❌ B) <code>nameCount</code> devuelve el número de componentes de la ruta (fragmentos de texto separados por <code>/</code>), no el tamaño en bytes del fichero. Para eso existe <code>Files.size(path)</code>.</p>
+<p>❌ C) La detección de si es fichero o directorio se realiza con <code>Files.isDirectory(path)</code>, no con la resta de <code>nameCount</code>.</p>
+<p>❌ D) El stream ya está ordenado con <code>.sorted()</code> antes de aplicar esta lógica. La resta sirve exclusivamente para calcular la indentación.</p>
+</details>
+<p><strong>Pregunta 6: ¿Cuál es la principal diferencia entre <code>Files.list()</code> y <code>Files.walk()</code>?</strong></p>
+<p>A) <code>Files.list()</code> devuelve un <code>Stream</code>, mientras que <code>Files.walk()</code> devuelve una <code>List</code>.</p>
+<p>B) <code>Files.walk()</code> recorre recursivamente todos los subdirectorios; <code>Files.list()</code> solo lista el nivel inmediato.</p>
+<p>C) <code>Files.list()</code> incluye el propio directorio raíz en el stream, mientras que <code>Files.walk()</code> no.</p>
+<p>D) <code>Files.walk()</code> solo funciona con directorios vacíos.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Ambos métodos devuelven un <code>Stream&lt;Path&gt;</code>. Ninguno devuelve una <code>List</code> directamente.</p>
+<p>✅ B) La diferencia clave es la recursividad: <code>Files.walk()</code> desciende a todas las subcarpetas (y a las subcarpetas de las subcarpetas…); <code>Files.list()</code> se detiene en el primer nivel del directorio indicado.</p>
+<p>❌ C) Ambos métodos incluyen el directorio raíz como primer elemento del stream. En el Ejemplo 3 se excluye manualmente comprobando que la profundidad sea mayor que 0.</p>
+<p>❌ D) <code>Files.walk()</code> funciona con cualquier directorio, esté o no vacío.</p>
+</details>
+</div>
 <hr />
 <h2 id="practica-2-directorios-y-comprobaciones">🎯 Práctica 2: Directorios y comprobaciones</h2>
 <div class="admonition warning">

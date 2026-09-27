@@ -474,8 +474,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -508,8 +506,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -518,6 +514,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#3-ficheros-de-texto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Ficheros de texto
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Ficheros de texto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#metodos-de-ficheros-de-texto" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de Ficheros de Texto
@@ -525,13 +531,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#ejemplo-escritura-y-lectura-en-fichero-de-texto-plano-txt" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-4-escritura-y-lectura-en-fichero-de-texto-plano-txt" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo - Escritura y lectura en fichero de texto plano .txt
+      Ejemplo 4. Escritura y lectura en fichero de texto plano .txt
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1251,8 +1262,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1261,6 +1270,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#3-ficheros-de-texto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Ficheros de texto
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Ficheros de texto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#metodos-de-ficheros-de-texto" class="md-nav__link">
     <span class="md-ellipsis">
       Métodos de Ficheros de Texto
@@ -1268,13 +1287,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#ejemplo-escritura-y-lectura-en-fichero-de-texto-plano-txt" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-4-escritura-y-lectura-en-fichero-de-texto-plano-txt" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejemplo - Escritura y lectura en fichero de texto plano .txt
+      Ejemplo 4. Escritura y lectura en fichero de texto plano .txt
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1297,9 +1321,11 @@
   
 
 
-<h1 id="3-ficheros-de-texto">3. Ficheros de texto</h1>
+  <h1>Ficheros de texto</h1>
+
+<h2 id="3-ficheros-de-texto">3. Ficheros de texto</h2>
 <p>Los ficheros de texto son legibles directamente por humanos y son una buena opción para guardar información después de cerrar el programa. A continuación se muestran algunas clases y métodos para leer y escribir información en ellos:</p>
-<h2 id="metodos-de-ficheros-de-texto">Métodos de Ficheros de Texto</h2>
+<h3 id="metodos-de-ficheros-de-texto">Métodos de Ficheros de Texto</h3>
 <table>
 <thead>
 <tr>
@@ -1355,7 +1381,45 @@
 </tbody>
 </table>
 <p>Dentro de los ficheros de texto existen ficheros de texto plano (sin ningún tipo de estructura) y ficheros de texto en los que la información está estructurada.</p>
-<h2 id="ejemplo-escritura-y-lectura-en-fichero-de-texto-plano-txt">Ejemplo - Escritura y lectura en fichero de texto plano .txt</h2>
+<div class="admonition tip">
+<p class="admonition-title">¿Qué método usar en cada caso?</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Situación</th>
+<th style="text-align: left;">Método recomendado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Leer un fichero pequeño de una sola vez</td>
+<td style="text-align: left;"><code>Files.readAllLines()</code> o <code>Files.readString()</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Escribir un bloque de texto de una vez</td>
+<td style="text-align: left;"><code>Files.writeString()</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Escribir una lista de líneas</td>
+<td style="text-align: left;"><code>Files.write(path, lines)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Añadir líneas sin borrar el contenido</td>
+<td style="text-align: left;"><code>Files.write(path, lines, StandardOpenOption.APPEND)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Leer un fichero grande línea a línea (eficiencia de memoria)</td>
+<td style="text-align: left;"><code>Files.newBufferedReader()</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Escribir un fichero grande con control de buffer</td>
+<td style="text-align: left;"><code>Files.newBufferedWriter()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="ejemplo-4-escritura-y-lectura-en-fichero-de-texto-plano-txt">Ejemplo 4. Escritura y lectura en fichero de texto plano .txt</h3>
+<p>El siguiente ejemplo muestra como leer y escribir información en un ficheros de texto plano <code>.txt</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -1394,50 +1458,85 @@
 <span class="normal"><a href="#__codelineno-0-36">36</a></span>
 <span class="normal"><a href="#__codelineno-0-37">37</a></span>
 <span class="normal"><a href="#__codelineno-0-38">38</a></span>
-<span class="normal"><a href="#__codelineno-0-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Paths</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
 <a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="c1">//Escritura en fichero de texto</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="c1">//writeString</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">texto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hola, mundo desde Kotlin&quot;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">writeString</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;documentos/saludo.txt&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">texto</span><span class="p">)</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="c1">//write</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">ruta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;documentos/texto.txt&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">lineasParaGuardar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">        </span><span class="s">&quot;Primera línea&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">        </span><span class="s">&quot;Segunda línea&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">        </span><span class="s">&quot;¡Hola desde Kotlin!&quot;</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="p">)</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="w"> </span><span class="n">lineasParaGuardar</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCharsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">)</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Fichero de texto escrito.&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="c1">//newBuffered</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;documentos/log.txt&quot;</span><span class="p">)).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">        </span><span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;Log iniciado...\n&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">        </span><span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;Proceso completado.\n&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="c1">//Lectura del fichero de texto</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="c1">//readAllLines</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">lineasLeidas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readAllLines</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Contenido leído con readAllLines:&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">lineas</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">lineasLeidas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="n">lineas</span><span class="p">)</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">    </span><span class="c1">//readString</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">contenido</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readString</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Contenido leído con readString:&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">    </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="n">contenido</span><span class="p">)</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">    </span><span class="c1">//newBufferedReader</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span><span class="n">ruta</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Contenido leído con newBufferedReader:&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="w">        </span><span class="n">reader</span><span class="p">.</span><span class="na">lineSequence</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">println</span><span class="w"> </span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="p">}</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="n">textoPlano</span><span class="p">()</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="p">}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">textoPlano</span><span class="p">(){</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="c1">// Ruta del fichero con el que vamos a trabajar</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">ruta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;muestras&quot;</span><span class="p">,</span><span class="s">&quot;anotacion.txt&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">createDirectories</span><span class="p">(</span><span class="n">ruta</span><span class="p">.</span><span class="na">parent</span><span class="p">)</span><span class="w"> </span><span class="c1">// Crea la carpeta &quot;muestras&quot; si no existe</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="c1">// Escritura de una línea writeString (si no existe lo crea y si existe lo vacía)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">anotacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Cuidados de orquídeas realizados.&quot;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">writeString</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="w"> </span><span class="n">anotacion</span><span class="p">,</span><span class="w"> </span><span class="n">StandardOpenOption</span><span class="p">.</span><span class="na">CREATE</span><span class="p">,</span><span class="w"> </span><span class="n">StandardOpenOption</span><span class="p">.</span><span class="na">TRUNCATE_EXISTING</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="c1">// Lectura rápida de todo el bloque con readString</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">contenidoCompleto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readString</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;--- 1. Contenido del fichero leído con readString: ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="n">contenidoCompleto</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="c1">// Escritura de múltiples líneas en un fichero de texto con Files.write</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">lineas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">        </span><span class="s">&quot;\n1. Regar cuando las raíces se observen de color grisáceo.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">        </span><span class="s">&quot;2. Mantener en un espacio con luz indirecta.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">        </span><span class="s">&quot;3. Evitar corrientes de aire.&quot;</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">    </span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="w"> </span><span class="n">lineas</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCharsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">,</span><span class="w"> </span><span class="n">StandardOpenOption</span><span class="p">.</span><span class="na">APPEND</span><span class="p">)</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="w">    </span><span class="c1">// Lectura con readAllLines (devuelve una lista línea por línea)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">lineasLeidas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readAllLines</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n--- 2. Contenido leído con readAllLines: ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">linea</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">lineasLeidas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="n">linea</span><span class="p">)</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="w">    </span><span class="c1">// Escribir registros de actividad (Logs) con Buffered Writer</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="w"> </span><span class="n">StandardOpenOption</span><span class="p">.</span><span class="na">APPEND</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a><span class="w">        </span><span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;(SISTEMA) Invernadero automatizado iniciado...\n&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a><span class="w">        </span><span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="s">&quot;(SENSOR) Nivel de humedad óptimo detectado (75%).\n&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a><span class="w">    </span><span class="c1">// Lectura secuencial eficiente con newBufferedReader</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n--- 3. Contenido leído con newBufferedReader: ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span><span class="n">ruta</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a><span class="w">        </span><span class="n">reader</span><span class="p">.</span><span class="na">lineSequence</span><span class="p">().</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">linea</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="n">linea</span><span class="p">)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Ejecuta el ejemplo anterior y comprueba que la salida es la siguiente:</p>
-</div>
+<p class="admonition-title">Prueba y analiza el ejemplo</p>
+<p>Prueba el código de ejemplo y verifica que la salida por consola es:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
@@ -1451,22 +1550,91 @@
 <span class="normal"><a href="#__codelineno-1-11">11</a></span>
 <span class="normal"><a href="#__codelineno-1-12">12</a></span>
 <span class="normal"><a href="#__codelineno-1-13">13</a></span>
-<span class="normal"><a href="#__codelineno-1-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>Fichero<span class="w"> </span>de<span class="w"> </span>texto<span class="w"> </span>escrito.
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>Contenido<span class="w"> </span>leído<span class="w"> </span>con<span class="w"> </span>readAllLines:
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>Primera<span class="w"> </span>línea
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>Segunda<span class="w"> </span>línea
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a>¡Hola<span class="w"> </span>desde<span class="w"> </span>Kotlin!
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a>Contenido<span class="w"> </span>leído<span class="w"> </span>con<span class="w"> </span>readString:
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>Primera<span class="w"> </span>línea
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a>Segunda<span class="w"> </span>línea
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a>¡Hola<span class="w"> </span>desde<span class="w"> </span>Kotlin!
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a>Contenido<span class="w"> </span>leído<span class="w"> </span>con<span class="w"> </span>newBufferedReader:
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a>Primera<span class="w"> </span>línea
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a>Segunda<span class="w"> </span>línea
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a>¡Hola<span class="w"> </span>desde<span class="w"> </span>Kotlin!
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>--- 1. Contenido del fichero leído con readString: ---
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>Cuidados de orquídeas realizados.
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>--- 2. Contenido leído con readAllLines: ---
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>Cuidados de orquídeas realizados.
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>1. Regar cuando las raíces se observen de color grisáceo.
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>2. Mantener en un espacio con luz indirecta.
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>3. Evitar corrientes de aire.
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>--- 3. Contenido leído con newBufferedReader: ---
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>Cuidados de orquídeas realizados.
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>1. Regar cuando las raíces se observen de color grisáceo.
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>2. Mantener en un espacio con luz indirecta.
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>3. Evitar corrientes de aire.
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>  (SISTEMA) Invernadero automatizado iniciado...
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>  (SENSOR) Nivel de humedad óptimo detectado (75%).
 </code></pre></div></td></tr></table></div>
-<hr />
+</div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 7: Se quiere registrar el stock de una planta al final del archivo diario sin borrar las anotaciones anteriores, y se escribe el siguiente código. ¿Cuál será el comportamiento del programa?</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.StandardOpenOption</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">ruta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/registro_diario.txt&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nuevaAnotacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;14:00 - Queda al menos una orquídea.&quot;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="n">Files</span><span class="p">.</span><span class="na">writeString</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="w"> </span><span class="n">nuevaAnotacion</span><span class="p">,</span><span class="w"> </span><span class="n">StandardOpenOption</span><span class="p">.</span><span class="na">WRITE</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>A) La nueva anotación se añadirá limpiamente al final del fichero de texto, respetando todo lo que ya estuviera escrito anteriormente.</p>
+<p>B) El código generará un error de compilación porque el método <code>writeString</code> requiere obligatoriamente que la ruta se defina con la clase clásica <code>java.io.File</code>.</p>
+<p>C) Se lanzará una excepción en tiempo de ejecución porque la opción <code>WRITE</code> exige que el archivo esté completamente vacío antes de poder escribir en él.</p>
+<p>D) Si el archivo ya existía y contenía texto, la nueva anotación se escribirá al principio del fichero, sobrescribiendo (pisando) únicamente los caracteres iniciales que ocupen su misma longitud.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Para añadir texto al final de un fichero existente sin destruir el contenido previo se debe utilizar obligatoriamente la opción <code>StandardOpenOption.APPEND</code>.</p>
+<p>❌ B) El método <code>Files.writeString</code> pertenece a la API moderna de NIO (<code>java.nio.file.Files</code>) y está diseñado específicamente para trabajar con objetos de tipo <code>Path</code>.</p>
+<p>❌ C) La opción <code>WRITE</code> simplemente abre el archivo con permisos de escritura. No lanza ninguna excepción por el hecho de que el archivo contenga datos previos, a menos que existan problemas de permisos del sistema operativo.</p>
+<p>✅ D) Al abrir el archivo únicamente con <code>StandardOpenOption.WRITE</code> (sin combinarlo con <code>APPEND</code> ni con <code>TRUNCATE_EXISTING</code>), el canal de escritura posiciona su puntero en el byte 0. Al escribir la nueva frase, esta sobrescribirá directamente los primeros caracteres del texto existente, dejando intacto el resto del archivo a partir de esa posición.</p>
+</details>
+<p><strong>Pregunta 8: ¿Qué ocurrirá al ejecutar el siguiente fragmento de código si el archivo de texto <code>cuidados_orquideas.txt</code> existe, pero está completamente vacío?</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">7</a></span>
+<span class="normal"><a href="#__codelineno-3-8">8</a></span>
+<span class="normal"><a href="#__codelineno-3-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">ruta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;documentos/cuidados_orquideas.txt&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">lineas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readAllLines</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Líneas leídas: </span><span class="si">${</span><span class="n">lineas</span><span class="p">.</span><span class="na">size</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>A) El programa se ejecutará sin errores y mostrará por consola: <code>Líneas leídas: 0</code>.</p>
+<p>B) El método <code>Files.readAllLines</code> lanzará una excepción en tiempo de ejecución (<code>NoSuchFileException</code>) al detectar que el archivo no tiene líneas de texto que leer.</p>
+<p>C) El programa se quedará en un bucle infinito intentando buscar la primera línea de texto del archivo.</p>
+<p>D) Se producirá un error de compilación porque <code>Files.readAllLines</code> no puede devolver una lista vacía.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>✅ A) El método <code>Files.readAllLines</code> lee correctamente archivos de texto vacíos sin lanzar excepciones. Al no encontrar líneas físicas, devuelve una lista mutable de cadenas (<code>List&lt;String&gt;</code>) con un tamaño (<code>.size</code>) igual a 0, ejecutando el programa con éxito.</p>
+<p>❌ B) El error <code>NoSuchFileException</code> solo se lanza si el archivo físico no existe en la ruta especificada. Si el archivo existe pero está vacío, el sistema lo trata como una lectura válida de cero caracteres.</p>
+<p>❌ C) La API de NIO controla internamente el final del archivo (EOF) al leer los flujos de caracteres, por lo que el método termina la lectura de inmediato y devuelve la colección sin generar ningún bloqueo de ejecución.</p>
+<p>❌ D) El tipo de retorno de <code>Files.readAllLines</code> es <code>MutableList&lt;String&gt;</code>. En programación, las listas pueden crearse y gestionarse con un tamaño de cero elementos perfectamente, lo cual es totalmente compatible con la sintaxis del lenguaje.</p>
+</details>
+</div>
 
 
 
