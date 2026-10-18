@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficheros de Acceso Aleatorio — Operaciones CRUD</title>
+<style>
+:root {
+  --bg:       #2b2b2b;
+  --surface:  #3c3f41;
+  --surface2: #4a4e50;
+  --border:   #555;
+  --accent:   #da7756;
+  --text:     #a9b7c6;
+  --bright:   #e0e0e0;
+  --green:    #6a8759;
+  --blue:     #6897bb;
+  --yellow:   #ffc66d;
+  --purple:   #c792ea;
+  --red:      #cc6666;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'JetBrains Mono','Consolas',monospace;background:var(--bg);color:var(--text);min-height:100vh;padding:16px 12px;}
+h1{color:var(--accent);text-align:center;font-size:1.25rem;margin-bottom:4px;}
+.subtitle{text-align:center;font-size:0.78rem;opacity:.65;margin-bottom:18px;}
+
+/* ── Tabs ── */
+.op-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;}
+.op-tab{padding:7px 18px;border:2px solid var(--surface2);border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8rem;font-weight:bold;background:var(--surface);color:var(--text);transition:all .2s;letter-spacing:.5px;}
+.op-tab:hover{border-color:var(--accent);color:var(--bright);}
+.op-tab.active{border-color:var(--accent);background:var(--accent);color:#fff;}
+
+/* ── Layout ── */
+.card{max-width:980px;margin:0 auto 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.op-header{padding:10px 16px;font-size:0.8rem;font-weight:bold;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+@media(max-width:680px){.content-grid{grid-template-columns:1fr;}}
+.visual-col{padding:14px;border-right:1px solid var(--border);}
+.info-col{padding:14px;}
+@media(max-width:680px){.visual-col{border-right:none;border-bottom:1px solid var(--border);}}
+
+/* ── Panel labels ── */
+.col-label{font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:bold;}
+.step-title{font-size:.95rem;color:var(--bright);font-weight:bold;margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.step-num{color:var(--accent);}
+.step-desc{font-size:.8rem;line-height:1.65;color:var(--bright);margin-bottom:12px;}
+.step-desc code{background:#1e1f22;padding:1px 5px;border-radius:3px;color:var(--yellow);font-size:.78rem;}
+.step-desc strong{color:var(--accent);}
+
+/* ── Code block ── */
+.code-box{background:#1e1f22;border:1px solid var(--border);border-radius:5px;padding:10px 12px;font-size:.73rem;line-height:1.65;overflow-x:auto;white-space:pre;}
+.kw{color:var(--purple);}
+.fn{color:var(--blue);}
+.st{color:var(--green);}
+.cm{color:#698878;font-style:italic;}
+.ty{color:var(--accent);}
+.hl{color:var(--yellow);font-weight:bold;}
+.nu{color:#6897bb;}
+
+/* ── File visualization ── */
+.file-wrap{margin-bottom:10px;}
+.file-label{font-size:.68rem;opacity:.7;margin-bottom:5px;}
+.file-header-row{display:flex;font-size:.63rem;opacity:.55;margin-bottom:3px;padding:0 2px;}
+.fh-id{width:42px;text-align:center;}
+.fh-name{flex:1;padding-left:6px;}
+.fh-price{width:68px;text-align:right;}
+.file-record{display:flex;border-radius:4px;overflow:hidden;border:1px solid var(--border);margin-bottom:4px;font-size:.74rem;transition:all .35s;}
+.fr-id{background:#2e3b4e;padding:5px 4px;text-align:center;width:42px;flex-shrink:0;border-right:1px solid var(--border);color:var(--blue);}
+.fr-name{background:#2e3d2e;padding:5px 8px;flex:1;border-right:1px solid var(--border);color:var(--green);}
+.fr-price{background:#3d2e2e;padding:5px 6px;text-align:right;width:68px;flex-shrink:0;color:var(--orange,#da7756);}
+.file-record.found{border-color:var(--yellow);box-shadow:0 0 7px rgba(255,198,109,.35);}
+.file-record.found .fr-id,.file-record.found .fr-name,.file-record.found .fr-price{background:rgba(255,198,109,.1);}
+.file-record.new-pending{border:2px dashed var(--green);opacity:.55;}
+.file-record.new-writing{border:2px solid var(--green);box-shadow:0 0 8px rgba(106,135,89,.4);}
+.file-record.new-done{border:1px solid var(--green);}
+.file-record.skip-this{opacity:.3;border-color:var(--red);position:relative;}
+.file-record.copied{border-color:var(--green);box-shadow:0 0 5px rgba(106,135,89,.3);}
+.file-record.dimmed{opacity:.45;}
+.cursor-row{font-size:.68rem;color:var(--accent);margin-top:4px;display:flex;align-items:center;gap:5px;}
+.cursor-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.skip-badge{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:var(--red);color:#fff;font-size:.6rem;padding:1px 5px;border-radius:3px;}
+
+/* ── Temp file ── */
+.tmp-wrap{margin-top:8px;border:1px dashed var(--purple);border-radius:5px;padding:8px;}
+.tmp-label{font-size:.68rem;color:var(--purple);margin-bottom:5px;}
+.tmp-empty{font-size:.72rem;opacity:.45;font-style:italic;}
+
+/* ── ByteBuffer ── */
+.buf-wrap{margin-bottom:10px;}
+.buf-label{font-size:.68rem;opacity:.7;margin-bottom:5px;}
+.buf-bar{display:flex;height:46px;border-radius:4px;overflow:hidden;border:1px solid var(--border);transition:all .3s;}
+.buf-id{background:#2e3b4e;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;font-size:.68rem;transition:background .3s;width:15%;border-right:1px solid var(--border);}
+.buf-name{background:#2e3d2e;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;font-size:.68rem;transition:background .3s;flex:1;border-right:1px solid var(--border);}
+.buf-price{background:#3d2e2e;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;font-size:.68rem;transition:background .3s;width:24%;}
+.buf-field-lbl{font-size:.58rem;opacity:.65;}
+.buf-id.filled{background:var(--blue);color:#fff;}
+.buf-name.filled{background:var(--green);color:#fff;}
+.buf-price.filled{background:var(--accent);color:#fff;}
+.buf-id.empty,.buf-name.empty,.buf-price.empty{background:var(--surface2);color:var(--text);opacity:.5;}
+.buf-id.reading{background:var(--blue);color:#fff;animation:rpulse .7s infinite;}
+.buf-name.reading{background:var(--green);color:#fff;animation:rpulse .7s infinite;}
+.buf-price.reading{background:var(--accent);color:#fff;animation:rpulse .7s infinite;}
+@keyframes rpulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+
+/* Buffer markers */
+.buf-markers{position:relative;height:18px;margin-top:3px;}
+.bm{position:absolute;font-size:.62rem;transform:translateX(-50%);white-space:nowrap;transition:left .35s;}
+.bm-pos{color:var(--yellow);}
+.bm-lim{color:var(--red);}
+
+/* ── Channel ── */
+.channel-wrap{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 0;font-size:.75rem;}
+.ch-icon{font-size:1.4rem;color:var(--accent);transition:all .3s;}
+.ch-flow{display:flex;gap:3px;align-items:center;}
+.ch-arrow{color:var(--accent);animation:flowR 1s infinite;}
+.ch-arrow.rev{animation:flowL 1s infinite;}
+@keyframes flowR{0%{opacity:0;transform:translateX(-6px);}50%{opacity:1;}100%{opacity:0;transform:translateX(6px);}}
+@keyframes flowL{0%{opacity:0;transform:translateX(6px);}50%{opacity:1;}100%{opacity:0;transform:translateX(-6px);}}
+.ch-label{font-size:.68rem;opacity:.7;text-align:center;}
+
+/* ── Nav bar ── */
+.nav-bar{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
+.nav-btn{background:var(--surface2);border:1px solid var(--border);color:var(--bright);padding:5px 14px;border-radius:4px;cursor:pointer;font-family:inherit;font-size:.8rem;transition:all .2s;}
+.nav-btn:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff;}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.dots{display:flex;gap:6px;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--surface2);cursor:pointer;transition:background .2s;}
+.dot.active{background:var(--accent);}
+.dot.done{background:var(--green);}
+.step-lbl{font-size:.78rem;color:var(--text);min-width:55px;text-align:center;}
+
+/* ── Fade transition ── */
+.fade-in{animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<h1>Ficheros Binarios de Acceso Aleatorio</h1>
+<p class="subtitle">Guía visual paso a paso &nbsp;·&nbsp; <code style="background:#1e1f22;padding:1px 5px;border-radius:3px;color:#ffc66d">FileChannel</code> + <code style="background:#1e1f22;padding:1px 5px;border-radius:3px;color:#ffc66d">ByteBuffer</code> &nbsp;·&nbsp; Java NIO</p>
+
+<div class="op-tabs" id="op-tabs">
+  <button class="op-tab active" data-op="ESCRIBIR">✏️&nbsp;ESCRIBIR</button>
+  <button class="op-tab"        data-op="LEER">📖&nbsp;LEER</button>
+  <button class="op-tab"        data-op="MODIFICAR">🎯&nbsp;MODIFICAR</button>
+  <button class="op-tab"        data-op="ELIMINAR">🗑️&nbsp;ELIMINAR</button>
+</div>
+
+<div class="card">
+  <div class="op-header" id="op-header"></div>
+  <div class="content-grid">
+    <div class="visual-col fade-in" id="visual-col"></div>
+    <div class="info-col fade-in"   id="info-col"></div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="btn-prev">← Anterior</button>
+  <div class="dots" id="dots"></div>
+  <span class="step-lbl" id="step-lbl"></span>
+  <button class="nav-btn" id="btn-next">Siguiente →</button>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const BASE_RECORDS = [
+  { id: 1, name: 'Rosa',      price: '1.5€' },
+  { id: 2, name: 'Girasol',   price: '3.0€' },
+  { id: 3, name: 'Margarita', price: '0.6€' },
+];
+
+const OPS = {
+
+  // ════════════════════════════════════════════
+  ESCRIBIR: {
+    color: '#6a8759',
+    headerText: '✏️  ESCRIBIR — Añadir un nuevo registro al final del fichero',
+    steps: [
+      {
+        title: 'Abrir el canal en modo <code>APPEND</code>',
+        desc: 'Se abre un <code>FileChannel</code> con las opciones <strong>WRITE, CREATE y APPEND</strong>. El canal posiciona automáticamente su puntero al <strong>final del fichero</strong> (byte 96 = 3 registros × 32 bytes), listo para añadir después de los datos existentes.',
+        code: `<span class="kw">FileChannel</span>.<span class="fn">open</span>(
+    archivoPath,
+    StandardOpenOption.WRITE,
+    StandardOpenOption.CREATE,
+    <span class="hl">StandardOpenOption.APPEND</span>   <span class="cm">// puntero al final</span>
+).<span class="fn">use</span> { canal -> ... }`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+            { id: 4, name: 'Tulipán', price: '2.0€', status: 'new-pending' },
+          ],
+          cursor: 'Puntero del canal → byte 96 (fin del fichero)'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'FileChannel abierto · modo APPEND' },
+        tmp: null
+      },
+      {
+        title: '<code>ByteBuffer.allocate(32)</code> — reservar espacio en RAM',
+        desc: 'Se reserva en la memoria RAM un <code>ByteBuffer</code> de exactamente <strong>32 bytes</strong>: el tamaño fijo de un registro. El cursor (<strong>position</strong>) apunta al inicio (byte 0) y el límite (<strong>limit</strong>) es 32. El buffer aún está vacío.',
+        code: `<span class="kw">val</span> buffer = ByteBuffer.<span class="fn">allocate</span>(<span class="hl">TAMANO_REGISTRO</span>)
+<span class="cm">// TAMANO_REGISTRO = 4 + 20 + 8 = 32 bytes
+// position = 0, limit = 32</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+            { id: 4, name: 'Tulipán', price: '2.0€', status: 'new-pending' },
+          ],
+          cursor: 'Puntero del canal → byte 96'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Buffer vacío · 32 bytes reservados' },
+        tmp: null
+      },
+      {
+        title: 'Rellenar el buffer campo a campo con <code>put…()</code>',
+        desc: 'Los tres métodos <code>put</code> escriben los datos en el buffer; el cursor avanza con cada campo: <code>putInt</code> escribe 4 bytes (pos→4) · <code>put</code> escribe los 20 bytes del nombre con relleno de espacios (pos→24) · <code>putDouble</code> escribe 8 bytes del precio (pos→32).',
+        code: `buffer.<span class="fn">putInt</span>(nuevaPlanta.idPlanta)        <span class="cm">// 4B → pos=4</span>
+<span class="kw">val</span> nombreBytes = nuevaPlanta.nombreComun
+    .<span class="fn">padEnd</span>(TAMANO_NOMBRE, <span class="st">' '</span>)         <span class="cm">// rellena a 20</span>
+    .<span class="fn">toByteArray</span>(Charsets.ISO_8859_1)
+buffer.<span class="fn">put</span>(nombreBytes, <span class="nu">0</span>, TAMANO_NOMBRE) <span class="cm">// 20B → pos=24</span>
+buffer.<span class="fn">putDouble</span>(nuevaPlanta.precio)    <span class="cm">// 8B → pos=32</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+            { id: 4, name: 'Tulipán', price: '2.0€', status: 'new-pending' },
+          ],
+          cursor: 'Puntero del canal → byte 96'
+        },
+        buf: { id:'filled', name:'filled', price:'filled', pos:32, lim:32,
+               idVal:'4', nameVal:'Tulipán…', priceVal:'2.0€', posLabel:'pos=32', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Buffer lleno · position = limit = 32' },
+        tmp: null
+      },
+      {
+        title: '<code>buffer.flip()</code> — preparar para volcar al disco',
+        desc: '<code>flip()</code> es fundamental: <strong>baja el limit</strong> a la posición actual (32) y <strong>devuelve el cursor a 0</strong>. Ahora el buffer sabe que tiene 32 bytes válidos para enviar al canal. Sin esta llamada el canal no escribiría nada, porque <code>hasRemaining()</code> sería false.',
+        code: `<span class="cm">// Antes del flip:</span>
+<span class="cm">//   position=32 · limit=32</span>
+buffer.<span class="hl">flip</span>()
+<span class="cm">// Después del flip:</span>
+<span class="cm">//   position=0  · limit=32  ← listo para leer</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+            { id: 4, name: 'Tulipán', price: '2.0€', status: 'new-pending' },
+          ],
+          cursor: 'Puntero del canal → byte 96'
+        },
+        buf: { id:'filled', name:'filled', price:'filled', pos:0, lim:32,
+               idVal:'4', nameVal:'Tulipán…', priceVal:'2.0€', posLabel:'pos=0 ↩', limLabel:'lim=32', flipped:true },
+        channel: { active:false, direction:null, label:'Buffer listo · flip() aplicado' },
+        tmp: null
+      },
+      {
+        title: '<code>canal.write(buffer)</code> — transferir 32 bytes al disco',
+        desc: 'El canal transfiere los <strong>32 bytes</strong> desde el buffer hasta el final del fichero. El bucle <code>while (buffer.hasRemaining())</code> garantiza la escritura completa aunque el sistema operativo no los envíe todos de una vez.',
+        code: `<span class="kw">while</span> (buffer.<span class="fn">hasRemaining</span>()) {
+    canal.<span class="hl">write</span>(buffer)   <span class="cm">// → 32 bytes al disco</span>
+}
+<span class="cm">// Registro añadido en bytes 96–127</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+            { id: 4, name: 'Tulipán', price: '2.0€', status: 'new-writing' },
+          ],
+          cursor: 'Escribiendo bytes 96–127…'
+        },
+        buf: { id:'filled', name:'filled', price:'filled', pos:0, lim:32,
+               idVal:'4', nameVal:'Tulipán…', priceVal:'2.0€', posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:true, direction:'to-file', label:'FileChannel → transfiriendo datos' },
+        tmp: null
+      },
+      {
+        title: '¡Registro añadido con éxito!',
+        desc: 'El nuevo registro (ID=4, <strong>Tulipán</strong>, 2.0€) ocupa exactamente los bytes <strong>96–127</strong> del fichero. La estructura de tamaño fijo (32B/registro) se mantiene, lo que permite calcular la posición de cualquier registro con una simple multiplicación: <em>posición = índice × 32</em>.',
+        code: `println(<span class="st">"Planta 'Tulipán' añadida."</span>)
+<span class="cm">// Byte offset del registro 4:
+//   (4 - 1) × 32 = 96 bytes desde el inicio</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+            { id: 4, name: 'Tulipán', price: '2.0€', status: 'new-done' },
+          ],
+          cursor: 'Fichero: 4 registros · 128 bytes'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:32, lim:32, posLabel:'pos=32', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Escritura completada ✔' },
+        tmp: null
+      },
+    ]
+  },
+
+  // ════════════════════════════════════════════
+  LEER: {
+    color: '#6897bb',
+    headerText: '📖  LEER — Lectura secuencial de todos los registros',
+    steps: [
+      {
+        title: 'Abrir el canal en modo <code>READ</code>',
+        desc: 'Se abre un <code>FileChannel</code> solo con la opción <strong>READ</strong>. El puntero del canal empieza en el <strong>byte 0</strong> (inicio del fichero). El canal recorrerá los registros uno a uno de forma secuencial.',
+        code: `<span class="kw">FileChannel</span>.<span class="fn">open</span>(archivoPath,
+    <span class="hl">StandardOpenOption.READ</span>
+).<span class="fn">use</span> { canal ->
+    <span class="cm">// puntero en byte 0 → inicio del fichero</span>
+}`,
+        file: {
+          records: BASE_RECORDS.map(r=>({...r,status:'normal'})),
+          cursor: 'Puntero del canal → byte 0 (inicio)'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'FileChannel abierto · modo READ' },
+        tmp: null
+      },
+      {
+        title: '<code>ByteBuffer.allocate(32)</code> — buffer vacío en RAM',
+        desc: 'Se crea un <code>ByteBuffer</code> de <strong>32 bytes</strong> en la RAM. Se reutilizará para cada registro: primero se llena desde el canal, se extraen los campos, y se reinicia con <code>buffer.clear()</code> para el siguiente.',
+        code: `<span class="kw">val</span> buffer = ByteBuffer.<span class="fn">allocate</span>(<span class="hl">TAMANO_REGISTRO</span>)
+<span class="cm">// position=0 · limit=32 · buffer vacío</span>`,
+        file: {
+          records: BASE_RECORDS.map(r=>({...r,status:'normal'})),
+          cursor: 'Puntero del canal → byte 0'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Buffer vacío · listo para recibir datos' },
+        tmp: null
+      },
+      {
+        title: '<code>canal.read(buffer)</code> + <code>buffer.flip()</code>',
+        desc: '<code>canal.read(buffer)</code> copia exactamente <strong>32 bytes</strong> del fichero al buffer (un registro completo) y avanza el puntero del canal. Después, <code>buffer.flip()</code> posiciona el cursor en 0 con limit=32 para poder leer los campos.',
+        code: `<span class="kw">while</span> (canal.<span class="fn">read</span>(buffer) > <span class="nu">0</span>) {   <span class="cm">// 32B del disco</span>
+    buffer.<span class="hl">flip</span>()
+    <span class="cm">// position=0 · limit=32 · listo para leer</span>
+    ...
+}`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'found' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'Puntero del canal → byte 32 (tras leer reg. #1)'
+        },
+        buf: { id:'filled', name:'filled', price:'filled', pos:0, lim:32,
+               idVal:'1', nameVal:'Rosa…', priceVal:'1.5€', posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:true, direction:'to-ram', label:'Disco → RAM · 32 bytes leídos' },
+        tmp: null
+      },
+      {
+        title: 'Extraer campos con <code>get…()</code>',
+        desc: 'Se extraen los campos en orden con <code>getInt()</code>, <code>get(array)</code> y <code>getDouble()</code>. El cursor del buffer avanza con cada lectura: 0→4 (ID) · 4→24 (Nombre) · 24→32 (Precio). Finalmente se construye el objeto <code>PlantaBinaria</code>.',
+        code: `<span class="kw">val</span> id     = buffer.<span class="hl">getInt</span>()          <span class="cm">// 4B → pos=4</span>
+<span class="kw">val</span> bytes  = ByteArray(<span class="nu">20</span>)
+buffer.<span class="hl">get</span>(bytes)                   <span class="cm">// 20B → pos=24</span>
+<span class="kw">val</span> nombre = String(bytes,
+    Charsets.ISO_8859_1).<span class="fn">trim</span>()
+<span class="kw">val</span> precio = buffer.<span class="hl">getDouble</span>()      <span class="cm">// 8B → pos=32</span>
+plantas.<span class="fn">add</span>(PlantaBinaria(id,nombre,precio))`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'found' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'Canal en byte 32'
+        },
+        buf: { id:'reading', name:'reading', price:'reading', pos:32, lim:32,
+               idVal:'1', nameVal:'Rosa…', priceVal:'1.5€', posLabel:'pos=32', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Campos extraídos del buffer' },
+        tmp: null
+      },
+      {
+        title: '<code>buffer.clear()</code> — reiniciar y leer el siguiente',
+        desc: '<code>buffer.clear()</code> resetea el cursor a 0 y el límite a 32 <em>sin borrar los bytes</em>. El bucle vuelve al inicio y <code>canal.read(buffer)</code> sobreescribirá el buffer con el siguiente registro. Se repite hasta que el canal devuelve ≤ 0 bytes (fin de fichero).',
+        code: `    buffer.<span class="hl">clear</span>()   <span class="cm">// pos=0 · lim=32 · reutilizable</span>
+}
+<span class="cm">// Repetir para registros #2 y #3...
+// canal.read() devuelve ≤ 0 → fin de fichero</span>
+println(<span class="st">"${BASE_RECORDS.length} plantas leídas"</span>)`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'found' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'Canal leyendo registro #2 (byte 32→64)'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0 ↩', limLabel:'lim=32' },
+        channel: { active:true, direction:'to-ram', label:'buffer.clear() → listo para siguiente' },
+        tmp: null
+      },
+    ]
+  },
+
+  // ════════════════════════════════════════════
+  MODIFICAR: {
+    color: '#ffc66d',
+    headerText: '🎯  MODIFICAR — Acceso aleatorio in-situ para actualizar un campo',
+    steps: [
+      {
+        title: 'Abrir canal con <code>READ + WRITE</code> (sin TRUNCATE)',
+        desc: 'El canal necesita <strong>READ</strong> para leer y buscar el ID, y <strong>WRITE</strong> para sobreescribir el campo. Es crítico <em>no incluir</em> <code>TRUNCATE_EXISTING</code>: eso vaciaría el fichero al abrirlo.',
+        code: `<span class="kw">FileChannel</span>.<span class="fn">open</span>(archivoPath,
+    <span class="hl">StandardOpenOption.READ</span>,
+    <span class="hl">StandardOpenOption.WRITE</span>
+    <span class="cm">// ⚠ sin TRUNCATE_EXISTING!</span>
+).<span class="fn">use</span> { canal -> ... }`,
+        file: { records: BASE_RECORDS.map(r=>({...r,status:'normal'})), cursor: 'Canal → byte 0 (inicio)' },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'FileChannel · READ + WRITE' },
+        tmp: null
+      },
+      {
+        title: 'Leer registro #1 — ID no coincide, continuar',
+        desc: 'Se lee el primer registro. Después de <code>buffer.flip()</code>, se extrae el ID con <code>buffer.getInt()</code>. El ID leído es <strong>1</strong>, que no coincide con el buscado (ID=2). Se llama a <code>buffer.clear()</code> y el canal avanza al registro siguiente.',
+        code: `canal.<span class="fn">read</span>(buffer)         <span class="cm">// → bytes 0–31</span>
+<span class="kw">val</span> posActual = canal.<span class="fn">position</span>() <span class="cm">// = 32</span>
+buffer.<span class="fn">flip</span>()
+<span class="kw">val</span> id = buffer.<span class="fn">getInt</span>()        <span class="cm">// id = 1</span>
+<span class="cm">// id(1) ≠ idBuscado(2) → continuar</span>
+buffer.<span class="fn">clear</span>()`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'dimmed' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'Canal → byte 32 (tras leer #1)'
+        },
+        buf: { id:'reading', name:'empty', price:'empty', pos:4, lim:32,
+               idVal:'1≠2', posLabel:'pos=4', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'ID=1 ≠ 2 · avanzar al siguiente' },
+        tmp: null
+      },
+      {
+        title: 'Leer registro #2 — <strong>¡ID encontrado!</strong>',
+        desc: 'Se lee el segundo registro (bytes 32–63). El ID extraído es <strong>2</strong>, que coincide con el buscado. Se guarda <code>posicionActual = canal.position()</code> = 64 para poder calcular la posición exacta del campo precio.',
+        code: `canal.<span class="fn">read</span>(buffer)
+<span class="kw">val</span> posActual = canal.<span class="fn">position</span>() <span class="cm">// = 64</span>
+buffer.<span class="fn">flip</span>()
+<span class="kw">val</span> id = buffer.<span class="fn">getInt</span>()         <span class="cm">// id = 2 ✔</span>
+<span class="kw">if</span> (id == idPlanta) {
+    encontrado = <span class="kw">true</span>
+    <span class="cm">// posActual = 64 (fin del registro #2)</span>
+}`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'dimmed' },
+            { ...BASE_RECORDS[1], status: 'found' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'Canal → byte 64 · posActual = 64'
+        },
+        buf: { id:'filled', name:'filled', price:'filled', pos:4, lim:32,
+               idVal:'2 ✔', nameVal:'Girasol', priceVal:'3.0€', posLabel:'pos=4', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'ID=2 ✔ · registro localizado' },
+        tmp: null
+      },
+      {
+        title: 'Calcular la posición exacta del campo precio',
+        desc: 'Tres operaciones matemáticas posicionan el puntero <em>exactamente</em> sobre el campo precio: retroceder al inicio del registro (<code>-32</code>), saltar el ID (<code>+4</code>) y saltar el nombre (<code>+20</code>). Resultado: <strong>byte 56</strong>.',
+        code: `<span class="kw">val</span> inicioRegistro = posActual - TAMANO_REGISTRO
+<span class="cm">//   = 64 - 32 = 32</span>
+<span class="kw">val</span> desp = TAMANO_ID + TAMANO_NOMBRE
+<span class="cm">//   = 4 + 20 = 24</span>
+<span class="kw">val</span> <span class="hl">posicionPrecio</span> = inicioRegistro + desp
+<span class="cm">//   = 32 + 24 = <b>56</b>  ← inicio del precio</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'dimmed' },
+            { ...BASE_RECORDS[1], status: 'found' },
+            { ...BASE_RECORDS[2], status: 'dimmed' },
+          ],
+          cursor: '← byte 32 (inicio reg. #2) + 4 + 20 = byte 56'
+        },
+        buf: { id:'filled', name:'filled', price:'empty', pos:24, lim:32,
+               idVal:'[4B]', nameVal:'[20B]', posLabel:'pos=24', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Calculando offset: 64 - 32 + 4 + 20 = 56' },
+        tmp: null
+      },
+      {
+        title: '<code>canal.position(56)</code> — salto directo al campo precio',
+        desc: 'Con <code>canal.position(posicionPrecio)</code> el puntero del canal <strong>salta directamente al byte 56</strong>, que es el inicio del campo precio del registro 2. Éste es el poder del acceso aleatorio: no hay que leer los datos intermedios.',
+        code: `canal.<span class="hl">position</span>(posicionPrecio)  <span class="cm">// salta al byte 56</span>
+<span class="kw">val</span> bufPrecio = ByteBuffer.<span class="fn">allocate</span>(TAMANO_PRECIO)
+bufPrecio.<span class="fn">putDouble</span>(nuevoPrecio)   <span class="cm">// 5.5€ en 8B</span>
+bufPrecio.<span class="fn">flip</span>()`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'dimmed' },
+            { id: 2, name: 'Girasol', price: '3.0€→?', status: 'found' },
+            { ...BASE_RECORDS[2], status: 'dimmed' },
+          ],
+          cursor: '⚡ Canal salta a byte 56 (campo precio de #2)'
+        },
+        buf: { id:'empty', name:'empty', price:'filled', pos:0, lim:8,
+               priceVal:'5.5€', posLabel:'pos=0', limLabel:'lim=8' },
+        channel: { active:false, direction:null, label:'canal.position(56) · buffer de 8 bytes' },
+        tmp: null
+      },
+      {
+        title: 'Sobreescribir solo el campo precio',
+        desc: 'El canal escribe los <strong>8 bytes del nuevo precio</strong> exactamente en la posición 56. El resto del fichero permanece intacto. Solo el campo precio del registro 2 cambia de 3.0€ a <strong>5.5€</strong>.',
+        code: `<span class="kw">while</span> (bufPrecio.<span class="fn">hasRemaining</span>()) {
+    canal.<span class="hl">write</span>(bufPrecio)  <span class="cm">// 8 bytes en byte 56</span>
+}
+<span class="cm">// Solo bytes 56–63 modificados.
+// Registros #1 y #3 intactos.</span>
+println(<span class="st">"Precio de ID 2 → 5.5€ ✔"</span>)`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { id: 2, name: 'Girasol', price: '5.5€ ✔', status: 'found' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'Solo bytes 56–63 reescritos'
+        },
+        buf: { id:'empty', name:'empty', price:'filled', pos:8, lim:8,
+               priceVal:'5.5€', posLabel:'pos=8', limLabel:'lim=8' },
+        channel: { active:true, direction:'to-file', label:'Escritura de 8 bytes en posición 56' },
+        tmp: null
+      },
+    ]
+  },
+
+  // ════════════════════════════════════════════
+  ELIMINAR: {
+    color: '#cc6666',
+    headerText: '🗑️  ELIMINAR — Técnica del fichero temporal (filtrado y reemplazo)',
+    steps: [
+      {
+        title: 'Abrir dos canales: original y temporal',
+        desc: 'Se abren simultáneamente dos canales: <code>canalLectura</code> sobre el fichero original (<em>READ</em>) y <code>canalEscritura</code> sobre un fichero temporal <code>.tmp</code> (<em>WRITE | CREATE | TRUNCATE</em>). El .tmp recibirá todos los registros <em>excepto</em> el que se desea borrar (ID=3).',
+        code: `<span class="kw">val</span> pathTmp = Path.<span class="fn">of</span>(<span class="st">"plantas.bin.tmp"</span>)
+FileChannel.<span class="fn">open</span>(archivoPath,
+    <span class="hl">StandardOpenOption.READ</span>
+).<span class="fn">use</span> { canalLectura ->
+    FileChannel.<span class="fn">open</span>(pathTmp,
+        <span class="hl">StandardOpenOption.WRITE</span>,
+        StandardOpenOption.CREATE,
+        StandardOpenOption.TRUNCATE_EXISTING
+    ).<span class="fn">use</span> { canalEscritura -> ... }
+}`,
+        file: { records: BASE_RECORDS.map(r=>({...r,status:'normal'})), cursor: 'canalLectura → byte 0' },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Dos canales abiertos · .tmp vacío' },
+        tmp: { records: [], empty: true }
+      },
+      {
+        title: 'Registro #1 (Rosa) — ID≠3 → copiar al .tmp',
+        desc: 'Se lee el primer registro. El ID leído (1) <strong>no coincide</strong> con el ID a eliminar (3). Se llama a <code>buffer.rewind()</code> para devolver el cursor al inicio del registro completo, y luego <code>canalEscritura.write(buffer)</code> lo copia íntegro al .tmp.',
+        code: `canalLectura.<span class="fn">read</span>(buffer)
+buffer.<span class="fn">flip</span>()
+<span class="kw">val</span> id = buffer.<span class="fn">getInt</span>()    <span class="cm">// id=1 ≠ 3</span>
+<span class="cm">// No coincide → copiar al .tmp</span>
+buffer.<span class="hl">rewind</span>()             <span class="cm">// cursor vuelve a 0</span>
+canalEscritura.<span class="fn">write</span>(buffer)
+buffer.<span class="fn">clear</span>()`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'copied' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'canalLectura → byte 32'
+        },
+        buf: { id:'filled', name:'filled', price:'filled', pos:0, lim:32,
+               idVal:'1≠3', nameVal:'Rosa', priceVal:'1.5€', posLabel:'pos=0 ↩', limLabel:'lim=32' },
+        channel: { active:true, direction:'to-file', label:'rewind() + write → copiando #1 al .tmp' },
+        tmp: { records: [{ id:1, name:'Rosa', price:'1.5€', status:'normal' }] }
+      },
+      {
+        title: 'Registro #2 (Girasol) — ID≠3 → copiar al .tmp',
+        desc: 'Se lee el segundo registro. El ID (2) <strong>tampoco coincide</strong> con 3. Se aplica el mismo patrón: <code>buffer.rewind()</code> y <code>canalEscritura.write(buffer)</code>. El fichero .tmp acumula ya 2 registros.',
+        code: `canalLectura.<span class="fn">read</span>(buffer)
+buffer.<span class="fn">flip</span>()
+<span class="kw">val</span> id = buffer.<span class="fn">getInt</span>()    <span class="cm">// id=2 ≠ 3</span>
+buffer.<span class="hl">rewind</span>()             <span class="cm">// cursor a 0</span>
+canalEscritura.<span class="fn">write</span>(buffer)
+buffer.<span class="fn">clear</span>()`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'copied' },
+            { ...BASE_RECORDS[1], status: 'copied' },
+            { ...BASE_RECORDS[2], status: 'normal' },
+          ],
+          cursor: 'canalLectura → byte 64'
+        },
+        buf: { id:'filled', name:'filled', price:'filled', pos:0, lim:32,
+               idVal:'2≠3', nameVal:'Girasol', priceVal:'3.0€', posLabel:'pos=0 ↩', limLabel:'lim=32' },
+        channel: { active:true, direction:'to-file', label:'rewind() + write → copiando #2 al .tmp' },
+        tmp: { records: [
+          { id:1, name:'Rosa', price:'1.5€', status:'normal' },
+          { id:2, name:'Girasol', price:'3.0€', status:'normal' },
+        ]}
+      },
+      {
+        title: 'Registro #3 (Margarita) — <strong>ID=3 ✔ → ignorar</strong>',
+        desc: 'Se lee el tercer registro. El ID (3) <strong>coincide</strong> con el que se desea eliminar. El registro se <em>ignora completamente</em>: no se escribe en el .tmp. Solo se llama a <code>buffer.clear()</code> y el bucle termina (no hay más registros).',
+        code: `canalLectura.<span class="fn">read</span>(buffer)
+buffer.<span class="fn">flip</span>()
+<span class="kw">val</span> id = buffer.<span class="fn">getInt</span>()    <span class="cm">// id=3 = 3 ✔</span>
+<span class="cm">// Coincide → <b>NO</b> se escribe en .tmp</span>
+plantaEncontrada = <span class="kw">true</span>
+buffer.<span class="fn">clear</span>()
+<span class="cm">// Fin del bucle (canal.read ≤ 0)</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'dimmed' },
+            { ...BASE_RECORDS[1], status: 'dimmed' },
+            { ...BASE_RECORDS[2], status: 'skip-this' },
+          ],
+          cursor: 'ID=3 encontrado → registro descartado'
+        },
+        buf: { id:'reading', name:'empty', price:'empty', pos:4, lim:32,
+               idVal:'3=3 ✔', posLabel:'pos=4', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'ID=3 ✔ · NO se copia al .tmp' },
+        tmp: { records: [
+          { id:1, name:'Rosa', price:'1.5€', status:'normal' },
+          { id:2, name:'Girasol', price:'3.0€', status:'normal' },
+        ]}
+      },
+      {
+        title: 'El .tmp contiene solo los registros válidos',
+        desc: 'Con los canales ya cerrados, el fichero <code>.tmp</code> tiene <strong>2 registros</strong> (64 bytes) sin ningún hueco. La integridad del fichero de tamaño fijo se mantiene. Ahora hay que reemplazar el original por el .tmp.',
+        code: `<span class="cm">// Canales cerrados.
+// plantas.bin.tmp: 2 registros (64 bytes)
+// plantas.bin:     3 registros (96 bytes)
+// → siguiente paso: reemplazar</span>`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'normal' },
+            { ...BASE_RECORDS[1], status: 'normal' },
+            { ...BASE_RECORDS[2], status: 'skip-this' },
+          ],
+          cursor: 'Original: 3 registros · .tmp: 2 registros'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Canales cerrados · .tmp listo' },
+        tmp: { records: [
+          { id:1, name:'Rosa', price:'1.5€', status:'normal' },
+          { id:2, name:'Girasol', price:'3.0€', status:'normal' },
+        ]}
+      },
+      {
+        title: '<code>Files.move()</code> — el .tmp reemplaza al original',
+        desc: '<code>Files.move(pathTemporal, archivoPath, REPLACE_EXISTING)</code> reemplaza atómicamente el fichero original por el .tmp. El resultado es un fichero limpio con los 2 registros conservados, sin huecos ni desalineaciones.',
+        code: `Files.<span class="hl">move</span>(pathTemporal, archivoPath,
+    StandardCopyOption.REPLACE_EXISTING)
+<span class="cm">// plantas.bin.tmp → plantas.bin
+// 2 registros · 64 bytes · estructura intacta</span>
+println(<span class="st">"Planta ID 3 eliminada ✔"</span>)`,
+        file: {
+          records: [
+            { ...BASE_RECORDS[0], status: 'new-done' },
+            { ...BASE_RECORDS[1], status: 'new-done' },
+          ],
+          cursor: 'Fichero: 2 registros · 64 bytes · ID=3 eliminado'
+        },
+        buf: { id:'empty', name:'empty', price:'empty', pos:0, lim:32, posLabel:'pos=0', limLabel:'lim=32' },
+        channel: { active:false, direction:null, label:'Files.move() completado ✔' },
+        tmp: { records: [], empty: true, replaced: true }
+      },
+    ]
+  },
+};
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let currentOp   = 'ESCRIBIR';
+let currentStep = 0;
+
+// ─────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────
+function render() {
+  const op   = OPS[currentOp];
+  const step = op.steps[currentStep];
+  const total = op.steps.length;
+
+  // header
+  const header = document.getElementById('op-header');
+  header.textContent = op.headerText;
+  header.style.color = op.color;
+
+  // visual column
+  document.getElementById('visual-col').innerHTML = renderVisual(step);
+
+  // info column
+  document.getElementById('info-col').innerHTML = renderInfo(step, currentStep + 1, total);
+
+  // dots
+  const dotsEl = document.getElementById('dots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === currentStep ? ' active' : (i < currentStep ? ' done' : ''));
+    d.onclick = () => { currentStep = i; render(); };
+    dotsEl.appendChild(d);
+  }
+
+  document.getElementById('step-lbl').textContent = `${currentStep + 1} / ${total}`;
+  document.getElementById('btn-prev').disabled = currentStep === 0;
+  document.getElementById('btn-next').disabled = currentStep === total - 1;
+}
+
+function renderVisual(step) {
+  return `
+    <div class="col-label">📂 Fichero en Disco</div>
+    ${renderFile(step.file)}
+    ${step.channel ? renderChannel(step.channel) : ''}
+    <div class="col-label" style="margin-top:10px">💾 ByteBuffer en RAM</div>
+    ${renderBuffer(step.buf)}
+    ${step.tmp !== null ? renderTmp(step.tmp) : ''}
+  `;
+}
+
+function renderFile(fileState) {
+  const { records, cursor } = fileState;
+  let html = `
+    <div class="file-wrap">
+      <div class="file-header-row">
+        <span class="fh-id">ID (4B)</span>
+        <span class="fh-name">Nombre (20B)</span>
+        <span class="fh-price">Precio (8B)</span>
+      </div>`;
+  for (const r of records) {
+    const statusClass = r.status !== 'normal' ? r.status : '';
+    html += `<div class="file-record ${statusClass}">
+      <div class="fr-id">${r.id}</div>
+      <div class="fr-name">${r.name}</div>
+      <div class="fr-price">${r.price}</div>
+      ${r.status === 'skip-this' ? '<div class="skip-badge">SKIP</div>' : ''}
+    </div>`;
+  }
+  if (cursor) {
+    html += `<div class="cursor-row"><div class="cursor-dot"></div>${cursor}</div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderBuffer(buf) {
+  const idCls    = buf.id    === 'filled' ? 'filled' : (buf.id    === 'reading' ? 'reading' : 'empty');
+  const nameCls  = buf.name  === 'filled' ? 'filled' : (buf.name  === 'reading' ? 'reading' : 'empty');
+  const priceCls = buf.price === 'filled' ? 'filled' : (buf.price === 'reading' ? 'reading' : 'empty');
+
+  const idTxt    = buf.idVal    || (buf.id    !== 'empty' ? 'ID'     : '—');
+  const nameTxt  = buf.nameVal  || (buf.name  !== 'empty' ? 'Nombre' : '—');
+  const priceTxt = buf.priceVal || (buf.price !== 'empty' ? 'Precio' : '—');
+
+  const posPercent = Math.round((buf.pos / 32) * 100);
+  const limPercent = Math.round((buf.lim / 32) * 100);
+
+  return `
+    <div class="buf-wrap">
+      <div class="buf-bar">
+        <div class="buf-id ${idCls}">
+          <span>${idTxt}</span>
+          <span class="buf-field-lbl">4B</span>
+        </div>
+        <div class="buf-name ${nameCls}">
+          <span>${nameTxt}</span>
+          <span class="buf-field-lbl">20B</span>
+        </div>
+        <div class="buf-price ${priceCls}">
+          <span>${priceTxt}</span>
+          <span class="buf-field-lbl">8B</span>
+        </div>
+      </div>
+      <div class="buf-markers" style="position:relative;height:18px;margin-top:3px;">
+        <span class="bm bm-pos" style="left:${posPercent}%">▲ ${buf.posLabel || 'pos=0'}</span>
+        <span class="bm bm-lim" style="left:${limPercent}%">▲ ${buf.limLabel || 'lim=32'}</span>
+      </div>
+    </div>`;
+}
+
+function renderChannel(ch) {
+  if (!ch.active) {
+    return `<div class="channel-wrap">
+      <span class="ch-icon">⇌</span>
+      <span class="ch-label">${ch.label || 'FileChannel'}</span>
+    </div>`;
+  }
+  const arrows = ch.direction === 'to-file'
+    ? `<span class="ch-arrow">→</span><span class="ch-arrow">→</span><span class="ch-arrow">→</span>`
+    : `<span class="ch-arrow rev">←</span><span class="ch-arrow rev">←</span><span class="ch-arrow rev">←</span>`;
+  return `<div class="channel-wrap">
+    <span class="ch-icon" style="color:var(--accent)">⇌</span>
+    <div class="ch-flow">${arrows}</div>
+    <span class="ch-label" style="color:var(--accent)">${ch.label}</span>
+  </div>`;
+}
+
+function renderTmp(tmp) {
+  let html = `<div class="tmp-wrap"><div class="tmp-label">📄 plantas.bin.tmp</div>`;
+  if (tmp.replaced) {
+    html += `<div class="tmp-empty">✔ .tmp eliminado · fichero reemplazado</div>`;
+  } else if (tmp.empty || tmp.records.length === 0) {
+    html += `<div class="tmp-empty">(vacío)</div>`;
+  } else {
+    for (const r of tmp.records) {
+      html += `<div class="file-record copied" style="margin-bottom:3px">
+        <div class="fr-id">${r.id}</div>
+        <div class="fr-name">${r.name}</div>
+        <div class="fr-price">${r.price}</div>
+      </div>`;
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderInfo(step, stepNum, total) {
+  return `
+    <div class="col-label">Paso ${stepNum} de ${total}</div>
+    <div class="step-title">${step.title}</div>
+    <div class="step-desc">${step.desc}</div>
+    <div class="col-label" style="margin-bottom:6px">Código Kotlin</div>
+    <div class="code-box">${step.code}</div>
+  `;
+}
+
+// ─────────────────────────────────────────────
+// EVENTS
+// ─────────────────────────────────────────────
+document.getElementById('btn-prev').onclick = () => {
+  if (currentStep > 0) { currentStep--; render(); }
+};
+document.getElementById('btn-next').onclick = () => {
+  if (currentStep < OPS[currentOp].steps.length - 1) { currentStep++; render(); }
+};
+
+document.querySelectorAll('.op-tab').forEach(btn => {
+  btn.onclick = () => {
+    currentOp = btn.dataset.op;
+    currentStep = 0;
+    document.querySelectorAll('.op-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  };
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    if (currentStep < OPS[currentOp].steps.length - 1) { currentStep++; render(); }
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    if (currentStep > 0) { currentStep--; render(); }
+  }
+});
+
+// Initial render
+render();
+</script>
+</body>
+</html>

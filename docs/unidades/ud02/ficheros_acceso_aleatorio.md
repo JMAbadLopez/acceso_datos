@@ -52,6 +52,15 @@ A continuación se describen algunos de los métodos que utilizaremos:
 | `rewind()` | Devuelve la posición a 0 para poder releer el buffer desde el inicio. |
 | `hasRemaining()` | Devuelve `true` si aún quedan elementos por procesar entre la posición actual y el límite. |
 
+### Recursos
+
+!!! tip "Infografía interactiva: Operaciones CRUD en ficheros binarios"
+    Antes de leer los ejemplos de código, revisa esta guía visual paso a paso. Explica cómo funciona cada operación (ESCRIBIR, LEER, MODIFICAR y ELIMINAR) mostrando el estado del `FileChannel`, el `ByteBuffer` y el fichero en cada momento.
+
+    [🔗 Abrir infografía interactiva](./infografia_acceso_aleatorio.html){ .md-button target="_blank" }
+
+---
+
 #### Ejemplo 12: Lectura y escritura en ficheros binarios de tamaño fijo
 
 En este ejemplo utilizaremos `FileChannel` y `ByteBuffer` para crear un fichero binario estructurado para nuestro herbario. Cada registro representará una planta con tres campos y ocupará exactamente **32 bytes** en total:
