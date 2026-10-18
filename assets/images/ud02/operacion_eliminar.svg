@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 320" width="100%" height="100%">
+  <defs>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669"/>
+    </marker>
+    <marker id="arrow-indigo" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4f46e5"/>
+    </marker>
+  </defs>
+
+  <!-- Canvas Card -->
+  <rect width="780" height="320" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 1. ORIGINAL FILE -->
+  <text x="30" y="32" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#475569" letter-spacing="0.3">1. FICHERO ORIGINAL: plantas.bin (96 bytes)</text>
+
+  <!-- Reg 1 Original -->
+  <rect x="30" y="44" width="220" height="52" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="140" y="66" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600" fill="#334155">Registro 1: ID = 1 (Rosa)</text>
+  <text x="140" y="84" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#64748b">ID ≠ 3 ➔ Conservar</text>
+
+  <!-- Reg 2 Original -->
+  <rect x="260" y="44" width="220" height="52" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="370" y="66" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600" fill="#334155">Registro 2: ID = 2 (Girasol)</text>
+  <text x="370" y="84" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#64748b">ID ≠ 3 ➔ Conservar</text>
+
+  <!-- Reg 3 Original (To Delete) -->
+  <rect x="490" y="44" width="260" height="52" rx="6" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="620" y="66" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#dc2626">Registro 3: ID = 3 (Margarita)</text>
+  <text x="620" y="84" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="600" fill="#ef4444">ID == 3 ➔ ¡DESCARTAR!</text>
+
+  <!-- Transition Area (Clear 50px vertical gap, no text overlap) -->
+  <path d="M 140 98 L 140 152" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="148" y="128" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="10.5" font-weight="600" fill="#059669">buffer.rewind() + write()</text>
+
+  <path d="M 370 98 L 370 152" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="378" y="128" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="10.5" font-weight="600" fill="#059669">buffer.rewind() + write()</text>
+
+  <!-- Discard Badge for Reg 3 -->
+  <rect x="525" y="112" width="190" height="28" rx="14" fill="#fef2f2" stroke="#fecaca" stroke-width="1"/>
+  <text x="620" y="130" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="700" fill="#dc2626">✕ Omitido (no se copia)</text>
+
+  <!-- 2. TEMPORARY FILE -->
+  <text x="30" y="166" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#475569" letter-spacing="0.3">2. FICHERO TEMPORAL: plantas.bin.tmp (64 bytes)</text>
+
+  <!-- Reg 1 Temporal -->
+  <rect x="30" y="176" width="220" height="52" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2"/>
+  <text x="140" y="198" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600" fill="#065f46">Registro 1: ID = 1 (Rosa)</text>
+  <text x="140" y="216" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#047857">Bytes 0 – 31 (32B)</text>
+
+  <!-- Reg 2 Temporal -->
+  <rect x="260" y="176" width="220" height="52" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2"/>
+  <text x="370" y="198" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600" fill="#065f46">Registro 2: ID = 2 (Girasol)</text>
+  <text x="370" y="216" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#047857">Bytes 32 – 63 (32B)</text>
+
+  <!-- Empty slot -->
+  <rect x="490" y="176" width="260" height="52" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="620" y="206" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#94a3b8">Espacio liberado (−32 bytes)</text>
+
+  <!-- 3. Final Atomic Replacement Box -->
+  <rect x="30" y="246" width="720" height="52" rx="6" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.2"/>
+  <path d="M 45 272 L 68 272" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-indigo)"/>
+  <text x="78" y="267" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="700" fill="#3730a3">
+    3. Sustitución atómica final: <tspan font-family="monospace" font-size="11" font-weight="600">Files.move(pathTemporal, archivoPath, REPLACE_EXISTING)</tspan>
+  </text>
+  <text x="78" y="285" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#4f46e5">
+    El fichero temporal limpio reemplaza de forma segura al original, resultando en un archivo final 32 bytes menor.
+  </text>
+</svg>

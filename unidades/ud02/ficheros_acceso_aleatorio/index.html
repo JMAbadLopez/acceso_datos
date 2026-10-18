@@ -599,6 +599,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ejemplo 12: Lectura y escritura en ficheros binarios de tamaño fijo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-escritura-anadir-un-registro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de ESCRITURA (Añadir un registro)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-lectura-secuencial-o-aleatoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de LECTURA (Secuencial o Aleatoria)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -608,6 +632,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ejemplo 13: Modificar el campo de un registro mediante acceso aleatorio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-modificacion-acceso-aleatorio-in-situ" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de MODIFICACIÓN (Acceso aleatorio in-situ)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -616,6 +655,21 @@
       Ejemplo 14: Eliminación de un registro binario
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Ejemplo 14: Eliminación de un registro binario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-eliminacion-filtrado-mediante-fichero-temporal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de ELIMINACIÓN (Filtrado mediante fichero temporal)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1295,6 +1349,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ejemplo 12: Lectura y escritura en ficheros binarios de tamaño fijo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-escritura-anadir-un-registro" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de ESCRITURA (Añadir un registro)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-lectura-secuencial-o-aleatoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de LECTURA (Secuencial o Aleatoria)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1304,6 +1382,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ejemplo 13: Modificar el campo de un registro mediante acceso aleatorio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-modificacion-acceso-aleatorio-in-situ" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de MODIFICACIÓN (Acceso aleatorio in-situ)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1312,6 +1405,21 @@
       Ejemplo 14: Eliminación de un registro binario
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Ejemplo 14: Eliminación de un registro binario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagrama-operacion-de-eliminacion-filtrado-mediante-fichero-temporal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama: Operación de ELIMINACIÓN (Filtrado mediante fichero temporal)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1345,53 +1453,6 @@
 <p>A diferencia del acceso secuencial, el <strong>acceso aleatorio</strong> nos permite situarnos (<em>saltar</em>) de forma instantánea a cualquier posición física del fichero para leer o modificar un fragmento de datos específico, sin necesidad de procesar todo lo que hay antes. Para poder utilizar esta técnica, nuestros registros en el fichero binario deben tener un <strong>tamaño fijo en bytes</strong>.</p>
 <blockquote>
 <p>Por ejemplo, si cada registro de nuestra colección botánica ocupa exactamente 32 bytes, para acceder al registro número 100 no tenemos que leer los 99 anteriores; podemos saltar directamente a la <strong>posición de inicio</strong> del registro número 100 calculándola: <strong>Posición = 32 bytes × (100−1) = 3168 bytes</strong></p>
-</blockquote>
-<p>Para que este cálculo matemático se cumpla con total precisión, el tamaño en bytes de los campos de texto debe cuplir siempre que 1 carácter = 1 byte y, dependiendo del charset que se utilice, esto puede no cumplirse. Por ejemplo, en un charset variable como UTF-8, caracteres como la 'ñ' o las tildes ocuparán más de un byte.</p>
-<p>A continuación se muestra una tabla comparativa con las características de algunas codificaciones:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Característica</th>
-<th style="text-align: left;"><code>Charset.defaultCharset()</code></th>
-<th style="text-align: left;"><code>Charsets.US_ASCII</code></th>
-<th style="text-align: left;"><code>Charsets.ISO_8859_1</code> (Latin-1)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Descripción</strong></td>
-<td style="text-align: left;">La codificación predeterminada de la Máquina Virtual de Java (JVM).</td>
-<td style="text-align: left;">El estándar clásico americano de 7 bits.</td>
-<td style="text-align: left;">Extensión de 8 bits para idiomas de Europa Occidental.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Tamaño en bytes por carácter</strong></td>
-<td style="text-align: left;"><strong>Variable</strong> (generalmente entre 1 y 4 bytes si la máquina usa UTF-8).</td>
-<td style="text-align: left;"><strong>Estricto: 1 byte</strong> por carácter.</td>
-<td style="text-align: left;"><strong>Estricto: 1 byte</strong> por carácter.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Caracteres soportados</strong></td>
-<td style="text-align: left;">Depende de la versión de Java:<br>- <strong>Java 18+:</strong> UTF-8 por defecto (soporta casi todo: tildes, emojis, caracteres asiáticos, etc.).<br>- <strong>Java 17 o anterior:</strong> Varía según el S.O. (Windows-1252 en Windows, UTF-8 en macOS/Linux).</td>
-<td style="text-align: left;">Extremadamente limitado. Solo alfabeto inglés básico (A-Z, a-z), números (0-9) y signos estándar. <strong>No soporta tildes ni la "ñ"</strong>.</td>
-<td style="text-align: left;">Alfabeto inglés, caracteres de Europa occidental, tildes (á, é, í...), diéresis y la <strong>"ñ"</strong>. <em>(Nota: No soporta el símbolo del Euro <code>€</code>)</em>.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Portabilidad</strong></td>
-<td style="text-align: left;"><strong>Baja</strong> (en Java 17 o inferior, un archivo creado en Windows puede leerse mal en Linux). <strong>Alta</strong> en Java 18+.</td>
-<td style="text-align: left;"><strong>Total</strong>. Es el estándar base universal.</td>
-<td style="text-align: left;"><strong>Alta</strong> en entornos occidentales.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Uso ideal en programación</strong></td>
-<td style="text-align: left;">Lectura/escritura rápida de archivos de texto locales para el usuario.</td>
-<td style="text-align: left;">Protocolos de red muy básicos, comandos de consola ingleses y optimización extrema.</td>
-<td style="text-align: left;">Estructuras de datos binarias con <strong>registros de tamaño fijo</strong> que requieran soporte para el idioma español (tildes, eñes).</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>En nuestros ejemplos utilizaremos <code>ISO_8859_1</code> para asegurarnos que <strong>1 carácter sea siempre estrictamente igual a 1 byte</strong> en el archivo binario, permitiendo de forma segura guardar tildes y eñes sin romper la matemática de los desplazamientos de bytes de tu acceso aleatorio (<code>canal.position()</code>).</p>
 </blockquote>
 <p>Para el acceso aleatorio en la API moderna de Java/Kotlin (<code>java.nio</code>), trabajamos con tres herramientas en equipo:</p>
 <ol>
@@ -1565,6 +1626,10 @@
 </tr>
 </tbody>
 </table>
+<h5 id="diagrama-operacion-de-escritura-anadir-un-registro">Diagrama: Operación de ESCRITURA (Añadir un registro)</h5>
+<p><img alt="Operación de Escritura" src="../../../assets/images/ud02/operacion_escribir.svg" /></p>
+<h5 id="diagrama-operacion-de-lectura-secuencial-o-aleatoria">Diagrama: Operación de LECTURA (Secuencial o Aleatoria)</h5>
+<p><img alt="Operación de Lectura" src="../../../assets/images/ud02/operacion_leer.svg" /></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">  1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">  2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">  3</a></span>
@@ -1937,6 +2002,8 @@
 </div>
 <h4 id="ejemplo-13-modificar-el-campo-de-un-registro-mediante-acceso-aleatorio">Ejemplo 13: Modificar el campo de un registro mediante acceso aleatorio</h4>
 <p>Ahora aprovecharemos la capacidad de <code>FileChannel</code> para posicionarnos directamente sobre una propiedad de un registro concreto utilizando el ID, para actualizarla sin alterar ni leer de forma secuencial el resto del fichero.</p>
+<h5 id="diagrama-operacion-de-modificacion-acceso-aleatorio-in-situ">Diagrama: Operación de MODIFICACIÓN (Acceso aleatorio in-situ)</h5>
+<p><img alt="Operación de Modificación" src="../../../assets/images/ud02/operacion_modificar.svg" /></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
@@ -2110,6 +2177,8 @@
 <h4 id="ejemplo-14-eliminacion-de-un-registro-binario">Ejemplo 14: Eliminación de un registro binario</h4>
 <p>Para eliminar un registro de un fichero binario estructurado secuencial, la técnica estándar consiste en leer el fichero de inicio a fin escribiendo en un fichero temporal <code>.tmp</code> únicamente aquellos registros que <strong>no coincidan</strong> con el ID a eliminar. Al terminar, borramos el original y sustituimos el fichero original por el temporal.</p>
 <p>Esta técnica se utiliza porque eliminar físicamente un registro del centro de un fichero binario obligaría a desplazar todos los bytes posteriores y eso sería muy costoso.</p>
+<h5 id="diagrama-operacion-de-eliminacion-filtrado-mediante-fichero-temporal">Diagrama: Operación de ELIMINACIÓN (Filtrado mediante fichero temporal)</h5>
+<p><img alt="Operación de Eliminación" src="../../../assets/images/ud02/operacion_eliminar.svg" /></p>
 <p>Para poder sustituir el fichero original por el temporal añadimos un import a nuestro código:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.nio.file.StandardCopyOption</span>
 </code></pre></div></td></tr></table></div>

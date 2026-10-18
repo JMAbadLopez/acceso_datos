@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" width="100%" height="100%">
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Canvas Card -->
+  <rect width="780" height="300" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Top Bar: File label & Formula pill -->
+  <text x="30" y="34" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#475569" letter-spacing="0.3">DISCO: fichero 'plantas.bin'</text>
+
+  <rect x="360" y="16" width="390" height="28" rx="14" fill="#f5f3ff" stroke="#ddd6fe" stroke-width="1"/>
+  <text x="555" y="34" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11.5" font-weight="600" fill="#6d28d9">
+    Salto directo: <tspan font-family="monospace">canal.position(32)</tspan>  [(2 − 1) × 32 = 32 bytes]
+  </text>
+
+  <!-- Pointer Jump Arc (clear above the boxes) -->
+  <path d="M 140 56 C 210 38 310 38 375 56" fill="none" stroke="#7c3aed" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrow-purple)"/>
+
+  <!-- File Tape -->
+  <!-- Record 1 -->
+  <rect x="30" y="64" width="220" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="140" y="88" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600" fill="#64748b">Registro 1: "Rosa"</text>
+  <text x="140" y="106" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#94a3b8">Bytes 0 – 31 (32B)</text>
+
+  <!-- Record 2 (Target) -->
+  <rect x="260" y="64" width="240" height="56" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="380" y="88" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#6d28d9">Registro 2: "Girasol"</text>
+  <text x="380" y="106" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="600" fill="#7c3aed">Bytes 32 – 63 (32 bytes)</text>
+
+  <!-- Record 3 -->
+  <rect x="510" y="64" width="240" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="630" y="88" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="600" fill="#64748b">Registro 3: "Margarita"</text>
+  <text x="630" y="106" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#94a3b8">Bytes 64 – 95 (32B)</text>
+
+  <!-- Downward Arrow from Record 2 to Buffer -->
+  <path d="M 380 120 L 380 162" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="394" y="146" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#2563eb">canal.read(buffer) ➔ 32B</text>
+
+  <!-- Buffer Section -->
+  <rect x="30" y="170" width="430" height="68" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <text x="45" y="188" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="700" fill="#1d4ed8" letter-spacing="0.5">BYTEBUFFER (32 BYTES) [flip() para extraer]</text>
+
+  <rect x="45" y="196" width="70" height="28" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="80" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#1e40af" font-weight="600">getInt()</text>
+
+  <rect x="123" y="196" width="180" height="28" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="213" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#1e40af" font-weight="600">get(nombreBytes).trim()</text>
+
+  <rect x="311" y="196" width="135" height="28" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="378" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" fill="#1e40af" font-weight="600">getDouble()</text>
+
+  <!-- Arrow from Buffer to Object -->
+  <path d="M 464 204 L 498 204" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+  <!-- Object in RAM Section -->
+  <rect x="506" y="170" width="244" height="68" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="520" y="190" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="10.5" font-weight="700" fill="#64748b" letter-spacing="0.5">OBJETO EN MEMORIA</text>
+  <text x="520" y="212" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#0f172a">PlantaBinaria(2, "Girasol", 3.0)</text>
+
+  <!-- Footer Tip Box -->
+  <rect x="30" y="248" width="720" height="40" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="45" y="273" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#475569">
+    <tspan font-weight="700" fill="#0f172a">Acceso aleatorio:</tspan> Permite saltar directamente al byte deseado con <tspan font-family="monospace">canal.position(offset)</tspan> sin procesar los registros previos.
+  </text>
+</svg>
