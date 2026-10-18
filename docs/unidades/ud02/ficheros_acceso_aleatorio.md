@@ -4,20 +4,6 @@ A diferencia del acceso secuencial, el **acceso aleatorio** nos permite situarno
 
 > Por ejemplo, si cada registro de nuestra colección botánica ocupa exactamente 32 bytes, para acceder al registro número 100 no tenemos que leer los 99 anteriores; podemos saltar directamente a la **posición de inicio** del registro número 100 calculándola: **Posición = 32 bytes × (100−1) = 3168 bytes**
 
-Para que este cálculo matemático se cumpla con total precisión, el tamaño en bytes de los campos de texto debe cuplir siempre que 1 carácter = 1 byte y, dependiendo del charset que se utilice, esto puede no cumplirse. Por ejemplo, en un charset variable como UTF-8, caracteres como la 'ñ' o las tildes ocuparán más de un byte.
-
-A continuación se muestra una tabla comparativa con las características de algunas codificaciones:
-
-| Característica | `Charset.defaultCharset()` | `Charsets.US_ASCII` | `Charsets.ISO_8859_1` (Latin-1) |
-| :--- | :--- | :--- | :--- |
-| **Descripción** | La codificación predeterminada de la Máquina Virtual de Java (JVM). | El estándar clásico americano de 7 bits. | Extensión de 8 bits para idiomas de Europa Occidental. |
-| **Tamaño en bytes por carácter** | **Variable** (generalmente entre 1 y 4 bytes si la máquina usa UTF-8). | **Estricto: 1 byte** por carácter. | **Estricto: 1 byte** por carácter. |
-| **Caracteres soportados** | Depende de la versión de Java:<br>- **Java 18+:** UTF-8 por defecto (soporta casi todo: tildes, emojis, caracteres asiáticos, etc.).<br>- **Java 17 o anterior:** Varía según el S.O. (Windows-1252 en Windows, UTF-8 en macOS/Linux). | Extremadamente limitado. Solo alfabeto inglés básico (A-Z, a-z), números (0-9) y signos estándar. **No soporta tildes ni la "ñ"**. | Alfabeto inglés, caracteres de Europa occidental, tildes (á, é, í...), diéresis y la **"ñ"**. *(Nota: No soporta el símbolo del Euro `€`)*. |
-| **Portabilidad** | **Baja** (en Java 17 o inferior, un archivo creado en Windows puede leerse mal en Linux). **Alta** en Java 18+. | **Total**. Es el estándar base universal. | **Alta** en entornos occidentales. |
-| **Uso ideal en programación** | Lectura/escritura rápida de archivos de texto locales para el usuario. | Protocolos de red muy básicos, comandos de consola ingleses y optimización extrema. | Estructuras de datos binarias con **registros de tamaño fijo** que requieran soporte para el idioma español (tildes, eñes). |
-
-> En nuestros ejemplos utilizaremos `ISO_8859_1` para asegurarnos que **1 carácter sea siempre estrictamente igual a 1 byte** en el archivo binario, permitiendo de forma segura guardar tildes y eñes sin romper la matemática de los desplazamientos de bytes de tu acceso aleatorio (`canal.position()`).
-
 Para el acceso aleatorio en la API moderna de Java/Kotlin (`java.nio`), trabajamos con tres herramientas en equipo:
 
 1. **`FileChannel`**: Funciona como un "canal o autopista de datos" bidireccional hacia el fichero en el disco. Es el que nos permite modificar la posición del puntero del fichero en tiempo de ejecución mediante `canal.position(long)`.
@@ -75,6 +61,15 @@ En este ejemplo utilizaremos `FileChannel` y `ByteBuffer` para crear un fichero 
 | `id_planta` | `Int` | 4 bytes | 0 – 3 |
 | `nombre_comun` | `String` | 20 bytes (longitud fija) | 4 – 23 |
 | `precio` | `Double` | 8 bytes | 24 – 31 |
+
+##### Diagrama: Operación de ESCRITURA (Añadir un registro)
+
+![Operación de Escritura](../../assets/images/ud02/operacion_escribir.svg)
+
+##### Diagrama: Operación de LECTURA (Secuencial o Aleatoria)
+
+![Operación de Lectura](../../assets/images/ud02/operacion_leer.svg)
+
 
 ```kotlin
 import java.nio.ByteBuffer
@@ -321,6 +316,11 @@ Offset    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F   ASCII
 
 Ahora aprovecharemos la capacidad de `FileChannel` para posicionarnos directamente sobre una propiedad de un registro concreto utilizando el ID, para actualizarla sin alterar ni leer de forma secuencial el resto del fichero.
 
+##### Diagrama: Operación de MODIFICACIÓN (Acceso aleatorio in-situ)
+
+![Operación de Modificación](../../assets/images/ud02/operacion_modificar.svg)
+
+
 ```kotlin
 fun modificarPrecioPlanta(idPlanta: Int, nuevoPrecio: Double) {
     try {
@@ -465,6 +465,11 @@ Añadimos a la función `main` las líneas para llamar a la nueva función y vol
 Para eliminar un registro de un fichero binario estructurado secuencial, la técnica estándar consiste en leer el fichero de inicio a fin escribiendo en un fichero temporal `.tmp` únicamente aquellos registros que **no coincidan** con el ID a eliminar. Al terminar, borramos el original y sustituimos el fichero original por el temporal.
 
 Esta técnica se utiliza porque eliminar físicamente un registro del centro de un fichero binario obligaría a desplazar todos los bytes posteriores y eso sería muy costoso.
+
+##### Diagrama: Operación de ELIMINACIÓN (Filtrado mediante fichero temporal)
+
+![Operación de Eliminación](../../assets/images/ud02/operacion_eliminar.svg)
+
 
 Para poder sustituir el fichero original por el temporal añadimos un import a nuestro código:
 
