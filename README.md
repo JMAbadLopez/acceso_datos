@@ -22,11 +22,12 @@ El módulo cubre el ciclo completo del acceso y persistencia de datos en aplicac
 
 | Unidad | Título |
 | :---: | :--- |
-| UD1 | Programación en el entorno Kotlin |
-| UD2 | Persistencia en ficheros |
-| UD3 | Persistencia en Bases de Datos |
-| UD4 | ORM. Mapeo Objeto Relacional |
-| UD5 | Diseño de componentes. API REST |
+| UD1 | [Programación en el entorno Kotlin](unidades/ud01/ud01.md) |
+| UD2 | [Persistencia en ficheros](unidades/ud02/introduccion.md) |
+| UD3 | [Persistencia en Bases de Datos](unidades/ud03/introduccion.md) |
+| UD4 | [ORM. Mapeo Objeto Relacional](unidades/ud04/introduccion.md) |
+| UD5 | [Diseño de componentes. API REST](unidades/ud05/introduccion.md) |
+| UD6 | [Bases de datos Documentales. MongoDB](unidades/ud06/introduccion.md) |
 
 ---
 
@@ -54,7 +55,7 @@ Este material ha sido elaborado y es mantenido por **José Manuel Abad López** 
 - 📧 <jm.abadlopez@edu.gva.es>
 - 🌐 <https://jmabadlopez.github.io>
 
-Las unidades UD1, UD2 y UD3 están basadas en el trabajo original de **Begoña Paterna** (a partir de materiales de **Alicia Salvador**), adaptadas y ampliadas para el presente curso. Las unidades UD4 y UD5 han sido creadas íntegramente por José Manuel Abad López.
+Las unidades UD1, UD2 y UD3 están basadas en el trabajo original de **Begoña Paterna** (a partir de materiales de **Alicia Salvador**), adaptadas y ampliadas para el presente curso. Las unidades UD4, UD5 y UD6 han sido creadas íntegramente por **José Manuel Abad López**.
 
 ---
 
