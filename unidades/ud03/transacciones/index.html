@@ -1466,69 +1466,12 @@
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
 <p class="admonition-title">🔍 <strong>Ejecutar y Analizar: Implementación de una Transacción</strong></p>
-<p>Prueba el código de ejemplo y verifica que funciona correctamente.</p>
+<p>Prueba el código de ejemplo y verifica que la salida por consola es:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>Transacción completada.
+</code></pre></div></td></tr></table></div>
+<p>Si el ID no existe en la BD, no se imprime nada (el <code>executeUpdate</code> afecta 0 filas). Si hay un error de conexión se imprimirá el mensaje de <code>catch</code> y los cambios quedarán revertidos.</p>
 </div>
 <p>Este método de ejemplo actualiza dos registros de forma segura dentro de una transacción.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span>
-<span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span>
-<span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span>
-<span class="normal"><a href="#__codelineno-2-20">20</a></span>
-<span class="normal"><a href="#__codelineno-2-21">21</a></span>
-<span class="normal"><a href="#__codelineno-2-22">22</a></span>
-<span class="normal"><a href="#__codelineno-2-23">23</a></span>
-<span class="normal"><a href="#__codelineno-2-24">24</a></span>
-<span class="normal"><a href="#__codelineno-2-25">25</a></span>
-<span class="normal"><a href="#__codelineno-2-26">26</a></span>
-<span class="normal"><a href="#__codelineno-2-27">27</a></span>
-<span class="normal"><a href="#__codelineno-2-28">28</a></span>
-<span class="normal"><a href="#__codelineno-2-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">actualizarAlturasConTransaccion</span><span class="p">(</span><span class="n">id1</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">nuevaAltura1</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span><span class="w"> </span><span class="n">id2</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">nuevaAltura2</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="c1">// 1. Iniciar transacción</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;UPDATE plantas SET altura = ? WHERE id = ?&quot;</span><span class="p">)</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setDouble</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">nuevaAltura1</span><span class="p">);</span><span class="w"> </span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id1</span><span class="p">);</span><span class="w"> </span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;UPDATE plantas SET altura = ? WHERE id = ?&quot;</span><span class="p">)</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setDouble</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">nuevaAltura2</span><span class="p">);</span><span class="w"> </span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id2</span><span class="p">);</span><span class="w"> </span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">commit</span><span class="p">()</span><span class="w"> </span><span class="c1">// 2. Confirmar cambios</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transacción completada.&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error en la transacción, se revierten los cambios: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">rollback</span><span class="p">()</span><span class="w"> </span><span class="c1">// 3. Revertir cambios</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="ejemplo-con-varias-tablas">Ejemplo con varias tablas</h3>
-<p>Vamos a modificar la <code>BD_plantas</code>. Para el siguiente ejemplo se han añadido a la BD las tablas <code>jardines</code>y <code>jardines_plantas</code> cuya estructura es la siguiente:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
@@ -1549,32 +1492,46 @@
 <span class="normal"><a href="#__codelineno-3-18">18</a></span>
 <span class="normal"><a href="#__codelineno-3-19">19</a></span>
 <span class="normal"><a href="#__codelineno-3-20">20</a></span>
-<span class="normal"><a href="#__codelineno-3-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="cm">/* Añadimos una columna de &#39;stock&#39; a la tabla &#39;plantas&#39; */</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">stock</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="cm">/* Actualizamos y ponemos a 50 todo el stock */</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">stock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="cm">/* Creación de la tabla jardines */</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jardines</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="n">id_jardin</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTOINCREMENT</span><span class="p">,</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="n">nombre</span><span class="w"> </span><span class="nb">TEXT</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="p">);</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="cm">/* Inserción de un jardín */</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">jardines</span><span class="p">(</span><span class="n">nombre</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Jardín botánico de Sagunto&#39;</span><span class="p">);</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="cm">/* Creación de la relación &#39;jardines_plantas&#39; */</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jardines_plantas</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">    </span><span class="n">id_planta</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">    </span><span class="n">id_jardin</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">    </span><span class="n">cantidad</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_planta</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_jardin</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">jardines</span><span class="w"> </span><span class="p">(</span><span class="n">id_jardin</span><span class="p">)</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="p">);</span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">actualizarPreciosConTransaccion</span><span class="p">(</span><span class="n">id1</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">nuevoPrecio1</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span><span class="w"> </span><span class="n">id2</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">nuevoPrecio2</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">        </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="c1">// 1. Iniciar transacción</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;UPDATE plantas SET precio = ? WHERE id = ?&quot;</span><span class="p">)</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setDouble</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">nuevoPrecio1</span><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id1</span><span class="p">)</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;UPDATE plantas SET precio = ? WHERE id = ?&quot;</span><span class="p">)</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setDouble</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">nuevoPrecio2</span><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id2</span><span class="p">)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">            </span><span class="n">stmt</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">()</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">commit</span><span class="p">()</span><span class="w"> </span><span class="c1">// 2. Confirmar cambios</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transacción completada.&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error en la transacción, se revierten los cambios: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">rollback</span><span class="p">()</span><span class="w"> </span><span class="c1">// 3. Revertir cambios</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p><img alt="Imagen 5" src="../../../assets/images/ud03/ud3_5.png" /></p>
-<p><img alt="Imagen 6" src="../../../assets/images/ud03/ud3_6.png" /></p>
-<p>Supongamos que queremos llevar varias unidades de una planta a un jardín. El programa debe actualizar el stock en la tabla <code>plantas</code> (restando las unidades correspondientes) y añadir un registro en la tabla <code>jardines_plantas</code> indicando el jadín, la planta y la cantidad.</p>
-<p>Ambas operaciones deben realizarse juntas, o no realizarse ninguna. El código sería el siguiente:</p>
+<h3 id="ejemplo-con-varias-tablas">Ejemplo con varias tablas</h3>
+<p>Vamos a modificar la <code>BD_plantas</code>. Para el siguiente ejemplo se han añadido a la BD las tablas <code>jardines</code>y <code>jardines_plantas</code> cuya estructura es la siguiente:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
@@ -1590,91 +1547,213 @@
 <span class="normal"><a href="#__codelineno-4-13">13</a></span>
 <span class="normal"><a href="#__codelineno-4-14">14</a></span>
 <span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span>
-<span class="normal"><a href="#__codelineno-4-21">21</a></span>
-<span class="normal"><a href="#__codelineno-4-22">22</a></span>
-<span class="normal"><a href="#__codelineno-4-23">23</a></span>
-<span class="normal"><a href="#__codelineno-4-24">24</a></span>
-<span class="normal"><a href="#__codelineno-4-25">25</a></span>
-<span class="normal"><a href="#__codelineno-4-26">26</a></span>
-<span class="normal"><a href="#__codelineno-4-27">27</a></span>
-<span class="normal"><a href="#__codelineno-4-28">28</a></span>
-<span class="normal"><a href="#__codelineno-4-29">29</a></span>
-<span class="normal"><a href="#__codelineno-4-30">30</a></span>
-<span class="normal"><a href="#__codelineno-4-31">31</a></span>
-<span class="normal"><a href="#__codelineno-4-32">32</a></span>
-<span class="normal"><a href="#__codelineno-4-33">33</a></span>
-<span class="normal"><a href="#__codelineno-4-34">34</a></span>
-<span class="normal"><a href="#__codelineno-4-35">35</a></span>
-<span class="normal"><a href="#__codelineno-4-36">36</a></span>
-<span class="normal"><a href="#__codelineno-4-37">37</a></span>
-<span class="normal"><a href="#__codelineno-4-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">llevarPlantasAJardin</span><span class="p">(</span><span class="n">id_jardin</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">        </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w">  </span><span class="c1">// Iniciar transacción manual</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">        </span><span class="c1">// Restar stock a la planta</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;UPDATE plantas SET stock = stock - ? WHERE id = ?&quot;</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">            </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">);</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">            </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">);</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">            </span><span class="n">stmt</span><span class="o">?.</span><span class="na">executeUpdate</span><span class="p">()</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">        </span><span class="c1">// Añadir línea en tabla jardines_plantas</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;INSERT INTO jardines_plantas(id_jardin, id_planta, cantidad) VALUES (?, ?, ?)&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">            </span><span class="p">.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">id_jardin</span><span class="p">);</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">);</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">);</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">executeUpdate</span><span class="p">()</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22"></a>
-<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">        </span><span class="c1">// Confirmar cambios</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">commit</span><span class="p">()</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transacción realizada con éxito.&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="o">?.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;UNIQUE constraint failed&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Intento de insertar clave duplicada&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="w">            </span><span class="n">conn</span><span class="o">?.</span><span class="na">rollback</span><span class="p">()</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transacción revertida.&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="c1">// otros errores, relanzamos</span>
-<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-4-34" name="__codelineno-4-34"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">        </span><span class="c1">// Código que se ejecuta siempre</span>
-<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Fin del programa.&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-37" name="__codelineno-4-37"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-38" name="__codelineno-4-38"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="cm">/* Creación de la tabla jardines */</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jardines</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="n">id_jardin</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTOINCREMENT</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="n">nombre</span><span class="w"> </span><span class="nb">TEXT</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="p">);</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="cm">/* Inserción de un jardín de ejemplo */</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">jardines</span><span class="p">(</span><span class="n">nombre</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Jardín botánico de Sagunto&#39;</span><span class="p">);</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="cm">/* Creación de la relación &#39;jardines_plantas&#39; */</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jardines_plantas</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">    </span><span class="n">id_planta</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">    </span><span class="n">id_jardin</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">    </span><span class="n">cantidad</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_planta</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_jardin</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">jardines</span><span class="w"> </span><span class="p">(</span><span class="n">id_jardin</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="p">);</span>
 </code></pre></div></td></tr></table></div>
-<p>Si no se produce ningún error se hará el <code>commit</code> y en caso contrario el <code>rollback</code></p>
-<div class="admonition success">
-<p class="admonition-title">🔍 <strong>Ejecutar y Analizar: Transacciones con varias tablas</strong></p>
-<p>Prueba el código de ejemplo y verifica que funciona correctamente.
-Ten en cuenta que tendrás que crear una función <code>main</code>que haga las llamadas correctas a las funciones   <code>llevarPlantasAJardin</code> y <code>actualizarAlturasConTransaccion</code>.</p>
-</div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
 <span class="normal"><a href="#__codelineno-5-3">3</a></span>
 <span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1">// Por ejemplo</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="n">actualizarAlturasConTransaccion</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">0.95</span><span class="p">)</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="n">llevarPlantasAJardin</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">7</a></span>
+<span class="normal"><a href="#__codelineno-5-8">8</a></span>
+<span class="normal"><a href="#__codelineno-5-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>Tabla jardines:
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a> id_jardin | nombre
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>-----------+-----------------------------
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>     1     | Jardín botánico de Sagunto
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>Tabla jardines_plantas (tras llevarPlantasAJardin):
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a> id_planta | id_jardin | cantidad
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>-----------+-----------+---------
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>     1     |     1     |   10
 </code></pre></div></td></tr></table></div>
+<p>Supongamos que queremos llevar varias unidades de una planta a un jardín. El programa debe actualizar el stock en la tabla <code>plantas</code> (restando las unidades correspondientes) y añadir un registro en la tabla <code>jardines_plantas</code> indicando el jadín, la planta y la cantidad.</p>
+<p>Ambas operaciones deben realizarse juntas, o no realizarse ninguna. El código sería el siguiente:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span>
+<span class="normal"><a href="#__codelineno-6-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">llevarPlantasAJardin</span><span class="p">(</span><span class="n">id_jardin</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">        </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="w">  </span><span class="c1">// Iniciar transacción manual</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">        </span><span class="c1">// Restar stock a la planta</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;UPDATE plantas SET stock = stock - ? WHERE id = ?&quot;</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">            </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">);</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">            </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">);</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">            </span><span class="n">stmt</span><span class="o">?.</span><span class="na">executeUpdate</span><span class="p">()</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">        </span><span class="c1">// Añadir línea en tabla jardines_plantas</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="s">&quot;INSERT INTO jardines_plantas(id_jardin, id_planta, cantidad) VALUES (?, ?, ?)&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">            </span><span class="p">.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">id_jardin</span><span class="p">);</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">id_planta</span><span class="p">);</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">setInt</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">cantidad</span><span class="p">);</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">                </span><span class="n">stmt</span><span class="o">?.</span><span class="na">executeUpdate</span><span class="p">()</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">        </span><span class="c1">// Confirmar cambios</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">        </span><span class="n">conn</span><span class="o">?.</span><span class="na">commit</span><span class="p">()</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transacción realizada con éxito.&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="o">?.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;UNIQUE constraint failed&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Intento de insertar clave duplicada&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="w">            </span><span class="n">conn</span><span class="o">?.</span><span class="na">rollback</span><span class="p">()</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Transacción revertida.&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="c1">// otros errores, relanzamos</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a><span class="w">        </span><span class="c1">// Código que se ejecuta siempre</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Fin del programa.&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Si no se produce ningún error se hará el <code>commit</code> y en caso contrario el <code>rollback</code></p>
+<div class="admonition success">
+<p class="admonition-title">🔍 <strong>Ejecutar y Analizar: Transacciones con varias tablas</strong></p>
+<p>Crea una función <code>main</code> que llame a <code>actualizarPreciosConTransaccion</code> y a <code>llevarPlantasAJardin</code> como se muestra a continuación, y verifica que la salida por consola es:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>Transacción completada.
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>Transacción realizada con éxito.
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>Fin del programa.
+</code></pre></div></td></tr></table></div>
+<p>Comprueba también en la herramienta <strong>Database</strong> de IntelliJ que el stock de la planta con ID 1 (Aloe Vera) se redujo en 10 unidades y que apareció un nuevo registro en <code>jardines_plantas</code>.</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1">// Por ejemplo</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="n">actualizarPreciosConTransaccion</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0.8</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">1.2</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="n">llevarPlantasAJardin</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 8: El administrador del herbario quiere llevar 10 unidades de Aloe Vera (id=1) al jardín botánico (id=1). La operación requiere dos acciones: restar 10 unidades del <code>stock</code> en <code>plantas</code> e insertar un registro en <code>jardines_plantas</code>. Si el programa falla justo después de la primera operación (por un corte de luz), ¿qué propiedad ACID garantiza que el <code>stock</code> NO quede reducido sin el registro en <code>jardines_plantas</code>?</strong></p>
+<p>A) Consistencia — el sistema comprueba que los datos siguen siendo válidos tras cada operación individual.</p>
+<p>B) Durabilidad — los cambios confirmados permanecen aunque el sistema falle después.</p>
+<p>C) Atomicidad — o se ejecutan todas las operaciones de la transacción, o no se ejecuta ninguna.</p>
+<p>D) Isolación — ninguna otra transacción puede leer los datos modificados hasta que se confirmen.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) La consistencia garantiza que la BD pasa de un estado válido a otro, pero no decide si las operaciones se revierten o no. Esa decisión es de la atomicidad.</p>
+<p>❌ B) La durabilidad actúa tras el <code>COMMIT</code>: garantiza que los cambios ya confirmados sobreviven a un fallo. Aquí el fallo ocurre antes del <code>COMMIT</code>.</p>
+<p>✅ C) La atomicidad trata la transacción como una unidad indivisible. Si alguna operación no se completa, el sistema revierte todas las operaciones previas de esa transacción. Ni el <code>stock</code> quedaría reducido ni el registro en <code>jardines_plantas</code> insertado.</p>
+<p>❌ D) La isolación controla qué ven otras transacciones concurrentes. No determina qué pasa con las operaciones incompletas de una misma transacción.</p>
+</details>
+<p><strong>Pregunta 9: El siguiente código desactiva <code>autoCommit</code> y realiza operaciones en la BD:</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">conn</span><span class="o">?.</span><span class="na">autoCommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="c1">// ... varias operaciones SQL ...</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="n">conn</span><span class="o">?.</span><span class="na">commit</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<p><strong>¿Qué ocurriría si se omitiera la línea <code>conn?.autoCommit = false</code> y se mantuviera la llamada a <code>conn?.commit()</code> al final?</strong></p>
+<p>A) Se lanzaría una <code>SQLException</code> porque <code>commit()</code> solo puede llamarse cuando <code>autoCommit</code> está desactivado.</p>
+<p>B) Cada operación SQL se confirmaría de forma inmediata e individual; si falla alguna operación intermedia, los cambios anteriores ya habrían sido aplicados y no podrían revertirse con <code>rollback()</code>.</p>
+<p>C) Las operaciones se acumularían en memoria hasta la llamada a <code>commit()</code>, igual que si <code>autoCommit</code> estuviera desactivado.</p>
+<p>D) El driver JDBC ignoraría la llamada a <code>commit()</code> sin producir ningún error, y las operaciones quedarían pendientes indefinidamente.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Llamar a <code>commit()</code> con <code>autoCommit = true</code> no lanza ninguna excepción; en muchos drivers simplemente no tiene efecto o confirma lo ya confirmado automáticamente.</p>
+<p>✅ B) Cuando <code>autoCommit = true</code> (el valor por defecto), cada <code>executeUpdate()</code> actúa como su propia micro-transacción y se confirma de inmediato. Si una operación posterior falla, las anteriores ya están permanentemente aplicadas y el <code>rollback()</code> ya no puede deshacerlas.</p>
+<p>❌ C) En modo <code>autoCommit = true</code> las operaciones se confirman inmediatamente. Para acumularlas es necesario desactivar <code>autoCommit</code> explícitamente.</p>
+<p>❌ D) <code>commit()</code> no deja operaciones en espera. En modo <code>autoCommit = true</code> puede tener efecto vacío según el driver, pero no bloquea ni deja cambios pendientes.</p>
+</details>
+</div>
 <h2 id="practica-5-transacciones">🎯 Práctica 5: Transacciones</h2>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica 5: Transacciones</p>
+<p>Para preparar la entrega final, vas a ampliar tu BD con una nueva relación. Añade las siguientes tablas a tu <code>videojuegos.sqlite</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">listas</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">    </span><span class="n">id_lista</span><span class="w">  </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTOINCREMENT</span><span class="p">,</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">    </span><span class="n">nombre</span><span class="w">    </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="p">);</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">listas</span><span class="p">(</span><span class="n">nombre</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Pendientes&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Completados&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Favoritos&#39;</span><span class="p">);</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">listas_videojuegos</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">    </span><span class="n">id_lista</span><span class="w">     </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">    </span><span class="n">id_videojuego</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="w">    </span><span class="n">fecha_añadido</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_lista</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">listas</span><span class="p">(</span><span class="n">id_lista</span><span class="p">),</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_videojuego</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">videojuegos</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>Implementa en tu proyecto una función <code>anyadirALista(idLista: Int, idVideojuego: Int, fecha: String)</code> que dentro de una <strong>única transacción</strong>:</p>
 <ol>
-<li>Diseña un bloque de transacciones de actualización para tu proyecto.</li>
-<li>La operación de transacción debe incluir varios <code>UPDATE</code>, <code>INSERT</code> o <code>DELETE</code>, que afecten a <strong>varios registros que cumplan ciertas condiciones</strong>.</li>
-<li>Si lo deseas, puedes comenzar a <strong>añadir nuevas tablas</strong> en la BD de tu Proyecto.</li>
+<li>Comprueba (con un <code>SELECT</code>) que el videojuego existe en la tabla <code>videojuegos</code>.</li>
+<li>Inserta el registro en <code>listas_videojuegos</code>.</li>
 </ol>
+<p>Si cualquiera de las dos operaciones falla, la transacción debe hacer <code>rollback</code> y ningún dato debe quedar modificado.</p>
 </div>
 
 

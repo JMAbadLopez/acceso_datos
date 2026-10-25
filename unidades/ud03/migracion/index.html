@@ -826,7 +826,7 @@
         <li class="md-nav__item">
   <a href="#practica-6-migracion-a-mysql-o-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 Práctica 6: Migración a Mysql o PostgreSQL
+      🎯 Práctica 6: Migración a MySQL o PostgreSQL
     </span>
   </a>
   
@@ -1308,7 +1308,7 @@
         <li class="md-nav__item">
   <a href="#practica-6-migracion-a-mysql-o-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 Práctica 6: Migración a Mysql o PostgreSQL
+      🎯 Práctica 6: Migración a MySQL o PostgreSQL
     </span>
   </a>
   
@@ -1371,16 +1371,36 @@
 <span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="n">nombre_comun</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="n">nombre_cientifico</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="n">frecuencia_riego</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="n">altura</span><span class="w">  </span><span class="nb">REAL</span><span class="p">,</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="n">stock</span><span class="w"> </span><span class="nb">INTEGER</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="p">);</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="cm">/* CREAMOS EL ESQUEMA DE TODAS LAS TABLAS COMO LAS TENÍAMOS EN SQLITE */</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="n">stock</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="n">precio</span><span class="w"> </span><span class="nb">REAL</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="p">);</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jardines</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="n">id_jardin</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="n">nombre</span><span class="w"> </span><span class="nb">TEXT</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="p">);</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jardines_plantas</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="n">id_planta</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="n">id_jardin</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="n">cantidad</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_planta</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">plantas</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id_jardin</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">jardines</span><span class="w"> </span><span class="p">(</span><span class="n">id_jardin</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="p">);</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="modificacion-del-conector">Modificación del Conector</h2>
 <p>Como decíamos al inicio, gracias a la <strong>modularidad</strong> que nos ofrece la <strong>arquitectura</strong> de nuestro Proyecto, para poder cambiar el <strong>SGBD</strong> simplemente tendremos que cambiar el archivo <code>ConexionDB</code> e indicarle que nuestra conexión se realizará contra <em>MySQL</em>.</p>
@@ -1457,14 +1477,30 @@
 <a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="kc">false</span>
 <a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="practica-6-migracion-a-mysql-o-postgresql">🎯 Práctica 6: Migración a Mysql o PostgreSQL</h2>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 10: Gracias al patrón DAO y al objeto <code>ConexionBD</code>, el proyecto está diseñado para facilitar el cambio de SGBD. Si se decide migrar de SQLite a MySQL, ¿qué fichero o ficheros del proyecto deben modificarse obligatoriamente?</strong></p>
+<p>A) Solo <code>ConexionBD.kt</code>, cambiando la URL de conexión y las credenciales, y también <code>build.gradle.kts</code> para añadir la dependencia del driver de MySQL.</p>
+<p>B) <code>ConexionBD.kt</code>, <code>PlantasDAO.kt</code> y <code>Main.kt</code>, porque cada uno contiene referencias directas al tipo de base de datos.</p>
+<p>C) Solo <code>build.gradle.kts</code>, ya que añadir el driver correcto hace que el resto del código funcione automáticamente.</p>
+<p>D) Solo <code>PlantasDAO.kt</code>, porque es donde están escritas las consultas SQL que son distintas en MySQL.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>✅ A) Esta es la ventaja del diseño modular. <code>ConexionBD.kt</code> centraliza toda la configuración de la conexión (URL, credenciales, driver). Añadiendo la dependencia del nuevo driver en <code>build.gradle.kts</code> y actualizando <code>ConexionBD.kt</code>, el resto del proyecto (DAO, Main) sigue funcionando sin cambios.</p>
+<p>❌ B) <code>PlantasDAO.kt</code> usa SQL estándar (SELECT, INSERT, UPDATE, DELETE con PreparedStatement) que es compatible con SQLite y MySQL. <code>Main.kt</code> no contiene referencias a la BD. Solo hay que tocar <code>ConexionBD.kt</code> y <code>build.gradle.kts</code>.</p>
+<p>❌ C) Añadir el driver no es suficiente. La URL de conexión de SQLite (<code>jdbc:sqlite:ruta</code>) es completamente diferente a la de MySQL (<code>jdbc:mysql://host:puerto/bd</code>), y MySQL requiere usuario y contraseña. Esos cambios van en <code>ConexionBD.kt</code>.</p>
+<p>❌ D) Las consultas SQL usadas en el proyecto (CRUD básico con PreparedStatement) son compatibles con ambos SGBD sin modificaciones. El único cambio en el DAO podría ser necesario si se usase SQL específico de SQLite (como <code>AUTOINCREMENT</code> vs <code>AUTO_INCREMENT</code>), pero no es el caso para las operaciones estándar.</p>
+</details>
+</div>
+<h2 id="practica-6-migracion-a-mysql-o-postgresql">🎯 Práctica 6: Migración a MySQL o PostgreSQL</h2>
 <div class="admonition warning">
-<p class="admonition-title">🎯 Práctica 6: Migración a Mysql o PostgreSQL</p>
+<p class="admonition-title">🎯 Práctica 6: Migración a MySQL o PostgreSQL</p>
 <ol>
-<li>Instala MySQL o PostgreSQL, preferiblemente mediante un contenedor Docker, AWS o VirtualBox.</li>
-<li>Migra la base de datos que has creado y la/s tabla/s en el nuevo SGBD con la misma estructura.</li>
-<li>Modifica <code>ConexionBD.kt</code> con los nuevos parámetros de conexión (URL, usuario, contraseña).</li>
-<li>Ejecuta la aplicación. Debería funcionar sin alterar el DAO o la lógica principal.</li>
+<li>Instala MySQL o PostgreSQL (preferiblemente mediante Docker, AWS o VirtualBox).</li>
+<li>Crea la base de datos <code>videojuegos</code> en el nuevo SGBD y ejecuta el script SQL de creación de tus tres tablas (<code>videojuegos</code>, <code>listas</code>, <code>listas_videojuegos</code>) con la misma estructura que en SQLite (recuerda adaptar <code>AUTOINCREMENT</code> → <code>AUTO_INCREMENT</code> si usas MySQL).</li>
+<li>Puebla las tablas con los mismos datos de prueba usados en SQLite.</li>
+<li>Modifica únicamente <code>ConexionBD.kt</code> con la nueva URL de conexión, usuario y contraseña. Añade también la dependencia del driver en <code>build.gradle.kts</code>.</li>
+<li>Ejecuta la aplicación. Todas las operaciones del DAO y la lógica de <code>Main.kt</code> deben funcionar sin ningún otro cambio.</li>
 </ol>
 </div>
 
