@@ -22,7 +22,7 @@ El módulo tiene como objetivo que el alumnado adquiera las competencias necesar
 
 | Unidad | Título |
 | :---: | :--- |
-| UD1 | [Programación en el entorno Kotlin](unidades/ud01/ud01.md) |
+| UD1 | [Programación en el entorno Kotlin](unidades/ud01/introduccion.md) |
 | UD2 | [Persistencia en ficheros](unidades/ud02/introduccion.md) |
 | UD3 | [Persistencia en Bases de Datos](unidades/ud03/introduccion.md) |
 | UD4 | [ORM. Mapeo Objeto Relacional](unidades/ud04/introduccion.md) |

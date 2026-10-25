@@ -3,7 +3,13 @@ site_url: https://jmabadlopez.github.io/acceso_datos/
 
 nav:
   - Unidades:
-    - UD1 - Programación en el entorno Kotlin: unidades/ud01/ud01.md
+    - UD1 - Programación en el entorno Kotlin:
+      - Introducción y Entorno: unidades/ud01/introduccion.md
+      - Fundamentos del Lenguaje: unidades/ud01/fundamentos.md
+      - Colecciones y Estructuras de Datos: unidades/ud01/colecciones.md
+      - Funciones y Lambdas: unidades/ud01/funciones.md
+      - Programación Orientada a Objetos: unidades/ud01/poo.md
+      - Boletín de Ejercicios: unidades/ud01/boletin.md
     - UD2 - Persistencia en ficheros:
       - Introducción: unidades/ud02/introduccion.md
       - Ficheros y directorios: unidades/ud02/ficheros_directorios.md
