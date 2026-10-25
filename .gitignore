@@ -21,3 +21,4 @@ site.zip
 # Archivos temporales de Word/LibreOffice
 ~$*
 *.~lock.*
+*.sqlite-journal

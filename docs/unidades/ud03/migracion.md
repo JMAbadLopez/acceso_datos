@@ -40,12 +40,22 @@ CREATE TABLE plantas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nombre_comun VARCHAR(100),
     nombre_cientifico VARCHAR(100),
-    frecuencia_riego INTEGER,
-    altura  REAL,
-    stock INTEGER
+    stock INTEGER,
+    precio REAL
 );
 
-/* CREAMOS EL ESQUEMA DE TODAS LAS TABLAS COMO LAS TENÍAMOS EN SQLITE */
+CREATE TABLE jardines (
+    id_jardin INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nombre TEXT
+);
+
+CREATE TABLE jardines_plantas (
+    id_planta INTEGER,
+    id_jardin INTEGER,
+    cantidad INTEGER,
+    FOREIGN KEY (id_planta) REFERENCES plantas (id),
+    FOREIGN KEY (id_jardin) REFERENCES jardines (id_jardin)
+);
 ```
 
 ## Modificación del Conector
@@ -101,11 +111,33 @@ El paso final es modificar el archivo `ConexionBD.kt` de nuestro proyecto. Busca
     }
 ```
 
-## 🎯 Práctica 6: Migración a Mysql o PostgreSQL
+!!! example "Autoevaluación"
 
-!!! warning "🎯 Práctica 6: Migración a Mysql o PostgreSQL"
-    1. Instala MySQL o PostgreSQL, preferiblemente mediante un contenedor Docker, AWS o VirtualBox.
-    2. Migra la base de datos que has creado y la/s tabla/s en el nuevo SGBD con la misma estructura.
-    3. Modifica `ConexionBD.kt` con los nuevos parámetros de conexión (URL, usuario, contraseña).
-    4. Ejecuta la aplicación. Debería funcionar sin alterar el DAO o la lógica principal.
+    **Pregunta 10: Gracias al patrón DAO y al objeto `ConexionBD`, el proyecto está diseñado para facilitar el cambio de SGBD. Si se decide migrar de SQLite a MySQL, ¿qué fichero o ficheros del proyecto deben modificarse obligatoriamente?**
+
+    A) Solo `ConexionBD.kt`, cambiando la URL de conexión y las credenciales, y también `build.gradle.kts` para añadir la dependencia del driver de MySQL.
+
+    B) `ConexionBD.kt`, `PlantasDAO.kt` y `Main.kt`, porque cada uno contiene referencias directas al tipo de base de datos.
+
+    C) Solo `build.gradle.kts`, ya que añadir el driver correcto hace que el resto del código funcione automáticamente.
+
+    D) Solo `PlantasDAO.kt`, porque es donde están escritas las consultas SQL que son distintas en MySQL.
+
+    ??? quote "Solución"
+        ✅ A) Esta es la ventaja del diseño modular. `ConexionBD.kt` centraliza toda la configuración de la conexión (URL, credenciales, driver). Añadiendo la dependencia del nuevo driver en `build.gradle.kts` y actualizando `ConexionBD.kt`, el resto del proyecto (DAO, Main) sigue funcionando sin cambios.
+
+        ❌ B) `PlantasDAO.kt` usa SQL estándar (SELECT, INSERT, UPDATE, DELETE con PreparedStatement) que es compatible con SQLite y MySQL. `Main.kt` no contiene referencias a la BD. Solo hay que tocar `ConexionBD.kt` y `build.gradle.kts`.
+
+        ❌ C) Añadir el driver no es suficiente. La URL de conexión de SQLite (`jdbc:sqlite:ruta`) es completamente diferente a la de MySQL (`jdbc:mysql://host:puerto/bd`), y MySQL requiere usuario y contraseña. Esos cambios van en `ConexionBD.kt`.
+
+        ❌ D) Las consultas SQL usadas en el proyecto (CRUD básico con PreparedStatement) son compatibles con ambos SGBD sin modificaciones. El único cambio en el DAO podría ser necesario si se usase SQL específico de SQLite (como `AUTOINCREMENT` vs `AUTO_INCREMENT`), pero no es el caso para las operaciones estándar.
+
+## 🎯 Práctica 6: Migración a MySQL o PostgreSQL
+
+!!! warning "🎯 Práctica 6: Migración a MySQL o PostgreSQL"
+    1. Instala MySQL o PostgreSQL (preferiblemente mediante Docker, AWS o VirtualBox).
+    2. Crea la base de datos `videojuegos` en el nuevo SGBD y ejecuta el script SQL de creación de tus tres tablas (`videojuegos`, `listas`, `listas_videojuegos`) con la misma estructura que en SQLite (recuerda adaptar `AUTOINCREMENT` → `AUTO_INCREMENT` si usas MySQL).
+    3. Puebla las tablas con los mismos datos de prueba usados en SQLite.
+    4. Modifica únicamente `ConexionBD.kt` con la nueva URL de conexión, usuario y contraseña. Añade también la dependencia del driver en `build.gradle.kts`.
+    5. Ejecuta la aplicación. Todas las operaciones del DAO y la lógica de `Main.kt` deben funcionar sin ningún otro cambio.
 

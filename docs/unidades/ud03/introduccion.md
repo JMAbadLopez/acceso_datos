@@ -32,7 +32,7 @@ Estos apuntes están diseñados para un aprendizaje práctico. A lo largo de la 
 
 ---
 
-## Fundamentos de las Bases de Datos Relacionaes
+## Fundamentos de las Bases de Datos Relacionales
 
 En esta primera sección, sentaremos las bases teóricas sobre las bases de datos relacionales y prepararemos el entorno de trabajo inicial para nuestro proyecto.
 
@@ -76,8 +76,6 @@ Un ejemplo sencillo de consulta podría ser:
     SELECT nombre FROM clientes WHERE ciudad = 'Valencia';
 ```
 
-Las bases de datos relacionales constituyen un pilar fundamental en el desarrollo de software. Organizan la información en **tablas**, compuestas por filas (registros) y columnas (atributos). Cada tabla representa una entidad (p. ej., `Clientes`, `Productos`).
-
 ### Tipos de Gestores de Bases de Datos (SGBD)
 
 Para conectar una aplicación a una base de datos, es esencial conocer el tipo de SGBD, ya que cada uno requiere un conector (driver) específico.
@@ -89,6 +87,46 @@ Para conectar una aplicación a una base de datos, es esencial conocer el tipo d
 2. **Gestores Cliente-Servidor (PostgreSQL, MySQL, Oracle)**:
     * Sistemas robustos que se ejecutan como un servicio en un servidor, permitiendo múltiples conexiones concurrentes.
     * Son el estándar en entornos empresariales y aplicaciones web por su escalabilidad y seguridad.
+
+!!! example "Autoevaluación"
+
+    **Pregunta 1: ¿Cuál de las siguientes URLs JDBC es la correcta para conectarse a una base de datos SQLite llamada `plantas.sqlite` ubicada en la carpeta `datos` del proyecto?**
+
+    A) `"jdbc:sqlite://localhost:3306/datos/plantas.sqlite"`
+
+    B) `"jdbc:sqlite:datos/plantas.sqlite"`
+
+    C) `"sqlite:datos/plantas.sqlite"`
+
+    D) `"jdbc:sqlite://datos/plantas.sqlite:3306"`
+
+    ??? quote "Solución"
+        ❌ A) Esa URL mezcla la sintaxis de MySQL (con host y puerto) con SQLite. SQLite es una base de datos embebida: no necesita host ni puerto, ya que accede directamente a un fichero local.
+
+        ✅ B) El formato correcto para SQLite es `jdbc:sqlite:<ruta_al_fichero>`. La ruta puede ser relativa (desde la raíz del proyecto) o absoluta.
+
+        ❌ C) Falta el prefijo `jdbc:`. Sin él, el `DriverManager` no puede identificar el driver a utilizar y lanzará una `SQLException`.
+
+        ❌ D) Añadir `//` y un puerto `:3306` es la sintaxis de un SGBD cliente-servidor. SQLite no usa red ni puertos.
+
+    **Pregunta 2: ¿Cuál de las siguientes afirmaciones describe correctamente la diferencia principal entre un SGBD embebido (como SQLite) y uno cliente-servidor (como PostgreSQL)?**
+
+    A) SQLite admite más conexiones simultáneas que PostgreSQL porque no necesita gestionar un servicio de red.
+
+    B) PostgreSQL almacena la base de datos en un único fichero local y no requiere un servicio de red.
+
+    C) SQLite requiere instalar y arrancar un servicio de servidor independiente antes de conectarse.
+
+    D) SQLite almacena la base de datos en un fichero local y no requiere un servicio de red independiente, mientras que PostgreSQL se ejecuta como un servidor y permite múltiples conexiones concurrentes.
+
+    ??? quote "Solución"
+        ❌ A) SQLite no está diseñado para múltiples conexiones simultáneas. Al contrario, su modelo de fichero local lo hace menos adecuado para alta concurrencia que PostgreSQL.
+
+        ❌ B) Es justo al revés: es SQLite quien almacena la BD en un fichero local. PostgreSQL usa un servidor que gestiona los datos en su propio directorio de datos.
+
+        ❌ C) Eso describe a un SGBD cliente-servidor, no a uno embebido. SQLite no necesita ningún servicio previo; la librería está incluida en la propia aplicación.
+
+        ✅ D) Esta es la diferencia clave. Un SGBD embebido vive dentro del proceso de la aplicación (sin servidor). Un SGBD cliente-servidor se ejecuta de forma independiente y escucha conexiones de red.
 
 ## Preparación del Entorno
 
@@ -165,9 +203,33 @@ Si haces **doble clic sobre el nombre de la tabla** (`plantas`), se abrirá un v
 
 Esta integración es una herramienta muy potente para comprobar en tiempo real que las operaciones de tu DAO en Kotlin están funcionando como esperas.
 
+## 🎯 Práctica 1: Creación del Proyecto y la Base de Datos
+
 !!! warning "🎯 Práctica 1: Creación del Proyecto y la Base de Datos"
-    1. Crea un nuevo proyecto en Kotlin con Gradle.
-    2. Utiliza la herramienta de **SQLite en IntelliJ** para crear un fichero `nombre_de_tu_BD.sqlite`.
-    3. Siguiendo los **datos definidos en la Unidad Anterior**, crea una tabla con clave primaria y tipos de datos adecuados.
-    4. Crea una carpeta `datos` en la raíz del proyecto y almacena en ella el archivo `.sqlite`.
-    5. Realiza operaciones CRUD (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) sobre la tabla para probar su funcionamiento desde la herramienta de IntelliJ.
+    El proyecto que construirás a lo largo de esta unidad es una **continuación directa del catálogo de videojuegos** de la UD2. Ahora, en lugar de persistir los datos en ficheros CSV, XML, JSON o binarios, los almacenarás en una **base de datos relacional**.
+
+    1. Crea un nuevo proyecto en Kotlin con Gradle en IntelliJ.
+    2. Utiliza la herramienta **Database** de IntelliJ para crear un fichero `videojuegos.sqlite` dentro de la carpeta `datos` de tu proyecto.
+    3. Crea la tabla `videojuegos` con la misma estructura que la `data class Videojuego` de la UD2:
+
+        ```sql
+        CREATE TABLE videojuegos (
+            id      INTEGER PRIMARY KEY,
+            titulo  TEXT    NOT NULL,
+            genero  TEXT    NOT NULL,
+            anio    INTEGER NOT NULL,
+            nota    REAL    NOT NULL
+        );
+        ```
+
+    4. Inserta al menos los 5 registros del catálogo original de la UD2 usando la consola SQL de IntelliJ:
+
+        ```sql
+        INSERT INTO videojuegos VALUES (1, 'The Legend of Zelda: Breath of the Wild', 'Aventura', 2017, 9.5);
+        INSERT INTO videojuegos VALUES (2, 'Red Dead Redemption 2', 'Acción', 2018, 9.7);
+        INSERT INTO videojuegos VALUES (3, 'Hades', 'Roguelike', 2020, 9.3);
+        INSERT INTO videojuegos VALUES (4, 'Hollow Knight', 'Plataformas', 2017, 9.1);
+        INSERT INTO videojuegos VALUES (5, 'Celeste', 'Plataformas', 2018, 8.9);
+        ```
+
+    5. Realiza una consulta `SELECT * FROM videojuegos` para verificar que los datos se han insertado correctamente.

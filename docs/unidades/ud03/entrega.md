@@ -3,79 +3,71 @@
 !!! danger "📁 Entrega Final"
     Esta es la entrega definitiva de la UD3. El proyecto debe ejecutarse sin errores para poder ser calificado.
 
-Has construido el núcleo de la aplicación. Ahora es el momento de dar un salto cualitativo y convertir nuestro proyecto en una aplicación con una estructura de datos más robusta y profesional. Una sola tabla está bien para empezar, pero el verdadero poder de las bases de datos reside en cómo se **relacionan** las distintas informaciones.
+## 🎯 Proyecto final: Catálogo de Videojuegos con BD Relacional
 
-## **El Objetivo**
+!!! warning "🎯 Proyecto final: Catálogo de Videojuegos con BD Relacional"
 
-En este punto de control, vamos a ampliar nuestra base de datos para que contenga **al menos tres tablas relacionadas entre sí**. Esto nos obligará a gestionar claves primarias y foráneas, y a crear la lógica necesaria en el código para manejar estas nuevas entidades.
+    A lo largo de las prácticas has construido una aplicación de gestión de un catálogo de videojuegos conectada a una base de datos relacional. Has implementado el patrón DAO, gestionado transacciones y migrado la BD a un SGBD cliente-servidor.
 
-Por ejemplo, si tu proyecto es sobre **plantas**, un **jardín** puede tener muchas **plantas** y una **planta** puede estar en varios **jardines** (relación N:N). Si es sobre **videojuegos**, un videojuego es desarrollado por un **estudio** (1:N). Si es sobre **recetas**, una **receta** tiene varios **ingredientes**, un **ingreciente** puede estar en muchas **recetas**, etc.
+    En esta entrega final integras todo lo construido y lo cierras con las **tres tablas relacionadas** del proyecto.
 
-## **Requisitos del Proyecto**
+    !!! warning "Requisito imprescindible"
+        No debe existir ningún rastro de los ejemplos del profesor (`PlantasDAO`, `ConexionBD` con `plantas.sqlite`, etc.). La entrega contendrá únicamente los archivos de **tu proyecto**: `ConexionBD.kt`, tus `data classes`, tus DAOs y `Main.kt`.
 
-!!! warning "Requisito imprescindible"
-    No debe existir ningún rastro de los ejemplos o prácticas realizados durante la Unidad. La entrega contendrá sólo los archivos necesarios para tu proyecto: **ConexionBD, Data Classes, DAOs y Main**
+    ### Base de Datos (MySQL o PostgreSQL)
 
-Para superar esta entrega, tu aplicación debe ser funcional y cumplir con lo siguiente:
+    * Las **tres tablas** del proyecto (`videojuegos`, `listas`, `listas_videojuegos`) con sus relaciones implementadas mediante **Claves Primarias (PK)** y **Claves Foráneas (FK)**.
+    * Las tablas deben estar **pobladas** con al menos 5 videojuegos y 3 listas.
+    * Fichero `datos/videojuegos.sql` con el **esquema completo** (CREATE TABLE) y la **inserción de datos** (INSERT).
 
-### **Base de Datos (MySQL o PostgreSQL)**
+    ### Estructura del Código (Kotlin)
 
-* Debe contener **al menos tres tablas** con una relación lógica entre ellas (ej: `jardines`, `plantas` y `jardines_plantas`).
-* La relación debe estar correctamente implementada usando una **Clave Primaria (PK)** en la tabla principal (la del "uno") y una **Clave Foránea (FK)** (o varias) en la/s tabla/s secundaria/s (la del "muchos").
-* **Puebla** las tablas de tu proyecto con datos de ejemplo.
-* **Exporta la BD a un fichero**. Deberás entregar un fichero `SQL` con la **creación de las tablas y la inserción de los datos**.
+    * **`ConexionBD.kt`**: configurado para MySQL o PostgreSQL.
+    * **Modelos de Datos**: una `data class` por tabla → `Videojuego.kt`, `Lista.kt`, `ListaVideojuego.kt`.
+    * **DAOs**: un fichero DAO por modelo → `VideojuegoDAO.kt`, `ListaDAO.kt`, `ListaVideojuegoDAO.kt`. Los tres implementan el **CRUD completo**.
+    * **Reto extra**: `ListaVideojuegoDAO` incluye el método `fun obtenerVideojuegosDeLista(idLista: Int): List<Videojuego>`.
 
-### **Estructura del Código (Kotlin)**
+    ### Aplicación Principal (`Main.kt`)
 
-* **Carpeta datos:** Deberá contener un fichero `SQL` con la creación e inserción de datos de tu BD (por ejemplos `datos/plantas.sql`).
-* **Fichero de Conexión:** Un único `ConexionBD.kt` que gestiona el acceso a la base de datos.
-* **Modelos de Datos:** Deberás tener una `data class` por cada tabla de tu base de datos (ej: `Jardin.kt`, `Planta.kt` y `JardinesPlantas.kt`).
-* **Objetos de Acceso a Datos (DAOs):** Deberás tener un fichero DAO por cada modelo (ej: `JardinDAO.kt`, `PlantaDAO.kt` y `JardinesPlantasDAO.kt`).
-* Los DAOs deben implementar las **operaciones CRUD** completas para sus respectivas tabla.
-* **Reto extra:** El DAO de la tabla/s secundaria/s (la/s del "muchos", ej: `JardinesPlantasDAO`) debe incluir un método adicional para consultar todos los elementos que pertenecen a una entidad principal (ej: `fun obtenerPlantasPorJardin(idJardin: Int): List<Planta>`).
-* **Aplicación Main:** Se explica en el siguiente punto.
+    El `main` debe demostrar que toda la funcionalidad está operativa:
 
-### **Aplicación Principal (`Main.kt`):**
+    1. **Listar** todos los videojuegos y todas las listas.
+    2. **Insertar**, **Actualizar** y **Eliminar** videojuegos y listas (respetando la integridad referencial al eliminar).
+    3. **Añadir** un videojuego a una lista usando la función de transacción de la Práctica 5.
+    4. **(Reto extra) Listar** todos los videojuegos de una lista concreta.
 
-* El fichero `main` debe demostrar que toda la funcionalidad se ha implementado correctamente. Debe ser capaz de:
-    1. **Insertar**, **Actualizar** y **Eliminar** (¡cuidado con la integridad referencial!) datos en todas las tablas (cuidado: por ejemplo, para relacionar plantas y jardines, necesitas tener al menos una inserción en ambas tablas).
-    2. **Listar todos los elementos** de las tablas principales.
-    3. **Listar los elementos de la tabla secundaria** filtrando por la principal (usando el "reto extra").
+    Ejemplo de menú:
 
-#### Ejemplo de menú de la aplicación
+    ```text
+    ===== CATÁLOGO DE VIDEOJUEGOS =====
+    --- VIDEOJUEGOS ---
+    1. Ver todos los videojuegos
+    2. Buscar videojuego por ID
+    3. Añadir videojuego
+    4. Modificar videojuego
+    5. Eliminar videojuego
 
-```text
---- JARDINES ---
-1. Nuevo jardín
-2. Modificar jardín
-3. Eliminar jardín
-4. Ver jardines
+    --- LISTAS ---
+    6. Ver todas las listas
+    7. Crear lista
+    8. Eliminar lista
 
---- PLANTAS ---
-5. Nueva planta
-6. Modificar stock de planta
-7. Eliminar planta
-8. Ver plantas
+    --- LISTAS Y VIDEOJUEGOS ---
+    9. Añadir videojuego a una lista
+    10. (EXTRA) Ver videojuegos de una lista
+    0. Salir
+    ====================================
 
---- JARDINES Y PLANTAS ---
-9. Añadir planta a jardín
-10. (EXTRA) Listar plantas de un jardín
-11. Salir
+    Escoge una opción:
+    ```
 
-Escoge una opción:
-```
+    ### Documentación: El Fichero LEEME.md
 
-### **Documentación: El Fichero LEEME.md**
+    Tu proyecto debe incluir un fichero `LEEME.md` con al menos estas secciones:
 
-Tu proyecto debe estar documentado. En un proyecto de software el código fuente por sí solo no cuenta toda la historia y es fundamental crear documentación adicional. 
+    * **Nombre del proyecto y breve descripción**.
+    * **Estructura de la Base de Datos**: diseño de las tres tablas y sus relaciones (puedes incluir el diagrama ER o el script SQL).
+    * **Instrucciones de Ejecución**: requisitos, cómo crear la BD y cómo configurar la conexión.
+    * **Decisiones de Diseño** (Opcional pero Recomendado): ¿por qué esas tablas? ¿MySQL o PostgreSQL?
 
-La forma estándar y más extendida de hacerlo es a través de un fichero `LEEME.md` (o `README.md`). Un proyecto sin un `LEEME.md` se considera incompleto o poco profesional.
-
-Tu fichero `LEEME.md` debería contener, como mínimo, las siguientes secciones:
-
-* **Nombre del proyecto y breve descripción**.
-* **Estructura de la Base de Datos**: En esta sección se explica el diseño de tu base de datos.
-* **Instrucciones de Ejecución**: Pasos claros y sencillos para que otra persona pueda ejecutar nuestro programa.
-* **Decisiones de Diseño** (Opcional pero Recomendado): Un pequeño apartado para explicar brevemente por qué tomamos ciertas decisiones.
-
-Puedes seguir la guía que usamos en la [Unidad 2 sobre Markdown y el fichero LEEME.md](../ud02/documentacion_final.md).
+    Puedes consultar la guía de la [Unidad 2](../ud02/documentacion_final.md) como referencia de estructura y formato.
