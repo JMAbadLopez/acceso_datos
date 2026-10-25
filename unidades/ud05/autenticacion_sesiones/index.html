@@ -1307,12 +1307,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1939,9 +1939,24 @@
 <a id="__codelineno-9-19" name="__codelineno-9-19"></a>│   └── Security.kt      // Plugin de Seguridad
 <a id="__codelineno-9-20" name="__codelineno-9-20"></a>└── Application.kt       
 </code></pre></div></td></tr></table></div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 7: En la configuración de sesiones de Ktor, <code>cookie.maxAgeInSeconds = 3600</code>. ¿Qué ocurre exactamente cuando pasan 3600 segundos desde que el usuario hizo login?</strong></p>
+<p>A) El servidor elimina automáticamente al usuario de la base de datos para proteger los datos.</p>
+<p>B) La Cookie <code>USER_SESSION</code> expira en el navegador del cliente; en la siguiente petición protegida, el servidor no encontrará sesión válida y devolverá 401.</p>
+<p>C) Ktor reinicia automáticamente el servidor y obliga a todos los usuarios a hacer login de nuevo.</p>
+<p>D) La sesión se renueva automáticamente por otros 3600 segundos sin que el usuario tenga que hacer nada.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) La expiración de la sesión no afecta en absoluto a los datos de la BD. Solo gestiona el "carnet de identidad" temporal del usuario en el navegador.</p>
+<p>✅ B) <code>maxAgeInSeconds</code> controla el tiempo de vida de la Cookie en el navegador del cliente. Cuando expira, el navegador ya no la envía con las peticiones. En la siguiente petición a una ruta protegida, <code>authenticate</code> no encontrará sesión válida y ejecutará el <code>challenge</code> con código 401.</p>
+<p>❌ C) Ktor no reinicia el servidor por expiración de sesiones. La expiración es un mecanismo del navegador del cliente, no del servidor.</p>
+<p>❌ D) La renovación automática requiere código explícito (por ejemplo, actualizar <code>maxAge</code> en cada petición). Con la configuración básica, la Cookie simplemente expira y no se renueva sola.</p>
+</details>
+</div>
 <h2 id="practica-5-auditoria-de-seguridad-y-estructura">🎯 <strong>Práctica 5. Auditoría de Seguridad y Estructura</strong></h2>
 <div class="admonition warning">
-<p class="admonition-title">Tarea de Verificación Total</p>
+<p class="admonition-title">🎯 Práctica 5. Auditoría de Seguridad y Estructura</p>
 <p>Para completar esta unidad, debes validar que cada componente de la arquitectura cumple su función. Sigue este orden estrictamente:</p>
 <ol>
 <li><strong>Verificación de Estructura:</strong> Comprueba que tienes los archivos principales distribuidos en los 6 paquetes (<code>core</code>, <code>data</code>, <code>domain</code>, <code>services</code>, <code>routes</code>, <code>plugins</code>) tal como indica el esquema superior.</li>

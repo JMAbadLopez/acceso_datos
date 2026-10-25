@@ -1223,12 +1223,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1550,9 +1550,36 @@
 <a id="__codelineno-1-15" name="__codelineno-1-15"></a>└── Application.kt       
 </code></pre></div></td></tr></table></div>
 <hr />
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 9: En <code>UsuariosService</code>, la función <code>registrarUsuario</code> comprueba si el email ya existe antes de insertar. ¿Por qué se realiza esta validación en el Servicio y no en el DAO?</strong></p>
+<p>A) Porque el DAO no tiene acceso a la función <code>seleccionarTodos()</code> necesaria para la comprobación.</p>
+<p>B) Porque la lógica de negocio (reglas sobre qué se permite o no) pertenece al Servicio; el DAO solo debe ejecutar operaciones de BD sin tomar decisiones sobre si deben realizarse.</p>
+<p>C) Por razones de rendimiento: llamar al DAO desde el propio DAO generaría un bucle infinito.</p>
+<p>D) Porque la anotación <code>@Serializable</code> en el DTO impide que el DAO lo compare directamente.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) El DAO sí tiene acceso a <code>seleccionarTodos()</code> porque es un método del mismo objeto. La razón de hacer la comprobación en el Servicio no es técnica, sino arquitectónica.</p>
+<p>✅ B) La separación de responsabilidades es el principio clave aquí. El DAO es un especialista en persistencia (INSERT, SELECT, UPDATE, DELETE). El Servicio es quien aplica las reglas de negocio ("¿debería permitirse esta operación?"). Mezclar ambas responsabilidades en el DAO lo haría difícil de reutilizar y de testear.</p>
+<p>❌ C) No hay ningún riesgo de bucle infinito al llamar a métodos del mismo objeto desde sí mismo. El flujo es lineal.</p>
+<p>❌ D) <code>@Serializable</code> es una anotación de Kotlin que no restringe las operaciones de comparación. Los objetos <code>UsuarioDTO</code> se pueden comparar normalmente con <code>.any { it.mail == ... }</code>.</p>
+</details>
+<p><strong>Pregunta 10: ¿Qué valor devuelve <code>registrarUsuario</code> cuando el email ya existe en la base de datos?</strong></p>
+<p>A) <code>0</code>, indicando que se insertaron 0 filas.</p>
+<p>B) <code>null</code>, porque no se pudo crear el usuario.</p>
+<p>C) <code>-1</code>, como código de error personalizado que el Controlador interpreta para devolver 409 Conflict al cliente.</p>
+<p>D) Lanza una <code>IllegalArgumentException</code> con el mensaje "El email ya existe".</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) El valor <code>0</code> podría confundirse con un ID válido en algunos sistemas. El diseño de esta función usa <code>-1</code> como centinela para distinguir el error del éxito.</p>
+<p>❌ B) La función devuelve <code>Int</code>, no <code>Int?</code>. Devolver <code>null</code> requeriría cambiar el tipo de retorno a <code>Int?</code> y añadir comprobaciones en el Controlador.</p>
+<p>✅ C) Devolver <code>-1</code> es la convención elegida en este diseño. El Controlador interpreta <code>nuevoId == -1</code> como conflicto y responde con <code>HttpStatusCode.Conflict</code> (409). Es un contrato claro entre las dos capas.</p>
+<p>❌ D) Lanzar una excepción para un caso previsto (email duplicado) no es buena práctica en este diseño. Las excepciones se reservan para errores inesperados; los casos de negocio se comunican mediante valores de retorno o sealed classes.</p>
+</details>
+</div>
 <h2 id="practica-3-creando-la-capa-de-servicio">🎯 Práctica 3. Creando la capa de Servicio</h2>
 <div class="admonition warning">
-<p class="admonition-title">🎯 Práctica para Aplicar</p>
+<p class="admonition-title">🎯 Práctica 3. Creando la capa de Servicio</p>
 <ol>
 <li>Crea el paquete <code>services</code> en tu proyecto.</li>
 <li>Implementa el objeto <code>UsuariosService</code> siguiendo el ejemplo anterior.</li>

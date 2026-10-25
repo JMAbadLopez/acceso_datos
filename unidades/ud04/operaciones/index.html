@@ -1322,12 +1322,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../../ud05/entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1643,157 +1643,120 @@
 </code></pre></div></td></tr></table></div>
 <h3 id="22-uso-practico">2.2 Uso Práctico</h3>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Crea un archivo <code>Operaciones.kt</code> con las operaciones CRUD. Llama a la función <code>insertarUsuario</code> desde tu <code>main</code> para añadir datos a la tabla.</p>
-</div>
+<p class="admonition-title">🔍 Ejecutar y Analizar: Inserción de registros</p>
+<p>Crea un archivo <code>Operaciones.kt</code> con las operaciones CRUD. Llama a la función <code>insertarUsuario</code> desde tu <code>main</code> para añadir datos a la tabla. Verifica que la salida por consola es:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
 <span class="normal"><a href="#__codelineno-2-2">2</a></span>
 <span class="normal"><a href="#__codelineno-2-3">3</a></span>
 <span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span>
-<span class="normal"><a href="#__codelineno-2-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">    </span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">conectar</span><span class="p">()</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="n">insertarUsuario</span><span class="p">(</span><span class="s">&quot;Atenea&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;atenea@mail.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hash123&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">1999</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">))</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="n">insertarUsuario</span><span class="p">(</span><span class="s">&quot;Hera&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hera@mail.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hash456&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2004</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">))</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="n">insertarUsuario</span><span class="p">(</span><span class="s">&quot;Iris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;iris@mail.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hash789&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2005</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>Conexión a MySQL establecida con éxito usando Exposed.
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Esquema de la tabla &#39;Usuarios&#39; verificado/creado.
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>Usuario &#39;Atenea&#39; insertado con ID: 1
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>Usuario &#39;Hera&#39; insertado con ID: 2
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>Usuario &#39;Iris&#39; insertado con ID: 3
+</code></pre></div></td></tr></table></div>
+<p>Comprueba en la herramienta <strong>Database</strong> de IntelliJ que los tres registros aparecen en la tabla <code>usuarios</code>.</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">conectar</span><span class="p">()</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="n">insertarUsuario</span><span class="p">(</span><span class="s">&quot;Atenea&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;atenea@mail.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hash123&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">1999</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">))</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="n">insertarUsuario</span><span class="p">(</span><span class="s">&quot;Hera&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hera@mail.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hash456&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2004</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">))</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="n">insertarUsuario</span><span class="p">(</span><span class="s">&quot;Iris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;iris@mail.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hash789&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2005</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="3-operacion-r-lectura-recuperar-registros">3. Operación R: Lectura (Recuperar Registros)</h2>
 <p>Para recuperar datos, usamos el método <code>selectAll()</code> y luego transformamos cada fila (<code>ResultRow</code>) devuelta por Exposed en un objeto Kotlin más utilizable.</p>
 <h3 id="31-estructura-de-datos-para-el-resultado">3.1 Estructura de Datos para el Resultado</h3>
 <p>Primero, definimos una clase de datos simple para almacenar el resultado, manteniendo la coherencia objeto-relacional.</p>
 <p>Cada objeto de la <code>data class UsuarioDTO</code> va a funcionar como un espacio en el que volquemos el resultado de cada <strong>fila (row)</strong> de nuestra tabla, mientras se recorre.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span>
-<span class="normal"><a href="#__codelineno-3-4">4</a></span>
-<span class="normal"><a href="#__codelineno-3-5">5</a></span>
-<span class="normal"><a href="#__codelineno-3-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">UsuarioDTO</span><span class="p">(</span><span class="w"> </span><span class="c1">// Data Transfer Object (DTO)</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">mail</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">fechaNacimiento</span><span class="p">:</span><span class="w"> </span><span class="n">LocalDate</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">UsuarioDTO</span><span class="p">(</span><span class="w"> </span><span class="c1">// Data Transfer Object (DTO)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">id</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">nombre</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">mail</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">fechaNacimiento</span><span class="p">:</span><span class="w"> </span><span class="n">LocalDate</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="32-codigo-de-lectura">3.2 Código de Lectura</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.selectAll</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">obtenerTodosLosUsuarios</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">UsuarioDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">        </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">selectAll</span><span class="p">()</span><span class="w"> </span><span class="c1">// Seleccionamos todas las filas de la tabla</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultRow</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="c1">// Mapeamos cada fila a nuestro objeto UsuarioDTO</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">                </span><span class="n">UsuarioDTO</span><span class="p">(</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">                    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">                    </span><span class="n">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">                    </span><span class="n">mail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">                    </span><span class="c1">// No recuperamos el password por seguridad</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">                    </span><span class="n">fechaNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="o">]</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">                </span><span class="p">)</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">            </span><span class="p">}.</span><span class="na">toList</span><span class="p">()</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.selectAll</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">obtenerTodosLosUsuarios</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">UsuarioDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">        </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">selectAll</span><span class="p">()</span><span class="w"> </span><span class="c1">// Seleccionamos todas las filas de la tabla</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultRow</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="c1">// Mapeamos cada fila a nuestro objeto UsuarioDTO</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">                </span><span class="n">UsuarioDTO</span><span class="p">(</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">                    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">                    </span><span class="n">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">                    </span><span class="n">mail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">                    </span><span class="c1">// No recuperamos el password por seguridad</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">                    </span><span class="n">fechaNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="o">]</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">                </span><span class="p">)</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">            </span><span class="p">}.</span><span class="na">toList</span><span class="p">()</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="33-uso-practico">3.3 Uso Práctico</h3>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Añade esta llamada al <code>main</code>. Recuerda <strong>comentar las inserciones</strong>, pues dará un error porque hemos definido el <code>mail</code> como un campo único en la BD.</p>
+<p class="admonition-title">🔍 Ejecutar y Analizar: Lectura de registros</p>
+<p>Añade esta llamada al <code>main</code>. Recuerda <strong>comentar las inserciones</strong>, pues dará un error porque hemos definido el <code>mail</code> como un campo único en la BD. Verifica que la salida por consola es:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>--- LISTADO DE USUARIOS ---
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>ID: 1 | Nombre: Atenea | Email: atenea@mail.com
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>ID: 2 | Nombre: Hera | Email: hera@mail.com
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>ID: 3 | Nombre: Iris | Email: iris@mail.com
+</code></pre></div></td></tr></table></div>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span>
-<span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span>
-<span class="normal"><a href="#__codelineno-5-6">6</a></span>
-<span class="normal"><a href="#__codelineno-5-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1">// ... (código en main)</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n--- LISTADO DE USUARIOS ---&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kd">val</span><span class="w"> </span><span class="nv">listaUsuarios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtenerTodosLosUsuarios</span><span class="p">()</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="n">listaUsuarios</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ID: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> | Nombre: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">nombre</span><span class="si">}</span><span class="s"> | Email: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">mail</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="p">}</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="c1">// ...</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1">// ... (código en main)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="n">println</span><span class="p">(</span><span class="s">&quot;\n--- LISTADO DE USUARIOS ---&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kd">val</span><span class="w"> </span><span class="nv">listaUsuarios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtenerTodosLosUsuarios</span><span class="p">()</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="n">listaUsuarios</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ID: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> | Nombre: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">nombre</span><span class="si">}</span><span class="s"> | Email: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">mail</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="p">}</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1">// ...</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="4-operacion-u-actualizacion-modificar-registros">4. Operación U: Actualización (Modificar Registros)</h2>
 <p>La actualización requiere una <strong>cláusula de condición</strong> (<code>where</code>) para especificar qué registro modificar.</p>
 <h3 id="41-codigo-de-actualizacion">4.1 Código de Actualización</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-6-10">10</a></span>
-<span class="normal"><a href="#__codelineno-6-11">11</a></span>
-<span class="normal"><a href="#__codelineno-6-12">12</a></span>
-<span class="normal"><a href="#__codelineno-6-13">13</a></span>
-<span class="normal"><a href="#__codelineno-6-14">14</a></span>
-<span class="normal"><a href="#__codelineno-6-15">15</a></span>
-<span class="normal"><a href="#__codelineno-6-16">16</a></span>
-<span class="normal"><a href="#__codelineno-6-17">17</a></span>
-<span class="normal"><a href="#__codelineno-6-18">18</a></span>
-<span class="normal"><a href="#__codelineno-6-19">19</a></span>
-<span class="normal"><a href="#__codelineno-6-20">20</a></span>
-<span class="normal"><a href="#__codelineno-6-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">Usuarios</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.update</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.SqlExpressionBuilder.eq</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">actualizarMail</span><span class="p">(</span><span class="n">usuarioId</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">nuevoMail</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">    </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">        </span><span class="c1">// 1. Usamos la función update y le pasamos la condición &#39;where&#39;</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">filasAfectadas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">update</span><span class="p">({</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="n">eq</span><span class="w"> </span><span class="n">usuarioId</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">            </span><span class="c1">// CE e: Modificamos el objeto persistente</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">            </span><span class="nb">it</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nuevoMail</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14"></a>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">filasAfectadas</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s"> actualizado. Nuevo email: </span><span class="si">$</span><span class="n">nuevoMail</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se encontró el usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s">.&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="42-uso-practico">4.2 Uso Práctico</h3>
-<div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Añade esta llamada al <code>main</code> después del listado. Luego comprueba si ha cambiado en la <strong>Base de Datos</strong>.</p>
-</div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span>
-<span class="normal"><a href="#__codelineno-7-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1">// ... (código en main)</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="n">actualizarMail</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;atena@olympus.com&quot;</span><span class="p">)</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="c1">// ...</span>
-</code></pre></div></td></tr></table></div>
-<h2 id="5-operacion-d-eliminacion-borrar-registros">5. Operación D: Eliminación (Borrar Registros)</h2>
-<p>La eliminación, al igual que la actualización, necesita una condición estricta para saber qué registros borrar.</p>
-<h3 id="51-codigo-de-eliminacion">5.1 Código de Eliminación</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
@@ -1811,53 +1774,151 @@
 <span class="normal"><a href="#__codelineno-8-15">15</a></span>
 <span class="normal"><a href="#__codelineno-8-16">16</a></span>
 <span class="normal"><a href="#__codelineno-8-17">17</a></span>
-<span class="normal"><a href="#__codelineno-8-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">Usuarios</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.deleteWhere</span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span>
+<span class="normal"><a href="#__codelineno-8-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">Usuarios</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.update</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.SqlExpressionBuilder.eq</span>
 <a id="__codelineno-8-5" name="__codelineno-8-5"></a>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">eliminarUsuario</span><span class="p">(</span><span class="n">usuarioId</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">actualizarMail</span><span class="p">(</span><span class="n">usuarioId</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span><span class="w"> </span><span class="n">nuevoMail</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">    </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8"></a>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">        </span><span class="c1">// 1. Usamos la función deleteWhere y definimos la condición</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">filasAfectadas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">deleteWhere</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="n">eq</span><span class="w"> </span><span class="n">usuarioId</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a>
-<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">filasAfectadas</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s"> ELIMINADO.&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se encontró el usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s"> para eliminar.&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="p">}</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">        </span><span class="c1">// 1. Usamos la función update y le pasamos la condición &#39;where&#39;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">filasAfectadas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">update</span><span class="p">({</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="n">eq</span><span class="w"> </span><span class="n">usuarioId</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="w">            </span><span class="c1">// CE e: Modificamos el objeto persistente</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">            </span><span class="nb">it</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nuevoMail</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">filasAfectadas</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s"> actualizado. Nuevo email: </span><span class="si">$</span><span class="n">nuevoMail</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se encontró el usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s">.&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="42-uso-practico">4.2 Uso Práctico</h3>
+<div class="admonition success">
+<p class="admonition-title">🔍 Ejecutar y Analizar: Actualización de registros</p>
+<p>Añade esta llamada al <code>main</code> después del listado. Luego comprueba si ha cambiado en la <strong>Base de Datos</strong>. Verifica que la salida por consola es:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>Usuario ID 1 actualizado. Nuevo email: atena@olympus.com
+</code></pre></div></td></tr></table></div>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1">// ... (código en main)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="n">actualizarMail</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;atena@olympus.com&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="c1">// ...</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="5-operacion-d-eliminacion-borrar-registros">5. Operación D: Eliminación (Borrar Registros)</h2>
+<p>La eliminación, al igual que la actualización, necesita una condición estricta para saber qué registros borrar.</p>
+<h3 id="51-codigo-de-eliminacion">5.1 Código de Eliminación</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">Usuarios</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.deleteWhere</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.SqlExpressionBuilder.eq</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">eliminarUsuario</span><span class="p">(</span><span class="n">usuarioId</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">    </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">        </span><span class="c1">// 1. Usamos la función deleteWhere y definimos la condición</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">filasAfectadas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">deleteWhere</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="w"> </span><span class="n">eq</span><span class="w"> </span><span class="n">usuarioId</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">filasAfectadas</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s"> ELIMINADO.&quot;</span><span class="p">)</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No se encontró el usuario ID </span><span class="si">$</span><span class="n">usuarioId</span><span class="s"> para eliminar.&quot;</span><span class="p">)</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="52-uso-practico">5.2 Uso Práctico</h3>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Añade esta llamada al <code>main</code> después de la actualización. Luego comprueba si se ha eliminado en la <strong>Base de Datos</strong>.</p>
+<p class="admonition-title">🔍 Ejecutar y Analizar: Eliminación de registros</p>
+<p>Añade esta llamada al <code>main</code> después de la actualización. Luego comprueba si se ha eliminado en la <strong>Base de Datos</strong>. Verifica que la salida por consola es:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>Usuario ID 3 ELIMINADO.
+</code></pre></div></td></tr></table></div>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
-<span class="normal"><a href="#__codelineno-9-2">2</a></span>
-<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1">// ... (código en main)</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="n">actualizarMail</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;atena@olympus.com&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1">// ...</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1">// ... (código en main)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="n">eliminarUsuario</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="c1">// ...</span>
 </code></pre></div></td></tr></table></div>
 <hr />
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 5: Al insertar un registro con Exposed usando <code>Usuarios.insert { ... } get Usuarios.id</code>, ¿qué devuelve la expresión <code>get Usuarios.id</code>?</strong></p>
+<p>A) El número total de filas que contiene la tabla después de la inserción.</p>
+<p>B) El valor del campo <code>id</code> del registro recién insertado, que MySQL ha generado de forma automática (AutoIncrement).</p>
+<p>C) Una referencia al objeto <code>Usuarios.id</code> que puede usarse para consultas posteriores.</p>
+<p>D) Siempre devuelve <code>null</code> porque el <code>id</code> es autogenerado y Exposed no puede conocerlo hasta la siguiente consulta.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) El número de filas totales lo devuelve <code>Usuarios.selectAll().count()</code>. La expresión <code>get Usuarios.id</code> es específica del registro insertado.</p>
+<p>✅ B) Exposed recibe el <code>LAST_INSERT_ID()</code> que devuelve MySQL tras un <code>INSERT</code> exitoso y lo expone mediante <code>.get(columna)</code>. Esto permite saber exactamente qué ID se asignó al registro nuevo sin hacer una consulta adicional.</p>
+<p>❌ C) <code>Usuarios.id</code> como referencia a la columna existe independientemente de la inserción. Lo que <code>get Usuarios.id</code> devuelve aquí es el valor concreto del ID generado, no la referencia.</p>
+<p>❌ D) Exposed sí puede conocer el ID autogenerado porque MySQL lo devuelve en la respuesta al <code>INSERT</code>. La expresión nunca devuelve <code>null</code> si la inserción fue exitosa.</p>
+</details>
+<p><strong>Pregunta 6: ¿Cuál es la sintaxis correcta en Exposed DSL para actualizar el campo <code>mail</code> de un usuario cuyo <code>id</code> sea igual a 5?</strong></p>
+<p>A) <code>Usuarios.where { Usuarios.id == 5 }.update { it[Usuarios.mail] = "nuevo@mail.com" }</code></p>
+<p>B) <code>Usuarios.update(Usuarios.id == 5) { it[Usuarios.mail] = "nuevo@mail.com" }</code></p>
+<p>C) <code>Usuarios.update({ Usuarios.id eq 5 }) { it[Usuarios.mail] = "nuevo@mail.com" }</code></p>
+<p>D) <code>Usuarios.set(Usuarios.mail, "nuevo@mail.com").where(Usuarios.id eq 5)</code></p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) En Exposed no se encadena <code>.where</code> antes de <code>.update</code>. Además, el operador de igualdad de Kotlin <code>==</code> no es el operador de Exposed; se usa <code>eq</code>.</p>
+<p>❌ B) La condición <code>where</code> en <code>update</code> va entre llaves como un lambda, no como argumento directo. Además, <code>==</code> debe ser <code>eq</code>.</p>
+<p>✅ C) Esta es la sintaxis correcta del DSL de Exposed. El primer bloque lambda <code>({ Usuarios.id eq 5 })</code> define la condición WHERE; el segundo <code>{ it[Usuarios.mail] = "..." }</code> define los campos a modificar con sus nuevos valores.</p>
+<p>❌ D) Exposed no tiene un método <code>.set</code> encadenable en este orden. La estructura siempre es <code>Tabla.update({ condicion }) { campos }</code>.</p>
+</details>
+</div>
 <h2 id="practica-3-implementacion-del-crud">🎯 Práctica 3. Implementación del CRUD</h2>
-<p>Hemos visto todas las operaciones básicas. Ahora es tu turno de aplicarlas:</p>
+<p>Hemos visto todas las operaciones básicas. Ahora aplícalas al <strong>Catálogo de Videojuegos</strong>.</p>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica 3. Implementación del CRUD</p>
+<p>Crea el fichero <code>VideojuegoDAO.kt</code> con el CRUD completo para la tabla <code>videojuegos</code>.</p>
 <ol>
-<li>Crea la clase de datos (<code>data class</code>) para tu entidad del proyecto (ej: <code>ProductoDTO</code>).</li>
-<li>Crea e implementa las funciones <strong>CRUD</strong> completas para tu entidad:<ul>
-<li><code>insertarProducto(...)</code> (INSERT)</li>
-<li><code>obtenerTodosLosProductos()</code> (SELECT ALL)</li>
-<li><code>actualizarStock(id, nuevoStock)</code> (UPDATE)</li>
-<li><code>eliminarProducto(id)</code> (DELETE)</li>
+<li>Define la <code>data class Videojuego(val id: Int, val titulo: String, val genero: String, val anio: Int, val nota: Double)</code>.</li>
+<li>Implementa las cuatro funciones CRUD:<ul>
+<li><code>fun insertarVideojuego(titulo: String, genero: String, anio: Int, nota: Double): Int</code> → devuelve el ID generado.</li>
+<li><code>fun obtenerTodosLosVideojuegos(): List&lt;Videojuego&gt;</code> → SELECT ALL mapeado a <code>Videojuego</code>.</li>
+<li><code>fun actualizarNota(id: Int, nuevaNota: Double)</code> → UPDATE de la columna <code>nota</code>.</li>
+<li><code>fun eliminarVideojuego(id: Int)</code> → DELETE por ID.</li>
 </ul>
 </li>
-<li>Asegúrate de que <strong>TODAS</strong> las funciones que interactúan con la base de datos están envueltas en <code>transaction(ConexionDB.db) { ... }</code>.</li>
-<li>Llama a estas funciones desde tu <code>main</code> para simular la gestión de tu aplicación.</li>
+<li>Asegúrate de que <strong>todas</strong> las funciones están dentro de <code>transaction(ConexionDB.db) { ... }</code>.</li>
+<li>En <code>Main.kt</code>, llama a las funciones para simular la gestión del catálogo:<ul>
+<li>Inserta los 5 videojuegos del proyecto: <em>Zelda: Breath of the Wild</em>, <em>Red Dead Redemption 2</em>, <em>Hades</em>, <em>Hollow Knight</em> y <em>Celeste</em>.</li>
+<li>Lista todos los videojuegos.</li>
+<li>Actualiza la nota de uno de ellos.</li>
+<li>Elimina uno y vuelve a listar para confirmar el borrado.</li>
+</ul>
+</li>
 </ol>
+<div class="admonition danger">
+<p class="admonition-title">Reto extra</p>
+<p>Implementa también <code>ListaDAO.kt</code> con el CRUD completo para la tabla <code>listas</code>.</p>
+</div>
 </div>
 
 

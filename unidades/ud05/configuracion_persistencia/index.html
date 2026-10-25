@@ -1346,12 +1346,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1665,7 +1665,8 @@
 <span class="normal"><a href="#__codelineno-0-28">28</a></span>
 <span class="normal"><a href="#__codelineno-0-29">29</a></span>
 <span class="normal"><a href="#__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#__codelineno-0-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">exposedVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;0.52.0&quot;</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">ktor_version</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">project</span>
@@ -1687,15 +1688,16 @@
 <a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlin:kotlin-stdlib-jdk8&quot;</span><span class="p">)</span>
 <a id="__codelineno-0-21" name="__codelineno-0-21"></a>
 <a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">    </span><span class="c1">// 3. BASE DE DATOS: Driver de MySQL</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;mysql:mysql-connector-java:8.0.29&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">    </span><span class="c1">// 4. LOGGING: Para ver qué pasa en el servidor</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;io.ktor:ktor-server-auth-jvm:</span><span class="si">$</span><span class="n">ktor_version</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;io.ktor:ktor-server-host-common-jvm:</span><span class="si">$</span><span class="n">ktor_version</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="s">&quot;io.ktor:ktor-server-test-host&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlin:kotlin-test-junit:</span><span class="si">$</span><span class="n">kotlin_version</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="p">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="c1">// Nota: a partir de la versión 8.0.31 las coordenadas cambiaron de grupo</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;com.mysql:mysql-connector-j:8.4.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="c1">// 4. LOGGING: Para ver qué pasa en el servidor</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;io.ktor:ktor-server-auth-jvm:</span><span class="si">$</span><span class="n">ktor_version</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;io.ktor:ktor-server-host-common-jvm:</span><span class="si">$</span><span class="n">ktor_version</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="s">&quot;io.ktor:ktor-server-test-host&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlin:kotlin-test-junit:</span><span class="si">$</span><span class="n">kotlin_version</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <blockquote>
 <p><strong>Importante:</strong> Recuerda actualizar las dependencias con el gestor de Gradle</p>
@@ -1787,7 +1789,7 @@
 <a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3306</span>
 <a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">DATABASE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;proyecto&quot;</span><span class="w"> </span><span class="c1">// Nombre de nuestra BD</span>
 <a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dam&quot;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Dam2526&quot;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Dam2627&quot;</span>
 <a id="__codelineno-3-10" name="__codelineno-3-10"></a>
 <a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:mysql://</span><span class="si">$</span><span class="n">HOST</span><span class="s">:</span><span class="si">$</span><span class="n">PORT</span><span class="s">/</span><span class="si">$</span><span class="n">DATABASE</span><span class="s">?useSSL=false&amp;serverTimezone=Europe/Madrid&quot;</span>
 <a id="__codelineno-3-12" name="__codelineno-3-12"></a>
@@ -1810,7 +1812,7 @@
 </code></pre></div></td></tr></table></div>
 <h3 id="adaptando-la-conexion-en-applicationkt">Adaptando la conexión en <code>Application.kt</code></h3>
 <div class="admonition warning">
-<p class="admonition-title">🎯 Práctica para Aplicar</p>
+<p class="admonition-title">🎯 Modifica <code>Application.kt</code></p>
 <p>Modifica tu función <code>main</code> en el archivo <code>Application.kt</code>. Observa cómo llamamos a los plugins configurados para que el servidor sepa usarlos:</p>
 </div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
@@ -2097,9 +2099,36 @@
 <a id="__codelineno-10-12" name="__codelineno-10-12"></a>│   └── Routing.kt       // C: Rutas de la API
 <a id="__codelineno-10-13" name="__codelineno-10-13"></a>└── Application.kt       // Unión de capas
 </code></pre></div></td></tr></table></div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 3: ¿Por qué es importante que <code>ConexionDB.conectar()</code> se llame ANTES de que el motor de Ktor empiece a escuchar peticiones?</strong></p>
+<p>A) Porque Ktor no puede importar el módulo de Exposed si la BD no está conectada primero.</p>
+<p>B) Porque si el servidor empieza a recibir peticiones antes de que la BD esté lista, cualquier ruta que intente acceder a datos fallará con un error de "BD no inicializada".</p>
+<p>C) Por razones de rendimiento: la conexión en frío al arranque es más rápida que conectar durante la primera petición.</p>
+<p>D) Es un requisito de MySQL: no acepta conexiones hasta que el servidor Ktor está activo.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) La importación de módulos en Kotlin ocurre en tiempo de compilación, no en tiempo de ejecución. No depende del estado de la BD.</p>
+<p>✅ B) Si una petición llega antes de que <code>conectar()</code> haya inicializado <code>ConexionDB.db</code>, cualquier acceso al DAO lanzará una <code>UninitializedPropertyAccessException</code> porque <code>lateinit var db</code> aún no tiene valor. Conectar primero garantiza que el sistema está listo para servir peticiones desde el primer momento.</p>
+<p>❌ C) El orden no tiene impacto en el rendimiento de la conexión. Lo que importa es la disponibilidad: la BD debe estar lista antes de que lleguen peticiones que la necesiten.</p>
+<p>❌ D) MySQL no sabe nada de Ktor. Acepta conexiones cuando está activo, independientemente de qué otro servicio esté arrancando.</p>
+</details>
+<p><strong>Pregunta 4: En la arquitectura MVC de este proyecto, ¿cuál es la responsabilidad específica de la capa de Servicio (<code>UsuariosService</code>)?</strong></p>
+<p>A) Enviar directamente las respuestas JSON al cliente usando <code>call.respond</code>.</p>
+<p>B) Definir la estructura de la tabla en la base de datos usando <code>object Usuarios : Table</code>.</p>
+<p>C) Centralizar la lógica de negocio (validaciones, reglas, transformaciones) y coordinar las llamadas al DAO, manteniéndola separada del controlador HTTP.</p>
+<p>D) Gestionar el pool de conexiones a la base de datos y repartirlas entre los distintos DAOs.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Enviar respuestas al cliente es responsabilidad del Controlador (las Rutas Ktor, <code>call.respond</code>). El Servicio nunca interactúa directamente con <code>ApplicationCall</code>.</p>
+<p>❌ B) Definir la estructura de la tabla es responsabilidad de la capa de Datos (<code>UsuariosTable.kt</code>). El Servicio no sabe cómo se almacenan los datos, solo qué hacer con ellos.</p>
+<p>✅ C) El Servicio es la capa de lógica de negocio. Valida datos (¿el email ya existe?), aplica reglas (¿el usuario es mayor de edad?) y orquesta las llamadas al DAO sin exponer detalles de SQL ni de HTTP. Esto mantiene el Controlador limpio y el DAO simple.</p>
+<p>❌ D) El pool de conexiones lo gestiona Exposed/JDBC a través de <code>ConexionDB</code>. El Servicio no tiene conocimiento de la gestión de conexiones.</p>
+</details>
+</div>
 <h2 id="practica-2-preparando-las-conexiones-y-la-estructura-del-proyecto">🎯 Práctica 2. Preparando las conexiones y la estructura del proyecto</h2>
 <div class="admonition warning">
-<p class="admonition-title">🎯 Práctica para Aplicar</p>
+<p class="admonition-title">🎯 Práctica 2. Preparando las conexiones y la estructura del proyecto</p>
 <ol>
 <li>Sigue los pasos de creación de toda la estructura y componentes de Persistencia del Proyecto.</li>
 <li>Verifica que tu estructura de carpetas coincide con el árbol modular mostrado arriba.</li>

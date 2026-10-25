@@ -1289,12 +1289,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1730,13 +1730,41 @@
 <p>Para testear que todo ha ido bien, lanza la función <strong>main</strong> del archivo <strong>Application.kt</strong>. Mostrará una ruta donde el servidor de tu API esté funcionando y <em>escuchando</em> peticiones (por ejempo, <a href="http://0.0.0.0:8080">http://0.0.0.0:8080</a>).</p>
 <p>Haz click y se abrirá un navegador con nuestro primer <em>Hello world!</em></p>
 <p><img alt="Ktor" src="../../../assets/images/ud05/ud5_6.png" /></p>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 1: Una API REST recibe una petición para modificar los datos de un usuario existente. ¿Qué verbo HTTP es el correcto para esta operación?</strong></p>
+<p>A) GET — porque se recuperan los datos actuales antes de modificarlos.</p>
+<p>B) POST — porque se envía información nueva al servidor.</p>
+<p>C) PUT — porque reemplaza completamente el recurso identificado por la URL.</p>
+<p>D) PATCH — siempre, ya que es el único verbo que permite modificar datos.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) GET solo recupera datos; nunca modifica el estado del servidor. Es una operación de solo lectura.</p>
+<p>❌ B) POST se usa para crear un recurso nuevo. Si el recurso ya existe, lo correcto no es usar POST para actualizarlo.</p>
+<p>✅ C) PUT es el verbo estándar REST para actualizar un recurso existente completo. Se dirige a una URL con el ID del recurso (ej: <code>PUT /usuarios/5</code>) y reemplaza todos sus campos con los del body JSON.</p>
+<p>❌ D) PATCH también sirve para actualizar, pero solo modifica parcialmente un recurso (solo los campos que se envíen). En nuestra API usamos PUT porque enviamos el recurso completo.</p>
+</details>
+<p><strong>Pregunta 2: ¿Para qué sirve el plugin <code>ContentNegotiation</code> de Ktor junto con <code>kotlinx-serialization</code>?</strong></p>
+<p>A) Para cifrar las peticiones HTTP entre el cliente y el servidor.</p>
+<p>B) Para convertir automáticamente los objetos Kotlin en JSON al enviar respuestas, y JSON en objetos Kotlin al recibir peticiones.</p>
+<p>C) Para gestionar la autenticación de usuarios mediante tokens JWT.</p>
+<p>D) Para permitir que la API acepte peticiones desde cualquier dominio (CORS).</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) El cifrado es responsabilidad de HTTPS/TLS, que se configura a nivel de servidor o proxy, no de <code>ContentNegotiation</code>.</p>
+<p>✅ B) <code>ContentNegotiation</code> es el "traductor" de la API. Con <code>kotlinx-serialization</code>, serializa objetos Kotlin (<code>data class</code>) a JSON al enviar respuestas (<code>call.respond(objeto)</code>) y deserializa JSON a objetos Kotlin al leer el body (<code>call.receive&lt;MiDTO&gt;()</code>).</p>
+<p>❌ C) La autenticación JWT en Ktor se gestiona con el plugin <code>Authentication</code> y su proveedor <code>jwt</code>. <code>ContentNegotiation</code> no interviene en la verificación de tokens.</p>
+<p>❌ D) CORS (Cross-Origin Resource Sharing) se gestiona en Ktor con el plugin <code>CORS</code>. <code>ContentNegotiation</code> solo se ocupa del formato de los datos, no de los permisos de origen.</p>
+</details>
+</div>
 <h2 id="practica-1-creacion-del-proyecto-con-ktor">🎯 Práctica 1. Creación del Proyecto con Ktor</h2>
 <div class="admonition warning">
-<p class="admonition-title">🎯 Práctica para Aplicar</p>
+<p class="admonition-title">🎯 Práctica 1. Creación del Proyecto con Ktor</p>
 <ol>
 <li>Crea tu nuevo proyecto Ktor siguiendo los pasos del asistente mencionados arriba.</li>
 <li>Una vez generado, localiza el archivo Application.kt dentro de la carpeta core o plugins (dependiendo de la versión).</li>
 <li>Explora el archivo Routing.kt y modifica el mensaje de la ruta principal con un mensaje personalizado.</li>
+<li>Lanza el servidor y verifica que responde en <code>http://0.0.0.0:8080</code>.</li>
 </ol>
 </div>
 

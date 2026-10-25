@@ -1253,12 +1253,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../../ud05/entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1520,39 +1520,15 @@
 <a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Crea un archivo <code>Consultas.kt</code> con las consultas que veamos en esta sección. Llama a la función <code>obtenerUsuariosMayoresQue</code> desde tu <code>main</code> para obtener datos de la tabla.</p>
-</div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span>
-<span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span>
-<span class="normal"><a href="#__codelineno-1-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">conectar</span><span class="p">()</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">fechaLimite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2001</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">consulta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtenerUsuariosMayoresQue</span><span class="p">(</span><span class="n">fechaLimite</span><span class="p">)</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="n">consulta</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ID: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> | Nombre: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">nombre</span><span class="si">}</span><span class="s"> | Email: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">mail</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="p">}</span>
+<p class="admonition-title">🔍 Ejecutar y Analizar: Filtro por fecha</p>
+<p>Crea un archivo <code>Consultas.kt</code> con las consultas que veamos en esta sección. Llama a la función <code>obtenerUsuariosMayoresQue</code> desde tu <code>main</code> para obtener datos de la tabla. Con los datos insertados en la práctica anterior (Atenea: 1999, Hera: 2004, Iris: 2005), solo Atenea nació antes de 2001-01-01. La salida debe ser:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>Conexión a MySQL establecida con éxito usando Exposed.
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>Esquema de la tabla &#39;Usuarios&#39; verificado/creado.
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>ID: 1 | Nombre: Atenea | Email: atenea@mail.com
 </code></pre></div></td></tr></table></div>
-<h2 id="2-combinacion-de-condiciones-and-or">2. Combinación de Condiciones (<code>AND</code>, <code>OR</code>)</h2>
-<p>Podemos combinar múltiples condiciones utilizando los operadores de Kotlin <strong><code>and</code></strong> y <strong><code>or</code></strong> entre las expresiones.</p>
-<h3 id="21-ejemplo-usuarios-con-nombre-y-edad">2.1. Ejemplo: Usuarios con Nombre y Edad</h3>
-<p>Buscamos usuarios cuyo nombre empiece por 'I' <strong>Y</strong> que hayan nacido después del año 2000.</p>
+</div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
@@ -1565,109 +1541,200 @@
 <span class="normal"><a href="#__codelineno-2-10">10</a></span>
 <span class="normal"><a href="#__codelineno-2-11">11</a></span>
 <span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span>
-<span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">buscarUsuariosPorFiltro</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">UsuarioDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">limiteNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2000</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="c1">// WHERE nombre LIKE &#39;I%&#39; AND fecha_nacimiento &gt; &#39;2000-01-01&#39;</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">selectAll</span><span class="p">()</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">            </span><span class="p">.</span><span class="na">where</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="s">&quot;A%&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="p">(</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="n">limiteNacimiento</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultRow</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">            </span><span class="c1">// ... (Mapeo a UsuarioDTO)</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">            </span><span class="n">UsuarioDTO</span><span class="p">(</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">                </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">                </span><span class="n">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">                </span><span class="n">mail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">                </span><span class="n">fechaNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="o">]</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">            </span><span class="p">)</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">        </span><span class="p">}.</span><span class="na">toList</span><span class="p">()</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">conectar</span><span class="p">()</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">fechaLimite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2001</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">consulta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtenerUsuariosMayoresQue</span><span class="p">(</span><span class="n">fechaLimite</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="n">consulta</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ID: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> | Nombre: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">nombre</span><span class="si">}</span><span class="s"> | Email: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">mail</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="2-combinacion-de-condiciones-and-or">2. Combinación de Condiciones (<code>AND</code>, <code>OR</code>)</h2>
+<p>Podemos combinar múltiples condiciones utilizando los operadores de Kotlin <strong><code>and</code></strong> y <strong><code>or</code></strong> entre las expresiones.</p>
+<h3 id="21-ejemplo-usuarios-con-nombre-y-edad">2.1. Ejemplo: Usuarios con Nombre y Edad</h3>
+<p>Buscamos usuarios cuyo nombre empiece por 'I' <strong>Y</strong> que hayan nacido después del año 2000.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">buscarUsuariosPorFiltro</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">UsuarioDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">limiteNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="m">2000</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">        </span><span class="c1">// WHERE nombre LIKE &#39;I%&#39; AND fecha_nacimiento &gt; &#39;2000-01-01&#39;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">        </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">selectAll</span><span class="p">()</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">            </span><span class="p">.</span><span class="na">where</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="s">&quot;A%&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="p">(</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="w"> </span><span class="n">greater</span><span class="w"> </span><span class="n">limiteNacimiento</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultRow</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">            </span><span class="c1">// ... (Mapeo a UsuarioDTO)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">            </span><span class="n">UsuarioDTO</span><span class="p">(</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">                </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">                </span><span class="n">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">                </span><span class="n">mail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">                </span><span class="n">fechaNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="o">]</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">            </span><span class="p">)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">        </span><span class="p">}.</span><span class="na">toList</span><span class="p">()</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Añade la consulta a tu <code>main</code>.</p>
-</div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span>
-<span class="normal"><a href="#__codelineno-3-4">4</a></span>
-<span class="normal"><a href="#__codelineno-3-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">consultaFiltro</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buscarUsuariosPorFiltro</span><span class="p">()</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="n">consultaFiltro</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ID: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> | Nombre: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">nombre</span><span class="si">}</span><span class="s"> | Email: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">mail</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="p">}</span>
+<p class="admonition-title">🔍 Ejecutar y Analizar: Filtro compuesto AND</p>
+<p>Añade la consulta a tu <code>main</code>. Esta consulta busca usuarios cuyo nombre empieza por <code>A</code> <strong>y</strong> nacieron después de 2000-01-01. Con los datos de ejemplo, Atenea empieza por <code>A</code> pero nació en 1999 (no cumple la condición de fecha). El resultado esperado es una lista vacía:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>(sin resultados — ningún usuario cumple ambas condiciones a la vez)
 </code></pre></div></td></tr></table></div>
-<h2 id="3-consultas-con-ordenacion-order-by">3. Consultas con Ordenación (<code>ORDER BY</code>)</h2>
-<p>Para ordenar los resultados, utilizamos el método <code>.orderBy()</code> después de la selección.</p>
-<h3 id="31-ejemplo-listar-por-antiguedad">3.1. Ejemplo: Listar por Antigüedad</h3>
-<p>Listamos todos los usuarios ordenados por su fecha de nacimiento (los más jóvenes primero).</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">obtenerUsuariosOrdenadosPorNacimiento</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">UsuarioDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">        </span><span class="c1">// CE f: Consulta con ordenación.</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">        </span><span class="c1">// SELECT * FROM usuarios ORDER BY fecha_nacimiento DESC</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">        </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">selectAll</span><span class="p">()</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">            </span><span class="p">.</span><span class="na">orderBy</span><span class="p">(</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="p">,</span><span class="w"> </span><span class="n">SortOrder</span><span class="p">.</span><span class="na">DESC</span><span class="p">)</span><span class="w"> </span><span class="c1">// DESC: del más reciente al más antiguo</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultRow</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">                </span><span class="c1">// ... (Mapeo a UsuarioDTO)</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">                </span><span class="n">UsuarioDTO</span><span class="p">(</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">                    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">                    </span><span class="n">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">                    </span><span class="n">mail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="p">,</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">                    </span><span class="n">fechaNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="o">]</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">                </span><span class="p">)</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">            </span><span class="p">}.</span><span class="na">toList</span><span class="p">()</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-<div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Añade la consulta a tu <code>main</code>.</p>
+<p>¡Esto es correcto! Cambia el nombre en la inserción de Atenea a "Ariadna" con fecha 2003-06-01 y vuelve a ejecutar para ver un resultado.</p>
 </div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
 <span class="normal"><a href="#__codelineno-5-3">3</a></span>
 <span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">consultaOrdenacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtenerUsuariosOrdenadosPorNacimiento</span><span class="p">()</span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">consultaFiltro</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buscarUsuariosPorFiltro</span><span class="p">()</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="n">consultaOrdenacion</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="n">consultaFiltro</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ID: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> | Nombre: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">nombre</span><span class="si">}</span><span class="s"> | Email: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">mail</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
 <a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
+<h2 id="3-consultas-con-ordenacion-order-by">3. Consultas con Ordenación (<code>ORDER BY</code>)</h2>
+<p>Para ordenar los resultados, utilizamos el método <code>.orderBy()</code> después de la selección.</p>
+<h3 id="31-ejemplo-listar-por-antiguedad">3.1. Ejemplo: Listar por Antigüedad</h3>
+<p>Listamos todos los usuarios ordenados por su fecha de nacimiento (los más jóvenes primero).</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">obtenerUsuariosOrdenadosPorNacimiento</span><span class="p">():</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">UsuarioDTO</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">transaction</span><span class="p">(</span><span class="n">ConexionDB</span><span class="p">.</span><span class="na">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">        </span><span class="c1">// CE f: Consulta con ordenación.</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">        </span><span class="c1">// SELECT * FROM usuarios ORDER BY fecha_nacimiento DESC</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">        </span><span class="n">Usuarios</span><span class="p">.</span><span class="na">selectAll</span><span class="p">()</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">            </span><span class="p">.</span><span class="na">orderBy</span><span class="p">(</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="p">,</span><span class="w"> </span><span class="n">SortOrder</span><span class="p">.</span><span class="na">DESC</span><span class="p">)</span><span class="w"> </span><span class="c1">// DESC: del más reciente al más antiguo</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">            </span><span class="p">.</span><span class="na">map</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">resultRow</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">                </span><span class="c1">// ... (Mapeo a UsuarioDTO)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">                </span><span class="n">UsuarioDTO</span><span class="p">(</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">                    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">id</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">                    </span><span class="n">nombre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">nombre</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">                    </span><span class="n">mail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">mail</span><span class="o">]</span><span class="p">,</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">                    </span><span class="n">fechaNacimiento</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultRow</span><span class="o">[</span><span class="n">Usuarios</span><span class="p">.</span><span class="na">fechaNacimiento</span><span class="o">]</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">                </span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">            </span><span class="p">}.</span><span class="na">toList</span><span class="p">()</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition success">
+<p class="admonition-title">🔍 Ejecutar y Analizar: Ordenación</p>
+<p>Añade la consulta a tu <code>main</code>. El orden es descendente por <code>fecha_nacimiento</code> (los más jóvenes primero). Con los datos de ejemplo, la salida esperada es:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>ID: 3 | Nombre: Iris | Email: iris@mail.com
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>ID: 2 | Nombre: Hera | Email: hera@mail.com
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>ID: 1 | Nombre: Atenea | Email: atenea@mail.com
+</code></pre></div></td></tr></table></div>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">consultaOrdenacion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obtenerUsuariosOrdenadosPorNacimiento</span><span class="p">()</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="n">consultaOrdenacion</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">usuario</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;ID: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s"> | Nombre: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">nombre</span><span class="si">}</span><span class="s"> | Email: </span><span class="si">${</span><span class="n">usuario</span><span class="p">.</span><span class="na">mail</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 7: ¿Qué operador de Exposed DSL equivale al <code>LIKE</code> de SQL y para qué se usa?</strong></p>
+<p>A) <code>contains()</code> — comprueba si un campo contiene una subcadena en cualquier posición.</p>
+<p>B) <code>like()</code> — busca patrones con comodines (<code>%</code> para cualquier cadena, <code>_</code> para un carácter), igual que <code>LIKE</code> en SQL.</p>
+<p>C) <code>matches()</code> — ejecuta una expresión regular directamente en MySQL.</p>
+<p>D) <code>eq()</code> — compara si dos valores son exactamente iguales, incluyendo patrones con comodines.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) <code>contains</code> no existe como operador de Exposed DSL. Para buscar subcadenas en SQL se usa <code>LIKE '%texto%'</code>, que en Exposed se escribe como <code>columna like "%texto%"</code>.</p>
+<p>✅ B) <code>like()</code> es el equivalente directo de <code>LIKE</code> en el DSL de Exposed. Acepta los mismos comodines SQL: <code>%</code> para cero o más caracteres y <code>_</code> para exactamente un carácter. Ejemplo: <code>Usuarios.nombre like "A%"</code> genera <code>WHERE nombre LIKE 'A%'</code>.</p>
+<p>❌ C) Exposed no expone un operador <code>matches()</code> para expresiones regulares en su DSL estándar. Las regex se pueden ejecutar mediante SQL nativo, pero no con el DSL tipado.</p>
+<p>❌ D) <code>eq()</code> comprueba igualdad exacta (<code>=</code>). No interpreta comodines: <code>Usuarios.nombre eq "A%"</code> buscaría literalmente el texto <code>"A%"</code>, no nombres que empiezan por A.</p>
+</details>
+<p><strong>Pregunta 8: Al encadenar <code>.orderBy(Usuarios.fechaNacimiento, SortOrder.DESC)</code>, ¿qué devuelve primero la consulta?</strong></p>
+<p>A) El usuario con la fecha de nacimiento más antigua (el mayor de edad).</p>
+<p>B) El usuario con la fecha de nacimiento más reciente (el más joven).</p>
+<p>C) Los usuarios en orden aleatorio, porque <code>DESC</code> significa "desordenado" (<em>descartado</em>).</p>
+<p>D) Una excepción, porque <code>orderBy</code> no acepta columnas de tipo <code>Date</code> en Exposed.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Eso sería <code>SortOrder.ASC</code> (ascendente). La fecha más antigua en orden ascendente aparecería primero.</p>
+<p>✅ B) <code>DESC</code> (descendente) ordena de mayor a menor. Las fechas más recientes tienen un valor numérico mayor, por lo que aparecen primero. Con los usuarios del ejemplo: Iris (2005) → Hera (2004) → Atenea (1999).</p>
+<p>❌ C) <code>DESC</code> es la abreviatura de <em>descending</em> (descendente), no "descartado". Es un término SQL estándar.</p>
+<p>❌ D) Exposed soporta <code>.orderBy</code> con columnas de cualquier tipo comparable, incluyendo fechas (<code>LocalDate</code>), siempre que se haya importado <code>exposed-java-time</code>.</p>
+</details>
+</div>
 <h2 id="practica-4-consultas-avanzadas">🎯 Práctica 4. Consultas Avanzadas</h2>
-<p>Una vez que domines los filtros y la ordenación, estarás listo para realizar cualquier consulta de datos en Exposed.</p>
+<p>Añade las consultas avanzadas al <code>VideojuegoDAO.kt</code> del <strong>Catálogo de Videojuegos</strong>.</p>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica 4. Consultas Avanzadas</p>
+<p>Implementa las siguientes funciones en <code>VideojuegoDAO.kt</code>:</p>
 <ol>
-<li><strong>Filtro Compuesto:</strong> Crea una función que filtre tu entidad (<code>Producto</code>, <code>Libro</code>, etc.) utilizando una combinación de <code>AND</code> y <code>OR</code> (ej: <code>Stock &gt; 10 AND (Nombre LIKE 'A%' OR Precio &lt; 50)</code>).</li>
-<li><strong>Consulta Ordenada:</strong> Crea una función que obtenga los 5 registros más recientes o más caros, utilizando <code>.orderBy()</code> y el método <code>.limit(5)</code>.</li>
-<li><strong>Verificación:</strong> Ejecuta las consultas y verifica que el listado retornado coincida exactamente con lo esperado de la base de datos.</li>
+<li>
+<p><strong><code>fun filtrarPorGenero(genero: String): List&lt;Videojuego&gt;</code></strong>
+   Devuelve todos los videojuegos cuyo género coincida exactamente con el parámetro (usa <code>eq</code>).
+   Ejemplo: <code>filtrarPorGenero("Roguelike")</code> debe devolver únicamente <em>Hades</em>.</p>
+</li>
+<li>
+<p><strong><code>fun buscarPorTitulo(fragmento: String): List&lt;Videojuego&gt;</code></strong>
+   Devuelve los videojuegos cuyo título contenga el fragmento indicado (usa <code>like</code> con <code>%</code>).
+   Ejemplo: <code>buscarPorTitulo("Red")</code> debe devolver <em>Red Dead Redemption 2</em>.</p>
+</li>
+<li>
+<p><strong><code>fun obtenerTop3PorNota(): List&lt;Videojuego&gt;</code></strong>
+   Devuelve los 3 videojuegos mejor valorados, ordenados de mayor a menor nota (usa <code>.orderBy()</code> con <code>SortOrder.DESC</code> y <code>.limit(3)</code>).
+   Con los datos del proyecto, el resultado esperado es: <em>Red Dead Redemption 2 (9.5)</em>, <em>Zelda: BOTW (9.3)</em>, <em>Hades (9.0)</em> / <em>Celeste (9.0)</em>.</p>
+</li>
+<li>
+<p><strong><code>fun obtenerVideojuegosDesdeAnio(anio: Int): List&lt;Videojuego&gt;</code></strong>
+   Devuelve todos los videojuegos publicados en el año indicado o posterior (usa <code>greaterEq</code>).
+   Ejemplo: <code>obtenerVideojuegosDesdeAnio(2018)</code> debe devolver <em>RDR2 (2018)</em>, <em>Hades (2020)</em> y <em>Celeste (2018)</em>.</p>
+</li>
+<li>
+<p>Llama a todas estas funciones desde <code>Main.kt</code> y verifica que los resultados son los esperados.</p>
+</li>
 </ol>
+<div class="admonition danger">
+<p class="admonition-title">Reto extra</p>
+<p>Implementa <code>fun obtenerVideojuegosConFiltroCompuesto(genero: String, notaMinima: Double)</code> que combine <code>genero eq</code> y <code>nota greaterEq</code> con el operador <code>and</code>.</p>
+</div>
 </div>
 
 

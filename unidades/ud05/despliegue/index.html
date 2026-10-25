@@ -14,7 +14,7 @@
         <link rel="prev" href="../autenticacion_sesiones/">
       
       
-        <link rel="next" href="../../proyecto/proyecto/">
+        <link rel="next" href="../entrega/">
       
       
       <link rel="icon" href="../../../assets/images/camp.png">
@@ -1340,12 +1340,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1737,9 +1737,24 @@
 </tbody>
 </table>
 <hr />
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 8: ¿Cuál es la diferencia principal entre <code>buildFatJar</code> e <code>installDist</code> como estrategias de empaquetado en Ktor?</strong></p>
+<p>A) <code>buildFatJar</code> solo funciona en Windows; <code>installDist</code> solo funciona en Linux y macOS.</p>
+<p>B) <code>buildFatJar</code> genera un único <code>.jar</code> con todo incluido (código + dependencias), ideal para distribuir y ejecutar con <code>java -jar</code>; <code>installDist</code> genera una carpeta estructurada con el código separado de las librerías, más adecuado para despliegues en servidores o Docker.</p>
+<p>C) <code>installDist</code> incluye el servidor MySQL dentro del paquete; <code>buildFatJar</code> requiere un servidor MySQL externo.</p>
+<p>D) No hay diferencia práctica; ambos generan exactamente los mismos archivos en ubicaciones distintas.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Ambos métodos de empaquetado funcionan en todos los sistemas operativos. <code>installDist</code> genera scripts <code>.bat</code> para Windows y scripts de shell para Linux/macOS, pero el proceso funciona en cualquier plataforma.</p>
+<p>✅ B) Esta es la distinción clave. El Fat JAR es un único archivo portable (perfecto para pruebas rápidas o microservicios sencillos). <code>installDist</code> separa el código de las dependencias en carpetas <code>bin/</code> y <code>lib/</code>, lo que permite actualizar solo el código sin reenviar todas las librerías — mucho más eficiente para despliegues reales en servidores.</p>
+<p>❌ C) Ninguno de los dos empaqueta el servidor MySQL. La base de datos siempre es un servicio externo al que la aplicación se conecta mediante JDBC.</p>
+<p>❌ D) Producen artefactos completamente distintos: un archivo <code>.jar</code> frente a una carpeta con estructura de directorios. Su uso y ventajas también difieren.</p>
+</details>
+</div>
 <h2 id="practica-6-despliegue">🎯 Práctica 6. Despliegue</h2>
 <div class="admonition warning">
-<p class="admonition-title">Práctica para Aplicar</p>
+<p class="admonition-title">🎯 Práctica 6. Despliegue</p>
 <ol>
 <li>Ejecuta <code>./gradlew clean installDist</code>.</li>
 <li>Ve a la carpeta <code>build/install/.../bin</code> y ejecuta tu aplicación mediante el script (sin usar <code>java -jar</code>).</li>
@@ -1800,13 +1815,13 @@
         
         
           
-          <a href="../../proyecto/proyecto/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Proyecto Final">
+          <a href="../entrega/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Entrega y documentación final">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Siguiente
               </span>
               <div class="md-ellipsis">
-                Proyecto Final
+                Entrega y documentación final
               </div>
             </div>
             <div class="md-footer__button md-icon">

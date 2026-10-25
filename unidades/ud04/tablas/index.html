@@ -1214,12 +1214,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../../ud05/entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1471,8 +1471,8 @@
 </tbody>
 </table>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Sigue los pasos para <strong>definir</strong> y <strong>mapear</strong> nuestra tabla de <code>Usuarios</code>.</p>
+<p class="admonition-title">🔍 Ejecutar y Analizar: Definición del esquema</p>
+<p>Crea el fichero <code>Usuarios.kt</code> con el código de mapeo que verás a continuación. Este archivo es una definición estática de esquema: no genera salida por consola. Comprueba que el archivo compila sin errores en IntelliJ antes de continuar.</p>
 </div>
 <p>Y aquí tenemos el mapeo <code>Usuarios.kt</code>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -1550,149 +1550,253 @@
 <a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition success">
-<p class="admonition-title">🔍 Ejecutar y Analizar</p>
-<p>Asegúrate de que tu archivo <code>ConexionDB.kt</code> incluya la función nueva de <code>conectar</code> con la creación del objeto <code>Usuarios</code>. <strong>OJO</strong> posiblemente, tendrás que actualizar o importar librerías.</p>
+<p class="admonition-title">🔍 Ejecutar y Analizar: Creación del esquema en MySQL</p>
+<p>Asegúrate de que tu archivo <code>ConexionDB.kt</code> incluya la función nueva de <code>conectar</code> con la creación del objeto <code>Usuarios</code>. <strong>OJO</strong> posiblemente, tendrás que actualizar o importar librerías. Llama a <code>ConexionDB.conectar()</code> desde <code>main</code> y verifica que la salida por consola es:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>Conexión a MySQL establecida con éxito usando Exposed.
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Esquema de la tabla &#39;Usuarios&#39; verificado/creado.
+</code></pre></div></td></tr></table></div>
+<p>Comprueba también en IntelliJ Database (o MySQL Workbench) que la tabla <code>usuarios</code> aparece con las cinco columnas definidas.</p>
 </div>
 <p>El archivo <code>ConexionDB.kt</code> debe ser algo así:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span>
-<span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span>
-<span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span>
-<span class="normal"><a href="#__codelineno-2-20">20</a></span>
-<span class="normal"><a href="#__codelineno-2-21">21</a></span>
-<span class="normal"><a href="#__codelineno-2-22">22</a></span>
-<span class="normal"><a href="#__codelineno-2-23">23</a></span>
-<span class="normal"><a href="#__codelineno-2-24">24</a></span>
-<span class="normal"><a href="#__codelineno-2-25">25</a></span>
-<span class="normal"><a href="#__codelineno-2-26">26</a></span>
-<span class="normal"><a href="#__codelineno-2-27">27</a></span>
-<span class="normal"><a href="#__codelineno-2-28">28</a></span>
-<span class="normal"><a href="#__codelineno-2-29">29</a></span>
-<span class="normal"><a href="#__codelineno-2-30">30</a></span>
-<span class="normal"><a href="#__codelineno-2-31">31</a></span>
-<span class="normal"><a href="#__codelineno-2-32">32</a></span>
-<span class="normal"><a href="#__codelineno-2-33">33</a></span>
-<span class="normal"><a href="#__codelineno-2-34">34</a></span>
-<span class="normal"><a href="#__codelineno-2-35">35</a></span>
-<span class="normal"><a href="#__codelineno-2-36">36</a></span>
-<span class="normal"><a href="#__codelineno-2-37">37</a></span>
-<span class="normal"><a href="#__codelineno-2-38">38</a></span>
-<span class="normal"><a href="#__codelineno-2-39">39</a></span>
-<span class="normal"><a href="#__codelineno-2-40">40</a></span>
-<span class="normal"><a href="#__codelineno-2-41">41</a></span>
-<span class="normal"><a href="#__codelineno-2-42">42</a></span>
-<span class="normal"><a href="#__codelineno-2-43">43</a></span>
-<span class="normal"><a href="#__codelineno-2-44">44</a></span>
-<span class="normal"><a href="#__codelineno-2-45">45</a></span>
-<span class="normal"><a href="#__codelineno-2-46">46</a></span>
-<span class="normal"><a href="#__codelineno-2-47">47</a></span>
-<span class="normal"><a href="#__codelineno-2-48">48</a></span>
-<span class="normal"><a href="#__codelineno-2-49">49</a></span>
-<span class="normal"><a href="#__codelineno-2-50">50</a></span>
-<span class="normal"><a href="#__codelineno-2-51">51</a></span>
-<span class="normal"><a href="#__codelineno-2-52">52</a></span>
-<span class="normal"><a href="#__codelineno-2-53">53</a></span>
-<span class="normal"><a href="#__codelineno-2-54">54</a></span>
-<span class="normal"><a href="#__codelineno-2-55">55</a></span>
-<span class="normal"><a href="#__codelineno-2-56">56</a></span>
-<span class="normal"><a href="#__codelineno-2-57">57</a></span>
-<span class="normal"><a href="#__codelineno-2-58">58</a></span>
-<span class="normal"><a href="#__codelineno-2-59">59</a></span>
-<span class="normal"><a href="#__codelineno-2-60">60</a></span>
-<span class="normal"><a href="#__codelineno-2-61">61</a></span>
-<span class="normal"><a href="#__codelineno-2-62">62</a></span>
-<span class="normal"><a href="#__codelineno-2-63">63</a></span>
-<span class="normal"><a href="#__codelineno-2-64">64</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.Database</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.SchemaUtils</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.DriverManager</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="kd">object</span><span class="w"> </span><span class="nc">ConexionDB</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="c1">// Configuración de la unidad anterior </span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">HOST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;IP_HOST&quot;</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3306</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">DATABASE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;NOMBRE_BD&quot;</span><span class="w"> </span><span class="c1">// Nombre de nuestra BD</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;USUARIO_BD&quot;</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;PASSWORD_BD&quot;</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">    </span><span class="c1">// URL JDBC para MySQL, ahora utilizada por Exposed</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:mysql://</span><span class="si">$</span><span class="n">HOST</span><span class="s">:</span><span class="si">$</span><span class="n">PORT</span><span class="s">/</span><span class="si">$</span><span class="n">DATABASE</span><span class="s">?useSSL=false&amp;serverTimezone=Europe/Madrid&quot;</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="c1">// Propiedad para almacenar la instancia de la base de datos de Exposed</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">    </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">db</span><span class="p">:</span><span class="w"> </span><span class="n">Database</span><span class="w"> </span><span class="c1">// LA INSTANCIA DE LA CONEXIÓN EXPOSED</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">    </span><span class="cm">/**</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="cm">     * Intenta establecer la conexión con Exposed e inicializa el esquema de la BD.</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="cm">     */</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">conectar</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">            </span><span class="c1">// 1. Establece la conexión con la base de datos a través de Exposed</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">            </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Database</span><span class="p">.</span><span class="na">connect</span><span class="p">(</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="w">                </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">URL</span><span class="p">,</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">                </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">USER</span><span class="p">,</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">                </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PASSWORD</span>
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="w">            </span><span class="p">)</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión a MySQL establecida con éxito usando Exposed.&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34"></a>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="w">            </span><span class="c1">// Pasamos &#39;db&#39; para indicar qué conexión usar.</span>
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="w">            </span><span class="n">transaction</span><span class="p">(</span><span class="n">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="w">                </span><span class="c1">// Crea la tabla &#39;Usuarios&#39; (y cualquier otra tabla que definamos e importemos)</span>
-<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="w">                </span><span class="n">SchemaUtils</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Usuarios</span><span class="p">)</span>
-<a id="__codelineno-2-39" name="__codelineno-2-39"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Esquema de la tabla &#39;Usuarios&#39; verificado/creado.&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-40" name="__codelineno-2-40"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-2-41" name="__codelineno-2-41"></a>
-<a id="__codelineno-2-42" name="__codelineno-2-42"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-43" name="__codelineno-2-43"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al conectar o inicializar la base de datos: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-44" name="__codelineno-2-44"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="o">?.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;Communications link failure&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;   Pista: Asegúrate de que el servidor MySQL está activo y las credenciales son correctas.&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-46" name="__codelineno-2-46"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-2-47" name="__codelineno-2-47"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-48" name="__codelineno-2-48"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-49" name="__codelineno-2-49"></a>
-<a id="__codelineno-2-50" name="__codelineno-2-50"></a><span class="w">    </span><span class="cm">/**</span>
-<a id="__codelineno-2-51" name="__codelineno-2-51"></a><span class="cm">     * Función de prueba para verificar la conexión, manteniendo la estructura de la Unidad 3.</span>
-<a id="__codelineno-2-52" name="__codelineno-2-52"></a><span class="cm">     */</span>
-<a id="__codelineno-2-53" name="__codelineno-2-53"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">testConexion</span><span class="p">():</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-54" name="__codelineno-2-54"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-55" name="__codelineno-2-55"></a><span class="w">            </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span><span class="w"> </span><span class="n">USER</span><span class="p">,</span><span class="w"> </span><span class="n">PASSWORD</span><span class="p">)</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-2-56" name="__codelineno-2-56"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Test: Conexión JDBC pura establecida con éxito.&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-57" name="__codelineno-2-57"></a><span class="w">                </span><span class="kc">true</span>
-<a id="__codelineno-2-58" name="__codelineno-2-58"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="kc">false</span>
-<a id="__codelineno-2-59" name="__codelineno-2-59"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-60" name="__codelineno-2-60"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Test: Error al conectar con JDBC puro: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-61" name="__codelineno-2-61"></a><span class="w">            </span><span class="kc">false</span>
-<a id="__codelineno-2-62" name="__codelineno-2-62"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-63" name="__codelineno-2-63"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-64" name="__codelineno-2-64"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span>
+<span class="normal"><a href="#__codelineno-3-50">50</a></span>
+<span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span>
+<span class="normal"><a href="#__codelineno-3-53">53</a></span>
+<span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span>
+<span class="normal"><a href="#__codelineno-3-62">62</a></span>
+<span class="normal"><a href="#__codelineno-3-63">63</a></span>
+<span class="normal"><a href="#__codelineno-3-64">64</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.Database</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.SchemaUtils</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.jetbrains.exposed.sql.transactions.transaction</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.DriverManager</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="kd">object</span><span class="w"> </span><span class="nc">ConexionDB</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="c1">// Configuración de la unidad anterior </span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">HOST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;IP_HOST&quot;</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3306</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">DATABASE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;NOMBRE_BD&quot;</span><span class="w"> </span><span class="c1">// Nombre de nuestra BD</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;USUARIO_BD&quot;</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;PASSWORD_BD&quot;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">    </span><span class="c1">// URL JDBC para MySQL, ahora utilizada por Exposed</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:mysql://</span><span class="si">$</span><span class="n">HOST</span><span class="s">:</span><span class="si">$</span><span class="n">PORT</span><span class="s">/</span><span class="si">$</span><span class="n">DATABASE</span><span class="s">?useSSL=false&amp;serverTimezone=Europe/Madrid&quot;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">    </span><span class="c1">// Propiedad para almacenar la instancia de la base de datos de Exposed</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">    </span><span class="kd">lateinit</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">db</span><span class="p">:</span><span class="w"> </span><span class="n">Database</span><span class="w"> </span><span class="c1">// LA INSTANCIA DE LA CONEXIÓN EXPOSED</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">    </span><span class="cm">/**</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="cm">     * Intenta establecer la conexión con Exposed e inicializa el esquema de la BD.</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="cm">     */</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">conectar</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">            </span><span class="c1">// 1. Establece la conexión con la base de datos a través de Exposed</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">            </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Database</span><span class="p">.</span><span class="na">connect</span><span class="p">(</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">                </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">URL</span><span class="p">,</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">                </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">USER</span><span class="p">,</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="w">                </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PASSWORD</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">            </span><span class="p">)</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión a MySQL establecida con éxito usando Exposed.&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">            </span><span class="c1">// Pasamos &#39;db&#39; para indicar qué conexión usar.</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a><span class="w">            </span><span class="n">transaction</span><span class="p">(</span><span class="n">db</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a><span class="w">                </span><span class="c1">// Crea la tabla &#39;Usuarios&#39; (y cualquier otra tabla que definamos e importemos)</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a><span class="w">                </span><span class="n">SchemaUtils</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Usuarios</span><span class="p">)</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Esquema de la tabla &#39;Usuarios&#39; verificado/creado.&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al conectar o inicializar la base de datos: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="o">?.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;Communications link failure&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;   Pista: Asegúrate de que el servidor MySQL está activo y las credenciales son correctas.&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a><span class="w">    </span><span class="cm">/**</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a><span class="cm">     * Función de prueba para verificar la conexión, manteniendo la estructura de la Unidad 3.</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a><span class="cm">     */</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">testConexion</span><span class="p">():</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a><span class="w">            </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span><span class="w"> </span><span class="n">USER</span><span class="p">,</span><span class="w"> </span><span class="n">PASSWORD</span><span class="p">)</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a><span class="w">                </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Test: Conexión JDBC pura establecida con éxito.&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a><span class="w">                </span><span class="kc">true</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Test: Error al conectar con JDBC puro: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a><span class="w">            </span><span class="kc">false</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 3: En Exposed, ¿qué ocurre si llamas a <code>SchemaUtils.create(Usuarios)</code> y la tabla <code>usuarios</code> ya existe en la base de datos?</strong></p>
+<p>A) Lanza una excepción <code>TableAlreadyExistsException</code> que detiene la ejecución.</p>
+<p>B) Elimina la tabla existente con todos sus datos y la vuelve a crear desde cero.</p>
+<p>C) No hace nada: comprueba si la tabla existe y, si es así, la deja intacta.</p>
+<p>D) Añade las columnas nuevas que no existieran, pero no borra las existentes.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) <code>SchemaUtils.create</code> no lanza excepciones por tablas ya existentes. Está diseñado para usarse al arrancar la aplicación de forma segura.</p>
+<p>❌ B) Para eliminar y recrear una tabla se usa <code>SchemaUtils.drop</code> seguido de <code>SchemaUtils.create</code>. <code>create</code> por sí solo nunca destruye datos existentes.</p>
+<p>✅ C) <code>SchemaUtils.create</code> emite un <code>CREATE TABLE IF NOT EXISTS</code>. Si la tabla ya existe, el comando no tiene efecto y los datos se conservan. Por eso es seguro llamarlo cada vez que arranca la aplicación.</p>
+<p>❌ D) Eso sería el comportamiento de <code>SchemaUtils.createMissingTablesAndColumns</code>, que sí añade columnas nuevas. <code>create</code> básico no hace migraciones de esquema.</p>
+</details>
+<p><strong>Pregunta 4: Al recuperar datos con <code>Usuarios.selectAll().map { resultRow -&gt; ... }</code>, ¿qué representa cada <code>resultRow</code> dentro del bloque <code>map</code>?</strong></p>
+<p>A) Un objeto <code>Usuarios</code> completo con todas sus propiedades ya mapeadas a Kotlin.</p>
+<p>B) Una fila de la tabla de base de datos, de la que se accede a cada columna usando el operador <code>[]</code> con la referencia a la columna (p.ej. <code>resultRow[Usuarios.nombre]</code>).</p>
+<p>C) Un índice numérico que identifica la posición de cada fila en el <code>ResultSet</code>.</p>
+<p>D) Una cadena JSON con todos los campos de la fila listos para enviar por la red.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) Exposed no crea instancias de tu clase automáticamente. El <code>map</code> es el paso donde tú construyes el objeto Kotlin (p.ej. un DTO) a partir de los datos brutos de la fila.</p>
+<p>✅ B) <code>resultRow</code> es un objeto <code>ResultRow</code> de Exposed. Actúa como un mapa tipado donde la clave es la referencia a la columna del objeto <code>Table</code> (como <code>Usuarios.nombre</code>) y el valor es el dato de esa columna en la fila actual.</p>
+<p>❌ C) El índice numérico lo gestiona Exposed internamente. Lo que recibe el bloque <code>map</code> es la fila en sí, no su posición.</p>
+<p>❌ D) La serialización a JSON es responsabilidad de kotlinx-serialization, no de Exposed. <code>resultRow</code> contiene tipos Kotlin nativos (<code>String</code>, <code>Int</code>, <code>LocalDate</code>, etc.).</p>
+</details>
+</div>
 <h2 id="practica-2-diseno-de-esquemas">🎯 Práctica 2. Diseño de Esquemas</h2>
-<p>El primer paso para consolidar el conocimiento es aplicar esta técnica a tu propio proyecto.</p>
+<p>El primer paso para consolidar el conocimiento es definir la estructura de las tablas del <strong>Catálogo de Videojuegos</strong> con Exposed.</p>
 <div class="admonition warning">
 <p class="admonition-title">🎯 Práctica 2. Diseño de Esquemas</p>
+<p>Vas a definir el mapeo de las tablas del <strong>Catálogo de Videojuegos</strong> usando Exposed.</p>
+<p><strong>Tabla principal — <code>object Videojuegos : Table("videojuegos")</code></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Campo SQL</th>
+<th style="text-align: left;">Tipo Exposed</th>
+<th style="text-align: left;">Tipo Kotlin</th>
+<th style="text-align: left;">Restricciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;"><code>Int</code></td>
+<td style="text-align: left;">PK, AutoIncrement</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>titulo</code></td>
+<td style="text-align: left;"><code>varchar(100)</code></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;">No nulo</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>genero</code></td>
+<td style="text-align: left;"><code>varchar(50)</code></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;">No nulo</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>anio</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;"><code>Int</code></td>
+<td style="text-align: left;">No nulo</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nota</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;"><code>Double</code></td>
+<td style="text-align: left;">No nulo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabla de listas — <code>object Listas : Table("listas")</code></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Campo SQL</th>
+<th style="text-align: left;">Tipo Exposed</th>
+<th style="text-align: left;">Tipo Kotlin</th>
+<th style="text-align: left;">Restricciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>id_lista</code></td>
+<td style="text-align: left;"><code>integer("id_lista")</code></td>
+<td style="text-align: left;"><code>Int</code></td>
+<td style="text-align: left;">PK, AutoIncrement</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nombre</code></td>
+<td style="text-align: left;"><code>varchar(50)</code></td>
+<td style="text-align: left;"><code>String</code></td>
+<td style="text-align: left;">No nulo, Único</td>
+</tr>
+</tbody>
+</table>
 <ol>
-<li><strong>Diseña tu Propia Entidad:</strong> Basado en la temática de tu proyecto personal (ej: si es una tienda, crea la tabla <code>Productos</code>, si es una biblioteca, crea la tabla <code>Libros</code>).</li>
-<li><strong>Define el Objeto <code>Table</code>:</strong> Crea un nuevo <code>object</code> en tu código (ej: <code>object Productos : Table("productos")</code>) que herede de <code>Table</code>.</li>
-<li><strong>Añade Columnas:</strong> Define al menos <strong>cinco columnas</strong> usando tipos como <code>varchar</code>, <code>integer</code>, <code>bool</code> o <code>double</code>.</li>
-<li><strong>Actualiza el Conector:</strong> Modifica la función <code>conectar()</code> en <code>ConexionDB.kt</code> para que use <code>SchemaUtils.create()</code> y cree <strong>tu nueva tabla</strong> dentro de la transacción.</li>
-<li><strong>Verificación:</strong> Ejecuta el proyecto y verifica en tu gestor de BD (IntelliJ, MySQL Workbench, etc.) que tu nueva tabla se haya creado correctamente.</li>
+<li>Crea el fichero <code>Videojuegos.kt</code> en el paquete <code>schemas</code> con el <code>object Videojuegos : Table("videojuegos")</code> y sus cinco columnas.</li>
+<li>Crea el fichero <code>Listas.kt</code> con el <code>object Listas : Table("listas")</code> y sus dos columnas.</li>
+<li>Actualiza la función <code>conectar()</code> en <code>ConexionDB.kt</code> para que ejecute <code>SchemaUtils.create(Videojuegos, Listas)</code> dentro de la transacción.</li>
+<li>Ejecuta el proyecto y verifica en IntelliJ Database (o MySQL Workbench) que las dos tablas aparecen con las columnas correctas.</li>
 </ol>
+<div class="admonition danger">
+<p class="admonition-title">Reto extra</p>
+<p>Define también la tabla de relación <code>ListasVideojuegos : Table("listas_videojuegos")</code> con las columnas <code>id_lista</code> (FK) y <code>id_videojuego</code> (FK). Crea las claves foráneas con <code>.references(Listas.id_lista)</code> y <code>.references(Videojuegos.id)</code> y añádela a <code>SchemaUtils.create(...)</code>.</p>
+</div>
 </div>
 
 

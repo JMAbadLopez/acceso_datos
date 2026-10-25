@@ -1269,7 +1269,7 @@
         <li class="md-nav__item">
   <a href="#practica-4-enrutando-y-realizacion-de-pruebas" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 Práctica 4. Enrutando y realización de pruebas.
+      🎯 Práctica 4. Enrutando y realización de pruebas
     </span>
   </a>
   
@@ -1337,12 +1337,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proyecto/proyecto/" class="md-nav__link">
+      <a href="../entrega/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Proyecto Final
+    Entrega y documentación final
     
   </span>
   
@@ -1584,7 +1584,7 @@
         <li class="md-nav__item">
   <a href="#practica-4-enrutando-y-realizacion-de-pruebas" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 Práctica 4. Enrutando y realización de pruebas.
+      🎯 Práctica 4. Enrutando y realización de pruebas
     </span>
   </a>
   
@@ -2027,9 +2027,36 @@
 </tr>
 </tbody>
 </table>
-<h2 id="practica-4-enrutando-y-realizacion-de-pruebas">🎯 Práctica 4. Enrutando y realización de pruebas.</h2>
+<div class="admonition example">
+<p class="admonition-title">Autoevaluación</p>
+<p><strong>Pregunta 5: En nuestra API, un <code>POST /usuarios</code> exitoso devuelve el código HTTP 201. ¿Por qué se usa 201 en lugar de 200?</strong></p>
+<p>A) Porque 200 está reservado exclusivamente para peticiones GET; cualquier otro verbo debe devolver un código diferente.</p>
+<p>B) Porque 201 (Created) indica específicamente que la petición tuvo como resultado la creación de un nuevo recurso, mientras que 200 (OK) indica simplemente que la petición se procesó con éxito sin necesidad de crear nada nuevo.</p>
+<p>C) Porque Ktor lanza una excepción si se usa <code>HttpStatusCode.OK</code> en respuesta a un <code>POST</code>.</p>
+<p>D) Es una convención opcional; 200 y 201 son equivalentes y se pueden usar indistintamente.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) El código 200 se puede usar con cualquier verbo HTTP. No está reservado para GET.</p>
+<p>✅ B) Los códigos de estado HTTP tienen semántica precisa. 200 OK significa "la petición fue procesada", y 201 Created añade la información de que se creó un recurso nuevo. Usar 201 en respuesta a un POST exitoso es la práctica estándar REST y permite a los clientes distinguir entre "procesado" y "creado".</p>
+<p>❌ C) Ktor acepta cualquier <code>HttpStatusCode</code> en <code>call.respond</code>. No lanza excepciones por el código que elijas.</p>
+<p>❌ D) Aunque técnicamente ambos son éxito (2xx), no son semánticamente equivalentes. Una buena API REST comunica con precisión qué ocurrió mediante el código de estado correcto.</p>
+</details>
+<p><strong>Pregunta 6: Un cliente envía <code>DELETE /usuarios/1</code> sin haber hecho login previamente. Según la arquitectura de autenticación con sesiones, ¿qué respuesta recibirá?</strong></p>
+<p>A) 200 OK — el usuario se elimina porque DELETE es un verbo estándar que no requiere autenticación.</p>
+<p>B) 404 Not Found — el servidor no puede encontrar la ruta <code>/usuarios/1</code> sin sesión activa.</p>
+<p>C) 401 Unauthorized — el bloque <code>authenticate("auth-session")</code> detecta que no hay cookie de sesión válida y ejecuta el <code>challenge</code> configurado.</p>
+<p>D) 500 Internal Server Error — el servidor falla al intentar leer la sesión que no existe.</p>
+<details class="quote">
+<summary>Solución</summary>
+<p>❌ A) DELETE está envuelto en el bloque <code>authenticate("auth-session")</code>. Sin sesión válida, Ktor nunca llega a ejecutar el código de borrado.</p>
+<p>❌ B) La ruta existe y es reconocida por Ktor. El problema no es que no encuentre la ruta, sino que el usuario no está autenticado para usarla.</p>
+<p>✅ C) El bloque <code>authenticate</code> intercepta la petición, comprueba si existe una <code>UserSession</code> válida en las cookies y, si no la encuentra, ejecuta el <code>challenge</code> que hemos configurado: devolver un mensaje <code>"401: No autorizado. Debes iniciar sesión."</code> con código HTTP 401.</p>
+<p>❌ D) Leer una sesión que no existe no produce una excepción en Ktor; simplemente devuelve <code>null</code>. El sistema de autenticación gestiona este caso limpiamente con el <code>challenge</code>.</p>
+</details>
+</div>
+<h2 id="practica-4-enrutando-y-realizacion-de-pruebas">🎯 Práctica 4. Enrutando y realización de pruebas</h2>
 <div class="admonition warning">
-<p class="admonition-title">🎯 Práctica para Aplicar</p>
+<p class="admonition-title">🎯 Práctica 4. Enrutando y realización de pruebas</p>
 <ol>
 <li>Implementa el archivo <code>UsuarioRoutes.kt</code> y asegúrate de registrarlo en <code>Routing.kt</code>.</li>
 <li>Ejecuta el servidor.</li>
