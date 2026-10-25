@@ -27,7 +27,7 @@ El módulo tiene como objetivo que el alumnado adquiera las competencias necesar
 | UD3 | [Persistencia en Bases de Datos](unidades/ud03/introduccion.md) |
 | UD4 | [ORM. Mapeo Objeto Relacional](unidades/ud04/introduccion.md) |
 | UD5 | [Diseño de componentes. API REST](unidades/ud05/introduccion.md) |
-| Proyecto intermodular | [Desarrollo de Backend](unidades/proyecto/proyecto.md) |
+| UD6 | [Bases de datos Documentales. MongoDB](unidades/ud06/introduccion.md) |
 
 ---
 
@@ -38,6 +38,6 @@ Este material ha sido elaborado y es mantenido por **José Manuel Abad López** 
 - 📧 <jm.abadlopez@edu.gva.es>
 - 🌐 <https://jmabadlopez.github.io>
 
-Las unidades UD1, UD2 y UD3 están basadas en el trabajo original de **Begoña Paterna** (a partir de materiales de **Alicia Salvador**), adaptadas y ampliadas para el presente curso. Las unidades UD4 y UD5 han sido creadas íntegramente por José Manuel Abad López.
+Las unidades UD1, UD2 y UD3 están basadas en el trabajo original de **Begoña Paterna** (a partir de materiales de **Alicia Salvador**), adaptadas y ampliadas para el presente curso. Las unidades UD4, UD5 y UD6 han sido creadas íntegramente por **José Manuel Abad López**.
 
 Distribuido bajo licencia [Creative Commons CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).

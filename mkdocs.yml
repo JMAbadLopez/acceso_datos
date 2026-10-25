@@ -33,6 +33,11 @@ nav:
       - Autenticación y Sesiones: unidades/ud05/autenticacion_sesiones.md
       - Arquitectura y despliegue: unidades/ud05/despliegue.md
       - Entrega y documentación final: unidades/ud05/entrega.md
+    - UD6 - Bases de datos Documentales. MongoDB:
+      - Introducción: unidades/ud06/introduccion.md
+      - Conexión desde Kotlin: unidades/ud06/conexion.md
+      - Operaciones CRUD: unidades/ud06/operaciones.md
+      - Consultas con Filtros: unidades/ud06/consultas.md
   - Inicio: index.md
 
 repo_url: https://github.com/JMAbadLopez/acceso_datos
