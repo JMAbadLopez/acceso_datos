@@ -42,8 +42,14 @@ fun obtenerUsuariosMayoresQue(fechaLimite: LocalDate): List<UsuarioDTO> {
 }
 ```
 
-!!! success "🔍 Ejecutar y Analizar"
-    Crea un archivo `Consultas.kt` con las consultas que veamos en esta sección. Llama a la función `obtenerUsuariosMayoresQue` desde tu `main` para obtener datos de la tabla.
+!!! success "🔍 Ejecutar y Analizar: Filtro por fecha"
+    Crea un archivo `Consultas.kt` con las consultas que veamos en esta sección. Llama a la función `obtenerUsuariosMayoresQue` desde tu `main` para obtener datos de la tabla. Con los datos insertados en la práctica anterior (Atenea: 1999, Hera: 2004, Iris: 2005), solo Atenea nació antes de 2001-01-01. La salida debe ser:
+
+    ```
+    Conexión a MySQL establecida con éxito usando Exposed.
+    Esquema de la tabla 'Usuarios' verificado/creado.
+    ID: 1 | Nombre: Atenea | Email: atenea@mail.com
+    ```
 
 ```kotlin
 fun main() {
@@ -91,8 +97,14 @@ fun buscarUsuariosPorFiltro(): List<UsuarioDTO> {
 }
 ```
 
-!!! success "🔍 Ejecutar y Analizar"
-    Añade la consulta a tu `main`.
+!!! success "🔍 Ejecutar y Analizar: Filtro compuesto AND"
+    Añade la consulta a tu `main`. Esta consulta busca usuarios cuyo nombre empieza por `A` **y** nacieron después de 2000-01-01. Con los datos de ejemplo, Atenea empieza por `A` pero nació en 1999 (no cumple la condición de fecha). El resultado esperado es una lista vacía:
+
+    ```
+    (sin resultados — ningún usuario cumple ambas condiciones a la vez)
+    ```
+
+    ¡Esto es correcto! Cambia el nombre en la inserción de Atenea a "Ariadna" con fecha 2003-06-01 y vuelve a ejecutar para ver un resultado.
 
 ```kotlin
     val consultaFiltro = buscarUsuariosPorFiltro()
@@ -131,8 +143,14 @@ fun obtenerUsuariosOrdenadosPorNacimiento(): List<UsuarioDTO> {
 }
 ```
 
-!!! success "🔍 Ejecutar y Analizar"
-    Añade la consulta a tu `main`.
+!!! success "🔍 Ejecutar y Analizar: Ordenación"
+    Añade la consulta a tu `main`. El orden es descendente por `fecha_nacimiento` (los más jóvenes primero). Con los datos de ejemplo, la salida esperada es:
+
+    ```
+    ID: 3 | Nombre: Iris | Email: iris@mail.com
+    ID: 2 | Nombre: Hera | Email: hera@mail.com
+    ID: 1 | Nombre: Atenea | Email: atenea@mail.com
+    ```
 
 ```kotlin
     val consultaOrdenacion = obtenerUsuariosOrdenadosPorNacimiento()
@@ -142,12 +160,72 @@ fun obtenerUsuariosOrdenadosPorNacimiento(): List<UsuarioDTO> {
     }
 ```
 
+!!! example "Autoevaluación"
+
+    **Pregunta 7: ¿Qué operador de Exposed DSL equivale al `LIKE` de SQL y para qué se usa?**
+
+    A) `contains()` — comprueba si un campo contiene una subcadena en cualquier posición.
+
+    B) `like()` — busca patrones con comodines (`%` para cualquier cadena, `_` para un carácter), igual que `LIKE` en SQL.
+
+    C) `matches()` — ejecuta una expresión regular directamente en MySQL.
+
+    D) `eq()` — compara si dos valores son exactamente iguales, incluyendo patrones con comodines.
+
+    ??? quote "Solución"
+        ❌ A) `contains` no existe como operador de Exposed DSL. Para buscar subcadenas en SQL se usa `LIKE '%texto%'`, que en Exposed se escribe como `columna like "%texto%"`.
+
+        ✅ B) `like()` es el equivalente directo de `LIKE` en el DSL de Exposed. Acepta los mismos comodines SQL: `%` para cero o más caracteres y `_` para exactamente un carácter. Ejemplo: `Usuarios.nombre like "A%"` genera `WHERE nombre LIKE 'A%'`.
+
+        ❌ C) Exposed no expone un operador `matches()` para expresiones regulares en su DSL estándar. Las regex se pueden ejecutar mediante SQL nativo, pero no con el DSL tipado.
+
+        ❌ D) `eq()` comprueba igualdad exacta (`=`). No interpreta comodines: `Usuarios.nombre eq "A%"` buscaría literalmente el texto `"A%"`, no nombres que empiezan por A.
+
+    **Pregunta 8: Al encadenar `.orderBy(Usuarios.fechaNacimiento, SortOrder.DESC)`, ¿qué devuelve primero la consulta?**
+
+    A) El usuario con la fecha de nacimiento más antigua (el mayor de edad).
+
+    B) El usuario con la fecha de nacimiento más reciente (el más joven).
+
+    C) Los usuarios en orden aleatorio, porque `DESC` significa "desordenado" (*descartado*).
+
+    D) Una excepción, porque `orderBy` no acepta columnas de tipo `Date` en Exposed.
+
+    ??? quote "Solución"
+        ❌ A) Eso sería `SortOrder.ASC` (ascendente). La fecha más antigua en orden ascendente aparecería primero.
+
+        ✅ B) `DESC` (descendente) ordena de mayor a menor. Las fechas más recientes tienen un valor numérico mayor, por lo que aparecen primero. Con los usuarios del ejemplo: Iris (2005) → Hera (2004) → Atenea (1999).
+
+        ❌ C) `DESC` es la abreviatura de *descending* (descendente), no "descartado". Es un término SQL estándar.
+
+        ❌ D) Exposed soporta `.orderBy` con columnas de cualquier tipo comparable, incluyendo fechas (`LocalDate`), siempre que se haya importado `exposed-java-time`.
+
 ## 🎯 Práctica 4. Consultas Avanzadas
 
-Una vez que domines los filtros y la ordenación, estarás listo para realizar cualquier consulta de datos en Exposed.
+Añade las consultas avanzadas al `VideojuegoDAO.kt` del **Catálogo de Videojuegos**.
 
 !!! warning "🎯 Práctica 4. Consultas Avanzadas"
-    1. **Filtro Compuesto:** Crea una función que filtre tu entidad (`Producto`, `Libro`, etc.) utilizando una combinación de `AND` y `OR` (ej: `Stock > 10 AND (Nombre LIKE 'A%' OR Precio < 50)`).
-    2. **Consulta Ordenada:** Crea una función que obtenga los 5 registros más recientes o más caros, utilizando `.orderBy()` y el método `.limit(5)`.
-    3. **Verificación:** Ejecuta las consultas y verifica que el listado retornado coincida exactamente con lo esperado de la base de datos.
+
+    Implementa las siguientes funciones en `VideojuegoDAO.kt`:
+
+    1. **`fun filtrarPorGenero(genero: String): List<Videojuego>`**
+       Devuelve todos los videojuegos cuyo género coincida exactamente con el parámetro (usa `eq`).
+       Ejemplo: `filtrarPorGenero("Roguelike")` debe devolver únicamente *Hades*.
+
+    2. **`fun buscarPorTitulo(fragmento: String): List<Videojuego>`**
+       Devuelve los videojuegos cuyo título contenga el fragmento indicado (usa `like` con `%`).
+       Ejemplo: `buscarPorTitulo("Red")` debe devolver *Red Dead Redemption 2*.
+
+    3. **`fun obtenerTop3PorNota(): List<Videojuego>`**
+       Devuelve los 3 videojuegos mejor valorados, ordenados de mayor a menor nota (usa `.orderBy()` con `SortOrder.DESC` y `.limit(3)`).
+       Con los datos del proyecto, el resultado esperado es: *Red Dead Redemption 2 (9.5)*, *Zelda: BOTW (9.3)*, *Hades (9.0)* / *Celeste (9.0)*.
+
+    4. **`fun obtenerVideojuegosDesdeAnio(anio: Int): List<Videojuego>`**
+       Devuelve todos los videojuegos publicados en el año indicado o posterior (usa `greaterEq`).
+       Ejemplo: `obtenerVideojuegosDesdeAnio(2018)` debe devolver *RDR2 (2018)*, *Hades (2020)* y *Celeste (2018)*.
+
+    5. Llama a todas estas funciones desde `Main.kt` y verifica que los resultados son los esperados.
+
+    !!! danger "Reto extra"
+        Implementa `fun obtenerVideojuegosConFiltroCompuesto(genero: String, notaMinima: Double)` que combine `genero eq` y `nota greaterEq` con el operador `and`.
 

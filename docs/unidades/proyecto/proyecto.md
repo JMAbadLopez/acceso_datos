@@ -8,7 +8,7 @@ La memoria del proyecto (entregada en formato **PDF**) debe contar con una porta
 
 * **Nombre del Proyecto:** (Ej: "Sistema de Gestión de [Temática elegida]")
 * **Módulos implicados:** Acceso a Datos
-* **Curso y Grupo:** 2025-2026 - 2º DAM.
+* **Curso y Grupo:** 2026-2027 - 2º DAM.
 * **Componentes del equipo:** Nombres completos. En caso de ser individual, nombre del autor/a.
 
 ## 2. Índice de Contenidos

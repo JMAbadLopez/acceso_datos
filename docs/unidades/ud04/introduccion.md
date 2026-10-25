@@ -57,8 +57,8 @@ El primer paso es añadir la librería Exposed y el driver JDBC necesario en nue
 
 Necesitamos tres componentes de Exposed y el driver de **MariaDB** (MySQL), ya que es el que usamos por coherencia con la unidad anterior.
 
-!!! success "🔍 Ejecutar y Analizar"
-    Abre tu archivo `build.gradle.kts` y asegúrate de que las dependencias de Exposed y MariaDB estén presentes. Recuerda usar el prefijo `implementation`.
+!!! success "🔍 Ejecutar y Analizar: Dependencias de Exposed"
+    Abre tu archivo `build.gradle.kts` y asegúrate de que las dependencias de Exposed y MariaDB estén presentes. Recuerda usar el prefijo `implementation`. Tras sincronizar Gradle (icono del elefante en IntelliJ), el panel de dependencias debe mostrar `exposed-core`, `exposed-jdbc` y `exposed-dao` sin errores de compilación.
 
 Fichero: `build.gradle.kts`
 
@@ -80,7 +80,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
     
     // 5. Driver JDBC MySQL (Necesario para conectar con nuestro servidor MySQL)
-    implementation("mysql:mysql-connector-java:8.0.29") //MySQL
+    // Nota: a partir de la versión 8.0.31 las coordenadas cambiaron de grupo
+    implementation("com.mysql:mysql-connector-j:8.4.0")
 
     // Dependencia estándar de Kotlin...
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -196,8 +197,50 @@ transaction(ConexionDB.db) {
 
 Comenzaremos con nuestro proyecto. Como siempre, preparemos el entorno para poder trabajar durante toda la **Unidad 4** con el **ORM Exposed**.
 
-!!! warning "Sigue las instrucciones de la **Práctica 1**"
-    1. Crea un nuevo proyecto Kotlin/JVM.
-    2. Actualiza el fichero `build.gradle.kts` con las dependencias de Exposed y MariaDB.
-    3. Crea el archivo `ConexionDB.kt` (mira el Canvas) y el `MainApp.kt`.
-    4. Ejecuta la función `testConexion()` para asegurarte de que tu servidor MySQL está operativo.
+!!! warning "🎯 Práctica 1. Creación del Proyecto y la Base de Datos"
+    1. Crea un nuevo proyecto Kotlin/JVM en IntelliJ y nómbralo **`videojuegos-orm`**.
+    2. Actualiza el fichero `build.gradle.kts` con las dependencias de Exposed y el driver MySQL tal como se indica en el ejemplo del profesor.
+    3. Crea el archivo `ConexionDB.kt` y configúralo para conectarte a tu servidor MySQL (base de datos `videojuegos`).
+    4. Crea el archivo `Main.kt` con la función `main`.
+    5. Ejecuta la función `testConexion()` para asegurarte de que tu servidor MySQL está operativo y la conexión es correcta.
+
+!!! example "Autoevaluación"
+
+    **Pregunta 1: ¿Cuál es la diferencia principal entre usar JDBC puro (como en la UD3) y un ORM como Kotlin Exposed?**
+
+    A) JDBC puro solo funciona con SQLite; Exposed solo funciona con MySQL.
+
+    B) Con JDBC puro el programador escribe SQL manualmente y gestiona `ResultSet`; con Exposed se interactúa con objetos Kotlin y el ORM genera el SQL automáticamente.
+
+    C) Exposed elimina la necesidad de un servidor de base de datos porque almacena los datos en memoria RAM.
+
+    D) JDBC puro es más seguro que Exposed porque no usa parámetros variables en las consultas.
+
+    ??? quote "Solución"
+        ❌ A) Tanto JDBC puro como Exposed son compatibles con múltiples SGBD (MySQL, PostgreSQL, SQLite, etc.). La elección del SGBD es independiente del mecanismo de acceso.
+
+        ✅ B) Esta es la diferencia fundamental. JDBC requiere escribir `ResultSet`, `PreparedStatement` y SQL manual. Exposed, como ORM, traduce operaciones sobre objetos Kotlin (como `Usuarios.selectAll()`) a sentencias SQL automáticamente, lo que reduce el código repetitivo y los errores.
+
+        ❌ C) Exposed sigue necesitando un SGBD externo (MySQL, PostgreSQL, etc.). Lo que hace es abstraer la comunicación con ese servidor, no eliminarlo.
+
+        ❌ D) Ambos mecanismos ofrecen protección frente a inyección SQL cuando se usan correctamente (PreparedStatement en JDBC, DSL en Exposed). Ninguno es inherentemente más seguro que el otro por defecto.
+
+    **Pregunta 2: En el objeto `ConexionDB`, la variable `db` se declara con `lateinit`. ¿Por qué es necesario usar `lateinit` en lugar de inicializarla directamente?**
+
+    A) Porque `Database` no es un tipo nullable y Kotlin obliga a usar `lateinit` para cualquier objeto de librerías externas.
+
+    B) Porque la conexión a la base de datos es una operación de E/S que ocurre en tiempo de ejecución dentro de `conectar()`, después de que el objeto `ConexionDB` ya ha sido construido; `lateinit` permite declarar la variable sin asignarle valor hasta ese momento.
+
+    C) Porque `lateinit` hace que la conexión sea más rápida al deferirla hasta el primer uso en una consulta.
+
+    D) Porque Kotlin no permite declarar propiedades de tipo `Database` dentro de un `object` sin `lateinit`.
+
+    ??? quote "Solución"
+        ❌ A) `lateinit` no es obligatorio para tipos no-nullable de librerías externas. Es una elección del diseño, no una imposición del compilador.
+
+        ✅ B) El `object ConexionDB` se inicializa de forma lazy al primer acceso, pero la variable `db` no puede recibir su valor hasta que se ejecute `conectar()`. `lateinit` le dice al compilador "confía en mí, esta variable tendrá valor antes de usarse" y evita declarar `db` como nullable (`Database?`), lo que obligaría a usar `?.` en cada uso.
+
+        ❌ C) `lateinit` no acelera ninguna operación. Solo pospone la inicialización hasta que el programador la ejecute explícitamente.
+
+        ❌ D) Kotlin sí permite propiedades no-nullable en `object`, siempre que se inicialicen en la declaración o en el bloque `init`. `lateinit` es necesario aquí porque la inicialización ocurre en una función posterior.
+

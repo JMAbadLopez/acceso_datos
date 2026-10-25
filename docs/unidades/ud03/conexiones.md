@@ -84,8 +84,8 @@ dependencies {
     // Para PostgreSQL (se usará opcionalmente más adelante)
     implementation("org.postgresql:postgresql:42.7.1")
 
-    // Para MySQL
-    implementation("mysql:mysql-connector-java:8.3.0") //MySQL
+    // Para MySQL (coordenadas nuevas desde 8.0.31)
+    implementation("com.mysql:mysql-connector-j:8.4.0")
 }
 ```
 

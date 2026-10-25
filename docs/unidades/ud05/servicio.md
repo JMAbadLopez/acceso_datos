@@ -119,9 +119,50 @@ src/main/kotlin/com/tu.proyecto/
 
 ---
 
+!!! example "Autoevaluación"
+
+    **Pregunta 9: En `UsuariosService`, la función `registrarUsuario` comprueba si el email ya existe antes de insertar. ¿Por qué se realiza esta validación en el Servicio y no en el DAO?**
+
+    A) Porque el DAO no tiene acceso a la función `seleccionarTodos()` necesaria para la comprobación.
+
+    B) Porque la lógica de negocio (reglas sobre qué se permite o no) pertenece al Servicio; el DAO solo debe ejecutar operaciones de BD sin tomar decisiones sobre si deben realizarse.
+
+    C) Por razones de rendimiento: llamar al DAO desde el propio DAO generaría un bucle infinito.
+
+    D) Porque la anotación `@Serializable` en el DTO impide que el DAO lo compare directamente.
+
+    ??? quote "Solución"
+        ❌ A) El DAO sí tiene acceso a `seleccionarTodos()` porque es un método del mismo objeto. La razón de hacer la comprobación en el Servicio no es técnica, sino arquitectónica.
+
+        ✅ B) La separación de responsabilidades es el principio clave aquí. El DAO es un especialista en persistencia (INSERT, SELECT, UPDATE, DELETE). El Servicio es quien aplica las reglas de negocio ("¿debería permitirse esta operación?"). Mezclar ambas responsabilidades en el DAO lo haría difícil de reutilizar y de testear.
+
+        ❌ C) No hay ningún riesgo de bucle infinito al llamar a métodos del mismo objeto desde sí mismo. El flujo es lineal.
+
+        ❌ D) `@Serializable` es una anotación de Kotlin que no restringe las operaciones de comparación. Los objetos `UsuarioDTO` se pueden comparar normalmente con `.any { it.mail == ... }`.
+
+    **Pregunta 10: ¿Qué valor devuelve `registrarUsuario` cuando el email ya existe en la base de datos?**
+
+    A) `0`, indicando que se insertaron 0 filas.
+
+    B) `null`, porque no se pudo crear el usuario.
+
+    C) `-1`, como código de error personalizado que el Controlador interpreta para devolver 409 Conflict al cliente.
+
+    D) Lanza una `IllegalArgumentException` con el mensaje "El email ya existe".
+
+    ??? quote "Solución"
+        ❌ A) El valor `0` podría confundirse con un ID válido en algunos sistemas. El diseño de esta función usa `-1` como centinela para distinguir el error del éxito.
+
+        ❌ B) La función devuelve `Int`, no `Int?`. Devolver `null` requeriría cambiar el tipo de retorno a `Int?` y añadir comprobaciones en el Controlador.
+
+        ✅ C) Devolver `-1` es la convención elegida en este diseño. El Controlador interpreta `nuevoId == -1` como conflicto y responde con `HttpStatusCode.Conflict` (409). Es un contrato claro entre las dos capas.
+
+        ❌ D) Lanzar una excepción para un caso previsto (email duplicado) no es buena práctica en este diseño. Las excepciones se reservan para errores inesperados; los casos de negocio se comunican mediante valores de retorno o sealed classes.
+
 ## 🎯 Práctica 3. Creando la capa de Servicio
 
-!!! warning "🎯 Práctica para Aplicar"
+!!! warning "🎯 Práctica 3. Creando la capa de Servicio"
+
     1. Crea el paquete `services` en tu proyecto.
     2. Implementa el objeto `UsuariosService` siguiendo el ejemplo anterior.
     3. Reflexiona: ¿Qué otra regla de negocio podrías añadir? (Ej: Validar que el nombre no esté vacío o que la contraseña tenga una longitud mínima).

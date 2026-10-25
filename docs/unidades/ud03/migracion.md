@@ -70,8 +70,8 @@ dependencies {
     // Para SQLite
     implementation("org.xerial:sqlite-jdbc:3.43.0.0")
 
-    // Para MySQL
-    implementation("mysql:mysql-connector-java:8.3.0") //MySQL
+    // Para MySQL (coordenadas nuevas desde 8.0.31)
+    implementation("com.mysql:mysql-connector-j:8.4.0")
 }
 ```
 

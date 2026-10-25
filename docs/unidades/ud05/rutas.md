@@ -254,9 +254,50 @@ Por último, vamos a realizar el borrado de un usuario según su `id`. La petici
 | **PUT** | `/usuarios/1` | `{ "id": 1, "nombre": "Atenea", "mail": "atenea@olimpo.com", "password": "atenea123", "fechaNacimiento": "2000-05-15" }` |
 | **DELETE** | `/usuarios/2` | (Vacío) |
 
-## 🎯 Práctica 4. Enrutando y realización de pruebas.
+!!! example "Autoevaluación"
 
-!!! warning "🎯 Práctica para Aplicar"
+    **Pregunta 5: En nuestra API, un `POST /usuarios` exitoso devuelve el código HTTP 201. ¿Por qué se usa 201 en lugar de 200?**
+
+    A) Porque 200 está reservado exclusivamente para peticiones GET; cualquier otro verbo debe devolver un código diferente.
+
+    B) Porque 201 (Created) indica específicamente que la petición tuvo como resultado la creación de un nuevo recurso, mientras que 200 (OK) indica simplemente que la petición se procesó con éxito sin necesidad de crear nada nuevo.
+
+    C) Porque Ktor lanza una excepción si se usa `HttpStatusCode.OK` en respuesta a un `POST`.
+
+    D) Es una convención opcional; 200 y 201 son equivalentes y se pueden usar indistintamente.
+
+    ??? quote "Solución"
+        ❌ A) El código 200 se puede usar con cualquier verbo HTTP. No está reservado para GET.
+
+        ✅ B) Los códigos de estado HTTP tienen semántica precisa. 200 OK significa "la petición fue procesada", y 201 Created añade la información de que se creó un recurso nuevo. Usar 201 en respuesta a un POST exitoso es la práctica estándar REST y permite a los clientes distinguir entre "procesado" y "creado".
+
+        ❌ C) Ktor acepta cualquier `HttpStatusCode` en `call.respond`. No lanza excepciones por el código que elijas.
+
+        ❌ D) Aunque técnicamente ambos son éxito (2xx), no son semánticamente equivalentes. Una buena API REST comunica con precisión qué ocurrió mediante el código de estado correcto.
+
+    **Pregunta 6: Un cliente envía `DELETE /usuarios/1` sin haber hecho login previamente. Según la arquitectura de autenticación con sesiones, ¿qué respuesta recibirá?**
+
+    A) 200 OK — el usuario se elimina porque DELETE es un verbo estándar que no requiere autenticación.
+
+    B) 404 Not Found — el servidor no puede encontrar la ruta `/usuarios/1` sin sesión activa.
+
+    C) 401 Unauthorized — el bloque `authenticate("auth-session")` detecta que no hay cookie de sesión válida y ejecuta el `challenge` configurado.
+
+    D) 500 Internal Server Error — el servidor falla al intentar leer la sesión que no existe.
+
+    ??? quote "Solución"
+        ❌ A) DELETE está envuelto en el bloque `authenticate("auth-session")`. Sin sesión válida, Ktor nunca llega a ejecutar el código de borrado.
+
+        ❌ B) La ruta existe y es reconocida por Ktor. El problema no es que no encuentre la ruta, sino que el usuario no está autenticado para usarla.
+
+        ✅ C) El bloque `authenticate` intercepta la petición, comprueba si existe una `UserSession` válida en las cookies y, si no la encuentra, ejecuta el `challenge` que hemos configurado: devolver un mensaje `"401: No autorizado. Debes iniciar sesión."` con código HTTP 401.
+
+        ❌ D) Leer una sesión que no existe no produce una excepción en Ktor; simplemente devuelve `null`. El sistema de autenticación gestiona este caso limpiamente con el `challenge`.
+
+## 🎯 Práctica 4. Enrutando y realización de pruebas
+
+!!! warning "🎯 Práctica 4. Enrutando y realización de pruebas"
+
     1. Implementa el archivo `UsuarioRoutes.kt` y asegúrate de registrarlo en `Routing.kt`.
     2. Ejecuta el servidor.
     3. Utiliza la herramienta Postman para realizar todas las pruebas:

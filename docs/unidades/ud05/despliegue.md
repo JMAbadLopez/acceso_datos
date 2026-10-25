@@ -126,9 +126,31 @@ fun Application.module() {
 
 ---
 
+!!! example "Autoevaluación"
+
+    **Pregunta 8: ¿Cuál es la diferencia principal entre `buildFatJar` e `installDist` como estrategias de empaquetado en Ktor?**
+
+    A) `buildFatJar` solo funciona en Windows; `installDist` solo funciona en Linux y macOS.
+
+    B) `buildFatJar` genera un único `.jar` con todo incluido (código + dependencias), ideal para distribuir y ejecutar con `java -jar`; `installDist` genera una carpeta estructurada con el código separado de las librerías, más adecuado para despliegues en servidores o Docker.
+
+    C) `installDist` incluye el servidor MySQL dentro del paquete; `buildFatJar` requiere un servidor MySQL externo.
+
+    D) No hay diferencia práctica; ambos generan exactamente los mismos archivos en ubicaciones distintas.
+
+    ??? quote "Solución"
+        ❌ A) Ambos métodos de empaquetado funcionan en todos los sistemas operativos. `installDist` genera scripts `.bat` para Windows y scripts de shell para Linux/macOS, pero el proceso funciona en cualquier plataforma.
+
+        ✅ B) Esta es la distinción clave. El Fat JAR es un único archivo portable (perfecto para pruebas rápidas o microservicios sencillos). `installDist` separa el código de las dependencias en carpetas `bin/` y `lib/`, lo que permite actualizar solo el código sin reenviar todas las librerías — mucho más eficiente para despliegues reales en servidores.
+
+        ❌ C) Ninguno de los dos empaqueta el servidor MySQL. La base de datos siempre es un servicio externo al que la aplicación se conecta mediante JDBC.
+
+        ❌ D) Producen artefactos completamente distintos: un archivo `.jar` frente a una carpeta con estructura de directorios. Su uso y ventajas también difieren.
+
 ## 🎯 Práctica 6. Despliegue
 
-!!! warning "Práctica para Aplicar"
+!!! warning "🎯 Práctica 6. Despliegue"
+
     1. Ejecuta `./gradlew clean installDist`.
     2. Ve a la carpeta `build/install/.../bin` y ejecuta tu aplicación mediante el script (sin usar `java -jar`).
     3. Comprueba en Postman que la API responde.

@@ -13,7 +13,7 @@ object ConexionDB {
     private const val PORT = 3306
     private const val DATABASE = "orm" // Nombre de nuestra BD
     private const val USER = "dam"
-    private const val PASSWORD = "Dam2526"
+    private const val PASSWORD = "Dam2627"
 
     // URL JDBC para MySQL, ahora utilizada por Exposed
     private val URL = "jdbc:mysql://$HOST:$PORT/$DATABASE?useSSL=false&serverTimezone=Europe/Madrid"

@@ -133,9 +133,50 @@ Haz click y se abrirá un navegador con nuestro primer *Hello world!*
 
 ![Ktor](../../assets/images/ud05/ud5_6.png)
 
+!!! example "Autoevaluación"
+
+    **Pregunta 1: Una API REST recibe una petición para modificar los datos de un usuario existente. ¿Qué verbo HTTP es el correcto para esta operación?**
+
+    A) GET — porque se recuperan los datos actuales antes de modificarlos.
+
+    B) POST — porque se envía información nueva al servidor.
+
+    C) PUT — porque reemplaza completamente el recurso identificado por la URL.
+
+    D) PATCH — siempre, ya que es el único verbo que permite modificar datos.
+
+    ??? quote "Solución"
+        ❌ A) GET solo recupera datos; nunca modifica el estado del servidor. Es una operación de solo lectura.
+
+        ❌ B) POST se usa para crear un recurso nuevo. Si el recurso ya existe, lo correcto no es usar POST para actualizarlo.
+
+        ✅ C) PUT es el verbo estándar REST para actualizar un recurso existente completo. Se dirige a una URL con el ID del recurso (ej: `PUT /usuarios/5`) y reemplaza todos sus campos con los del body JSON.
+
+        ❌ D) PATCH también sirve para actualizar, pero solo modifica parcialmente un recurso (solo los campos que se envíen). En nuestra API usamos PUT porque enviamos el recurso completo.
+
+    **Pregunta 2: ¿Para qué sirve el plugin `ContentNegotiation` de Ktor junto con `kotlinx-serialization`?**
+
+    A) Para cifrar las peticiones HTTP entre el cliente y el servidor.
+
+    B) Para convertir automáticamente los objetos Kotlin en JSON al enviar respuestas, y JSON en objetos Kotlin al recibir peticiones.
+
+    C) Para gestionar la autenticación de usuarios mediante tokens JWT.
+
+    D) Para permitir que la API acepte peticiones desde cualquier dominio (CORS).
+
+    ??? quote "Solución"
+        ❌ A) El cifrado es responsabilidad de HTTPS/TLS, que se configura a nivel de servidor o proxy, no de `ContentNegotiation`.
+
+        ✅ B) `ContentNegotiation` es el "traductor" de la API. Con `kotlinx-serialization`, serializa objetos Kotlin (`data class`) a JSON al enviar respuestas (`call.respond(objeto)`) y deserializa JSON a objetos Kotlin al leer el body (`call.receive<MiDTO>()`).
+
+        ❌ C) La autenticación JWT en Ktor se gestiona con el plugin `Authentication` y su proveedor `jwt`. `ContentNegotiation` no interviene en la verificación de tokens.
+
+        ❌ D) CORS (Cross-Origin Resource Sharing) se gestiona en Ktor con el plugin `CORS`. `ContentNegotiation` solo se ocupa del formato de los datos, no de los permisos de origen.
+
 ## 🎯 Práctica 1. Creación del Proyecto con Ktor
 
-!!! warning "🎯 Práctica para Aplicar"
+!!! warning "🎯 Práctica 1. Creación del Proyecto con Ktor"
     1. Crea tu nuevo proyecto Ktor siguiendo los pasos del asistente mencionados arriba.
     2. Una vez generado, localiza el archivo Application.kt dentro de la carpeta core o plugins (dependiendo de la versión).
     3. Explora el archivo Routing.kt y modifica el mensaje de la ruta principal con un mensaje personalizado.
+    4. Lanza el servidor y verifica que responde en `http://0.0.0.0:8080`.

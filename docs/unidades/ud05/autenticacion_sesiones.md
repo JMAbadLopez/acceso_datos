@@ -278,9 +278,31 @@ src/main/kotlin/com/tu.proyecto/
 └── Application.kt       
 ```
 
+!!! example "Autoevaluación"
+
+    **Pregunta 7: En la configuración de sesiones de Ktor, `cookie.maxAgeInSeconds = 3600`. ¿Qué ocurre exactamente cuando pasan 3600 segundos desde que el usuario hizo login?**
+
+    A) El servidor elimina automáticamente al usuario de la base de datos para proteger los datos.
+
+    B) La Cookie `USER_SESSION` expira en el navegador del cliente; en la siguiente petición protegida, el servidor no encontrará sesión válida y devolverá 401.
+
+    C) Ktor reinicia automáticamente el servidor y obliga a todos los usuarios a hacer login de nuevo.
+
+    D) La sesión se renueva automáticamente por otros 3600 segundos sin que el usuario tenga que hacer nada.
+
+    ??? quote "Solución"
+        ❌ A) La expiración de la sesión no afecta en absoluto a los datos de la BD. Solo gestiona el "carnet de identidad" temporal del usuario en el navegador.
+
+        ✅ B) `maxAgeInSeconds` controla el tiempo de vida de la Cookie en el navegador del cliente. Cuando expira, el navegador ya no la envía con las peticiones. En la siguiente petición a una ruta protegida, `authenticate` no encontrará sesión válida y ejecutará el `challenge` con código 401.
+
+        ❌ C) Ktor no reinicia el servidor por expiración de sesiones. La expiración es un mecanismo del navegador del cliente, no del servidor.
+
+        ❌ D) La renovación automática requiere código explícito (por ejemplo, actualizar `maxAge` en cada petición). Con la configuración básica, la Cookie simplemente expira y no se renueva sola.
+
 ## 🎯 **Práctica 5. Auditoría de Seguridad y Estructura**
 
-!!! warning "Tarea de Verificación Total"
+!!! warning "🎯 Práctica 5. Auditoría de Seguridad y Estructura"
+
     Para completar esta unidad, debes validar que cada componente de la arquitectura cumple su función. Sigue este orden estrictamente:
 
     1. **Verificación de Estructura:** Comprueba que tienes los archivos principales distribuidos en los 6 paquetes (`core`, `data`, `domain`, `services`, `routes`, `plugins`) tal como indica el esquema superior.

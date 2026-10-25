@@ -33,7 +33,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // 3. BASE DE DATOS: Driver de MySQL
-    implementation("mysql:mysql-connector-java:8.0.29")
+    // Nota: a partir de la versión 8.0.31 las coordenadas cambiaron de grupo
+    implementation("com.mysql:mysql-connector-j:8.4.0")
     
     // 4. LOGGING: Para ver qué pasa en el servidor
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
@@ -102,7 +103,7 @@ object ConexionDB {
     private const val PORT = 3306
     private const val DATABASE = "proyecto" // Nombre de nuestra BD
     private const val USER = "dam"
-    private const val PASSWORD = "Dam2526"
+    private const val PASSWORD = "Dam2627"
     
     private val URL = "jdbc:mysql://$HOST:$PORT/$DATABASE?useSSL=false&serverTimezone=Europe/Madrid"
 
@@ -126,7 +127,7 @@ object ConexionDB {
 
 ### Adaptando la conexión en `Application.kt`
 
-!!! warning "🎯 Práctica para Aplicar"
+!!! warning "🎯 Modifica `Application.kt`"
     Modifica tu función `main` en el archivo `Application.kt`. Observa cómo llamamos a los plugins configurados para que el servidor sepa usarlos:
 
 ```kotlin
@@ -317,9 +318,50 @@ src/main/kotlin/com/tu.proyecto/
 └── Application.kt       // Unión de capas
 ```
 
+!!! example "Autoevaluación"
+
+    **Pregunta 3: ¿Por qué es importante que `ConexionDB.conectar()` se llame ANTES de que el motor de Ktor empiece a escuchar peticiones?**
+
+    A) Porque Ktor no puede importar el módulo de Exposed si la BD no está conectada primero.
+
+    B) Porque si el servidor empieza a recibir peticiones antes de que la BD esté lista, cualquier ruta que intente acceder a datos fallará con un error de "BD no inicializada".
+
+    C) Por razones de rendimiento: la conexión en frío al arranque es más rápida que conectar durante la primera petición.
+
+    D) Es un requisito de MySQL: no acepta conexiones hasta que el servidor Ktor está activo.
+
+    ??? quote "Solución"
+        ❌ A) La importación de módulos en Kotlin ocurre en tiempo de compilación, no en tiempo de ejecución. No depende del estado de la BD.
+
+        ✅ B) Si una petición llega antes de que `conectar()` haya inicializado `ConexionDB.db`, cualquier acceso al DAO lanzará una `UninitializedPropertyAccessException` porque `lateinit var db` aún no tiene valor. Conectar primero garantiza que el sistema está listo para servir peticiones desde el primer momento.
+
+        ❌ C) El orden no tiene impacto en el rendimiento de la conexión. Lo que importa es la disponibilidad: la BD debe estar lista antes de que lleguen peticiones que la necesiten.
+
+        ❌ D) MySQL no sabe nada de Ktor. Acepta conexiones cuando está activo, independientemente de qué otro servicio esté arrancando.
+
+    **Pregunta 4: En la arquitectura MVC de este proyecto, ¿cuál es la responsabilidad específica de la capa de Servicio (`UsuariosService`)?**
+
+    A) Enviar directamente las respuestas JSON al cliente usando `call.respond`.
+
+    B) Definir la estructura de la tabla en la base de datos usando `object Usuarios : Table`.
+
+    C) Centralizar la lógica de negocio (validaciones, reglas, transformaciones) y coordinar las llamadas al DAO, manteniéndola separada del controlador HTTP.
+
+    D) Gestionar el pool de conexiones a la base de datos y repartirlas entre los distintos DAOs.
+
+    ??? quote "Solución"
+        ❌ A) Enviar respuestas al cliente es responsabilidad del Controlador (las Rutas Ktor, `call.respond`). El Servicio nunca interactúa directamente con `ApplicationCall`.
+
+        ❌ B) Definir la estructura de la tabla es responsabilidad de la capa de Datos (`UsuariosTable.kt`). El Servicio no sabe cómo se almacenan los datos, solo qué hacer con ellos.
+
+        ✅ C) El Servicio es la capa de lógica de negocio. Valida datos (¿el email ya existe?), aplica reglas (¿el usuario es mayor de edad?) y orquesta las llamadas al DAO sin exponer detalles de SQL ni de HTTP. Esto mantiene el Controlador limpio y el DAO simple.
+
+        ❌ D) El pool de conexiones lo gestiona Exposed/JDBC a través de `ConexionDB`. El Servicio no tiene conocimiento de la gestión de conexiones.
+
 ## 🎯 Práctica 2. Preparando las conexiones y la estructura del proyecto
 
-!!! warning "🎯 Práctica para Aplicar"
+!!! warning "🎯 Práctica 2. Preparando las conexiones y la estructura del proyecto"
+
     1. Sigue los pasos de creación de toda la estructura y componentes de Persistencia del Proyecto.
     2. Verifica que tu estructura de carpetas coincide con el árbol modular mostrado arriba.
     3. Asegúrate de que `Application.kt` llama tanto a la base de datos como a los plugins de serialización y routing.
