@@ -1,13 +1,13 @@
 # Entrega: Backend del Proyecto Intermodular
 
 !!! danger "📁 Entrega Final"
-    Esta es la entrega definitiva de la UD5. El backend debe arrancar sin errores y superar todas las pruebas de Postman para poder ser calificado.
+    Esta es la entrega definitiva de la UD5 (versión Spring Boot). El backend debe arrancar sin errores y superar todas las pruebas de Postman para poder ser calificado.
 
 ## 🎯 Proyecto final: Backend de tu Proyecto Intermodular
 
 !!! warning "🎯 Proyecto final: Backend del Proyecto Intermodular"
 
-    A lo largo de las prácticas has construido una **API REST completa con Ktor** siguiendo el modelo `Usuarios`. Ahora aplicarás exactamente los mismos patrones para construir el **backend del Proyecto Intermodular de tu grupo**: la API que dará servicio a vuestra aplicación cliente.
+    A lo largo de las prácticas has construido una **API REST completa con Spring Boot** siguiendo el modelo `Usuarios`. Ahora aplicarás exactamente los mismos patrones para construir el **backend del Proyecto Intermodular de tu grupo**: la API que dará servicio a vuestra aplicación cliente.
 
     El proyecto se entrega como **memoria técnica en PDF** más el **código fuente**. Los puntos de la entrega corresponden a las secciones que se detallan a continuación.
 
@@ -36,7 +36,8 @@
 
     * **¿Qué es un ORM?** Ventajas de Exposed frente a JDBC puro.
     * **Modelado de Datos**: importancia de la integridad referencial y la normalización.
-    * **Arquitectura API REST**: protocolo HTTP, patrón MVC y rol de Ktor.
+    * **Arquitectura API REST**: protocolo HTTP, patrón MVC y rol de Spring Boot.
+    * **Inyección de Dependencias (IoC)**: qué es el contenedor de Spring y por qué facilita el desarrollo.
 
     ---
 
@@ -55,25 +56,26 @@
 
     ```text
     src/main/kotlin/com/tu.proyecto/
-    ├── core/        → ConexionDB.kt
-    ├── data/        → Tables + DAOs (Exposed, CRUD completo)
-    ├── domain/      → DTOs serializables, UserSession, LoginRequest
-    ├── services/    → Lógica de negocio (validaciones, reglas)
-    ├── routes/      → Endpoints Ktor
-    ├── plugins/     → Serialization, Routing, Security
-    └── Application.kt
+    ├── data/        → Tablas + DAOs (Exposed, CRUD completo)
+    ├── domain/      → DTOs serializables, LoginRequest
+    ├── services/    → Lógica de negocio (@Service)
+    ├── controllers/ → Endpoints REST (@RestController)
+    └── security/    → SecurityConfig (SecurityFilterChain)
+    src/main/resources/
+    └── application.yml
     ```
 
     #### 5.2 Seguridad y Sesiones
 
-    * Implementación de **Session Authentication**.
-    * Rutas de escritura (POST, PUT, DELETE) protegidas con `authenticate("auth-session")`.
-    * Rutas de lectura (GET) públicas.
+    * Configuración de **Spring Security** con `SecurityFilterChain`.
+    * Rutas de escritura (POST, PUT, DELETE) protegidas con `.authenticated()`.
+    * Rutas de lectura (GET) públicas con `.permitAll()`.
+    * Endpoints `POST /auth/login` y `POST /auth/logout`.
 
     #### 5.3 Arquitectura y Despliegue
 
-    * Diagrama de la arquitectura del servidor.
-    * Configuración de **Gradle** para la generación del ejecutable (`buildFatJar`).
+    * Diagrama de la arquitectura del servidor (puede ser el generado con Mermaid).
+    * Configuración de **Gradle** para la generación del ejecutable (`bootJar`).
     * El JAR debe arrancar de forma independiente y conectar con la BD MySQL.
 
     ---
@@ -104,8 +106,8 @@
 
     Reflexión final sobre el proceso de desarrollo:
 
-    * Dificultades encontradas en el mapeo ORM o en la configuración de Ktor.
-    * Ventajas detectadas al usar arquitectura basada en servicios.
+    * Diferencias encontradas al usar Spring Boot en lugar de Ktor.
+    * Ventajas del sistema de inyección de dependencias de Spring.
     * Posibles mejoras futuras del sistema.
 
     ---

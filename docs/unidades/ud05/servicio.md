@@ -1,172 +1,172 @@
 # Capa de Dominio y Servicios
 
-En los apartados anteriores hemos construido los cimientos (Base de Datos) y las herramientas de traducción (JSON). Ahora vamos a crear la **Capa de Servicio**, el lugar donde reside la lógica de nuestra aplicación.
+La capa de servicio es la misma en Spring Boot que en Ktor: contiene la **lógica de negocio** y actúa de intermediario entre el Controlador y el DAO. Lo que cambia es que en Spring Boot usamos la anotación `@Service` para que Spring la gestione automáticamente.
 
 ## 1 La Necesidad de una Capa de Servicio
 
-¿Por qué no llamar al `UsuariosDAO` directamente desde las rutas de Ktor? Aunque en aplicaciones muy pequeñas funciona, en entornos profesionales usamos una capa intermedia llamada **Service** por tres razones clave:
-
-1. **Abstracción:** Si mañana cambiamos el DAO o usamos dos bases de datos distintas, el controlador (las rutas) no tiene por qué enterarse.
-2. **Lógica de Negocio:** El DAO solo sabe hacer CRUD. El Servicio sabe, por ejemplo, que no se puede registrar a un usuario si el email ya existe o si es menor de edad.
-3. **Seguridad:** Podemos filtrar datos sensibles o transformar objetos antes de que salgan a la red.
-
-### Flujo de Comunicación
-
-El siguiente gráfico representa cómo interactúan los componentes en nuestra arquitectura modular:
+El patrón es exactamente igual al de la versión Ktor:
 
 ```mermaid
 graph LR
-    A[Routing / Controller] -- "1. Pide Datos" --> B[Service Layer]
-    B -- "2. Lógica y Validación" --> C[DAO Layer]
-    C -- "3. Consulta Exposed" --> D[(Base de Datos)]
-    D -- "4. Retorna Fila" --> C
-    C -- "5. Mapea a DTO" --> B
-    B -- "6. Envía DTO Limpio" --> A
+    A["@RestController"] -- "1. Pide datos" --> B["@Service"]
+    B -- "2. Lógica + validación" --> C["DAO (@Repository)"]
+    C -- "3. Exposed transaction" --> D[(MySQL)]
+    D -- "4. Fila" --> C
+    C -- "5. DTO" --> B
+    B -- "6. DTO limpio" --> A
 ```
 
-## 2 Implementación del Servicio: `UsuariosService.kt`
+La diferencia con Ktor es que aquí el Controlador no instancia el Servicio manualmente: Spring se encarga de **inyectarlo** gracias a `@Service` y la inyección por constructor.
 
-El Servicio es el "empleado" que recibe órdenes del Controlador y utiliza al "especialista" (DAO) para ejecutarlas.
+## 2 Implementación: `UsuarioService.kt`
 
 !!! success "🔍 Ejecutar y Analizar"
-    Crea el archivo `UsuariosService.kt` en la carpeta `services`. Observa cómo esta capa gestiona la lógica antes de tocar la base de datos.
+    Crea `services/UsuarioService.kt`. Observa la anotación `@Service` y cómo se inyecta `UsuariosDAO` por constructor.
 
 ```kotlin
-package com.tu.proyecto.services
+package com.tuproyecto.usuariosapi.services
 
-import com.tu.proyecto.data.UsuariosDAO
-import com.tu.proyecto.domain.UsuarioDTO
+import com.tuproyecto.usuariosapi.data.UsuariosDAO
+import com.tuproyecto.usuariosapi.domain.UsuarioDTO
+import org.springframework.stereotype.Service
 
-/**
- * Capa de Servicio: Aquí reside la lógica de negocio.
- * Se encarga de validar datos y coordinar las llamadas al DAO.
- */
-object UsuariosService {
+@Service
+class UsuarioService {
 
     /**
-     * Obtiene todos los usuarios. Podría aplicar filtros o lógica adicional.
+     * Devuelve la lista completa de usuarios.
      */
-    fun listarUsuarios(): List<UsuarioDTO> {
-        return UsuariosDAO.seleccionarTodos()
-    }
+    fun listarUsuarios(): List<UsuarioDTO> = UsuariosDAO.seleccionarTodos()
 
     /**
-     * Busca un usuario por ID.
+     * Busca un usuario por ID. Devuelve null si no existe.
      */
-    fun buscarPorId(id: Int): UsuarioDTO? {
-        return UsuariosDAO.seleccionarPorId(id)
-    }
+    fun buscarPorId(id: Int): UsuarioDTO? = UsuariosDAO.seleccionarPorId(id)
 
     /**
      * Lógica para crear un usuario.
-     * Aquí podríamos verificar si el email ya existe antes de insertar.
+     * Comprueba que el mail no esté ya registrado.
+     * Devuelve el ID del nuevo usuario o -1 si el mail ya existe.
      */
     fun registrarUsuario(usuario: UsuarioDTO): Int {
-        // Ejemplo de regla de negocio: Comprobar si el mail ya está en la lista
         val existe = UsuariosDAO.seleccionarTodos().any { it.mail == usuario.mail }
         if (existe) return -1
-        
         return UsuariosDAO.insertar(usuario)
     }
 
     /**
-     * Actualiza un usuario existente.
+     * Actualiza los datos de un usuario existente.
+     * Devuelve el número de filas modificadas (0 si no existe).
      */
-    fun actualizarUsuario(id: Int, usuario: UsuarioDTO): Int {
-        return UsuariosDAO.actualizar(id, usuario)
-    }
+    fun actualizarUsuario(id: Int, usuario: UsuarioDTO): Int =
+        UsuariosDAO.actualizar(id, usuario)
 
     /**
-     * Elimina un usuario.
+     * Elimina un usuario por ID.
+     * Devuelve el número de filas eliminadas (0 si no existe).
      */
-    fun borrarUsuario(id: Int): Int {
-        return UsuariosDAO.eliminar(id)
-    }
+    fun borrarUsuario(id: Int): Int = UsuariosDAO.eliminar(id)
 }
 ```
 
 !!! warning "Recuerda"
-    **TODA** la lógica de negocio (reglas de validación, seguridad de datos, búsquedas previas, etc.) se realiza en la capa de Servicio (en el Controlador) y **no en el DAO**.
+    **Toda** la lógica de negocio (reglas de validación, comprobaciones previas, etc.) vive en el `@Service`, **nunca** en el DAO ni en el Controlador. El DAO solo sabe hacer CRUD; el Controlador solo sabe recibir y responder peticiones HTTP.
 
-## 3 El Contrato de API: DTOs Serializables
+## 3 Inyección de Dependencias en Spring Boot
 
-Como vimos, el **UsuarioDTO** es nuestro contrato. Es la promesa de cómo se ven los datos tanto para el cliente (Frontend) como para el servidor.
+En Spring Boot la **inyección de dependencias** (IoC) funciona automáticamente. Cuando marcas una clase con `@Service`, `@Repository` o `@Component`, Spring crea una instancia única (*singleton*) y la inyecta donde sea necesaria.
 
-!!! success "🔍 Recordatorio del Modelo de Dominio"
-    Asegúrate de que tu `UsuarioDTO.kt` sea el único objeto que viaja entre el Servicio y el Controlador. Esto mantiene la **Capa de Datos** (Tablas y Rows) totalmente oculta para el exterior.
+La forma recomendada es **inyección por constructor**:
+
+```kotlin
+// En el controlador (lo veremos en la siguiente sección):
+@RestController
+class UsuarioController(
+    private val service: UsuarioService  // ← Spring inyecta aquí automáticamente
+) { ... }
+```
+
+No hace falta instanciar `UsuarioService()` manualmente; Spring lo hace por nosotros.
+
+!!! info "Comparativa Ktor vs Spring Boot — Service Layer"
+
+    | Aspecto | Ktor | Spring Boot |
+    |---|---|---|
+    | Definición | `object UsuariosService { }` | `@Service class UsuarioService { }` |
+    | Instanciación | Manual (`UsuariosService`) | Automática por IoC container |
+    | Inyección en rutas | Llamada directa al object | Inyección por constructor |
+    | Lógica de negocio | Igual | Igual |
+
+    El código de la lógica es prácticamente idéntico. La diferencia está en cómo Spring gestiona el ciclo de vida del objeto.
 
 ## 4 Estructura de Carpetas Actualizada
 
-Con la incorporación de los servicios, nuestra arquitectura modular queda así:
-
 ```text
-src/main/kotlin/com/tu.proyecto/
-├── core/
-│   └── ConexionDB.kt    
+src/main/kotlin/com/tuproyecto/usuariosapi/
+├── UsuariosApiApplication.kt
 ├── data/
-│   ├── UsuariosTable.kt 
-│   └── UsuariosDAO.kt   
-├── domain/              // CAPA DE DOMINIO
-│   ├── UsuarioDTO.kt    
-│   └── LocalDateSerializer.kt 
-├── services/            // CAPA DE SERVICIO (Lógica de Negocio)
-│   └── UsuariosService.kt   
-├── plugins/
-│   ├── Serialization.kt 
-│   └── Routing.kt       
-└── Application.kt       
+│   ├── UsuariosTable.kt
+│   └── UsuariosDAO.kt
+├── domain/
+│   └── UsuarioDTO.kt
+├── services/
+│   └── UsuarioService.kt       ← NUEVA
+└── controllers/                ← (próxima sección)
 ```
+
+---
+
+## 🎯 Práctica 2. Creando la capa de Servicio
+
+!!! warning "🎯 Práctica 2. Creando la capa de Servicio"
+
+    1. Crea el paquete `services` y el archivo `UsuarioService.kt`.
+    2. Implementa los 5 métodos del servicio siguiendo el ejemplo.
+    3. Reflexiona: ¿qué otra regla de negocio podrías añadir? (Ej: que el nombre no esté vacío, o que la fecha de nacimiento sea válida).
 
 ---
 
 !!! example "Autoevaluación"
 
-    **Pregunta 9: En `UsuariosService`, la función `registrarUsuario` comprueba si el email ya existe antes de insertar. ¿Por qué se realiza esta validación en el Servicio y no en el DAO?**
+    **Pregunta 9: ¿Qué ventaja aporta la anotación `@Service` frente a no usarla?**
 
-    A) Porque el DAO no tiene acceso a la función `seleccionarTodos()` necesaria para la comprobación.
+    A) Permite que la clase se ejecute más rápido al estar optimizada por el compilador de Spring.
 
-    B) Porque la lógica de negocio (reglas sobre qué se permite o no) pertenece al Servicio; el DAO solo debe ejecutar operaciones de BD sin tomar decisiones sobre si deben realizarse.
+    B) Registra la clase en el contenedor de IoC de Spring, permitiendo que sea inyectada automáticamente en otros componentes y activando funcionalidades como gestión de transacciones declarativas.
 
-    C) Por razones de rendimiento: llamar al DAO desde el propio DAO generaría un bucle infinito.
+    C) Hace que todos los métodos de la clase sean `public` y `final` automáticamente.
 
-    D) Porque la anotación `@Serializable` en el DTO impide que el DAO lo compare directamente.
-
-    ??? quote "Solución"
-        ❌ A) El DAO sí tiene acceso a `seleccionarTodos()` porque es un método del mismo objeto. La razón de hacer la comprobación en el Servicio no es técnica, sino arquitectónica.
-
-        ✅ B) La separación de responsabilidades es el principio clave aquí. El DAO es un especialista en persistencia (INSERT, SELECT, UPDATE, DELETE). El Servicio es quien aplica las reglas de negocio ("¿debería permitirse esta operación?"). Mezclar ambas responsabilidades en el DAO lo haría difícil de reutilizar y de testear.
-
-        ❌ C) No hay ningún riesgo de bucle infinito al llamar a métodos del mismo objeto desde sí mismo. El flujo es lineal.
-
-        ❌ D) `@Serializable` es una anotación de Kotlin que no restringe las operaciones de comparación. Los objetos `UsuarioDTO` se pueden comparar normalmente con `.any { it.mail == ... }`.
-
-    **Pregunta 10: ¿Qué valor devuelve `registrarUsuario` cuando el email ya existe en la base de datos?**
-
-    A) `0`, indicando que se insertaron 0 filas.
-
-    B) `null`, porque no se pudo crear el usuario.
-
-    C) `-1`, como código de error personalizado que el Controlador interpreta para devolver 409 Conflict al cliente.
-
-    D) Lanza una `IllegalArgumentException` con el mensaje "El email ya existe".
+    D) Es solo una anotación decorativa para documentación; no tiene efecto en tiempo de ejecución.
 
     ??? quote "Solución"
-        ❌ A) El valor `0` podría confundirse con un ID válido en algunos sistemas. El diseño de esta función usa `-1` como centinela para distinguir el error del éxito.
+        ❌ A) Spring no optimiza el bytecode por el tipo de anotación. El rendimiento de la clase depende del código que contiene, no de si tiene `@Service`.
 
-        ❌ B) La función devuelve `Int`, no `Int?`. Devolver `null` requeriría cambiar el tipo de retorno a `Int?` y añadir comprobaciones en el Controlador.
+        ✅ B) `@Service` registra la clase en el *Application Context* de Spring (el contenedor IoC). Esto significa que Spring crea una única instancia (*singleton*) de la clase al arrancar y la inyecta automáticamente en cualquier componente que la declare como dependencia (p. ej., en el constructor del `@RestController`). Además, al ser un componente Spring, puede beneficiarse de funcionalidades como `@Transactional` para gestión declarativa de transacciones.
 
-        ✅ C) Devolver `-1` es la convención elegida en este diseño. El Controlador interpreta `nuevoId == -1` como conflicto y responde con `HttpStatusCode.Conflict` (409). Es un contrato claro entre las dos capas.
+        ❌ C) `@Service` no modifica la visibilidad de los métodos. En Kotlin los métodos son `public` por defecto, y `@Service` no añade `final` (de hecho, `kotlin("plugin.spring")` hace lo contrario: abre las clases para que Spring pueda hacer proxies).
 
-        ❌ D) Lanzar una excepción para un caso previsto (email duplicado) no es buena práctica en este diseño. Las excepciones se reservan para errores inesperados; los casos de negocio se comunican mediante valores de retorno o sealed classes.
+        ❌ D) `@Service` tiene efecto real en tiempo de ejecución: Spring la escanea durante el arranque (`@ComponentScan`) y crea el bean correspondiente.
 
-## 🎯 Práctica 3. Creando la capa de Servicio
+    **Pregunta 10: En `UsuarioService`, `registrarUsuario` devuelve `-1` cuando el mail ya existe. ¿Podría lanzar una excepción en su lugar?**
 
-!!! warning "🎯 Práctica 3. Creando la capa de Servicio"
+    A) No, Spring Boot no permite lanzar excepciones desde un `@Service`.
 
-    1. Crea el paquete `services` en tu proyecto.
-    2. Implementa el objeto `UsuariosService` siguiendo el ejemplo anterior.
-    3. Reflexiona: ¿Qué otra regla de negocio podrías añadir? (Ej: Validar que el nombre no esté vacío o que la contraseña tenga una longitud mínima).
+    B) Sí, y sería incluso más idiomático en Spring Boot. Podría lanzar una excepción personalizada que el Controlador captura con `@ExceptionHandler` o que Spring convierte automáticamente en una respuesta HTTP con `@ResponseStatus`.
 
-Llegados a este punto, el proyecto debe ser similar a esto:
+    C) Solo se pueden lanzar `RuntimeException`; las excepciones propias no están permitidas en Spring Boot.
 
-![Estructura proyecto](../../assets/images/ud05/ud5_7.png)
+    D) Sí, pero solo si la clase está anotada con `@Transactional`.
+
+    ??? quote "Solución"
+        ❌ A) Spring Boot no tiene ninguna restricción sobre lanzar excepciones en un `@Service`. Es perfectamente válido y habitual.
+
+        ✅ B) En aplicaciones Spring Boot de producción es común usar excepciones personalizadas para casos de error de negocio. Por ejemplo:
+        ```kotlin
+        class MailDuplicadoException(mail: String) :
+            RuntimeException("El email $mail ya está registrado")
+        ```
+        Anotada con `@ResponseStatus(HttpStatus.CONFLICT)`, Spring la convierte automáticamente en un 409. Los controladores con `@ExceptionHandler` permiten centralizar el manejo de errores. El enfoque con valor de retorno `-1` es más simple para introducir el concepto.
+
+        ❌ C) En Kotlin puedes crear y lanzar cualquier clase que herede de `Throwable` (o `Exception`, `RuntimeException`, etc.). No hay restricciones de tipos en Spring Boot.
+
+        ❌ D) `@Transactional` controla el contexto de transacción de BD, no la capacidad de lanzar excepciones.

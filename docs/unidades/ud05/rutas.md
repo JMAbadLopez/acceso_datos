@@ -1,310 +1,220 @@
 # Rutas. Implementación del CRUD Completo
 
-En este apartado vamos a construir las **Rutas (Routing)** de nuestra API. El objetivo es que nuestro servidor Ktor sea capaz de recibir peticiones HTTP, usar el Servicio para procesarlas y devolver respuestas en formato JSON.
+En este apartado construimos los **Controladores REST** de Spring Boot. Mientras que en Ktor las rutas se definen como funciones dentro de bloques `routing { }`, en Spring Boot cada endpoint es un **método anotado** dentro de una clase `@RestController`.
 
-## 1 Estructura del Routing en Ktor
+## 1 El Controlador en Spring Boot
 
-### ¿Qué estamos haciendo?
-
-Estamos definiendo los "puntos de entrada" (*endpoints*) de nuestra aplicación. En Ktor, el sistema de rutas se configura como un "Plugin" que escucha las peticiones que llegan al servidor.
-
-### ¿Para qué sirve?
-
-Separar las rutas del motor principal del servidor permite que el código sea modular. En lugar de tener un archivo gigante con todas las URLs, creamos pequeñas funciones de extensión que agrupan rutas por "recurso" (ej: usuarios, productos, facturas).
-
-Utilizaremos el archivo `plugins/Routing.kt` para definir cómo responde nuestra API.
-
-!!! success "🔍 Ejecutar y Analizar"
-    Abre `plugins/Routing.kt` y observa la estructura. Vamos a delegar la lógica de los usuarios a una función de extensión para mantener el código limpio.
+### Estructura general
 
 ```kotlin
-package com.tu.proyecto.plugins
+@RestController                     // Indica que esta clase maneja peticiones HTTP y devuelve JSON
+@RequestMapping("/usuarios")        // Prefijo común para todos los endpoints de esta clase
+class UsuarioController(
+    private val service: UsuarioService  // Inyección de dependencias por constructor
+) {
 
-import com.tu.proyecto.routes.usuarioRouting
-import io.ktor.server.application.*
-import io.ktor.server.routing.*
+    @GetMapping                     // GET /usuarios
+    fun listarTodos(): List<UsuarioDTO> { ... }
 
-fun Application.configureRouting() {
-    routing {
-        // Registramos las rutas de usuarios
-        usuarioRouting()
-    }
+    @GetMapping("/{id}")            // GET /usuarios/{id}
+    fun buscarPorId(@PathVariable id: Int): ResponseEntity<UsuarioDTO> { ... }
+
+    @PostMapping                    // POST /usuarios
+    fun crear(@RequestBody usuario: UsuarioDTO): ResponseEntity<Int> { ... }
+
+    // ...
 }
 ```
 
-## 2 El Controlador de Usuarios: `routes/UsuarioRoutes.kt`
+!!! info "Comparativa Ktor vs Spring Boot — Definición de Rutas"
 
-Implementamos las 5 operaciones fundamentales. El controlador recibe objetos `Call` (la llamada del cliente), extrae información (parámetros o cuerpo JSON) y delega el trabajo al **Servicio**.
+    | Aspecto | Ktor | Spring Boot |
+    |---|---|---|
+    | Estructura | Función `Route.usuarioRouting()` | Clase `@RestController` |
+    | GET todos | `get { call.respond(lista) }` | `@GetMapping fun listar()` |
+    | GET por ID | `get("{id}") { }` | `@GetMapping("/{id}") fun buscar(@PathVariable id: Int)` |
+    | Respuesta | `call.respond(objeto)` | `return ResponseEntity.ok(objeto)` |
+    | 404 | `call.respond(HttpStatusCode.NotFound, ...)` | `return ResponseEntity.notFound().build()` |
+    | Parámetro URL | `call.parameters["id"]?.toIntOrNull()` | `@PathVariable id: Int` |
+    | Cuerpo JSON | `call.receive<UsuarioDTO>()` | `@RequestBody usuario: UsuarioDTO` |
 
-El controlador actúa como un "traductor":
+    El resultado es idéntico; la sintaxis es diferente.
 
-* Convierte lo que viene de la red (texto JSON) en objetos Kotlin (`call.receive`).
-* Convierte los objetos de nuestra lógica en respuestas para la red (`call.respond`).
-
-Aquí es donde ocurre la magia. Definiremos los 5 endpoints clásicos de un CRUD RESTful.
+## 2 Implementación Completa: `UsuarioController.kt`
 
 !!! success "🔍 Ejecutar y Analizar"
-    Crea el archivo `UsuarioRoutes.kt` en la carpeta `routes`. Analiza cómo usamos `call.respond` para enviar datos y `call.receive` para leerlos.
+    Crea `controllers/UsuarioController.kt` y observa cómo `@PathVariable` y `@RequestBody` sustituyen a `call.parameters` y `call.receive<T>()` de Ktor.
 
 ```kotlin
-package com.tu.proyecto.routes
+package com.tuproyecto.usuariosapi.controllers
 
-import com.tu.proyecto.services.UsuariosService
-import com.tu.proyecto.domain.UsuarioDTO
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import com.tuproyecto.usuariosapi.domain.UsuarioDTO
+import com.tuproyecto.usuariosapi.services.UsuarioService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
-fun Route.usuarioRouting() {
-    
-    // El controlador llama al Servicio, NUNCA directamente al DAO
-    val service = UsuariosService 
+@RestController
+@RequestMapping("/usuarios")
+class UsuarioController(
+    private val service: UsuarioService
+) {
 
-    route("/usuarios") {
-        
-        // 1. GET: Obtener todos (Lectura)
-        get {
-            val lista = service.listarUsuarios()
-            call.respond(lista) // Ktor convierte automáticamente la lista a JSON
+    // 1. GET /usuarios — Listar todos
+    @GetMapping
+    fun listarTodos(): ResponseEntity<List<UsuarioDTO>> {
+        val lista = service.listarUsuarios()
+        return ResponseEntity.ok(lista)
+    }
+
+    // 2. GET /usuarios/{id} — Buscar por ID
+    @GetMapping("/{id}")
+    fun buscarPorId(@PathVariable id: Int): ResponseEntity<UsuarioDTO> {
+        val usuario = service.buscarPorId(id)
+        return if (usuario != null) {
+            ResponseEntity.ok(usuario)
+        } else {
+            ResponseEntity.notFound().build()
         }
+    }
 
-        // 2. GET/{id}: Obtener uno específico (Lectura)
-        get("{id}") {
-            val id = call.parameters["id"]?.toIntOrNull() 
-                ?: return@get call.respondText("ID no válido", status = HttpStatusCode.BadRequest)
-            
-            val usuario = service.buscarPorId(id)
-            if (usuario != null) {
-                call.respond(usuario)
-            } else {
-                call.respondText("Usuario no encontrado", status = HttpStatusCode.NotFound)
-            }
+    // 3. POST /usuarios — Crear nuevo
+    @PostMapping
+    fun crear(@RequestBody usuario: UsuarioDTO): ResponseEntity<Any> {
+        val nuevoId = service.registrarUsuario(usuario)
+        return if (nuevoId != -1) {
+            ResponseEntity.status(HttpStatus.CREATED).body(nuevoId)
+        } else {
+            ResponseEntity.status(HttpStatus.CONFLICT).body("El email ya está registrado")
         }
+    }
 
-        // 3. POST: Crear nuevo (Escritura)
-        post {
-            try {
-                // Importante: El JSON debe coincidir con el DTO
-                val usuario = call.receive<UsuarioDTO>()
-                val nuevoId = service.registrarUsuario(usuario)
-                
-                if (nuevoId != -1) call.respond(HttpStatusCode.Created, nuevoId)
-                else call.respond(HttpStatusCode.Conflict, "El email ya existe")
-            } catch (e: Exception) {
-                call.respondText("Error en los datos: ${e.message}", status = HttpStatusCode.BadRequest)
-            }
+    // 4. PUT /usuarios/{id} — Actualizar
+    @PutMapping("/{id}")
+    fun actualizar(
+        @PathVariable id: Int,
+        @RequestBody usuario: UsuarioDTO
+    ): ResponseEntity<String> {
+        val filas = service.actualizarUsuario(id, usuario)
+        return if (filas > 0) {
+            ResponseEntity.ok("Usuario actualizado correctamente")
+        } else {
+            ResponseEntity.notFound().build()
         }
+    }
 
-        // 4. PUT/{id}: Actualizar (Modificación)
-        put("{id}") {
-            val id = call.parameters["id"]?.toIntOrNull() 
-                ?: return@put call.respondText("ID no válido", status = HttpStatusCode.BadRequest)
-            
-            val usuarioActualizado = call.receive<UsuarioDTO>()
-            val filas = service.actualizarUsuario(id, usuarioActualizado)
-            
-            if (filas > 0) {
-                call.respondText("Usuario actualizado correctamente")
-            } else {
-                call.respondText("No se pudo actualizar: Usuario no encontrado", status = HttpStatusCode.NotFound)
-            }
-        }
-
-        // 5. DELETE/{id}: Borrar (Eliminación)
-        delete("{id}") {
-            val id = call.parameters["id"]?.toIntOrNull() 
-                ?: return@delete call.respondText("ID no válido", status = HttpStatusCode.BadRequest)
-            
-            val eliminado = service.borrarUsuario(id)
-            if (eliminado > 0) {
-                call.respondText("Usuario eliminado", status = HttpStatusCode.OK)
-            } else {
-                call.respondText("Usuario no encontrado", status = HttpStatusCode.NotFound)
-            }
+    // 5. DELETE /usuarios/{id} — Eliminar
+    @DeleteMapping("/{id}")
+    fun eliminar(@PathVariable id: Int): ResponseEntity<String> {
+        val filas = service.borrarUsuario(id)
+        return if (filas > 0) {
+            ResponseEntity.ok("Usuario eliminado")
+        } else {
+            ResponseEntity.notFound().build()
         }
     }
 }
 ```
 
-### Estructura de Directorios Resultante
+## 3 `ResponseEntity<T>`: Controlando la Respuesta HTTP
 
-Para implementar este controlador, nuestro proyecto debe estar organizado de la siguiente manera:
+`ResponseEntity<T>` es la clase de Spring Boot para construir respuestas HTTP con total control sobre el código de estado, las cabeceras y el cuerpo.
 
-```text
-src/main/kotlin/com/tu.proyecto/
-├── core/
-│   └── ConexionDB.kt    // M: Persistencia
-├── data/
-│   ├── UsuariosTable.kt // M: Mapeo
-│   └── UsuariosDAO.kt   // M: CRUD Exposed
-├── domain/
-│   ├── UsuarioDTO.kt    // M: Modelo Serializable
-│   └── LocalDateSerializer.kt
-├── services/
-│   └── UsuariosService.kt // M: Lógica de Negocio
-├── routes/              // CAPA CONTROLADOR (C)
-│   └── UsuarioRoutes.kt // Definición de Endpoints
-├── plugins/
-│   ├── Serialization.kt // V: Vista JSON
-│   └── Routing.kt       // Punto de anclaje de rutas
-└── Application.kt       // Orquestador
-```
+| Ktor | Spring Boot | Resultado |
+|---|---|---|
+| `call.respond(HttpStatusCode.OK, objeto)` | `ResponseEntity.ok(objeto)` | 200 + JSON |
+| `call.respond(HttpStatusCode.Created, id)` | `ResponseEntity.status(HttpStatus.CREATED).body(id)` | 201 + id |
+| `call.respond(HttpStatusCode.NotFound, ...)` | `ResponseEntity.notFound().build()` | 404 vacío |
+| `call.respond(HttpStatusCode.Conflict, msg)` | `ResponseEntity.status(HttpStatus.CONFLICT).body(msg)` | 409 + mensaje |
 
-## 3 Semántica de las Respuestas HTTP
+## 4 Tabla de Códigos de Estado
 
-Estamos asignando un código numérico a cada respuesta. Una buena API no solo devuelve datos, sino que explica qué ha pasado mediante el estándar HTTP.
+| Código | Nombre | Cuándo lo devolvemos |
+|---|---|---|
+| **200** | OK | `GET` exitoso y `PUT`/`DELETE` con resultado |
+| **201** | Created | `POST` exitoso (nuevo recurso creado) |
+| **404** | Not Found | ID no existe en la BD |
+| **409** | Conflict | Email duplicado en `POST` |
+| **401** | Unauthorized | Operación protegida sin sesión activa |
+| **403** | Forbidden | Sesión activa pero sin permisos suficientes |
 
-### Tabla de Códigos de Estado
+## 5 Probando la API con Postman
 
-| Código | Nombre | Significado Teórico | Cuándo usarlo en nuestra API |
-| :--- | :--- | :--- | :--- |
-| **200** | OK | Petición exitosa. | En `GET` (lista o uno) y `PUT` / `DELETE` exitosos. |
-| **201** | Created | Recurso creado con éxito. | Siempre tras un `POST` que inserte un registro. |
-| **400** | Bad Request | Petición mal formada. | Si el cliente envía un ID que no es un número. |
-| **404** | Not Found | No encontrado. | Si buscamos, editamos o borramos un ID inexistente. |
-| **409** | Conflict | Conflicto en el servidor. | Si intentan registrar un email que ya existe. |
-| **500** | Internal Error | Error no controlado. | Cuando nuestro código falla (excepción no capturada). |
-
-## 4 Probando la API
-
-Utilizamos herramientas externas para simular ser un cliente (un móvil o una web) que consume nuestra API.
-
-Dado que una API REST no tiene "botones" ni "pantallas", necesitamos enviar peticiones manuales para verificar que el flujo **Controlador -> Servicio -> DAO -> BD** funciona correctamente de principio a fin.
-
-!!! success "🔍 Herramientas recomendadas"
-
-    * **Postman:** La herramienta estándar de la industria. [Accede a su página oficial](https://www.postman.com/)
-    * **IntelliJ HTTP Client:** Muy útil para dejar las pruebas guardadas en el propio proyecto (ficheros `.http`).
-
-### 4.1 Tabla de Endpoints y Pruebas
-
-Antes de comenzar con las pruebas, vamos a acceder a nuestra BD y vamos a insertar (con SQL) usuarios de prueba:
+Antes de probar, inserta usuarios de prueba directamente en MySQL:
 
 ```sql
-INSERT INTO usuarios(nombre,mail,password,fecha_nacimiento)
-VALUES ("Atenea","atena@mail.com","pass123","2000-05-15");
+INSERT INTO usuarios(nombre, mail, password, fecha_nacimiento)
+VALUES ('Atenea', 'atenea@mail.com', 'pass123', '2000-05-15');
 
-INSERT INTO usuarios(nombre,mail,password,fecha_nacimiento)
-VALUES ("Perséfone","persefone@mail.com","pass123","2004-01-01");
+INSERT INTO usuarios(nombre, mail, password, fecha_nacimiento)
+VALUES ('Perséfone', 'persefone@mail.com', 'pass123', '2004-01-01');
 ```
 
-La siguiente tabla muestra las peticiones que vamos a testear en `http://0.0.0.0:8080`:
+La API escucha en `http://localhost:8080`:
 
-| Método | URL (Endpoint) | Parámetros / Body (JSON de ejemplo) | Objetivo |
-| :--- | :--- | :--- | :--- |
-| **GET** | `/usuarios` | Ninguno | Obtener la lista de todos los usuarios. |
-| **GET** | `/usuarios/1` | `id=1` en la URL | Ver detalles del usuario con ID 1. |
-| **POST** | `/usuarios` | `{ "id": 0, "nombre": "Ícaro", "mail": "icaro@mail.com", "password": "pass123", "fechaNacimiento": "2003-10-20" }` | Crear un nuevo usuario. |
-| **PUT** | `/usuarios/1` | `{ "id": 1, "nombre": "Atenea", "mail": "atenea@olimpo.com", "password": "atenea123", "fechaNacimiento": "2000-05-15" }` | Modificar los datos del usuario 1. |
-| **DELETE** | `/usuarios/2` | `id=1` en la URL | Eliminar permanentemente al usuario 2. |
+| Método | URL | Body (JSON) | Resultado esperado |
+|---|---|---|---|
+| `GET` | `/usuarios` | — | 200 + lista JSON |
+| `GET` | `/usuarios/1` | — | 200 + usuario / 404 |
+| `POST` | `/usuarios` | `{"id":0,"nombre":"Ícaro","mail":"icaro@mail.com","password":"pass123","fechaNacimiento":"2003-10-20"}` | 201 + nuevo ID |
+| `PUT` | `/usuarios/1` | `{"id":1,"nombre":"Atenea","mail":"atenea@olimpo.com","password":"atenea123","fechaNacimiento":"2000-05-15"}` | 200 |
+| `DELETE` | `/usuarios/2` | — | 200 / 404 |
 
-!!! info "Nota sobre el JSON"
-    Recuerda que en el `POST` y `PUT` debes configurar en Postman el tipo de cuerpo como **raw** y seleccionar **JSON**. Asegúrate de que los nombres de los campos coinciden exactamente con tu `UsuarioDTO`.
+!!! info "Nota sobre Postman"
+    En `POST` y `PUT` selecciona **Body → raw → JSON**. Los nombres de los campos deben coincidir exactamente con `UsuarioDTO` (respetando mayúsculas, p. ej. `fechaNacimiento`).
 
-#### Listar todos los usuarios
+!!! danger "¿Spring Security bloquea todas las peticiones?"
+    Por defecto, Spring Security exige autenticación para **todo**. En la siguiente sección configuramos `SecurityFilterChain` para abrir las rutas públicas y proteger solo las de escritura. Si ves un `403 Forbidden` en un `GET /usuarios`, es normal en este punto.
 
-La primera petición `http://0.0.0.0:8080/usuarios` usando el método **GET** nos devolverá la lista de todos los usuarios de la BD.
+---
 
-![Rutas](../../assets/images/ud05/ud5_8.png)
+## 🎯 Práctica 3. Implementando el Controlador REST
 
-#### Buscar usuario por `id`
+!!! warning "🎯 Práctica 3. Implementando el Controlador REST"
 
-Podemos realizar una búsqueda por `id`. La petición la haremos por **GET** a la url `http://0.0.0.0:8080/usuarios/2` (para buscar el usuario con `id` igual a `2`).
+    1. Crea `controllers/UsuarioController.kt` con los 5 endpoints.
+    2. Arranca la aplicación.
+    3. Prueba en Postman los endpoints `GET` (puede que recibas 403 hasta configurar Security).
+    4. Una vez que configures Spring Security en la siguiente sección, prueba todos los endpoints.
 
-![Rutas](../../assets/images/ud05/ud5_9.png)
-
-#### Crear un nuevo usuario
-
-En esta ocasión, vamos a insertar datos en nuestra BD. Para ello, por seguridad, el envío de parámetros lo realizamos usando el método **POST**. Los parámetros, en vez de ir concatenados en la URL como en el método **GET**, irán encapsulados dentro del cuerpo de la petición.
-
-Esto significa, que al servidor le enviaremos un *JSON* con los campos del nuevo registro a la URL `http://0.0.0.0:8080/usuarios`
-
-Además, para asegurarnos de que el `id` se autoincremente, enviaremos por defecto el `id=0`. Con este truco, Ktor se quedará tranquilo porque el *JSON* es correcto y la BD ignorará el `id`.
-
-![Rutas](../../assets/images/ud05/ud5_10.png)
-
-> **Nota:** fíjate que el servidor nos ha devuelto el `id` del usuario nuevo creado.
-
-#### Modificar un usario existente
-
-Para este ejemplo, modificaremos el `mail` y el `password` del ususario con el `id` igual a 1. Usaremos una petición **PUT** a la URL `http://0.0.0.0:8080/usuarios/1`. En este caso (como con **POST**) enviaremos todos los datos del registro a modificar con un *JSON* dentro del cuerpo de la petición.
-
-![Rutas](../../assets/images/ud05/ud5_11.png)
-
-#### Eliminar usuario con `id`
-
-Por último, vamos a realizar el borrado de un usuario según su `id`. La petición la haremos usando el método **DELETE** en la url `http://0.0.0.0:8080/usuarios/2`.
-
-![Rutas](../../assets/images/ud05/ud5_12.png)
-
-### 4.2 Corrección de errores
-
-!!! danger "¿Falla el POST/PUT/DELETE?"
-    Si recibes errores al enviar datos, comprueba estos 3 puntos:
-
-    1. **Content-Type:** En Postman, asegúrate de que el Body es `raw` -> `JSON`.
-    2. **El ID en el JSON:** Tu `UsuarioDTO` tiene un campo `id`. Si en el POST no lo envías, Ktor fallará. **Truco:** Envía un `id: 0`, la base de datos lo ignorará y usará el autoincremental.
-    3. **Formato Fecha:** Debe ser exactamente `"YYYY-MM-DD"`.
-
-| Método | Endpoint | Body (JSON) Ejemplo |
-| :--- | :--- | :--- |
-| **POST** | `/usuarios` | `{ "id": 0, "nombre": "Ícaro", "mail": "icaro@mail.com", "password": "pass123", "fechaNacimiento": "2003-10-20" }` |
-| **PUT** | `/usuarios/1` | `{ "id": 1, "nombre": "Atenea", "mail": "atenea@olimpo.com", "password": "atenea123", "fechaNacimiento": "2000-05-15" }` |
-| **DELETE** | `/usuarios/2` | (Vacío) |
+---
 
 !!! example "Autoevaluación"
 
-    **Pregunta 5: En nuestra API, un `POST /usuarios` exitoso devuelve el código HTTP 201. ¿Por qué se usa 201 en lugar de 200?**
+    **Pregunta 11: En Spring Boot, `@PathVariable` y `@RequestBody` extraen datos de la petición. ¿Cuál es la diferencia entre ambas?**
 
-    A) Porque 200 está reservado exclusivamente para peticiones GET; cualquier otro verbo debe devolver un código diferente.
+    A) `@PathVariable` lee datos del cuerpo JSON; `@RequestBody` lee datos de la URL.
 
-    B) Porque 201 (Created) indica específicamente que la petición tuvo como resultado la creación de un nuevo recurso, mientras que 200 (OK) indica simplemente que la petición se procesó con éxito sin necesidad de crear nada nuevo.
+    B) `@PathVariable` extrae un segmento de la URL (p. ej. el `{id}` de `/usuarios/{id}`); `@RequestBody` deserializa el cuerpo JSON de la petición en un objeto Kotlin.
 
-    C) Porque Ktor lanza una excepción si se usa `HttpStatusCode.OK` en respuesta a un `POST`.
+    C) `@PathVariable` solo funciona con `@GetMapping`; `@RequestBody` solo funciona con `@PostMapping`.
 
-    D) Es una convención opcional; 200 y 201 son equivalentes y se pueden usar indistintamente.
-
-    ??? quote "Solución"
-        ❌ A) El código 200 se puede usar con cualquier verbo HTTP. No está reservado para GET.
-
-        ✅ B) Los códigos de estado HTTP tienen semántica precisa. 200 OK significa "la petición fue procesada", y 201 Created añade la información de que se creó un recurso nuevo. Usar 201 en respuesta a un POST exitoso es la práctica estándar REST y permite a los clientes distinguir entre "procesado" y "creado".
-
-        ❌ C) Ktor acepta cualquier `HttpStatusCode` en `call.respond`. No lanza excepciones por el código que elijas.
-
-        ❌ D) Aunque técnicamente ambos son éxito (2xx), no son semánticamente equivalentes. Una buena API REST comunica con precisión qué ocurrió mediante el código de estado correcto.
-
-    **Pregunta 6: Un cliente envía `DELETE /usuarios/1` sin haber hecho login previamente. Según la arquitectura de autenticación con sesiones, ¿qué respuesta recibirá?**
-
-    A) 200 OK — el usuario se elimina porque DELETE es un verbo estándar que no requiere autenticación.
-
-    B) 404 Not Found — el servidor no puede encontrar la ruta `/usuarios/1` sin sesión activa.
-
-    C) 401 Unauthorized — el bloque `authenticate("auth-session")` detecta que no hay cookie de sesión válida y ejecuta el `challenge` configurado.
-
-    D) 500 Internal Server Error — el servidor falla al intentar leer la sesión que no existe.
+    D) Son equivalentes; se usan indistintamente según la preferencia del desarrollador.
 
     ??? quote "Solución"
-        ❌ A) DELETE está envuelto en el bloque `authenticate("auth-session")`. Sin sesión válida, Ktor nunca llega a ejecutar el código de borrado.
+        ❌ A) Es exactamente al revés.
 
-        ❌ B) La ruta existe y es reconocida por Ktor. El problema no es que no encuentre la ruta, sino que el usuario no está autenticado para usarla.
+        ✅ B) `@PathVariable` mapea un segmento variable de la ruta URL — por ejemplo, en `GET /usuarios/5`, extrae el `5` y lo convierte a `Int`. `@RequestBody` deserializa el JSON del cuerpo de la petición (disponible en `POST`/`PUT`) en el tipo de objeto indicado. Son complementarios: uno lee la URL, el otro lee el cuerpo.
 
-        ✅ C) El bloque `authenticate` intercepta la petición, comprueba si existe una `UserSession` válida en las cookies y, si no la encuentra, ejecuta el `challenge` que hemos configurado: devolver un mensaje `"401: No autorizado. Debes iniciar sesión."` con código HTTP 401.
+        ❌ C) No hay restricción por tipo de mapping. `@PathVariable` se usa habitualmente en `GET`, `PUT` y `DELETE` (para identificar el recurso). `@RequestBody` se usa en `POST` y `PUT` (para recibir el contenido).
 
-        ❌ D) Leer una sesión que no existe no produce una excepción en Ktor; simplemente devuelve `null`. El sistema de autenticación gestiona este caso limpiamente con el `challenge`.
+        ❌ D) No son equivalentes. Cada una extrae información de una parte distinta de la petición HTTP.
 
-## 🎯 Práctica 4. Enrutando y realización de pruebas
+    **Pregunta 12: `ResponseEntity.notFound().build()` devuelve un 404 con cuerpo vacío. ¿Cuándo es preferible a lanzar una excepción?**
 
-!!! warning "🎯 Práctica 4. Enrutando y realización de pruebas"
+    A) Nunca; siempre es mejor lanzar una excepción porque Spring la convierte automáticamente en la respuesta HTTP correcta.
 
-    1. Implementa el archivo `UsuarioRoutes.kt` y asegúrate de registrarlo en `Routing.kt`.
-    2. Ejecuta el servidor.
-    3. Utiliza la herramienta Postman para realizar todas las pruebas:
-          1. Listar todos los usuarios (GET).
-          2. Buscar un usuario por `id` (GET).
-          3. Crear un usuario nuevo (POST).
-          4. Modificar datos de un usuario existente (PUT).
-          5. Eliminar un usuario (DELETE).
-    4. Realiza todas las pruebas posibles (mails duplicados, buscar un usuario que no existe, etc.).
-    5. Verifica que tras las modificaciones, el listado **GET** devuelve la lista con todos los usuarios y las alteraciones de la BD.
+    B) `ResponseEntity` es la opción adecuada cuando el controlador necesita devolver distintos códigos HTTP según el resultado del servicio (200 o 404 en la misma función). Las excepciones son más adecuadas cuando el caso de error es excepcional y quieres centralizar el manejo con `@ExceptionHandler`.
+
+    C) `ResponseEntity` solo se puede usar en `@GetMapping`; en `@PostMapping` hay que lanzar excepciones.
+
+    D) `ResponseEntity` solo funciona con tipos primitivos; para objetos complejos hay que lanzar excepciones.
+
+    ??? quote "Solución"
+        ❌ A) Lanzar excepciones es válido, pero no siempre es la opción más clara. Un 404 previsible ("el usuario con ese ID no existe") no es un caso excepcional; es un flujo normal de la aplicación y se maneja bien con `ResponseEntity`.
+
+        ✅ B) `ResponseEntity` brilla cuando una función puede tener múltiples respuestas HTTP válidas. El patrón `return if (x != null) ResponseEntity.ok(x) else ResponseEntity.notFound().build()` es claro y explícito. Las excepciones personalizadas (con `@ResponseStatus` o `@ExceptionHandler`) son más adecuadas para casos de error transversales (errores de BD, validaciones de seguridad, etc.).
+
+        ❌ C) `ResponseEntity` funciona con cualquier tipo de mapping HTTP. No hay restricción por método.
+
+        ❌ D) `ResponseEntity<T>` es genérica — `T` puede ser cualquier tipo: primitivo, `UsuarioDTO`, `List<UsuarioDTO>`, `String`, etc.

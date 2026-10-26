@@ -1,319 +1,265 @@
 # Autenticación y Sesiones
 
-En este bloque, vamos a dotar a nuestra API de una capa de seguridad profesional. Implementaremos un sistema de **Sesiones** para identificar a los usuarios y restringiremos el acceso a las operaciones sensibles.
+En esta sección añadimos seguridad a la API con **Spring Security**. El resultado es el mismo que en la versión Ktor (sesiones basadas en cookies, rutas de lectura públicas, escritura protegida), pero la configuración es declarativa mediante la clase `SecurityFilterChain`.
 
-## 1 ¿Por qué Sesiones?
+## 1 ¿Por qué Spring Security?
 
-### ¿Qué estamos haciendo?
+HTTP es *stateless*: el servidor olvida quién eres en cada petición. Las **sesiones** resuelven esto guardando un identificador en una cookie que el navegador/Postman envía automáticamente en cada petición posterior.
 
-HTTP es un protocolo "sin estado" (*stateless*). Esto significa que el servidor olvida quién eres en cuanto termina la petición. Las **Sesiones** nos permiten guardar un "carnet de identidad" temporal en el navegador del usuario (usando una Cookie) para que el servidor lo reconozca en futuras visitas.
+Spring Security intercepta **todas** las peticiones antes de que lleguen al controlador y verifica si el usuario tiene permiso. Es un "portero" global que se activa solo con tener la dependencia en el proyecto.
 
-### ¿Para qué sirve?
+!!! info "Comparativa Ktor vs Spring Boot — Autenticación"
 
-* **Seguridad:** Permite restringir el acceso a usuarios no identificados.
-* **Persistencia:** Mantiene al usuario logueado sin pedirle la contraseña en cada click.
+    | Aspecto | Ktor | Spring Boot |
+    |---|---|---|
+    | Configuración | `install(Authentication) { session<UserSession>(...) }` | `@Bean fun securityFilterChain(http: HttpSecurity)` |
+    | Sesión | `data class UserSession(val email: String)` | `HttpSession` de Spring (gestionada automáticamente) |
+    | Login | Ruta `POST /auth/login` manual | Ruta `POST /auth/login` manual |
+    | Logout | `call.sessions.clear<UserSession>()` | `http.logout { ... }` + `SecurityContextHolder` |
+    | Ruta protegida | `authenticate("auth-session") { ... }` | `.requestMatchers("/usuarios/**").authenticated()` |
 
-### Configuración del entorno
+## 2 Endpoints de Login y Logout
 
-Antes de empezar, vamos a añadir los módulos de **Seguridad** y **Sesiones** a nuestro gestor de dependencias y activar dichos plugins en el arranque del servidor. Sirve para que Ktor reconozca las herramientas de protección. Sin esta configuración, el servidor no sabrá qué hacer cuando encuentre un bloque `authenticate` y lanzará un error de "Plugin no instalado".
+Añade las rutas de autenticación al controlador de seguridad. Primero necesitamos que el `UsuariosDAO` busque por email (igual que en Ktor):
 
-!!! success "🔍 Actualización de `build.gradle.kts`"
-    Asegúrate de incluir estos dos módulos esenciales en tu bloque de dependencias:
-
-```kotlin
-dependencies {
-    // ... otras dependencias ...
-
-    // Módulos de seguridad necesarios
-    implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-sessions-jvm:$ktor_version")
-}
-```
-
-!!! success "🔍 Inicialización en el Módulo Principal"
-    Para que el plugin sea detectado, debes llamar a `configureSecurity()` en tu función de módulo (normalmente en `Application.kt` o donde configures el servidor), siempre **antes** de las rutas.
-
-```kotlin
-fun Application.module() {
-    configureSerialization() // Traducción JSON
-    configureSecurity()      // INSTALACIÓN DEL GUARDIÁN (Auth y Sesiones)
-    configureRouting()       // Definición de las rutas
-}
-```
-
-## 2 Actualización de la Capa de Persistencia (DAO)
-
-Necesitamos realizar la expansión de nuestro **Modelo** de datos para permitir búsquedas por campos únicos que no son la clave primaria (en este caso, el email).
-
-Para que el sistema de autenticación pueda localizar a un usuario específico mediante su "nombre de usuario" o correo antes de proceder a verificar su identidad con la contraseña.
-
-!!! success "🔍 Modificación en `data/UsuariosDAO.kt`"
+!!! success "🔍 Añadir a `UsuariosDAO.kt`"
 
 ```kotlin
 fun seleccionarPorEmail(email: String): UsuarioDTO? = transaction {
-    Usuarios.select { Usuarios.mail eq email }
-        .map { it.toUsuarioDTO() }
-        .singleOrNull()
+    UsuariosTable
+        .selectAll()
+        .where { UsuariosTable.mail eq email }
+        .firstOrNull()
+        ?.let { toDTO(it) }
 }
 ```
 
-## 3 Lógica de Dominio y Autenticación
+Y el modelo `LoginRequest` para el cuerpo del login:
 
-Es la definición del "carnet de identidad" (`UserSession`) que el servidor entregará al cliente y la lógica de negocio que valida si alguien es quien dice ser.
-
-Tener un objeto de sesión específico en la capa de **Domain** asegura que sea visible desde todo el proyecto (evitando errores de compilación). 
-
-!!! success "🔍 Nuevo Fichero: `domain/UserSession.kt`"
+!!! success "🔍 Nuevo fichero: `domain/LoginRequest.kt`"
 
 ```kotlin
-package com.tu.proyecto.domain
+package com.tuproyecto.usuariosapi.domain
 
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class UserSession(val email: String)
-```
-
-Para el login solo necesitamos email y password. No usar el DTO general de Usuario, porque Ktor fallará al no recibir el resto de campos.
-
-!!! success "🔍 Fichero: `domain/LoginRequest.kt`"
-
-```kotlin
-@Serializable
 data class LoginRequest(
     val mail: String,
     val password: String
 )
 ```
 
-El **Servicio** centraliza la validación para que el controlador no tenga que manejar contraseñas directamente.
+Añade al `UsuarioService` la validación de credenciales:
 
-!!! success "🔍 Actualización de `services/UsuariosService.kt`"
+!!! success "🔍 Añadir a `UsuarioService.kt`"
 
 ```kotlin
-/**
- * Valida las credenciales de un usuario.
- */
-fun buscarPorEmail(mail: String, pass: String): UsuarioDTO? {
+fun buscarPorEmail(mail: String, password: String): UsuarioDTO? {
     val usuario = UsuariosDAO.seleccionarPorEmail(mail)
-    // Comparamos el email y la contraseña antes de dar el OK
-    return if (usuario != null && usuario.password == pass) usuario else null
+    return if (usuario != null && usuario.password == password) usuario else null
 }
 ```
+
+Ahora el controlador de autenticación:
+
+!!! success "🔍 Nuevo fichero: `controllers/AuthController.kt`"
+
+```kotlin
+package com.tuproyecto.usuariosapi.controllers
+
+import com.tuproyecto.usuariosapi.domain.LoginRequest
+import com.tuproyecto.usuariosapi.services.UsuarioService
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.annotation.*
+
+@RestController
+@RequestMapping("/auth")
+class AuthController(
+    private val service: UsuarioService
+) {
+
+    // POST /auth/login
+    @PostMapping("/login")
+    fun login(
+        @RequestBody request: LoginRequest,
+        httpRequest: HttpServletRequest
+    ): ResponseEntity<String> {
+        val usuario = service.buscarPorEmail(request.mail, request.password)
+
+        return if (usuario != null) {
+            // Creamos la sesión HTTP (Spring la gestiona automáticamente con una cookie)
+            val session = httpRequest.getSession(true)
+            session.setAttribute("userMail", usuario.mail)
+            ResponseEntity.ok("Login exitoso. Bienvenido, ${usuario.nombre}")
+        } else {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas")
+        }
+    }
+
+    // POST /auth/logout
+    @PostMapping("/logout")
+    fun logout(httpRequest: HttpServletRequest): ResponseEntity<String> {
+        httpRequest.getSession(false)?.invalidate()
+        SecurityContextHolder.clearContext()
+        return ResponseEntity.ok("Sesión cerrada correctamente.")
+    }
+}
+```
+
+## 3 Configuración de Spring Security: `SecurityConfig.kt`
+
+Este es el equivalente al `plugins/Security.kt` de Ktor. Define qué rutas son públicas y cuáles requieren autenticación.
+
+!!! success "🔍 Nuevo fichero: `security/SecurityConfig.kt`"
+
+```kotlin
+package com.tuproyecto.usuariosapi.security
+
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy
+
+@Configuration
+@EnableWebSecurity
+class SecurityConfig {
+
+    @Bean
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            // Desactivamos CSRF (necesario para APIs REST con Postman)
+            .csrf { it.disable() }
+
+            // Definimos qué rutas requieren autenticación
+            .authorizeHttpRequests { auth ->
+                // Rutas de autenticación: públicas
+                auth.requestMatchers("/auth/**").permitAll()
+
+                // Lectura de usuarios: pública
+                auth.requestMatchers(HttpMethod.GET, "/usuarios", "/usuarios/**").permitAll()
+
+                // Escritura (POST, PUT, DELETE): requiere sesión activa
+                auth.requestMatchers(HttpMethod.POST, "/usuarios").authenticated()
+                auth.requestMatchers(HttpMethod.PUT, "/usuarios/**").authenticated()
+                auth.requestMatchers(HttpMethod.DELETE, "/usuarios/**").authenticated()
+
+                // Todo lo demás: denegado
+                auth.anyRequest().denyAll()
+            }
+
+            // Configuración de sesiones
+            .sessionManagement { session ->
+                session.maximumSessions(1)
+            }
+
+            // Respuesta personalizada para acceso denegado (equivalente al challenge de Ktor)
+            .exceptionHandling { ex ->
+                ex.authenticationEntryPoint { _: HttpServletRequest, response: HttpServletResponse, _ ->
+                    response.status = HttpServletResponse.SC_UNAUTHORIZED
+                    response.contentType = "text/plain;charset=UTF-8"
+                    response.writer.write("401: No autorizado. Debes iniciar sesión.")
+                }
+            }
+
+        return http.build()
+    }
+}
+```
+
+!!! warning "Sesión manual vs Spring Security nativo"
+    En esta implementación usamos `HttpSession` directamente (como en Ktor) para mantener la similitud conceptual. En proyectos de producción se usa `UsernamePasswordAuthenticationFilter` o un `UserDetailsService` para integración completa con el ecosistema Spring Security.
+
+## 4 Estructura Final del Proyecto
+
+```text
+src/main/kotlin/com/tuproyecto/usuariosapi/
+├── UsuariosApiApplication.kt
+├── data/
+│   ├── UsuariosTable.kt
+│   └── UsuariosDAO.kt
+├── domain/
+│   ├── UsuarioDTO.kt
+│   └── LoginRequest.kt       ← NUEVA
+├── services/
+│   └── UsuarioService.kt
+├── controllers/
+│   ├── UsuarioController.kt
+│   └── AuthController.kt     ← NUEVA
+└── security/
+    └── SecurityConfig.kt     ← NUEVA
+```
+
+## 5 Guía de Pruebas en Postman
+
+| Método | URL | Body JSON | Requiere Login | Resultado esperado |
+|---|---|---|---|---|
+| `POST` | `/auth/login` | `{"mail":"atenea@mail.com","password":"pass123"}` | No | 200 + cookie de sesión |
+| `GET` | `/usuarios` | — | No | 200 + lista JSON |
+| `POST` | `/usuarios` | `{"id":0,"nombre":"Ícaro","mail":"icaro@mail.com","password":"pass123","fechaNacimiento":"2003-10-20"}` | **Sí** | 201 (con login) / 401 (sin login) |
+| `POST` | `/auth/logout` | — | No | 200 |
+| `DELETE` | `/usuarios/1` | — | **Sí** | 401 (sin login) / 200 (con login) |
+
+!!! danger "Activa las cookies en Postman"
+    En Postman, asegúrate de que las cookies están habilitadas (pestaña **Cookies** o el icono del candado). Spring Security gestiona la sesión mediante la cookie `JSESSIONID`, que Postman debe enviar automáticamente en cada petición tras el login.
 
 ---
 
-## 3 Configuración de Seguridad: `plugins/Security.kt`
+## 🎯 Práctica 4. Auditoría de Seguridad
 
-Vamor ahora a realizar la configuración de los plugins de **Sesiones** (almacenamiento) y **Autenticación** (verificación) de Ktor.
+!!! warning "🎯 Práctica 4. Auditoría de Seguridad"
 
-Con esto, se permite que el servidor gestione automáticamente las Cookies en el navegador del cliente y define un "desafío" (*challenge*) para denegar el acceso a quienes intenten entrar en rutas protegidas sin estar logueados.
+    Valida que la seguridad funciona correctamente siguiendo este orden:
 
-!!! success "🔍 Configuración en `plugins/Security.kt`"
+    1. **Test de intrusión:** Intenta `DELETE /usuarios/1` sin haber hecho login. Resultado esperado: **401**.
+    2. **Login:** Haz `POST /auth/login` con credenciales válidas. Resultado esperado: **200** + cookie `JSESSIONID` en Postman.
+    3. **Operación protegida:** Con la sesión activa, repite el `DELETE /usuarios/1`. Resultado esperado: **200**.
+    4. **Logout:** Ejecuta `POST /auth/logout`. Resultado esperado: **200**.
+    5. **Post-logout:** Intenta de nuevo el `DELETE`. Resultado esperado: **401** (sesión destruida).
 
-```kotlin
-package com.tu.proyecto.plugins
-
-import com.tu.proyecto.domain.UserSession // Importamos desde domain
-import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.sessions.*
-import io.ktor.server.response.*
-
-fun Application.configureSecurity() {
-    install(Sessions) {
-        cookie<UserSession>("USER_SESSION") {
-            cookie.path = "/"
-            cookie.maxAgeInSeconds = 3600 // La sesión expira en 1 hora
-        }
-    }
-
-    install(Authentication) {
-        session<UserSession>("auth-session") {
-            validate { session -> session }
-            challenge {
-                call.respondText("401: No autorizado. Debes iniciar sesión.", status = io.ktor.http.HttpStatusCode.Unauthorized)
-            }
-        }
-    }
-}
-```
-
-## 4 Rutas de Sesión y Protección: `routes/UsuarioRoutes.kt`
-
-Actualizamos la implementación de los endpoints de Login/Logout y la delimitación de qué rutas requieren estar identificado.
-
-De esta manera permitiremos al usuario iniciar su sesión voluntariamente. Al usar el bloque `authenticate`, delegamos en Ktor la tarea de revisar si existe la Cookie de sesión antes de permitir operaciones de borrado o edición.
-
-!!! danger "Importante para visibilidad"
-    Asegúrate de incluir el import: `import io.ktor.server.sessions.*` y `import com.tu.proyecto.domain.UserSession` al inicio del archivo de rutas.
-
-!!! success "🔍 Implementación en `routes/UsuarioRoutes.kt`"
-
-```kotlin
-fun Route.usuarioRouting() {
-    val service = UsuariosService 
-
-    // Bloque de Autenticación (Login/Logout)
-    route("/auth") {
-        post("/login") {
-            
-            // Recibimos solo Mail y Password usando el DTO específico
-            val login = call.receive<LoginRequest>()
-            val usuario = service.buscarPorEmail(login.mail, login.password)
-
-            if (usuario != null) {
-                call.sessions.set(UserSession(email = usuario.mail))
-                call.respondText("Login exitoso. Bienvenido, ${usuario.nombre}")
-            } else {
-                call.respond(HttpStatusCode.Unauthorized, "Credenciales incorrectas")
-            }
-        }
-
-        get("/logout") {
-            call.sessions.clear<UserSession>()
-            call.respondText("Sesión cerrada correctamente.")
-        }
-    }
-}
-```
-
-### ¿Cómo protegemos las rutas?
-
-Ahora podemos crear perímetros de seguridad dentro de nuestra API. Podemos decidir que las rutas de "lectura" sean públicas para que cualquiera pueda ver los datos, pero que las rutas de "escritura o borrado" requieran obligatoriamente que el usuario presente una sesión válida.
-
-!!! success "🔍 Ejemplo de Protección de Rutas"
-    Observa cómo envolvemos los métodos sensibles dentro de `authenticate`. Si un usuario intenta usar `DELETE` sin estar logueado, Ktor responderá automáticamente con el error 401 que definimos en el *challenge*.
-
-> **Nota importante:** Para este ejemplo, en las rutas **GET** dejamos expuestos los *mails* y *passwords* en la lista de los usuarios, **¡eso no es seguro!**. Deberíamos modificar el resultado del DAO para devolver sólo los **campos de la tabla que nos interesan que sean públicos**.
-
-```kotlin
-route("/usuarios") {
-    
-    // RUTAS PÚBLICAS (GET): Cualquiera puede ver la lista
-    get {
-       // ...
-    }
-
-    // RUTAS PROTEGIDAS: Solo accesibles si hay sesión iniciada
-    authenticate("auth-session") {
-        post {
-           // ...
-        }
-
-        put("{id}") {
-           // ...
-        }
-
-        delete("{id}") {
-            // ...
-        }
-    }
-}
-```
-
-## 5 Guía de Pruebas (Rutas Protegidas)
-
-Vamos a poner a prueba el protocolo de verificación para asegurar que los endpoints de autenticación y los bloqueos de seguridad funcionan según lo previsto. Así evaluamos que el flujo de Login emite correctamente la Cookie y que el servidor deniega el acceso (401) cuando dicha Cookie no está presente.
-
-| Método | Endpoint | Body (JSON) / Parámetros | ¿Requiere Login? | Resultado Esperado |
-| :--- | :--- | :--- | :--- | :--- |
-| **POST** | `/auth/login` | `{"mail": "atenea@mail.com", "password": "pass123"}` | No | **200 OK** + Cookie generada |
-| **GET** | `/usuarios` | Ninguno | **No** | **200 OK** + Lista JSON |
-| **POST** | `/usuarios` | `{ "id": 0, "nombre": "Perseida", "mail": "perseida@mail.com", "password": "pass123", "fechaNacimiento": "2003-10-20" }` | **SÍ** | **201 Created** (Si hay Login) |
-| **GET** | `/auth/logout` | Ninguno | No | **200 OK** + Cookie eliminada |
-| **DELETE** | `/usuarios/1` | `id=1` en URL | **SÍ** | **401 Unauthorized** (Sin Login) |
-
-!!! info "Nota sobre el JSON"
-    Recuerda que en el `POST` y `PUT` debes configurar en Postman el tipo de cuerpo como **raw** y seleccionar **JSON**. Asegúrate de que los nombres de los campos coinciden exactamente con tu `UsuarioDTO`.
-
-#### Login y autenticación de usuario registrado
-
-La primera petición `http://0.0.0.0:8080/auth/login` usando el método **POST** y pasando un *JSON* con los parámetros de login `mail` y `password`. Si ha ido **OK** devolverá el *Status 200 OK*.
-
-En este momento, el usuario está autenticado y puede hacer operaciones reservadas sólo para usuarios autenticados.
-
-![Rutas](../../assets/images/ud05/ud5_13.png)
-
-Por ejemplo, podemos hacer una petición **POST** para crear un usuario nuevo (tenemos los permisos para hacerlo).
-
-![Rutas](../../assets/images/ud05/ud5_15.png)
-
-#### Logout. Cerrando la sesión
-
-Para terminar la sesión, hacemos la petición a `http://0.0.0.0:8080/auth/logout` usando el método **GET**. Esto destruye la sesión existente.
-
-En este momento, el usuario ya **no está autenticado** y no podrá hacer operaciones restringidas.
-
-![Rutas](../../assets/images/ud05/ud5_14.png)
-
-Si intentamos borrar un *usuario* ya no podremos. ¡Estamos asegurando el **acceso a nuestros datos**!
-
-![Rutas](../../assets/images/ud05/ud5_16.png)
-
-## 6 Estructura Final del Proyecto
-
-Así queda organizada nuestra arquitectura **MVC** segura:
-
-```text
-src/main/kotlin/com/tu.proyecto/
-├── core/
-│   └── ConexionDB.kt    
-├── data/
-│   ├── UsuariosTable.kt 
-│   └── UsuariosDAO.kt   
-├── domain/
-│   ├── UsuarioDTO.kt    
-│   ├── UserSession.kt   // Carnet de identidad global
-│   ├── LocalDateSerializer.kt
-│   └── LoginRequest.kt 
-├── services/            
-│   └── UsuariosService.kt 
-├── routes/              
-│   └── UsuarioRoutes.kt // Controlador protegido
-├── plugins/             
-│   ├── Serialization.kt 
-│   ├── Routing.kt       
-│   └── Security.kt      // Plugin de Seguridad
-└── Application.kt       
-```
+---
 
 !!! example "Autoevaluación"
 
-    **Pregunta 7: En la configuración de sesiones de Ktor, `cookie.maxAgeInSeconds = 3600`. ¿Qué ocurre exactamente cuando pasan 3600 segundos desde que el usuario hizo login?**
+    **Pregunta 13: ¿Para qué sirve `.csrf { it.disable() }` en la configuración de Spring Security?**
 
-    A) El servidor elimina automáticamente al usuario de la base de datos para proteger los datos.
+    A) Desactiva el cifrado de las contraseñas, lo que hace la aplicación más rápida.
 
-    B) La Cookie `USER_SESSION` expira en el navegador del cliente; en la siguiente petición protegida, el servidor no encontrará sesión válida y devolverá 401.
+    B) Deshabilita la protección CSRF (Cross-Site Request Forgery), que está activa por defecto. Es necesario hacerlo en APIs REST que usan Postman u otros clientes HTTP que no son navegadores, porque no gestionan tokens CSRF automáticamente.
 
-    C) Ktor reinicia automáticamente el servidor y obliga a todos los usuarios a hacer login de nuevo.
+    C) Desactiva la autenticación completamente, permitiendo acceso libre a todas las rutas.
 
-    D) La sesión se renueva automáticamente por otros 3600 segundos sin que el usuario tenga que hacer nada.
+    D) Elimina la necesidad de usar HTTPS en el servidor.
 
     ??? quote "Solución"
-        ❌ A) La expiración de la sesión no afecta en absoluto a los datos de la BD. Solo gestiona el "carnet de identidad" temporal del usuario en el navegador.
+        ❌ A) CSRF no tiene relación con el cifrado de contraseñas. `PasswordEncoder` es lo que gestiona el hashing.
 
-        ✅ B) `maxAgeInSeconds` controla el tiempo de vida de la Cookie en el navegador del cliente. Cuando expira, el navegador ya no la envía con las peticiones. En la siguiente petición a una ruta protegida, `authenticate` no encontrará sesión válida y ejecutará el `challenge` con código 401.
+        ✅ B) CSRF es un tipo de ataque donde un sitio malicioso hace que el navegador de la víctima envíe peticiones no deseadas a nuestra API. Spring Security lo previene mediante tokens. Pero cuando el cliente es Postman, una app móvil, u otro sistema backend, no hay "navegador" que pueda ser engañado, por lo que el token CSRF es innecesario y solo complica las pruebas. Para APIs REST el estándar es deshabilitar CSRF y usar otros mecanismos (sesiones, JWT, etc.).
 
-        ❌ C) Ktor no reinicia el servidor por expiración de sesiones. La expiración es un mecanismo del navegador del cliente, no del servidor.
+        ❌ C) `.csrf { it.disable() }` solo afecta a la protección CSRF. Las reglas de `.authorizeHttpRequests` siguen activas.
 
-        ❌ D) La renovación automática requiere código explícito (por ejemplo, actualizar `maxAge` en cada petición). Con la configuración básica, la Cookie simplemente expira y no se renueva sola.
+        ❌ D) CSRF no tiene relación con HTTPS. Son mecanismos de seguridad completamente distintos.
 
-## 🎯 **Práctica 5. Auditoría de Seguridad y Estructura**
+    **Pregunta 14: En Spring Security, `.requestMatchers(HttpMethod.DELETE, "/usuarios/**").authenticated()` ¿qué garantiza?**
 
-!!! warning "🎯 Práctica 5. Auditoría de Seguridad y Estructura"
+    A) Que solo los usuarios con rol "ADMIN" pueden borrar registros.
 
-    Para completar esta unidad, debes validar que cada componente de la arquitectura cumple su función. Sigue este orden estrictamente:
+    B) Que cualquier petición `DELETE` a `/usuarios/*` (por ejemplo `/usuarios/5`) debe provenir de un cliente que haya iniciado sesión previamente. Si no hay sesión válida, Spring Security devuelve 401 sin llegar al controlador.
 
-    1. **Verificación de Estructura:** Comprueba que tienes los archivos principales distribuidos en los 6 paquetes (`core`, `data`, `domain`, `services`, `routes`, `plugins`) tal como indica el esquema superior.
-    2. **Verificación de Arranque:** Ejecuta la aplicación y confirma que en los logs de la consola aparece tanto la conexión exitosa a MySQL como el inicio del motor Netty sin errores de "MissingPlugin".
-    3. **Test de Intrusión (Fallo esperado):** Abre Postman e intenta borrar un usuario (`DELETE /usuarios/1`). 
-        * *Resultado esperado:* Código **401 Unauthorized**. Si el borrado funciona, revisa el bloque `authenticate`.
-    4. **Test de Autenticación:** Realiza el Login (`POST /auth/login`) con credenciales válidas.
-        * *Resultado esperado:* Mensaje de bienvenida y aparición de la cookie `USER_SESSION` en la pestaña *Cookies* de Postman.
-    5. **Test de Operación Protegida:** Con la sesión activa, repite el borrado o crea un usuario.
-        * *Resultado esperado:* Código **200 OK** o **201 Created**.
-    6. **Test de Cierre:** Ejecuta `/auth/logout` e intenta de nuevo una operación protegida.
-        * *Resultado esperado:* Retorno al estado **401 Unauthorized**.
+    C) Que el endpoint DELETE se ejecuta siempre, independientemente de si hay sesión o no.
 
-    **¡Si has superado todos los puntos, tu API es segura y profesional!**
+    D) Que la petición DELETE se redirige a la página de login configurada en Spring Security.
+
+    ??? quote "Solución"
+        ❌ A) `.authenticated()` solo verifica que hay una sesión activa. Para restricción por roles se usa `.hasRole("ADMIN")` o `.hasAuthority("ADMIN")`.
+
+        ✅ B) `.authenticated()` exige que el contexto de seguridad de Spring tenga un usuario autenticado. En nuestra implementación, eso ocurre cuando `HttpSession` tiene el atributo `userMail` establecido en el login. Si no hay sesión válida, el `authenticationEntryPoint` que configuramos devuelve un 401 con el mensaje personalizado, sin que la petición llegue al `@DeleteMapping` del controlador.
+
+        ❌ C) Es exactamente lo contrario: sin sesión, la petición es bloqueada por el filtro de seguridad antes de llegar al controlador.
+
+        ❌ D) Nuestra configuración no tiene `loginPage(...)`. En lugar de redirigir, devolvemos un 401 directamente mediante el `authenticationEntryPoint`.
