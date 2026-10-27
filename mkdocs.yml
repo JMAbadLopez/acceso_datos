@@ -31,6 +31,7 @@ nav:
       - Creación de esquemas de BD: unidades/ud04/tablas.md
       - CRUD Básico y Persistencia: unidades/ud04/operaciones.md
       - Consultas avanzadas con un ORM: unidades/ud04/consultas.md
+      # - Entrega y documentación final: unidades/ud04/entrega.md
     - UD5 - Diseño de componentes. API REST:
       - Introducción: unidades/ud05/introduccion.md
       - Configuración del entorno y persistencia: unidades/ud05/configuracion_persistencia.md
