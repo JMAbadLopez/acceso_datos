@@ -89,6 +89,23 @@ dependencies {
 }
 ```
 
+!!! warning "Advertencia al arrancar con Java 17+"
+    Al ejecutar el proyecto con Java 17 o superior verás este mensaje en la consola:
+
+    ```
+    WARNING: A restricted method in java.lang.System has been called
+    WARNING: java.lang.System::load has been called by org.sqlite.SQLiteJDBCLoader ...
+    WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+    ```
+
+    **No es un error** — la conexión funciona igualmente. El driver SQLite necesita cargar una librería nativa y Java avisa de que en versiones futuras lo bloqueará sin permiso explícito. Puedes ignorarlo sin problema. Si prefieres silenciarlo, añade este bloque al final de tu `build.gradle.kts` (fuera de cualquier otro bloque):
+
+    ```kotlin
+    tasks.withType<JavaExec> {
+        jvmArgs("--enable-native-access=ALL-UNNAMED")
+    }
+    ```
+
 ## El Gestor de Conexión
 
 Una buena práctica es centralizar la lógica de conexión en un único objeto. Esto facilita el mantenimiento, ya que cualquier cambio en la configuración solo requiere modificar un fichero.
