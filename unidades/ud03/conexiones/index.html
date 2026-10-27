@@ -1844,156 +1844,173 @@
 <a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;com.mysql:mysql-connector-j:8.4.0&quot;</span><span class="p">)</span>
 <a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia al arrancar con Java 17+</p>
+<p>Al ejecutar el proyecto con Java 17 o superior verás este mensaje en la consola:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>WARNING: A restricted method in java.lang.System has been called
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>WARNING: java.lang.System::load has been called by org.sqlite.SQLiteJDBCLoader ...
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+</code></pre></div></td></tr></table></div>
+<p><strong>No es un error</strong> — la conexión funciona igualmente. El driver SQLite necesita cargar una librería nativa y Java avisa de que en versiones futuras lo bloqueará sin permiso explícito. Puedes ignorarlo sin problema. Si prefieres silenciarlo, añade este bloque al final de tu <code>build.gradle.kts</code> (fuera de cualquier otro bloque):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">tasks</span><span class="p">.</span><span class="na">withType</span><span class="o">&lt;</span><span class="n">JavaExec</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="n">jvmArgs</span><span class="p">(</span><span class="s">&quot;--enable-native-access=ALL-UNNAMED&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</div>
 <h2 id="el-gestor-de-conexion">El Gestor de Conexión</h2>
 <p>Una buena práctica es centralizar la lógica de conexión en un único objeto. Esto facilita el mantenimiento, ya que cualquier cambio en la configuración solo requiere modificar un fichero.</p>
 <div class="admonition success">
 <p class="admonition-title">🔍 Ejecutar y Analizar: Conexión Básica</p>
 <p>Ejecuta el código y verifica que la salida por consola es:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>Ruta absoluta de la BD: /ruta/a/tu/proyecto/datos/plantas.sqlite
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Conexión establecida correctamente con SQLite.
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>Ruta absoluta de la BD: /ruta/a/tu/proyecto/datos/plantas.sqlite
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>Conexión establecida correctamente con SQLite.
 </code></pre></div></td></tr></table></div>
 <p>La ruta absoluta variará según tu sistema operativo y la ubicación del proyecto.</p>
 </div>
 <p>El siguiente código muestra una conexión directa en un <strong>proyecto en Kotlin</strong> a una base de datos <strong>SQLite</strong>, en concreto <code>plantas.sqlite</code>. Ejecútalo para comprobar que se establece la comunicación.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-3-10">10</a></span>
-<span class="normal"><a href="#__codelineno-3-11">11</a></span>
-<span class="normal"><a href="#__codelineno-3-12">12</a></span>
-<span class="normal"><a href="#__codelineno-3-13">13</a></span>
-<span class="normal"><a href="#__codelineno-3-14">14</a></span>
-<span class="normal"><a href="#__codelineno-3-15">15</a></span>
-<span class="normal"><a href="#__codelineno-3-16">16</a></span>
-<span class="normal"><a href="#__codelineno-3-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.DriverManager</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;datos/plantas.sqlite&quot;</span><span class="w"> </span><span class="c1">// Asegúrate de que exista este fichero</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">dbPath</span><span class="p">)</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Ruta absoluta de la BD: </span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:sqlite:</span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">        </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión establecida correctamente con SQLite.&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al conectar: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.DriverManager</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;datos/plantas.sqlite&quot;</span><span class="w"> </span><span class="c1">// Asegúrate de que exista este fichero</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">dbPath</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Ruta absoluta de la BD: </span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:sqlite:</span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">        </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión establecida correctamente con SQLite.&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al conectar: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="organizacion-del-proyecto">Organización del Proyecto</h2>
 <p>Cuando se trabaja con bases de datos, una buena opción para organizar el código es tener el código que maneja toda la lógica de BD en un mismo sitio En Kotlin se puede crear un objeto con funciones para que estén disponibles de forma directa en otras partes del programa.</p>
 <p>Una de las ventajas de trabajar de esta forma es que evitas repetir código para abrir y cerrar conexiones y, además, si la base de datos cambia de ubicación, solo habrá que actualizar la ruta dentro del código de este objeto no en varios sitios.</p>
 <p>También es muy recomendable utilizar los bloques <strong>try-catch-finally</strong> para capturar posibles errores y excepciones.</p>
 <p>Para mejorar la organización, encapsularemos esta lógica en un objeto <code>ConexionBD</code>:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span>
-<span class="normal"><a href="#__codelineno-4-21">21</a></span>
-<span class="normal"><a href="#__codelineno-4-22">22</a></span>
-<span class="normal"><a href="#__codelineno-4-23">23</a></span>
-<span class="normal"><a href="#__codelineno-4-24">24</a></span>
-<span class="normal"><a href="#__codelineno-4-25">25</a></span>
-<span class="normal"><a href="#__codelineno-4-26">26</a></span>
-<span class="normal"><a href="#__codelineno-4-27">27</a></span>
-<span class="normal"><a href="#__codelineno-4-28">28</a></span>
-<span class="normal"><a href="#__codelineno-4-29">29</a></span>
-<span class="normal"><a href="#__codelineno-4-30">30</a></span>
-<span class="normal"><a href="#__codelineno-4-31">31</a></span>
-<span class="normal"><a href="#__codelineno-4-32">32</a></span>
-<span class="normal"><a href="#__codelineno-4-33">33</a></span>
-<span class="normal"><a href="#__codelineno-4-34">34</a></span>
-<span class="normal"><a href="#__codelineno-4-35">35</a></span>
-<span class="normal"><a href="#__codelineno-4-36">36</a></span>
-<span class="normal"><a href="#__codelineno-4-37">37</a></span>
-<span class="normal"><a href="#__codelineno-4-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1">// Fichero: ConexionBD.kt</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.DriverManager</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kd">object</span><span class="w"> </span><span class="nc">ConexionBD</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;datos/plantas.sqlite&quot;</span><span class="w"> </span><span class="c1">// Modificar según tu fichero</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">dbPath</span><span class="p">)</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:sqlite:</span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getConnection</span><span class="p">():</span><span class="w"> </span><span class="n">Connection? </span><span class="p">{</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">            </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al conectar con la base de datos: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">            </span><span class="kc">null</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">    </span><span class="c1">// Función de prueba: verificar conexión</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">testConnection</span><span class="p">():</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión establecida con éxito a </span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">            </span><span class="kc">true</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="kc">false</span>
-<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-28" name="__codelineno-4-28"></a>
-<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="w">    </span><span class="c1">// Cerrar conexión (para los casos en los que no se utiliza .use)</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">closeConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection?)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="w">            </span><span class="n">conn</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
-<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión cerrada correctamente.&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-34" name="__codelineno-4-34"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al cerrar la conexión: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-4-37" name="__codelineno-4-37"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-38" name="__codelineno-4-38"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span>
+<span class="normal"><a href="#__codelineno-6-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1">// Fichero: ConexionBD.kt</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.io.File</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.DriverManager</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="kd">object</span><span class="w"> </span><span class="nc">ConexionBD</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;datos/plantas.sqlite&quot;</span><span class="w"> </span><span class="c1">// Modificar según tu fichero</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">dbFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">dbPath</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:sqlite:</span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">getConnection</span><span class="p">():</span><span class="w"> </span><span class="n">Connection? </span><span class="p">{</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">            </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al conectar con la base de datos: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">            </span><span class="kc">null</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">    </span><span class="c1">// Función de prueba: verificar conexión</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">testConnection</span><span class="p">():</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getConnection</span><span class="p">()</span><span class="o">?.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión establecida con éxito a </span><span class="si">${</span><span class="n">dbFile</span><span class="p">.</span><span class="na">absolutePath</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">            </span><span class="kc">true</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="w">    </span><span class="c1">// Cerrar conexión (para los casos en los que no se utiliza .use)</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">closeConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">:</span><span class="w"> </span><span class="n">Connection?)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a><span class="w">            </span><span class="n">conn</span><span class="o">?.</span><span class="na">close</span><span class="p">()</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conexión cerrada correctamente.&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">SQLException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error al cerrar la conexión: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <p>De esta forma, cuando el programa necesite acceder a la BD llamará a la función de conexión y cuando termine llamará a la función que cierra la conexión. Un ejemplo de estas llamadas podría ser:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span>
-<span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span>
-<span class="normal"><a href="#__codelineno-5-6">6</a></span>
-<span class="normal"><a href="#__codelineno-5-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">conn</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conectado a la BD correctamente.&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">        </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">closeConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">getConnection</span><span class="p">()</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">conn</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Conectado a la BD correctamente.&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">        </span><span class="n">ConexionBD</span><span class="p">.</span><span class="na">closeConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition example">
 <p class="admonition-title">Autoevaluación</p>
 <p><strong>Pregunta 3: El siguiente código abre una conexión JDBC usando el bloque <code>.use {}</code>:</strong></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span>
-<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">    </span><span class="c1">// operaciones con la BD</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="na">use</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">-&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">    </span><span class="c1">// operaciones con la BD</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <p><strong>¿Qué garantiza el uso de <code>.use {}</code> frente a llamar manualmente a <code>conn.close()</code> al final del bloque?</strong></p>
 <p>A) Que la conexión se abra automáticamente si el fichero de BD no existe.</p>
