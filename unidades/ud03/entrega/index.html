@@ -1689,33 +1689,42 @@
 <div class="admonition warning">
 <p class="admonition-title">🎯 Proyecto final: Catálogo de Videojuegos con BD Relacional</p>
 <p>A lo largo de las prácticas has construido una aplicación de gestión de un catálogo de videojuegos conectada a una base de datos relacional. Has implementado el patrón DAO, gestionado transacciones y migrado la BD a un SGBD cliente-servidor.</p>
-<p>En esta entrega final integras todo lo construido y lo cierras con las <strong>tres tablas relacionadas</strong> del proyecto.</p>
+<p>En esta entrega final integras todo lo construido y lo amplías con una nueva entidad: <strong>el Jugador</strong>. Las listas de videojuegos ya no son anónimas, sino que pertenecen a un jugador concreto.</p>
 <div class="admonition warning">
 <p class="admonition-title">Requisito imprescindible</p>
 <p>No debe existir ningún rastro de los ejemplos del profesor (<code>PlantasDAO</code>, <code>ConexionBD</code> con <code>plantas.sqlite</code>, etc.). La entrega contendrá únicamente los archivos de <strong>tu proyecto</strong>: <code>ConexionBD.kt</code>, tus <code>data classes</code>, tus DAOs y <code>Main.kt</code>.</p>
 </div>
 <h3 id="base-de-datos-mysql-o-postgresql">Base de Datos (MySQL o PostgreSQL)</h3>
+<p>El proyecto trabaja ahora con <strong>cuatro tablas</strong> relacionadas:</p>
 <ul>
-<li>Las <strong>tres tablas</strong> del proyecto (<code>videojuegos</code>, <code>listas</code>, <code>listas_videojuegos</code>) con sus relaciones implementadas mediante <strong>Claves Primarias (PK)</strong> y <strong>Claves Foráneas (FK)</strong>.</li>
-<li>Las tablas deben estar <strong>pobladas</strong> con al menos 5 videojuegos y 3 listas.</li>
-<li>Fichero <code>datos/videojuegos.sql</code> con el <strong>esquema completo</strong> (CREATE TABLE) y la <strong>inserción de datos</strong> (INSERT).</li>
+<li><code>videojuegos</code></li>
+<li><code>jugadores</code></li>
+<li><code>listas</code> — debe incluir una <strong>clave foránea</strong> hacia <code>jugadores</code>, de forma que cada lista pertenezca a un jugador.</li>
+<li><code>listas_videojuegos</code> — tabla intermedia entre <code>listas</code> y <code>videojuegos</code>.</li>
 </ul>
+<p>Todas las relaciones deben estar implementadas mediante <strong>Claves Primarias (PK)</strong> y <strong>Claves Foráneas (FK)</strong>. Deberás diseñar la tabla <code>jugadores</code> y modificar la tabla <code>listas</code> para reflejar esta relación. <strong>El diseño del esquema SQL es parte de la entrega</strong>: no se proporciona el código.</p>
+<p>Las tablas deben estar <strong>pobladas</strong> con al menos 5 videojuegos, 3 jugadores y 3 listas (cada una asignada a un jugador diferente).</p>
+<p>Fichero <code>datos/videojuegos.sql</code> con el <strong>esquema completo</strong> (CREATE TABLE) y la <strong>inserción de datos</strong> (INSERT).</p>
 <h3 id="estructura-del-codigo-kotlin">Estructura del Código (Kotlin)</h3>
 <ul>
 <li><strong><code>ConexionBD.kt</code></strong>: configurado para MySQL o PostgreSQL.</li>
-<li><strong>Modelos de Datos</strong>: una <code>data class</code> por tabla → <code>Videojuego.kt</code>, <code>Lista.kt</code>, <code>ListaVideojuego.kt</code>.</li>
-<li><strong>DAOs</strong>: un fichero DAO por modelo → <code>VideojuegoDAO.kt</code>, <code>ListaDAO.kt</code>, <code>ListaVideojuegoDAO.kt</code>. Los tres implementan el <strong>CRUD completo</strong>.</li>
-<li><strong>Reto extra</strong>: <code>ListaVideojuegoDAO</code> incluye el método <code>fun obtenerVideojuegosDeLista(idLista: Int): List&lt;Videojuego&gt;</code>.</li>
+<li><strong>Modelos de Datos</strong>: una <code>data class</code> por tabla:<ul>
+<li><code>Videojuego.kt</code></li>
+<li><code>Jugador.kt</code> ← nueva</li>
+<li><code>Lista.kt</code> ← modificada para incluir el <code>idJugador</code></li>
+<li><code>ListaVideojuego.kt</code></li>
+</ul>
+</li>
+<li><strong>DAOs</strong>:<ul>
+<li><code>VideojuegoDAO.kt</code> → CRUD completo.</li>
+<li><code>JugadorDAO.kt</code> ← nuevo → solo <code>insertar</code> y <code>eliminar</code>.</li>
+<li><code>ListaDAO.kt</code> → solo <code>insertar</code> y <code>eliminar</code> (la inserción debe recibir el <code>idJugador</code> al que pertenece la lista).</li>
+<li><code>ListaVideojuegoDAO.kt</code> → <code>insertar</code> y <code>fun obtenerVideojuegosDeLista(idLista: Int): List&lt;Videojuego&gt;</code>.</li>
+</ul>
+</li>
 </ul>
 <h3 id="aplicacion-principal-mainkt">Aplicación Principal (<code>Main.kt</code>)</h3>
-<p>El <code>main</code> debe demostrar que toda la funcionalidad está operativa:</p>
-<ol>
-<li><strong>Listar</strong> todos los videojuegos y todas las listas.</li>
-<li><strong>Insertar</strong>, <strong>Actualizar</strong> y <strong>Eliminar</strong> videojuegos y listas (respetando la integridad referencial al eliminar).</li>
-<li><strong>Añadir</strong> un videojuego a una lista usando la función de transacción de la Práctica 5.</li>
-<li><strong>(Reto extra) Listar</strong> todos los videojuegos de una lista concreta.</li>
-</ol>
-<p>Ejemplo de menú:</p>
+<p>El <code>main</code> presenta un menú dividido en tres bloques que demuestra que toda la funcionalidad está operativa:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -1735,34 +1744,48 @@
 <span class="normal"><a href="#__codelineno-0-17">17</a></span>
 <span class="normal"><a href="#__codelineno-0-18">18</a></span>
 <span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>===== CATÁLOGO DE VIDEOJUEGOS =====
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>--- VIDEOJUEGOS ---
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>1. Ver todos los videojuegos
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>2. Buscar videojuego por ID
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>3. Añadir videojuego
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>4. Modificar videojuego
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>5. Eliminar videojuego
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>--- LISTAS ---
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a>6. Ver todas las listas
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a>7. Crear lista
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>8. Eliminar lista
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>===== CATÁLOGO DE VIDEOJUEGOS =====
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>--- VIDEOJUEGOS ---
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>1. Ver todos los videojuegos
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>2. Buscar videojuego por ID
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>3. Añadir videojuego
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>4. Modificar videojuego
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>5. Eliminar videojuego
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>--- JUGADORES ---
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>6. Crear jugador
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>7. Eliminar jugador
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>--- LISTAS Y VIDEOJUEGOS ---
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a>9. Añadir videojuego a una lista
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>10. (EXTRA) Ver videojuegos de una lista
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>0. Salir
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>====================================
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>--- LISTAS ---
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>8. Crear lista
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>9. Eliminar lista
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>10. Añadir videojuego a una lista
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>11. Ver videojuegos de una lista
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>Escoge una opción:
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>0. Salir
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>====================================
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>Escoge una opción:
 </code></pre></div></td></tr></table></div>
+<div class="admonition info">
+<p class="admonition-title">Notas sobre el bloque LISTAS</p>
+<ul>
+<li>Al <strong>crear una lista</strong> (opción 8), el programa debe pedir también el ID del jugador al que pertenece. Si el jugador no existe, no se creará la lista.</li>
+<li><strong>Añadir un videojuego a una lista</strong> (opción 10) debe seguir usando la función con transacción implementada en la Práctica 5.</li>
+<li>Al <strong>eliminar un jugador</strong> (opción 7), ten en cuenta la integridad referencial: si ese jugador tiene listas asociadas, deberás eliminarlas antes (o configurar la FK con <code>ON DELETE CASCADE</code>).</li>
+</ul>
+</div>
 <h3 id="documentacion-el-fichero-leememd">Documentación: El Fichero LEEME.md</h3>
 <p>Tu proyecto debe incluir un fichero <code>LEEME.md</code> con al menos estas secciones:</p>
 <ul>
 <li><strong>Nombre del proyecto y breve descripción</strong>.</li>
-<li><strong>Estructura de la Base de Datos</strong>: diseño de las tres tablas y sus relaciones (puedes incluir el diagrama ER o el script SQL).</li>
+<li><strong>Estructura de la Base de Datos</strong>: diseño de las cuatro tablas y sus relaciones (puedes incluir el diagrama ER o el script SQL).</li>
 <li><strong>Instrucciones de Ejecución</strong>: requisitos, cómo crear la BD y cómo configurar la conexión.</li>
-<li><strong>Decisiones de Diseño</strong> (Opcional pero Recomendado): ¿por qué esas tablas? ¿MySQL o PostgreSQL?</li>
+<li><strong>Decisiones de Diseño</strong> (Opcional pero Recomendado): ¿qué campos tiene la tabla <code>jugadores</code>? ¿cómo has gestionado la relación con <code>listas</code>? ¿MySQL o PostgreSQL?</li>
 </ul>
 <p>Puedes consultar la guía de la <a href="../../ud02/documentacion_final/">Unidad 2</a> como referencia de estructura y formato.</p>
 </div>
